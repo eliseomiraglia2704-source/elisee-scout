@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — APP3 — Codice storico tolto da app.js (passo 3 di 3):
+Ultimo aggiornamento: **2026-10-19** — ST1 — Schede tecniche senza persone e dati inventati:
+
+1. **Cosa era rotto**: `schede-tecniche.js` aggiungeva a ogni candidatura schede «selezionate dall'IA» prese da un elenco di persone inventate (con telefoni ed email finti). In più, per qualsiasi nome cercato da DS/Scout inventava data di nascita, altezza, stato del contratto, GPS e statistiche di carriera.
+2. **Ora**: elenco di esempio tolto (`POOL = []`); le candidature mostrano solo chi si è candidato davvero; «Crea scheda» (DS/Scout) funziona solo per profili presenti sulla piattaforma e mostra solo i dati del profilo o della rosa del club, il resto «—». La compatibilità non dice più «Verificato da AI Scouting Advisor». Le vecchie schede generate salvate nei browser vengono tolte all'apertura.
+3. **File**: `schede-tecniche.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_ST1`.
+
+Feature precedente: **2026-10-19** — APP3 — Codice storico tolto da app.js (passo 3 di 3):
 
 1. **Ora**: le ~7.000 righe parcheggiate sono state tolte da `app.js` (da ~12.650 a ~5.670 righe, da ~620 KB a ~230 KB). Copia di sicurezza in `_archivio/app-codice-storico-2026-10-19.js.txt` (esclusa dal sito in `.vercelignore`). Dentro c'erano: notizie/classifiche/annunci finti con timer, un vecchio login admin che leggeva utente e password dall'indirizzo, doppioni di `switchView`, `filterAndRenderJobs` e simili, vecchie funzioni del pannello admin non più mostrate.
 2. **Prove**: visitatore e utente identici a prima; «Modifica profilo» non cambia la navigazione; login admin senza ricaricare apre il Control Center; nessun pulsante della pagina chiama funzioni mancanti (oltre a quelle già protette da un controllo).

@@ -6,88 +6,8 @@
   var currentSheet = '';
   var compareIds = [];
 
-  var POOL = [
-    { name: 'Marco Rossi', role: 'Attaccante', city: 'Foggia', region: 'Puglia', year: '2003', nat: 'Italia', foot: 'Destro', height: '182', weight: '76',
-      profile: 'Centravanti mobile, attacco alla profondità e lavoro in ampiezza.',
-      exp: ['2024/25 · ASD Lucera Calcio · Eccellenza · attaccante', '2023/24 · San Severo Primavera · attaccante'],
-      train: ['Patentino FIGC Settore Giovanile', 'Corso anti-doping NADO'],
-      skills: ['Finalizzazione', 'Smarcamento', 'Duelli aerei'], langs: ['Italiano', 'Inglese B1'],
-      avail: 'Immediata · svincolato', geo: 'Puglia, Basilicata, Campania',
-      shareContacts: true, phone: '+39 320 1112233', email: 'marco.rossi@elisee.demo',
-      photo: true, video: 'Video 30s — gol e movimenti senza palla', cv: true, docs: ['Curriculum PDF', 'Certificato medico'] },
-    { name: 'Sara Esposito', role: 'Attaccante', city: 'Napoli', region: 'Campania', year: '2004', nat: 'Italia', foot: 'Sinistro', height: '168', weight: '58',
-      profile: 'Ala esterna, 1vs1 e cross dal fondo.',
-      exp: ['2024/25 · Napoli Femminile giovanili · ala'],
-      train: ['UEFA C in corso'],
-      skills: ['Dribbling', 'Cross', 'Pressing'], langs: ['Italiano', 'Spagnolo A2'],
-      avail: 'Da giugno 2026', geo: 'Campania, Lazio',
-      shareContacts: false, phone: '', email: '',
-      photo: true, video: 'Highlight 28s — 1vs1', cv: true, docs: ['Curriculum PDF'] },
-    { name: 'Kevin Di Bari', role: 'Centrocampista', city: 'Roma', region: 'Lazio', year: '2002', nat: 'Italia', foot: 'Destro', height: '176', weight: '70',
-      profile: 'Trequartista, ultimo passaggio e inserimenti.',
-      exp: ['2024/25 · Network Club Lazio · trequartista', '2022/23 · Latina Calcio · centrocampista'],
-      train: ['Match analysis base'],
-      skills: ['Visione', 'Assist', 'Tiro da fuori'], langs: ['Italiano', 'Inglese B2'],
-      avail: '2 settimane di preavviso', geo: 'Lazio, Umbria, tutta Italia per titolarità',
-      shareContacts: true, phone: '+39 347 5566778', email: 'kevin.dibari@elisee.demo',
-      photo: true, video: 'Clip assist e tiri', cv: true, docs: ['Curriculum PDF'] },
-    { name: 'Lorenzo Bianchi', role: 'Centrocampista', city: 'San Severo', region: 'Puglia', year: '2001', nat: 'Italia', foot: 'Destro', height: '180', weight: '74',
-      profile: 'Mezzala di interdizione e inserimento.',
-      exp: ['2024/25 · US San Severo · mezzala'],
-      train: ['Preparazione atletica funzionale'],
-      skills: ['Recupero palla', 'Box-to-box'], langs: ['Italiano'],
-      avail: 'Immediata', geo: 'Foggia e provincia',
-      shareContacts: true, phone: '+39 333 9988776', email: 'lorenzo.bianchi@elisee.demo',
-      photo: false, video: '', cv: false, docs: [] },
-    { name: 'Roberto Barbieri', role: 'Portiere', city: 'Lucera', region: 'Puglia', year: '2005', nat: 'Italia', foot: 'Destro', height: '188', weight: '80',
-      profile: 'Estremo reattivo, uscite e gioco con i piedi.',
-      exp: ['2024/25 · Accademia Puglia U19 · portiere'],
-      train: ['Corso portieri FIGC'],
-      skills: ['Parate in tuffo', 'Gioco corto'], langs: ['Italiano', 'Inglese A2'],
-      avail: 'Da luglio 2026', geo: 'Puglia, Molise',
-      shareContacts: true, phone: '+39 389 2211445', email: 'roberto.barbieri@elisee.demo',
-      photo: true, video: 'Video 30s — parate e costruzione', cv: true, docs: ['Curriculum PDF', 'Certificato FIGC'] },
-    { name: 'Davide Russo', role: 'Portiere', city: 'Verona', region: 'Veneto', year: '2003', nat: 'Italia', foot: 'Sinistro', height: '190', weight: '82',
-      profile: 'Portiere di impostazione, lettura delle traiettorie.',
-      exp: ['2023/24 · Verona giovanili · portiere'],
-      train: ['Licenza portieri regionale'],
-      skills: ['Posizionamento', 'Rinvii'], langs: ['Italiano', 'Tedesco A1'],
-      avail: 'Trasferibile', geo: 'Nord e Centro Italia',
-      shareContacts: false, phone: '', email: '',
-      photo: true, video: 'Highlight uscite', cv: true, docs: ['Curriculum PDF'] },
-    { name: 'Matteo Ferrari', role: 'Difensore', city: 'Manfredonia', region: 'Puglia', year: '2005', nat: 'Italia', foot: 'Destro', height: '186', weight: '79',
-      profile: 'Difensore centrale, anticipo e costruzione dal basso.',
-      exp: ['2024/25 · Manfredonia Calcio · difensore centrale'],
-      train: ['Fuoriquota Under'],
-      skills: ['Anticipo', 'Marcamento', 'Uscita palla'], langs: ['Italiano'],
-      avail: 'Immediata · obblighi categoria 2005/06', geo: 'Puglia',
-      shareContacts: true, phone: '+39 328 6677889', email: 'matteo.ferrari@elisee.demo',
-      photo: true, video: 'Video 30s — duelli e costruzione', cv: true, docs: ['Curriculum PDF'] },
-    { name: 'Giulia Romano', role: 'Difensore', city: 'Latina', region: 'Lazio', year: '2004', nat: 'Italia', foot: 'Sinistro', height: '170', weight: '60',
-      profile: 'Terzino sinistro, spinta e copertura.',
-      exp: ['2024/25 · Latina Calcio · terzino'],
-      train: ['Corso tattico settore giovanile'],
-      skills: ['Sovrapposizione', 'Cross'], langs: ['Italiano', 'Inglese B1'],
-      avail: 'Fine stagione', geo: 'Lazio, Campania',
-      shareContacts: false, phone: '', email: '',
-      photo: true, video: '', cv: false, docs: [] },
-    { name: 'Giulia Conti', role: 'Match Analyst', city: 'Roma', region: 'Lazio', year: '1998', nat: 'Italia', foot: '', height: '', weight: '',
-      profile: 'Analista pre/post gara, tagging clip e report staff.',
-      exp: ['2024/25 · Network Club Lazio · match analyst', '2022/24 · Freelance dilettanti Lazio'],
-      train: ['UEFA B', 'Certificazione Wyscout'],
-      skills: ['Tagging', 'Report 8 blocchi', 'Heatmap'], langs: ['Italiano', 'Inglese C1', 'Francese B1'],
-      avail: 'Part-time o full-time da agosto', geo: 'Lazio, remoto + trasferte weekend',
-      shareContacts: true, phone: '+39 349 1122334', email: 'giulia.conti@elisee.demo',
-      photo: true, video: 'Showreel report 45s', cv: true, docs: ['Curriculum PDF', 'Portfolio report'] },
-    { name: 'Elena Santoro', role: 'Preparatore Atletico', city: 'Foggia', region: 'Puglia', year: '1995', nat: 'Italia', foot: '', height: '', weight: '',
-      profile: 'Periodizzazione forza e prevenzione infortuni.',
-      exp: ['2023/25 · Foggia In Motion · preparatore atletico'],
-      train: ['Istruttore CONI', 'FIFA Diploma Fitness'],
-      skills: ['GPS', 'Forza', 'Rieducazione'], langs: ['Italiano', 'Inglese B2'],
-      avail: 'Part-time con possibile full-time', geo: 'Foggia e provincia, trasferte regionali',
-      shareContacts: true, phone: '+39 320 4455667', email: 'elena.santoro@elisee.demo',
-      photo: true, video: '', cv: true, docs: ['Curriculum PDF', 'Diploma CONI'] }
-  ];
+  // Elenco di profili di esempio rimosso (2026-10-19): niente persone inventate.
+  var POOL = [];
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -111,8 +31,17 @@
     var blob = [u.siteRoleFamily, u.ruolo, u.role, u.staffRole, u.ruoloDettagliato].filter(Boolean).join(' ').toLowerCase();
     return /squadra|club|societ|direttore|scout|osservatore|staff/.test(blob);
   }
+  // Le schede generate dai vecchi profili di esempio («IA») non sono persone reali: si tolgono.
+  function isGeneratedSheet(sh) {
+    return !!sh && (sh.source === 'ai' || sh.source === 'ai-request' || /^ai-/.test(String(sh.id || '')));
+  }
   function loadAll() {
-    try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch (_) { return {}; }
+    var map;
+    try { map = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch (_) { return {}; }
+    Object.keys(map).forEach(function (k) {
+      if (map[k] && Array.isArray(map[k].sheets)) map[k].sheets = map[k].sheets.filter(function (sh) { return !isGeneratedSheet(sh); });
+    });
+    return map;
   }
   var saveTimer = 0;
   function saveAll(map) {
@@ -180,7 +109,6 @@
       (person.skills || []).forEach(function (sk) { if (hay.indexOf(String(sk).toLowerCase()) >= 0) n += 2; });
       (person.langs || []).forEach(function (lg) { if (hay.indexOf(String(lg).toLowerCase()) >= 0) n += 2; });
     }
-    n += (String(person.name).length % 5);
     return Math.min(98, n);
   }
   function aiStrengths(person, job) {
@@ -197,7 +125,7 @@
     if (person.video) out.push('Materiale video presente: il club può valutare senza chiedere file via e-mail.');
     if (person.avail && /immediat/i.test(person.avail)) out.push('Disponibilità lavorativa immediata.');
     if (person.skills && person.skills.length) out.push('Competenze chiave: ' + person.skills.slice(0, 3).join(', ') + '.');
-    if (!out.length) out.push('Profilo selezionato dall’IA tra i più compatibili con i requisiti inseriti dal club.');
+    if (!out.length) out.push('Candidatura inviata dalla piattaforma.');
     return out;
   }
   function initials(name) {
@@ -236,7 +164,7 @@
       match: match,
       strengths: extra.strengths || aiStrengths(person, job),
       status: extra.status || 'nuova',
-      source: extra.source || 'ai',
+      source: extra.source || 'candidatura',
       note: extra.note || ''
     };
   }
@@ -261,16 +189,15 @@
     var id = job.id || slug(job.title || job.club);
     var map = loadAll();
     if (map[id] && Array.isArray(map[id].sheets) && map[id].sheets.length) {
-      map[id].title = job.title || map[id].title;
+      if (job.title && job.title !== id) map[id].title = job.title;
       map[id].club = job.club || job.societa || map[id].club;
       map[id].role = job.role || job.ruolo || map[id].role;
       saveAll(map);
       return map[id];
     }
     var useAi = job.ai !== false;
-    var sheets = useAi
-      ? pickPool(job).map(function (p) { return sheetFromPerson(p, job, { source: 'ai', id: 'ai-' + id + '-' + slug(p.name) }); })
-      : [];
+    // Solo candidature vere: nessuna scheda generata da profili di esempio.
+    var sheets = [];
     map[id] = {
       id: id,
       title: job.title || 'Annuncio',
@@ -369,7 +296,7 @@
       var on = s.id === currentSheet ? ' is-on' : '';
       var chk = compareIds.indexOf(s.id) >= 0 ? ' checked' : '';
       return '<button type="button" class="es-st-item' + on + '" data-open="' + esc(s.id) + '">' +
-        '<span class="es-st-match">' + esc(s.match) + '%</span>' +
+        (s.match ? '<span class="es-st-match">' + esc(s.match) + '%</span>' : '') +
         '<h3>' + esc(s.name) + '</h3>' +
         '<p>' + esc(s.role) + (s.city ? ' · ' + esc(s.city) : '') + (s.source === 'ai' ? ' · IA' : ' · candidatura') + '</p>' +
         '<span class="es-st-st ' + esc(s.status === 'shortlist' ? 'shortlist' : s.status === 'scartata' ? 'scartata' : '') + '">' + esc(s.status) + '</span>' +
@@ -399,7 +326,7 @@
     html += '<p class="es-st-src-banner es-st-src-' + esc(s.dataSource || 'ia') + '">' +
       (s.dataSource === 'club'
         ? 'Anagrafica e presenze da rosa club. GPS hardware assente, salvo file caricati dallo staff.'
-        : 'Sintesi IA: GPS e carriera stimati. Non usare come certificazione atletica.') +
+        : 'Dati dal profilo del calciatore. GPS e statistiche solo se caricati dal club.') +
       '</p>';
     html += '<div class="es-st-hero">';
     html += '<div class="es-st-ava">' + (s.photoUrl ? '<img src="' + esc(s.photoUrl) + '" alt="">' : esc(initials(s.name))) + '</div>';
@@ -410,9 +337,11 @@
     html += '</div></div>';
 
     html += '<div class="es-st-ai">';
-    html += '<p>Match Index IA: <strong>' + esc(s.match) + '% MATCH</strong></p>';
-    html += '<div class="es-st-bar"><i style="width:' + esc(s.match) + '%"></i></div>';
-    html += '<p class="es-st-ai-sub">Verificato da AI Scouting Advisor sui parametri di ricerca DS</p>';
+    if (s.match) {
+      html += '<p>Compatibilità: <strong>' + esc(s.match) + '%</strong></p>';
+      html += '<div class="es-st-bar"><i style="width:' + esc(s.match) + '%"></i></div>';
+    }
+    html += '<p class="es-st-ai-sub">Compatibilità stimata da ruolo, zona e competenze. Non è una valutazione tecnica.</p>';
     html += '</div>';
 
     html += '<h3 class="es-st-sec">1. Header &amp; anagrafica identificativa</h3>';
@@ -423,7 +352,7 @@
     html += kv('Status contrattuale', esc(s.contractStatus));
     html += kv('Club attuale / ultima categoria', esc(s.clubLine));
     html += kv('Dati antropometrici', esc(s.anthro));
-    html += kv('Match Index IA', esc(s.match) + '% MATCH');
+    html += kv('Compatibilità', (s.match ? esc(s.match) + '%' : '—'));
     html += '</div>';
 
     html += '<h3 class="es-st-sec">2. Specifiche tattiche &amp; mappa ruoli</h3>';
@@ -481,7 +410,7 @@
       return '<div class="es-st-sheet" data-sheet="' + esc(s.id) + '">' +
         '<p class="es-st-ai-kicker">Scheda tecnica scouting</p>' +
         '<h2>' + esc(s.name) + '</h2>' +
-        '<p>' + esc(s.primaryRole || s.role) + ' · Match Index ' + esc(s.match) + '%</p>' +
+        '<p>' + esc(s.primaryRole || s.role) + (s.match ? ' · Compatibilità ' + esc(s.match) + '%' : '') + '</p>' +
         '<p>' + esc(s.clubLine || '') + '</p></div>';
     }
     return renderScoutDossier(s);
@@ -711,92 +640,50 @@
   function sourceCaption(kind) {
     if (kind === 'gps') return 'Fonte: file GPS caricati dallo staff.';
     if (kind === 'club') return 'Fonte: rosa / anagrafica club. Non è telemetria da dispositivo.';
-    return 'Sintesi IA — valori stimati, non misurati da GPS o da archivio ufficiale.';
+    if (kind === 'none') return 'Nessun dato GPS: arriva solo da file caricati dallo staff del club.';
+    return 'Fonte: profilo del calciatore.';
   }
 
+  // Nessun dato inventato: si mostra solo ciò che viene dal profilo del calciatore
+  // o dalla rosa del club. I campi mancanti restano «—».
   function ensureScoutFields(s) {
     if (!s) return s;
     var hit = lookupClubPlayer(s);
     if (hit) applyClubPlayer(s, hit);
-    if (s.gps && s.career && s.primaryRole && s.gpsSource) return s;
-    var h = hashStr(s.name + (s.role || ''));
-    var pack = tacticalPack(s.role, h);
+    if (s.__esFieldsDone) return s;
+    var dash = '—';
     var year = parseInt(s.year, 10);
-    if (!year || year < 1985) year = 1998 + (h % 10);
-    var age = 2026 - year;
-    var day = 1 + (h % 27);
-    var mon = 1 + (h % 12);
-    var dob = (s.dob && String(s.dob).indexOf('/') >= 0) ? s.dob : ((day < 10 ? '0' : '') + day + '/' + (mon < 10 ? '0' : '') + mon + '/' + year);
-    var height = s.height || (170 + (h % 18));
-    var weight = s.weight || (64 + (h % 18));
-    var foot = s.foot || ((h % 3 === 0) ? 'Sinistro' : 'Destro');
-    var opp = 55 + (h % 30);
-    var free = /svincol|libera|free/i.test(s.avail || s.contractStatus || '') || (h % 4 !== 1);
-    var club = s.societa || s.club || 'S.S. Sesto Calcio';
-    var cat = s.categoria || 'Eccellenza';
-    var dist = (9.6 + (h % 16) / 10).toFixed(1);
-    var hsr = 680 + (h % 280);
-    var vmax = (28.4 + (h % 40) / 10).toFixed(1);
-    var sprint = 18 + (h % 16);
-    var acc = 34 + (h % 14);
-    var dec = 30 + (h % 14);
-    var minPeak = 50 + (h % 35);
-    var g1 = 4 + (h % 10), a1 = 3 + (h % 8), p1 = 20 + (h % 10);
-    var g2 = 6 + (h % 8), a2 = 4 + (h % 8), p2 = 22 + (h % 8);
-    var career = (s.exp && s.exp.length)
-      ? s.exp.slice(0, 2).map(function (line, i) {
-          var bits = String(line).split(' · ');
-          return { season: bits[0] || ('202' + (4 - i) + '/202' + (5 - i)), club: bits[1] || club, cat: bits[3] || cat, apps: (p1 - i * 2) + ' (' + (p1 - 2 - i) + ')', min: ((p1 - i) * 82) + "'", g: g1 - i, a: a1 - i, cards: (1 + i) + ' / 0' };
-        })
-      : [
-          { season: '2025/2026', club: club, cat: cat, apps: p1 + ' (' + (p1 - 2) + ')', min: (p1 * 82) + "'", g: g1, a: a1, cards: '3 / 0' },
-          { season: '2024/2025', club: 'AC Città', cat: 'Promozione', apps: p2 + ' (' + p2 + ')', min: (p2 * 85) + "'", g: g2, a: a2, cards: '2 / 0' }
-        ];
-    var totG = 0, totA = 0, totP = 0, totM = 0, totY = 0;
-    career.forEach(function (c) {
-      totG += Number(c.g) || 0;
-      totA += Number(c.a) || 0;
-      totP += parseInt(c.apps, 10) || 0;
-      totM += parseInt(c.min, 10) || 0;
-      totY += parseInt(c.cards, 10) || 0;
-    });
-    s.primaryRole = s.primaryRole || pack.primary;
-    s.secondaryRoles = s.secondaryRoles || pack.second;
-    s.roleMap = s.roleMap || pack.map;
-    s.badges = s.badges || pack.badges;
-    s.heatmap = s.heatmap || pack.heat;
-    s.modulo = s.modulo || pack.modulo;
-    s.heatCert = s.heatCert || (s.dataSource === 'club'
-      ? 'Mappa tattica derivata dal ruolo in rosa; non è tracking di gara.'
-      : 'Mappa tattica stimata dall’IA in assenza di tracking di gara.');
-    s.gpsSource = s.gpsSource || 'ia';
-    s.careerSource = s.careerSource || 'ia';
-    s.dataSource = s.dataSource || 'ia';
-    s.footLine = s.footLine || (foot + ' (uso opposto: ' + opp + '%)');
-    s.contractStatus = s.contractStatus || (free ? 'Svincolato / Cerca squadra' : 'Sotto contratto');
-    s.clubLine = s.clubLine || (club + ' (' + cat + ')');
-    s.natLine = s.natLine || ((s.nat || 'Italiana') + ' | ' + (s.city || s.geo || 'Italia'));
-    s.dobAge = s.dobAge || (dob + ' (' + age + ' anni)');
-    s.anthro = s.anthro || (height + ' cm | ' + weight + ' kg');
-    s.height = height;
-    s.weight = weight;
-    s.foot = foot;
-    s.match = s.match || (78 + (h % 18));
-    s.gps = s.gps || [
-      { param: 'Distanza totale media (km)', value: dist + ' km / gara', ref: Number(dist) >= 10.2 ? 'Sopra la media (+8%)' : 'In linea con il ruolo' },
-      { param: 'Metri ad alta intensità (HSR)', value: hsr + ' metri', ref: 'In linea con il ruolo' },
-      { param: 'Velocità massima (km/h)', value: vmax + ' km/h (minuto ' + minPeak + ')', ref: Number(vmax) >= 30.5 ? 'Top performer' : 'Nella media di categoria' },
-      { param: 'Sprint totali (>24 km/h)', value: sprint + ' ad alta intensità', ref: 'Elevata tenuta atletica' },
-      { param: 'Accelerazioni / decelerazioni', value: acc + ' / ' + dec + ' per partita', ref: 'Reattività esplosiva' }
-    ];
-    s.career = s.career || career;
-    s.careerTot = s.careerTot || { apps: String(totP), min: totM + "'", g: totG, a: totA, cards: totY + ' / 0' };
+    var age = year && year > 1950 ? (2026 - year) : 0;
+    s.primaryRole = s.primaryRole || s.role || dash;
+    s.secondaryRoles = s.secondaryRoles || dash;
+    s.roleMap = s.roleMap || [];
+    s.badges = s.badges || (s.skills || []).slice(0, 4);
+    s.heatmap = s.heatmap || 'Non disponibile: servono dati di gara caricati dal club.';
+    s.modulo = s.modulo || dash;
+    s.heatCert = s.heatCert || 'Nessun tracking di gara.';
+    s.dataSource = s.dataSource || 'profilo';
+    s.gpsSource = s.gpsSource || 'none';
+    s.careerSource = s.careerSource || 'profilo';
+    s.footLine = s.footLine || s.foot || dash;
+    s.contractStatus = s.contractStatus || s.avail || 'Non indicato';
+    s.clubLine = s.clubLine || s.societa || s.club || dash;
+    s.natLine = s.natLine || [s.nat, s.city || s.geo].filter(Boolean).join(' | ') || dash;
+    s.dobAge = s.dobAge || (s.dob ? (s.dob + (age ? ' (' + age + ' anni)' : '')) : (year ? (String(year) + ' (' + age + ' anni)') : dash));
+    s.anthro = s.anthro || ([s.height ? s.height + ' cm' : '', s.weight ? s.weight + ' kg' : ''].filter(Boolean).join(' | ') || dash);
+    s.gps = s.gps || [];
+    if (!s.career) {
+      s.career = (s.exp || []).slice(0, 4).map(function (line) {
+        var bits = String(line).split(' · ');
+        return { season: bits[0] || dash, club: bits[1] || dash, cat: bits[3] || bits[2] || dash, apps: dash, min: dash, g: dash, a: dash, cards: dash };
+      });
+    }
+    s.careerTot = s.careerTot || null;
+    s.__esFieldsDone = true;
     return s;
   }
 
   function collectLiveProfiles() {
     var out = [];
-    POOL.forEach(function (p) { out.push(p); });
     try {
       var sl = JSON.parse(localStorage.getItem('elisee_secret_list') || '[]') || [];
       sl.forEach(function (x) {
@@ -843,9 +730,9 @@
     var extra = {
       societa: person.societa || person.club,
       club: person.societa || person.club,
-      source: 'ai-request',
+      source: 'richiesta',
       requester: requester || 'scout',
-      match: person.match || (78 + (h % 18)),
+      match: person.match || '',
       photoUrl: person.photoUrl || ''
     };
     return { person: person, extra: extra };
@@ -856,7 +743,7 @@
     return ensureJob({
       id: 'richieste-ds-scout',
       title: 'Schede tecniche richieste da DS / Scout',
-      club: u.squadra || u.club || 'Foggia City',
+      club: u.squadra || u.club || '',
       role: 'Scouting',
       location: u.citta || 'Italia',
       ai: true
@@ -872,19 +759,14 @@
         String(p.role || '').toLowerCase().indexOf(ql) >= 0 ||
         String(p.societa || p.club || '').toLowerCase().indexOf(ql) >= 0;
     });
-    var person = hits[0] || {
-      name: q,
-      role: 'Ala sinistra',
-      profile: 'Dossier ricostruito dall’IA su richiesta di ' + (requester === 'ds' ? 'Direttore Sportivo' : 'Scout') + '.',
-      city: (userObj().citta || 'Foggia'),
-      nat: 'Italiana',
-      langs: ['Italiano']
-    };
+    // Solo profili presenti sulla piattaforma: niente dossier su persone inventate.
+    var person = hits[0];
+    if (!person) return null;
     var packed = enrichPerson(person, requester);
     var job = requestJob(requester);
     var sh = sheetFromPerson(packed.person, job, packed.extra);
     sh = ensureScoutFields(sh);
-    sh.id = 'ai-req-' + slug(person.name) + '-' + Date.now();
+    sh.id = 'req-' + slug(person.name) + '-' + Date.now();
     sh.strengths = aiStrengths(packed.person, job);
     job.sheets = (job.sheets || []).filter(function (s) { return s.name !== sh.name; });
     job.sheets.unshift(sh);
@@ -929,16 +811,16 @@
     return '<section class="es-pd-card" style="padding:1.25rem;">' +
       '<div class="es-pd-card-header"><h2>Scheda tecnica scouting</h2>' +
       '<span class="es-pd-source-badge">Dossier DS / Scout</span></div>' +
-      '<p style="color:#94a3b8;font-size:0.84rem;line-height:1.5;margin:0 0 12px;">L’IA genera il dossier analitico ufficiale: anagrafica, mappa ruoli, heatmap, GPS e storico carriera. Richiedibile da Direttore Sportivo e da Scout, esportabile in PDF/Word.</p>' +
+      '<p style="color:#94a3b8;font-size:0.84rem;line-height:1.5;margin:0 0 12px;">Raccoglie in un dossier i dati che il calciatore ha nel profilo e quelli caricati dal club. Esportabile in PDF/Word.</p>' +
       '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">' +
         '<input type="text" id="es-st-ia-q" placeholder="Nome, ruolo o società del calciatore" style="flex:1;min-width:220px;padding:10px 12px;border-radius:8px;border:1px solid #1e2430;background:#0b0e14;color:#eef1f6;">' +
-        '<button type="button" class="es-pro-btn-quick-jump" data-st-ia="generate" data-from="' + esc(requester || 'ds') + '">Genera scheda IA</button>' +
+        '<button type="button" class="es-pro-btn-quick-jump" data-st-ia="generate" data-from="' + esc(requester || 'ds') + '">Crea scheda</button>' +
       '</div>' +
       (recent.length
         ? '<div style="display:flex;flex-direction:column;gap:8px;">' + recent.map(function (s) {
             return '<button type="button" class="es-st-item" style="text-align:left;width:100%;" data-st-ia="open" data-sid="' + esc(s.id) + '" data-from="' + esc(requester || 'ds') + '">' +
               '<b>' + esc(s.name) + '</b> · ' + esc(s.role || '') + (s.societa ? ' · ' + esc(s.societa) : '') +
-              ' · ' + esc(s.match) + '%</button>';
+              (s.match ? ' · ' + esc(s.match) + '%' : '') + '</button>';
           }).join('')
         : '<p class="es-pd-empty">Nessuna scheda richiesta. Cerca un tesserato e genera.</p>') +
     '</section>';
@@ -962,8 +844,11 @@
           return;
         }
         var sh = generateFor(q, from);
-        if (!sh) return;
-        toast('Scheda tecnica IA generata per ' + sh.name + '.', 'success');
+        if (!sh) {
+          toast('Nessun profilo sulla piattaforma con questo nome, ruolo o società.', 'info');
+          return;
+        }
+        toast('Scheda tecnica creata per ' + sh.name + '.', 'success');
         openViewer(sh, from);
         return;
       }
