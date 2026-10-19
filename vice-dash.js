@@ -67,6 +67,7 @@
   }
 
   var _coachLiveData = null;
+  var _lastLiveSyncAt = 0;
   var _isSyncing = false;
 
   function formatDateTime(iso) {
@@ -119,7 +120,7 @@
     }
 
     try {
-      var clubId = await window.EliseeSupabase.resolveClubId(user);
+      var clubId = await window.EliseeSupabase.resolveClubId();
       var staffId = user.staffId || user.id || null;
 
       var res = await Promise.all([
@@ -294,6 +295,7 @@
 
       _coachLiveData = {
         isLiveSupabase: true,
+        calendarioEvents: mergeRemoteCalendar((getCoachData().calendarioEvents || []), partite, allenamenti),
         clubId: clubId,
         clubName: user.squadra || user.club || 'Foggia City',
         categoria: user.categoria || 'Amatoriale · Foggia',
@@ -332,6 +334,8 @@
         }
       };
 
+      // Rosa ancora vuota online: resta quella salvata su questo dispositivo.
+      if (!liveRoster.length) delete _coachLiveData.roster;
       updateCoachDomWithLiveData(_coachLiveData);
     } catch (err) {
       console.warn('[CoachDash] Errore sync live Supabase:', err);
@@ -363,7 +367,6 @@
 
     var container = document.getElementById('es-cos-active-content');
     if (container) {
-      syncLiveCoachData(user);
     var data = getCoachData();
       container.innerHTML = renderActiveTab(activeTab, data);
       bindAllEvents();
@@ -1298,6 +1301,11 @@
       window.EliseePersist.pullCoach(function (data) {
         if (data) renderHub(user);
       });
+    }
+    // Dati condivisi della squadra (/api/squadra): al massimo una volta al minuto.
+    if (!_lastLiveSyncAt || Date.now() - _lastLiveSyncAt > 60000) {
+      _lastLiveSyncAt = Date.now();
+      syncLiveCoachData(null, false);
     }
 
     var grp = document.getElementById('user-dossier-view-group');
@@ -2927,7 +2935,178 @@
     );
   }
 
-  function openCalendarEventModal(data, editId) {
+  // ============================================================
+  // CALENDARIO, SEDUTE E REPORT SUL DATABASE DELLA SQUADRA (/api/squadra)
+  // Partite e allenamenti del calendario vengono salvati anche online:
+  // così tutto lo staff della squadra vede gli stessi eventi.
+  // ============================================================
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  function isoFromLocal(d, t) {
+    var dt = new Date(String(d) + 'T' + String(t || '00:00'));
+    return isNaN(dt.getTime()) ? '' : dt.toISOString();
+  }
+  function localParts(iso) {
+    var dt = new Date(iso || '');
+    if (isNaN(dt.getTime())) return { data: '', ora: '' };
+    return {
+      data: dt.getFullYear() + '-' + pad2(dt.getMonth() + 1) + '-' + pad2(dt.getDate()),
+      ora: pad2(dt.getHours()) + ':' + pad2(dt.getMinutes())
+    };
+  }
+  function eventColOf(tipo) { return tipo === 'allenamento' ? 'allenamenti' : 'partite'; }
+  function eventToItem(ev) {
+    var done = ev.stato === 'Disputata';
+    var base = {
+      id: ev.id,
+      data_ora: isoFromLocal(ev.data, ev.ora),
+      tipo_evento: ev.tipo,
+      stato_label: ev.stato,
+      competizione: ev.competizione || '',
+      note: ev.descrizione || ''
+    };
+    if (ev.tipo === 'allenamento') {
+      base.tipo = ev.titolo;
+      base.luogo = ev.luogo || '';
+      base.obiettivi = ev.descrizione || '';
+      base.durata_minuti = ev.durata_minuti || 90;
+      base.stato = done ? 'completata' : 'programmata';
+    } else {
+      base.avversario = ev.titolo;
+      base.stadio = ev.luogo || '';
+      base.stato = done ? 'Disputata' : (ev.stato || 'Programmata');
+    }
+    return base;
+  }
+  function itemToEvent(it, col) {
+    var lp = localParts(it.data_ora);
+    var isTr = col === 'allenamenti';
+    return {
+      id: it.id,
+      tipo: it.tipo_evento || (isTr ? 'allenamento' : (it.competizione === 'Amichevole' ? 'amichevole' : 'partita')),
+      stato: it.stato_label || (it.stato === 'completata' || it.stato === 'Disputata' ? 'Disputata' : 'Programmata'),
+      titolo: isTr ? (it.tipo || 'Seduta di allenamento') : (it.avversario || 'Partita'),
+      data: lp.data,
+      ora: lp.ora,
+      competizione: it.competizione || (isTr ? 'Seduta Campo' : 'Campionato'),
+      luogo: isTr ? (it.luogo || '') : (it.stadio || ''),
+      descrizione: it.note || (isTr && typeof it.obiettivi === 'string' ? it.obiettivi : ''),
+      remote: true
+    };
+  }
+  // Unisce gli eventi locali con quelli salvati online (online vince).
+  function mergeRemoteCalendar(localEvents, partite, allenamenti) {
+    var byId = {};
+    var out = [];
+    (partite || []).forEach(function (p) { if (p && p.id && p.data_ora) byId[p.id] = itemToEvent(p, 'partite'); });
+    (allenamenti || []).forEach(function (a) { if (a && a.id && a.data_ora) byId[a.id] = itemToEvent(a, 'allenamenti'); });
+    (localEvents || []).forEach(function (ev) {
+      if (!ev || !ev.id) return;
+      if (byId[ev.id]) return;
+      if (ev.remote) return; // tolto online da un altro membro dello staff
+      out.push(ev);
+    });
+    Object.keys(byId).forEach(function (id) { out.push(byId[id]); });
+    return out;
+  }
+  async function squadraClubId() {
+    if (!window.EliseeSupabase) return null;
+    return (_coachLiveData && _coachLiveData.clubId) || window.EliseeSupabase.resolveClubId();
+  }
+  async function pushEventToSquadra(ev, prevTipo) {
+    var api = window.EliseeSupabase;
+    if (!api || typeof api.saveItem !== 'function') return { ok: false };
+    var clubId = await squadraClubId();
+    if (!clubId) return { ok: false, error: 'squadra_mancante' };
+    if (prevTipo && eventColOf(prevTipo) !== eventColOf(ev.tipo)) {
+      await api.removeItem(clubId, eventColOf(prevTipo), ev.id);
+    }
+    var r = await api.saveItem(clubId, eventColOf(ev.tipo), eventToItem(ev));
+    if (r && r.ok) ev.remote = true;
+    return r;
+  }
+  async function removeEventFromSquadra(ev) {
+    var api = window.EliseeSupabase;
+    if (!api || typeof api.removeItem !== 'function' || !ev) return { ok: false };
+    var clubId = await squadraClubId();
+    if (!clubId) return { ok: false };
+    return api.removeItem(clubId, eventColOf(ev.tipo), ev.id);
+  }
+  function squadraSaveToast(r) {
+    if (!window.showToast) return;
+    if (r && r.ok) return;
+    if (r && r.status === 403) window.showToast('Salvato solo su questo dispositivo: non fai parte dello staff di questa squadra.', 'warning');
+    else if (r && r.status === 401) window.showToast('Salvato solo su questo dispositivo: accedi di nuovo per condividerlo con lo staff.', 'warning');
+    else window.showToast('Salvato solo su questo dispositivo: connessione al database non riuscita.', 'warning');
+  }
+  function refreshActiveTab() {
+    var container = document.getElementById('es-cos-active-content');
+    if (!container) return;
+    container.innerHTML = renderActiveTab(activeTab, getCoachData());
+    bindAllEvents();
+  }
+
+  function openWriteReportModal() {
+    openModal('Scrivi un report per lo staff',
+      '<form id="form-write-report" class="es-sqf-form">' +
+        '<div class="es-sqf-field"><label for="rep-form-tipo">Tipo</label>' +
+          '<select id="rep-form-tipo">' +
+            '<option value="Tecnico">Tecnico</option>' +
+            '<option value="Atletico">Atletico</option>' +
+            '<option value="Medico">Medico</option>' +
+            '<option value="Gara">Gara</option>' +
+            '<option value="Altro">Altro</option>' +
+          '</select></div>' +
+        '<div class="es-sqf-field"><label for="rep-form-titolo">Titolo *</label>' +
+          '<input type="text" id="rep-form-titolo" required maxlength="140" placeholder="Es. Analisi seduta di martedì"></div>' +
+        '<div class="es-sqf-field"><label for="rep-form-testo">Testo *</label>' +
+          '<textarea id="rep-form-testo" rows="5" required maxlength="3500" placeholder="Cosa è successo, cosa va migliorato, prossimi passi."></textarea></div>' +
+        '<p class="es-sqf-hint">Il report lo vede tutto lo staff della squadra.</p>' +
+        '<p class="es-sqf-error" id="rep-form-error" role="alert" hidden></p>' +
+        '<div class="es-sqf-actions">' +
+          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
+          '<button type="submit" class="es-btn-cos-primary">Invia report</button>' +
+        '</div>' +
+      '</form>', '560px');
+    var f = document.getElementById('form-write-report');
+    if (!f) return;
+    f.onsubmit = async function (e) {
+      e.preventDefault();
+      var titolo = document.getElementById('rep-form-titolo').value.trim();
+      var testo = document.getElementById('rep-form-testo').value.trim();
+      var errEl = document.getElementById('rep-form-error');
+      if (!titolo || !testo) {
+        if (errEl) { errEl.textContent = 'Scrivi titolo e testo.'; errEl.hidden = false; }
+        return;
+      }
+      var btn = f.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      var u = userObj();
+      var api = window.EliseeSupabase;
+      var clubId = await squadraClubId();
+      var r = api && clubId ? await api.saveItem(clubId, 'report', {
+        tipo: document.getElementById('rep-form-tipo').value,
+        titolo: titolo,
+        contenuto: testo,
+        mittente_id: u.staffId || u.id || u.email || '',
+        mittente_nome: [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.email || '',
+        letto: false
+      }) : { ok: false };
+      if (!r || !r.ok) {
+        if (btn) btn.disabled = false;
+        if (errEl) {
+          errEl.textContent = r && r.status === 403 ? 'Non fai parte dello staff di questa squadra.' : 'Report non inviato. Riprova tra poco.';
+          errEl.hidden = false;
+        }
+        return;
+      }
+      closeModal();
+      if (window.showToast) window.showToast('Report inviato allo staff.', 'success');
+      await syncLiveCoachData(null, true);
+      refreshActiveTab();
+    };
+  }
+
+  function openCalendarEventModal(data, editId, presetTipo) {
     var allEvents = getInitCalendarEvents(data);
     var editingEvent = null;
     if (editId) {
@@ -2937,7 +3116,7 @@
     var isEdit = !!editingEvent;
     var defaultDate = isEdit ? editingEvent.data : new Date().toISOString().slice(0, 10);
     var defaultTime = isEdit ? editingEvent.ora : '15:30';
-    var defaultTipo = isEdit ? editingEvent.tipo : 'partita';
+    var defaultTipo = isEdit ? editingEvent.tipo : (presetTipo || 'partita');
     var defaultTitolo = isEdit ? editingEvent.titolo : '';
     var defaultComp = isEdit ? editingEvent.competizione : 'Campionato';
     var defaultLuogo = isEdit ? editingEvent.luogo : 'Campo Comunale';
@@ -3047,7 +3226,10 @@
           return;
         }
 
+        var prevTipo = isEdit ? editingEvent.tipo : null;
+        var savedEvent;
         if (isEdit) {
+          savedEvent = editingEvent;
           editingEvent.tipo = inTipo;
           editingEvent.stato = inStato;
           editingEvent.titolo = inTitolo;
@@ -3069,11 +3251,19 @@
             descrizione: inDesc
           };
           allEvents.unshift(newEvent);
+          savedEvent = newEvent;
         }
 
         data.calendarioEvents = allEvents;
         saveCoachData(data);
         closeModal();
+        pushEventToSquadra(savedEvent, prevTipo).then(function (r) {
+          squadraSaveToast(r);
+          if (r && r.ok) {
+            saveCoachData(data);
+            syncLiveCoachData(null, true).then(refreshActiveTab);
+          }
+        });
 
         var container = document.getElementById('es-cos-active-content');
         if (container && activeTab === 'calendario') {
@@ -3098,7 +3288,14 @@
       return;
     }
 
+    var removed = allEvents[targetIdx];
     allEvents.splice(targetIdx, 1);
+    if (removed && removed.remote) {
+      removeEventFromSquadra(removed).then(function (r) {
+        squadraSaveToast(r);
+        if (r && r.ok) syncLiveCoachData(null, true).then(refreshActiveTab);
+      });
+    }
     data.calendarioEvents = allEvents;
     saveCoachData(data);
 
@@ -3404,7 +3601,8 @@
         '<div class="es-cos-panel-card">' +
           '<div class="es-cos-panel-head">' +
             '<span class="es-cos-panel-title">Report Staff Tecnico & Medico (Tabella: report)</span>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-upload-staff-report-modal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica Nuovo Report / Scheda</button>' +
+            '<div class="es-sqf-head-actions"><button type="button" class="es-btn-cos-primary" id="btn-write-staff-report">Scrivi report</button>' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-upload-staff-report-modal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica file</button></div>' +
           '</div>' +
           '<div style="display:flex; flex-direction:column; gap:0.75rem;">' +
             (reports.length ? reports.map(function (r) {
@@ -3935,49 +4133,13 @@
     var btnAddTr = mount.querySelector('#btn-add-training-modal');
     if (btnAddTr) {
       btnAddTr.onclick = function () {
-        openModal('Pianifica Seduta di Campo',
-          '<form id="form-modal-add-tr" style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Tipologia Seduta *</label><input type="text" id="inp-tr-name" required placeholder="Es. Lavoro Tattico & Calci Piazzati" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Data</label><input type="text" id="inp-tr-date" value="16/09/2026" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Orario</label><input type="text" id="inp-tr-time" value="15:00 - 17:00" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-            '</div>' +
-            '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Obiettivi & Descrizione</label><textarea id="inp-tr-desc" rows="3" placeholder="Fase di possesso, transizioni e lavoro per reparti..." style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></textarea></div>' +
-            '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
-              '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
-              '<button type="submit" class="es-btn-cos-primary">Programma Seduta</button>' +
-            '</div>' +
-          '</form>'
-        );
-        var f = document.getElementById('form-modal-add-tr');
-        if (f) {
-          f.onsubmit = function (ev) {
-            ev.preventDefault();
-            data.trainingsList.unshift({
-              id: 'tr-' + Date.now(),
-              tipo: document.getElementById('inp-tr-name').value.trim(),
-              data: document.getElementById('inp-tr-date').value.trim(),
-              orario: document.getElementById('inp-tr-time').value.trim(),
-              luogo: 'Stadio Comunale',
-              desc: document.getElementById('inp-tr-desc').value.trim(),
-              carico: 'Medio-Alto',
-              presenze: {}
-            });
-            saveCoachData(data);
-            closeModal();
-            var container = document.getElementById('es-cos-active-content');
-            if (container && activeTab === 'allenamenti') {
-              container.innerHTML = renderAllenamenti(data);
-              bindAllEvents();
-            } else {
-              renderHub();
-            }
-            if (window.showToast) window.showToast('Seduta programmata con successo!', 'success');
-          };
-        }
+        openCalendarEventModal(data, null, 'allenamento');
       };
     }
-
+    var btnWriteRep = mount.querySelector('#btn-write-staff-report');
+    if (btnWriteRep) {
+      btnWriteRep.onclick = function () { openWriteReportModal(); };
+    }
     // Upload GPS Telemetria
     var btnUploadGps = mount.querySelector('#btn-upload-gps-modal');
     if (btnUploadGps) {

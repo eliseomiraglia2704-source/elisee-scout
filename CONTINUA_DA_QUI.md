@@ -1,6 +1,14 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — SQ2 — Staff della squadra:
+Ultimo aggiornamento: **2026-10-19** — SQ3 — Partite, allenamenti e report salvati per tutto lo staff:
+
+1. **Cosa era rotto**: il calendario e «Pianifica seduta» salvavano solo nel browser; la seduta spariva appena arrivavano i dati online. I report si potevano solo caricare come file. In più i dati online della squadra non venivano mai caricati all'apertura della dashboard (una riga con una variabile inesistente bloccava l'aggiornamento) e la squadra veniva letta con un ripiego «Foggia City».
+2. **Ora** (dashboard Allenatore e Vice): partite, amichevoli e sedute create o modificate nel calendario vanno anche su `/api/squadra` (`partite`, `allenamenti`); eliminarle le toglie anche online. «Pianifica seduta» apre lo stesso modulo con «Seduta di allenamento» già scelto. Nella scheda Report c'è «Scrivi report» (tipo, titolo, testo) salvato in `report`. All'apertura la dashboard carica i dati della squadra (al massimo una volta al minuto). Se la rosa online è ancora vuota resta quella del dispositivo. Se il salvataggio online non riesce, un avviso dice che è rimasto solo sul dispositivo.
+3. **Server**: `lib/squadra-store.js` rende scrivibili `partite`, `allenamenti`, `report` e accetta `removeId` per eliminare. `EliseeSupabase.saveItem` / `removeItem`.
+4. **File**: `coach-dash.js`, `vice-dash.js`, `elisee-supabase.js`, `lib/squadra-store.js`, `squadra-membri.css`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_SQ3`.
+5. **Aperto**: i testi delle dashboard Allenatore/Vice sono solo in italiano (tutta la dashboard, non solo i moduli nuovi).
+
+Feature precedente: **2026-10-19** — SQ2 — Staff della squadra:
 
 1. **Cosa mancava**: il database permetteva al titolare di aggiungere membri, ma non c'era la schermata.
 2. **Ora**: dashboard Allenatore e Vice, scheda Impostazioni, riquadro «Staff della squadra» (`squadra-membri.js` + `squadra-membri.css`). Il titolare vede i membri, li aggiunge con l'email e li toglie. Un membro vede che fa parte dello staff. Chi non è membro vede che la squadra ha un titolare e la sua email da comunicargli. Nuova funzione `EliseeSupabase.getSquadraInfo`. Testi IT/EN in `i18n.js` (chiavi `sqm.*`).

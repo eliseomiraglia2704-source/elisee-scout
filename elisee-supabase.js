@@ -312,6 +312,16 @@
     return all.filter(function (d) { return d.partita_id === matchId; })[0] || null;
   }
 
+  // Salvataggio generico: partite, allenamenti, report (stesso id = aggiornamento).
+  async function saveItem(clubId, col, item) {
+    var r = await call('POST', clubId, col, { item: item });
+    if (r.ok) return { ok: true, status: r.status, item: r.data.item };
+    return r;
+  }
+  async function removeItem(clubId, col, id) {
+    return call('POST', clubId, col, { removeId: id });
+  }
+
   // Nome squadra, se sei il titolare (titolare: true) e, solo per lui, l'elenco dei membri.
   async function getSquadraInfo(clubId) {
     return call('GET', clubId, '');
@@ -347,6 +357,8 @@
     saveDossierTattico: saveDossierTattico,
     getDossierTattico: getDossierTattico,
     getSquadraInfo: getSquadraInfo,
+    saveItem: saveItem,
+    removeItem: removeItem,
     addMembro: addMembro,
     removeMembro: removeMembro
   };

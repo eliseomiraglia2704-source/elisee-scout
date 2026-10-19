@@ -111,3 +111,69 @@
   opacity: 0.6;
   cursor: progress;
 }
+
+/* Moduli squadra nelle dashboard (report staff) */
+.es-sqf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.es-sqf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.es-sqf-field label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--cos-muted, #8da8bc);
+}
+
+.es-sqf-field input,
+.es-sqf-field select,
+.es-sqf-field textarea {
+  background: var(--cos-input-bg, #071522);
+  border: 1px solid var(--cos-card-border, #12344a);
+  color: var(--cos-text, #f3f8fc);
+  padding: 0.6rem;
+  border-radius: var(--cos-radius-sm, 6px);
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+.es-sqf-field input:focus-visible,
+.es-sqf-field select:focus-visible,
+.es-sqf-field textarea:focus-visible {
+  outline: 2px solid var(--cos-cyan, #19B9F2);
+  outline-offset: 1px;
+}
+
+.es-sqf-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--cos-muted, #8da8bc);
+}
+
+.es-sqf-error {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #f08a8a;
+}
+
+.es-sqf-error[hidden] {
+  display: none;
+}
+
+.es-sqf-actions,
+.es-sqf-head-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.es-sqf-head-actions {
+  margin-left: auto;
+}
