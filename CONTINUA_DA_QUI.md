@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — AUTH1 — Niente più accesso finto con WhatsApp:
+Ultimo aggiornamento: **2026-10-19** — APP1 — «Modifica profilo» chiusa al punto giusto (passo 1 di 3):
+
+1. **Cosa era rotto**: in `app.js` `window.openEditUserModal` non si chiudeva: conteneva ~7.000 righe (navigazione, bacheca, pannello admin, vecchio login admin che legge utente e password dall'indirizzo, notizie/classifiche/annunci finti con timer). Partivano solo aprendo «Modifica profilo», e ogni volta da capo: sostituivano `switchView` e `filterAndRenderJobs` di `app-boot-extras.js` e aggiungevano contenuti finti.
+2. **Ora**: la funzione si chiude dopo il proprio modulo. Il resto è parcheggiato in `_eliseeCodiceStoricoNonEseguito()` (mai chiamata). Il sito al caricamento è identico a prima (verificato da visitatore e da utente); aprire «Modifica profilo» non cambia più la navigazione.
+3. **Piano approvato, prossimi passi**: (2) recuperare solo le funzioni che mancano davvero (es. `openBadgeInfoModal` del badge FIGC, `renderPeopleCards`, `requireEliseeLogin`, `isEliseeLoggedIn`, `downloadGDPRPdf`, `switchAdminTab`, `closeGovernanceActionModal`), controllando che non esistano già altrove; (3) cancellare il resto (contenuti finti, vecchio login admin, doppioni) con copia di sicurezza.
+4. **File**: `app.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_APP1`.
+
+Feature precedente: **2026-10-19** — AUTH1 — Niente più accesso finto con WhatsApp:
 
 1. **Cosa era rotto**: «Password dimenticata?» apriva un accesso con codice WhatsApp. Il codice nasceva nel browser e non arrivava nessun messaggio: non faceva entrare.
 2. **Ora**: il blocco WhatsApp è tolto da `index.html`. «Password dimenticata?» dice la verità: il recupero non è ancora attivo; chi è registrato con Google entra con Google; gli altri scrivono a areaeliseescout@gmail.com (chiave `auth.forgot.msg`, IT/EN). `submitWhatsAppOtp` rimanda allo stesso messaggio.

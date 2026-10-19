@@ -414,6 +414,13 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal();
       });
     }
+  };
+
+  // Codice storico finito per errore dentro «Modifica profilo» (fino al 2026-10-19 partiva
+  // solo aprendo quella finestra, e ogni volta da capo). Non viene eseguito: le parti utili
+  // vanno recuperate una alla volta, il resto cancellato. Vedi CONTINUA_DA_QUI.md (APP1).
+  // eslint-disable-next-line no-unused-vars
+  function _eliseeCodiceStoricoNonEseguito() {
   function updateDossierView() {
     const user = getActiveUser();
     const step = getApprovalStep();
