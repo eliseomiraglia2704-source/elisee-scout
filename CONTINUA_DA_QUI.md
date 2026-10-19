@@ -1,6 +1,11 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — SQ1 — Gestione squadra sul database:
+Ultimo aggiornamento: **2026-10-19** — PERF1 — Memoria del browser:
+
+1. **Cosa era rotto**: `vercel.json` mandava `no-store` su tutto: ogni visita riscaricava circa 250 file.
+2. **Ora**: i file con `?v=` nel link restano in memoria per un anno (`immutable`); pagine e JSON si ricontrollano a ogni visita (`no-cache`); le API non vengono mai memorizzate (`no-store`). Regola: ogni nuovo script o foglio di stile in `index.html` deve avere `?v=`.
+
+Feature precedente: **2026-10-19** — SQ1 — Gestione squadra sul database:
 
 1. **Cosa era rotto**: Allenatore e Vice (`coach-dash.js`, `vice-dash.js`) leggevano e scrivevano su Supabase con la chiave pubblica, ma le tabelle non esistevano: niente veniva salvato. Con le tabelle create, chiunque avrebbe potuto leggere rosa e dati dei calciatori (anche minori).
 2. **Ora**: `elisee-supabase.js` (stesso nome e stesse funzioni) chiama `/api/squadra` → `api/manager.js?path=squadra` → `lib/squadra-store.js`, che salva su Upstash (`elisee:squadra:<slug>`). Serve il login; il primo utente che apre una squadra ne è il titolare; gli altri entrano solo se il titolare li aggiunge (`EliseeSupabase.addMembro`). L'admin vede tutte le squadre. Scrivibili: rosa, schemi tattici, dossier tattico. Allegati: "disponibile a breve" (servirà uno spazio file, es. Vercel Blob).
