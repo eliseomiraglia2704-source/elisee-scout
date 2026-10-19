@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — I18N1 — Traduzioni spagnolo e francese dei testi nuovi:
+Ultimo aggiornamento: **2026-10-19** — DI1 — Dashboard Allenatore e Vice in 4 lingue (fase 1) e via i dati finti:
+
+1. **Traduzione**: i testi sono scritti in italiano dentro `coach-dash.js`/`vice-dash.js`. Invece di riscrivere i file, `dash-i18n.js` (nuovo, script di ruolo) sostituisce i testi mostrati nella dashboard e nelle sue finestre usando `window.EliseeDashI18n` in fondo a `i18n.js` (chiave = testo italiano; EN/ES/FR; la voce `it` corregge testi tecnici come «Tabella: allenamenti», «Supabase», «Bucket»). Coperti: menu, dashboard, calendario e modulo evento, rosa, allenamenti, report e modulo report, impostazioni. Fase 2: formazione, tattica, analisi avversario, GPS, comunicazioni, avvisi (alert).
+2. **Dati finti tolti** (entrambi i file): rosa di esempio di 21 persone inventate con codice fiscale, email e data di nascita (`getDefaultRoster` ora vuota); squadra di ripiego «Foggia City»; nome «Elisee Miraglia»; matricola «FIGC-88210», scadenza «30/06/2027», patentino «UEFA B» e logo UEFA mostrati a tutti. Ora si vedono solo i dati inseriti dall'utente.
+3. **File**: `coach-dash.js`, `vice-dash.js`, `dash-i18n.js` (nuovo), `i18n.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_DI1`.
+
+Feature precedente: **2026-10-19** — I18N1 — Traduzioni spagnolo e francese dei testi nuovi:
 
 1. **Ora**: aggiunte in `i18n.js` le versioni ES e FR di tutti i testi creati il 2026-10-19: `sqm.*` (staff squadra), `reset.*` (recupero password), `legal.*`, `auth.loginNeeded`, `auth.forgot.msg`, `cv.*` (curriculum). Controllato che ogni chiave risponda in IT/EN/ES/FR.
 2. **Aperto**: le dashboard Allenatore e Vice (`coach-dash.js`, `vice-dash.js`) sono ancora scritte solo in italiano dentro il codice.

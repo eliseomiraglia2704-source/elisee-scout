@@ -22,10 +22,8 @@
   function userObj() {
     try {
       var u = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
-      if (!u.squadra || /atalanta|carlentini/i.test(u.squadra)) u.squadra = 'Foggia City';
-      if (!u.club || /atalanta|carlentini/i.test(u.club)) u.club = 'Foggia City';
       return u;
-    } catch (_) { return { squadra: 'Foggia City', club: 'Foggia City' }; }
+    } catch (_) { return {}; }
   }
 
   function isCoach(u) {
@@ -291,12 +289,12 @@
         isLiveSupabase: true,
         calendarioEvents: mergeRemoteCalendar((getCoachData().calendarioEvents || []), partite, allenamenti),
         clubId: clubId,
-        clubName: user.squadra || user.club || 'Foggia City',
-        categoria: user.categoria || 'Amatoriale · Foggia',
-        coachName: [user.nome, user.cognome].filter(Boolean).join(' ').trim() || user.username || 'Elisee Miraglia',
+        clubName: user.squadra || user.club || '',
+        categoria: '',
+        coachName: [user.nome, user.cognome].filter(Boolean).join(' ').trim() || user.username || '',
         coachRole: user.staffRole || 'Allenatore Capo',
-        matricola: user.matricola || 'FIGC-88210',
-        patent: user.qualifica || 'UEFA B',
+        matricola: user.matricola || '',
+        patent: user.qualifica || '',
         nextMatch: liveNextMatch,
         sedutaOdierna: liveSedutaOdierna,
         prossimeGare: liveProssimeGare,
@@ -315,14 +313,14 @@
           id: viceStaff[0].id,
           name: ((viceStaff[0].nome || '') + ' ' + (viceStaff[0].cognome || '')).trim() || 'Vice Allenatore',
           role: 'Vice Allenatore / Staff Tecnico',
-          patent: viceStaff[0].patentino || 'UEFA B',
+          patent: viceStaff[0].patentino || '',
           status: 'Collegato',
           lastSync: 'Sincronizzato'
         } : {
           id: 'vice-none',
           name: 'In attesa associazione Vice',
           role: 'Staff Tecnico',
-          patent: 'UEFA B',
+          patent: '',
           status: 'Non connesso',
           lastSync: '--'
         }
@@ -620,7 +618,7 @@
       id: 'catena-laterale-sovrapposizione-433',
       nome: 'Catena Laterale & Sovrapposizione Terzino',
       modulo: '4-3-3',
-      autore: 'Staff Tecnico Foggia City',
+      autore: 'Modello Elisee Scout',
       categoria: 'Sviluppo Corsie Esterne',
       descrizione: 'Combinazione codificata sulla corsia destra: l\'ala riceve aperta e converge verso il limite per tirare fuori il terzino avversario. Il nostro terzino sprinta all\'esterno sul corridoio scoperto per crossare dal fondo.',
       badgeColore: '#f59e0b',
@@ -712,88 +710,9 @@
     }
   ];
 
+  // Nessuna rosa di esempio: la rosa è solo quella inserita dallo staff.
   function getDefaultRoster() {
-    return [
-      { id: 'p-1', num: 1, name: 'Alessandro Fumagalli', role: 'Portiere', status: 'disp', statoDettagliato: 'disponibile', birth: '1998', data_nascita: '1998-04-12', luogo_nascita: 'Foggia', codice_fiscale: 'FMGLSN98D12D643A', email: 'a.fumagalli@foggia.it', app: 14, load: 'Basso', acwr: '0.95' },
-      { id: 'p-12', num: 12, name: 'Matteo Dalmasso', role: 'Portiere', status: 'disp', statoDettagliato: 'disponibile', birth: '2001', data_nascita: '2001-09-20', luogo_nascita: 'Torino', codice_fiscale: 'DLMMTT01P20L219F', email: 'm.dalmasso@foggia.it', app: 4, load: 'Basso', acwr: '0.90' },
-      { id: 'p-2', num: 2, name: 'Luca Di Pasquale', role: 'Terzino Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '1999', data_nascita: '1999-02-15', luogo_nascita: 'Bari', codice_fiscale: 'DPSLCU99B15A662K', email: 'l.dipasquale@foggia.it', app: 16, load: 'Medio', acwr: '1.02' },
-      { id: 'p-3', num: 3, name: 'Simone Rizzo', role: 'Terzino Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '2000', data_nascita: '2000-06-11', luogo_nascita: 'Lecce', codice_fiscale: 'RZZSMN00H11E506J', email: 's.rizzo@foggia.it', app: 15, load: 'Medio', acwr: '1.05' },
-      { id: 'p-5', num: 5, name: 'Davide Carillo', role: 'Difensore Centrale', status: 'disp', statoDettagliato: 'disponibile', birth: '1996', data_nascita: '1996-01-28', luogo_nascita: 'Napoli', codice_fiscale: 'CRLDVD96A28F839W', email: 'd.carillo@foggia.it', app: 17, load: 'Alto', acwr: '1.12' },
-      { id: 'p-6', num: 6, name: 'Emanuele Salines', role: 'Difensore Centrale', status: 'disp', statoDettagliato: 'disponibile', birth: '2000', data_nascita: '2000-11-04', luogo_nascita: 'Roma', codice_fiscale: 'SLNMNL00S04H501E', email: 'e.salines@foggia.it', app: 16, load: 'Medio', acwr: '1.04' },
-      { id: 'p-13', num: 13, name: 'Marco Marzupio', role: 'Braccetto Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '2000', data_nascita: '2000-03-08', luogo_nascita: 'Bergamo', codice_fiscale: 'MRZMRC00C08A794X', email: 'm.marzupio@foggia.it', app: 11, load: 'Medio', acwr: '1.00' },
-      { id: 'p-14', num: 14, name: 'Giacomo Riccardi', role: 'Libero', status: 'disp', statoDettagliato: 'disponibile', birth: '1997', data_nascita: '1997-08-19', luogo_nascita: 'Salerno', codice_fiscale: 'RCCGCM97M19H703B', email: 'g.riccardi@foggia.it', app: 9, load: 'Basso', acwr: '0.98' },
-      { id: 'p-15', num: 15, name: 'Filippo Antonacci', role: 'Esterno Basso Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '2001', data_nascita: '2001-05-30', luogo_nascita: 'Taranto', codice_fiscale: 'NTNFPP01E30L049G', email: 'f.antonacci@foggia.it', app: 8, load: 'Medio', acwr: '1.01' },
-      { id: 'p-4', num: 4, name: 'Moses Odjer', role: 'Mediano', status: 'disp', statoDettagliato: 'disponibile', birth: '1996', data_nascita: '1996-07-04', luogo_nascita: 'Accra', codice_fiscale: 'DJRMSS96L04Z324L', email: 'm.odjer@foggia.it', app: 18, load: 'Alto', acwr: '1.15' },
-      { id: 'p-8', num: 8, name: 'Andrea Tascone', role: 'Mezzala Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '1997', data_nascita: '1997-09-29', luogo_nascita: 'Napoli', codice_fiscale: 'TSNNDR97P29F839Z', email: 'a.tascone@foggia.it', app: 17, load: 'Alto', acwr: '1.08' },
-      { id: 'p-10', num: 10, name: 'Carlos Embalo', role: 'Trequartista', status: 'disp', statoDettagliato: 'disponibile', birth: '1994', data_nascita: '1994-11-25', luogo_nascita: 'Bissau', codice_fiscale: 'MBLCRL94S25Z323P', email: 'c.embalo@foggia.it', app: 15, load: 'Medio', acwr: '1.03' },
-      { id: 'p-16', num: 16, name: 'Federico Frigerio', role: 'Mezzala Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '2001', data_nascita: '2001-01-14', luogo_nascita: 'Milano', codice_fiscale: 'FRGFRC01A14F205R', email: 'f.frigerio@foggia.it', app: 12, load: 'Medio', acwr: '1.02' },
-      { id: 'p-18', num: 18, name: 'Mattia Fiorini', role: 'Regista', status: 'disp', statoDettagliato: 'disponibile', birth: '2001', data_nascita: '2001-03-31', luogo_nascita: 'Firenze', codice_fiscale: 'FRNMTT01C31D612E', email: 'm.fiorini@foggia.it', app: 10, load: 'Basso', acwr: '0.96' },
-      { id: 'p-7', num: 7, name: 'Diego Peralta', role: 'Ala Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '1996', data_nascita: '1996-09-27', luogo_nascita: 'Livorno', codice_fiscale: 'PRLDGO96P27E625T', email: 'd.peralta@foggia.it', app: 16, load: 'Alto', acwr: '1.10' },
-      { id: 'p-11', num: 11, name: 'Andrea Schenetti', role: 'Ala Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '1991', data_nascita: '1991-03-09', luogo_nascita: 'Milano', codice_fiscale: 'SCNNDR91C09F205D', email: 'a.schenetti@foggia.it', app: 18, load: 'Alto', acwr: '1.14' },
-      { id: 'p-9', num: 9, name: 'Jacopo Murano', role: 'Centravanti', status: 'disp', statoDettagliato: 'disponibile', birth: '1990', data_nascita: '1990-02-14', luogo_nascita: 'Potenza', codice_fiscale: 'MRNJCP90B14G942J', email: 'j.murano@foggia.it', app: 17, load: 'Alto', acwr: '1.18' },
-      { id: 'p-19', num: 19, name: 'Francesco Orlando', role: 'Seconda Punta', status: 'disp', statoDettagliato: 'disponibile', birth: '1996', data_nascita: '1996-10-01', luogo_nascita: 'Taranto', codice_fiscale: 'RLNFNC96R01L049M', email: 'f.orlando@foggia.it', app: 13, load: 'Medio', acwr: '1.06' },
-      { id: 'p-20', num: 20, name: 'Gabriel Santaniello', role: 'Falso Nueve', status: 'disp', statoDettagliato: 'disponibile', birth: '1990', data_nascita: '1990-12-19', luogo_nascita: 'Napoli', codice_fiscale: 'SNTGRL90T19F839K', email: 'g.santaniello@foggia.it', app: 11, load: 'Basso', acwr: '0.99' },
-      { id: 'p-21', num: 21, name: 'Lorenzo Garattoni', role: 'Esterno Alto Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '1998', data_nascita: '1998-01-23', luogo_nascita: 'Cesena', codice_fiscale: 'GRTLNZ98A23C573V', email: 'l.garattoni@foggia.it', app: 14, load: 'Medio', acwr: '1.04' },
-      { id: 'p-22', num: 22, name: 'Alberto Rizzo', role: 'Esterno Alto Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '1997', data_nascita: '1997-04-25', luogo_nascita: 'Trapani', codice_fiscale: 'RZZLRT97D25L331W', email: 'a.rizzo@foggia.it', app: 12, load: 'Medio', acwr: '1.02' }
-    ];
-  }
-
-  function getShortRole(roleStr) {
-    if (!roleStr) return 'CC';
-    var r = String(roleStr).trim().toLowerCase();
-    if (/portiere/i.test(r)) return 'POR';
-    if (/libero/i.test(r)) return 'LIB';
-    if (/braccetto d/i.test(r)) return 'BCD';
-    if (/braccetto s/i.test(r)) return 'BCS';
-    if (/difensore centrale/i.test(r)) return 'DC';
-    if (/terzino d/i.test(r)) return 'TD';
-    if (/terzino s/i.test(r)) return 'TS';
-    if (/esterno b.*d/i.test(r)) return 'EBD';
-    if (/esterno b.*s/i.test(r)) return 'EBS';
-    if (/regista/i.test(r)) return 'REG';
-    if (/mediano/i.test(r)) return 'MED';
-    if (/trequartista/i.test(r)) return 'TRQ';
-    if (/mezzala d/i.test(r)) return 'CC';
-    if (/mezzala s/i.test(r)) return 'CC';
-    if (/mezzala|centrocampista/i.test(r)) return 'CC';
-    if (/esterno a.*d/i.test(r)) return 'EAD';
-    if (/esterno a.*s/i.test(r)) return 'EAS';
-    if (/ala d/i.test(r)) return 'AD';
-    if (/ala s/i.test(r)) return 'AS';
-    if (/seconda punta/i.test(r)) return 'SP';
-    if (/falso nueve/i.test(r)) return 'FN';
-    if (/centravanti|punta|attaccante/i.test(r)) return 'ATT';
-    var clean = roleStr.replace(/[^A-Za-z]/g, '').toUpperCase();
-    return clean.length >= 2 ? clean.substring(0, 3) : 'CC';
-  }
-
-  function matchRole(playerRole, slotRole) {
-    if (!playerRole || !slotRole) return false;
-    var pr = String(playerRole).toLowerCase();
-    var sr = String(slotRole).toUpperCase();
-    if (sr === 'POR' && /portiere|por/i.test(pr)) return true;
-    if ((sr === 'DC' || sr === 'LIB' || sr === 'BCD' || sr === 'BCS') && /difensore|centrale|libero|braccetto/i.test(pr)) return true;
-    if ((sr === 'TD' || sr === 'EBD') && /terzino d|destro|esterno b.*d/i.test(pr)) return true;
-    if ((sr === 'TS' || sr === 'EBS') && /terzino s|sinistro|esterno b.*s/i.test(pr)) return true;
-    if ((sr === 'MED' || sr === 'REG') && /mediano|regista|centrocampista d/i.test(pr)) return true;
-    if (sr === 'CC' && /mezzala|centrocampista/i.test(pr)) return true;
-    if (sr === 'TRQ' && /trequartista|fantasista/i.test(pr)) return true;
-    if ((sr === 'AD' || sr === 'EAD') && /ala d|esterno a.*d/i.test(pr)) return true;
-    if ((sr === 'AS' || sr === 'EAS') && /ala s|esterno a.*s/i.test(pr)) return true;
-    if ((sr === 'ATT' || sr === 'SP' || sr === 'FN') && /punta|centravanti|attaccante|seconda punta|falso/i.test(pr)) return true;
-    return false;
-  }
-
-  function getRoleBadgeStyle(pos) {
-    var p = String(pos || '').toUpperCase();
-    if (p === 'POR') return 'background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.4); color:#facc15;';
-    if (['LIB', 'DC', 'BCD', 'BCS', 'TD', 'TS', 'EBD', 'EBS'].indexOf(p) >= 0) {
-      return 'background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.4); color:#93c5fd;';
-    }
-    if (['MED', 'REG', 'CC', 'TRQ', 'EAD', 'EAS'].indexOf(p) >= 0) {
-      return 'background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#6ee7b7;';
-    }
-    return 'background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); color:#fca5a5;';
+    return [];
   }
 
   function syncFormationWithRoster(data) {
@@ -1127,15 +1046,15 @@
   function getCoachData() {
     var u = userObj();
     var base = {
-      coachName: [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Elisee Miraglia',
+      coachName: [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || '',
       coachRole: u.staffRole || 'Allenatore Capo',
-      patent: u.qualifica || (u.staffProfile && u.staffProfile.qualifica) || 'UEFA B',
+      patent: u.qualifica || (u.staffProfile && u.staffProfile.qualifica) || '',
       status: 'in_carica',
-      clubName: u.squadra || 'Foggia City',
-      categoria: 'Amatoriale · Foggia',
+      clubName: u.squadra || '',
+      categoria: '',
       reparto: 'Prima Squadra',
-      matricola: u.matricola || 'FIGC-88210',
-      scadenzaTesseramento: '30/06/2027',
+      matricola: u.matricola || '',
+      scadenzaTesseramento: '',
       sede: 'Foggia (FG)',
       stadio: 'Campo Comunale - Foggia',
       telefono: u.telefono || '+39 340 1234567',
@@ -1158,7 +1077,7 @@
         id: 'vice-none',
         name: 'In attesa associazione Vice',
         role: 'Vice Allenatore / Staff Tecnico',
-        patent: 'UEFA B',
+        patent: '',
         email: '',
         status: 'In attesa',
         lastSync: '--'
@@ -1353,13 +1272,11 @@
               '</button>' +
               '<div class="es-cos-header-identity">' +
                 '<div class="es-cos-header-block">' +
-                  '<div class="licence-badge es-cos-licence-badge" title="Patentino UEFA B">' +
-                    '<img src="immagini/logo/uefa-b.png?v=20260916_UEFAB1" alt="UEFA B" width="48" height="48">' +
-                  '</div>' +
+                  (data.patent ? '<div class="licence-badge es-cos-licence-badge" title="' + esc(data.patent) + '">' + esc(data.patent) + '</div>' : '') +
                   '<div class="es-cos-coach-info">' +
                     '<strong>' + esc(data.coachName) + '</strong>' +
                     '<span class="role">Allenatore Capo</span>' +
-                    '<p class="sub">Tesseramento FIGC: ' + esc(data.matricola) + ' · Scadenza: 30/06/2027</p>' +
+                    (data.matricola ? '<p class="sub">Matricola: ' + esc(data.matricola) + '</p>' : '') +
                   '</div>' +
                 '</div>' +
 
@@ -2321,7 +2238,7 @@
     var modKey = String(data.moduloPrincipale || '4-3-3').trim();
     if (!MODULI_TATTICI[modKey]) modKey = '4-3-3';
     var modDef = MODULI_TATTICI[modKey];
-    var clubName = data.clubName || 'Foggia City';
+    var clubName = data.clubName || '';
 
     // PIN GIOCATORI: DESIGN PIATTO EDITORIALE SENZA GLOW
     var miniPins = modDef.slots.map(function (slot, idx) {
@@ -2681,8 +2598,6 @@
     'Campo Comunale Cerignola',
     'Stadio Miramare (Manfredonia)',
     'Stadio Ricciardelli (San Severo)',
-    'Centro Sportivo Foggia City - Campo 1',
-    'Centro Sportivo Foggia City - Palestra & GPS',
     'Campo Antistadio Comunale',
     'Palasport Cittadino'
   ];
@@ -3960,7 +3875,7 @@
         data.messaggiStaff = data.messaggiStaff || [];
         data.messaggiStaff.push({
           id: 'm-' + Date.now(),
-          from: 'Elisee Miraglia (Mister)',
+          from: (data.coachName || 'Staff') + ' (Mister)',
           text: inp.value.trim(),
           time: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' }) + ' ' + new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
           prio: 'Ordinaria'
