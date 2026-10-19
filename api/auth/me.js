@@ -132,6 +132,12 @@ function overrideKey(email) {
 
 async function getOverrideHash(email) {
   const em = String(email || '').trim().toLowerCase();
+  // Redis per primo: un'istanza ancora calda non deve usare una password vecchia.
+  const fresh = await redisCall('/get/' + encodeURIComponent(overrideKey(em)));
+  if (fresh) {
+    memoryOverrides[em] = String(fresh);
+    return String(fresh);
+  }
   if (memoryOverrides[em]) return memoryOverrides[em];
   const fileMap = loadFileOverrides();
   if (fileMap[em]) {
@@ -174,6 +180,7 @@ function pathOf(req) {
   if (/\/register(?:\?|$)/.test(url)) return 'register';
   if (/\/login(?:\?|$)/.test(url)) return 'login';
   if (/set-password/.test(url)) return 'set-password';
+  if (/reset-password/.test(url)) return 'reset-password';
   if (/verify-docs/.test(url)) return 'verify-docs';
   return 'me';
 }
@@ -221,12 +228,7 @@ function publicRegisteredUser(rec, extra) {
 async function getUserRecord(email) {
   const em = String(email || '').trim().toLowerCase();
   if (!em) return null;
-  if (memoryUsers[em]) return memoryUsers[em];
-  const fileMap = loadUsersFile();
-  if (fileMap[em]) {
-    memoryUsers[em] = fileMap[em];
-    return fileMap[em];
-  }
+  // Redis per primo (dato condiviso tra le istanze), poi cache e file locale.
   const remote = await redisCall('/get/' + encodeURIComponent(userKey(em)));
   if (remote) {
     try {
@@ -236,6 +238,12 @@ async function getUserRecord(email) {
         return parsed;
       }
     } catch (_) {}
+  }
+  if (memoryUsers[em]) return memoryUsers[em];
+  const fileMap = loadUsersFile();
+  if (fileMap[em]) {
+    memoryUsers[em] = fileMap[em];
+    return fileMap[em];
   }
   return null;
 }
@@ -452,6 +460,37 @@ module.exports = async function handler(req, res) {
       }
       const saved = await setDocsRecord(email, prev);
       return json(res, 200, { ok: true, record: saved });
+    }
+
+    if (req.method === 'POST' && pathName === 'reset-password') {
+      const b = bodyOf(req);
+      const tokenStr = String(b.resetToken || '');
+      const parts = tokenStr.split('.');
+      const otpSecret = process.env.OTP_SECRET;
+      if (!otpSecret || parts.length !== 2) return json(res, 400, { ok: false, error: 'codice_non_valido' });
+      const expect = crypto.createHmac('sha256', otpSecret).update('reset:' + parts[0]).digest('base64url');
+      if (!hashesEqual(expect, parts[1])) return json(res, 400, { ok: false, error: 'codice_non_valido' });
+      let claim = null;
+      try { claim = JSON.parse(Buffer.from(parts[0], 'base64url').toString('utf8')); } catch (_) {}
+      if (!claim || claim.p !== 'reset' || !claim.exp || claim.exp < Date.now()) {
+        return json(res, 400, { ok: false, error: 'codice_scaduto' });
+      }
+      const email = String(claim.email || '').trim().toLowerCase();
+      if (staffOf(email)) return json(res, 403, { ok: false, error: 'staff', message: 'Per lo staff la password si cambia dalle impostazioni del server.' });
+      const used = await redisCall('/get/' + encodeURIComponent('elisee:reset-used:' + parts[1]));
+      if (used) return json(res, 400, { ok: false, error: 'codice_gia_usato' });
+      const prev = await getUserRecord(email);
+      if (!prev) return json(res, 404, { ok: false, error: 'account_non_trovato' });
+      if (prev.accountClosed) return json(res, 403, { ok: false, error: 'account_chiuso' });
+      const password = String(b.password || '');
+      const policy = checkPasswordPolicy(password);
+      if (!policy.ok) return json(res, 400, { ok: false, error: 'password_non_conforme', message: policy.message });
+      await redisCall('/set/' + encodeURIComponent('elisee:reset-used:' + parts[1]) + '/1/ex/900');
+      const nextHash = hashPassword(password);
+      await setOverrideHash(email, nextHash);
+      const rec = await setUserRecord(email, Object.assign({}, prev, { passwordHash: nextHash, mustResetPassword: false }));
+      const user = publicRegisteredUser(rec, { mustResetPassword: false });
+      return json(res, 200, { ok: true, user: user, token: signToken(rec) });
     }
 
     if (req.method === 'POST' && pathName === 'set-password') {

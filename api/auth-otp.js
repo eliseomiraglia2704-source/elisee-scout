@@ -66,6 +66,14 @@ function signOtpTicket(email, codeHash, expiresAt) {
   return sig + '.' + expiresAt + '.' + codeHash;
 }
 
+// Token di recupero password: rilasciato solo dopo un codice email verificato.
+// Valido 10 minuti; /api/auth/reset-password lo accetta una sola volta.
+function signResetToken(email) {
+  const payload = Buffer.from(JSON.stringify({ email: String(email).toLowerCase(), p: 'reset', exp: Date.now() + 600000 })).toString('base64url');
+  const sig = crypto.createHmac('sha256', OTP_SECRET).update('reset:' + payload).digest('base64url');
+  return payload + '.' + sig;
+}
+
 function verifyOtpTicket(email, rawCode, ticket) {
   if (!ticket || typeof ticket !== 'string') return false;
   const parts = ticket.split('.');
@@ -185,7 +193,9 @@ function mailBodies(code, meta) {
   const subject = 'Codice di verifica Elisee Scout';
   const text =
     hello + '\n\n' +
-    'Per confermare il tuo account, inserisci questo codice nella barra in basso su Elisee Scout.\n\n' +
+    (info.purpose === 'reset'
+      ? 'Per scegliere una nuova password, inserisci questo codice su Elisee Scout.\n\n'
+      : 'Per confermare il tuo account, inserisci questo codice nella barra in basso su Elisee Scout.\n\n') +
     spaced + '\n\n' +
     'Valido 10 minuti. Non condividerlo con nessuno.\n\n' +
     'Dettagli di questo accesso:\n' +
@@ -216,7 +226,9 @@ function mailBodies(code, meta) {
     '</td></tr>' +
     '<tr><td style="padding:4px 24px 10px;font-family:Arial,Helvetica,sans-serif;font-size:26px;line-height:32px;font-weight:800;color:#F8FAFC;">Codice di verifica</td></tr>' +
     '<tr><td style="padding:0 24px 22px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:23px;color:#94A3B8;">' +
-    'Per confermare il tuo account, inserisci questo codice nella barra in basso sul sito.' +
+    (info.purpose === 'reset'
+      ? 'Per scegliere una nuova password, inserisci questo codice sul sito.'
+      : 'Per confermare il tuo account, inserisci questo codice nella barra in basso sul sito.') +
     '</td></tr>' +
     '<tr><td align="center" style="padding:4px 16px 8px;">' + digitCells(digits) + '</td></tr>' +
     '<tr><td align="center" style="padding:14px 24px 26px;">' +
@@ -385,6 +397,7 @@ module.exports = async function handler(req, res) {
     const rawCode = String(crypto.randomInt(100000, 1000000)).padStart(6, '0');
     const bodies = mailBodies(rawCode, {
       nome: body.nome || query.nome || '',
+      purpose: String(body.purpose || query.purpose || ''),
       ua: body.ua || req.headers['user-agent'] || '',
       tz: body.tz || ''
     });
@@ -445,7 +458,11 @@ module.exports = async function handler(req, res) {
         } catch (_) {}
       }
     }
+    const isReset = String(body.purpose || query.purpose || '') === 'reset';
     if (!record) {
+      if (isReset) {
+        return sendJson(res, 400, { success: false, error: 'Codice scaduto. Premi di nuovo Invia codice.' });
+      }
       if (ticket && verifyOtpTicket(email, code, ticket)) {
         await redisCall('/del/' + encodeURIComponent('elisee:otp:' + email));
         return sendJson(res, 200, {
@@ -486,7 +503,10 @@ module.exports = async function handler(req, res) {
       ok = verifyOtpTicket(email, code, ticket);
     }
     if (!ok) {
+      store[email] = record;
       saveStore(store);
+      const ttl = Math.max(1, Math.ceil((record.expiresAt - now) / 1000));
+      await redisCall('/set/' + encodeURIComponent('elisee:otp:' + email) + '/' + encodeURIComponent(JSON.stringify(record)) + '/ex/' + ttl);
       return sendJson(res, 400, {
         success: false,
         error: 'Codice OTP errato. Tentativi rimasti: ' + Math.max(0, 5 - record.attempts)
@@ -495,12 +515,14 @@ module.exports = async function handler(req, res) {
     delete store[email];
     saveStore(store);
     await redisCall('/del/' + encodeURIComponent('elisee:otp:' + email));
-    return sendJson(res, 200, {
+    const out = {
       success: true,
       verified: true,
       email: email,
       verifiedAt: new Date(now).toISOString()
-    });
+    };
+    if (isReset) out.resetToken = signResetToken(email);
+    return sendJson(res, 200, out);
   }
 
   return sendJson(res, 400, { success: false, error: 'Azione non supportata (action=send o action=verify)' });

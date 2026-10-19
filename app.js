@@ -1795,6 +1795,10 @@ window.setAccessoPanel = function (mode) {
 window.forgotAccessoPassword = function () {
   var box = document.getElementById('accesso-error-general');
   var msg = document.getElementById('accesso-error-msg');
+  if (window.EliseePasswordReset && typeof window.EliseePasswordReset.open === 'function') {
+    window.EliseePasswordReset.open();
+    return;
+  }
   if (box && msg) {
     msg.textContent = esTr('auth.forgot.msg', 'Il recupero della password non è ancora attivo. Se ti sei registrato con Google, entra con Google. Altrimenti scrivi a areaeliseescout@gmail.com dalla email con cui ti sei registrato.');
     box.style.display = 'block';
@@ -2320,7 +2324,7 @@ document.addEventListener('elisee:lang-changed', function () {
 function _accessoMethodEls() {
   return {
     email: document.getElementById('accesso-method-email'),
-    whatsapp: document.getElementById('accesso-method-whatsapp'),
+    reset: document.getElementById('accesso-method-reset'),
     passkey: document.getElementById('accesso-method-passkey'),
     qr: document.getElementById('accesso-method-qr'),
     setpw: document.getElementById('accesso-method-setpw')

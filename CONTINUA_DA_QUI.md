@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — ST1 — Schede tecniche senza persone e dati inventati:
+Ultimo aggiornamento: **2026-10-19** — PW1 — Recupero password vero con codice email:
+
+1. **Email**: l'invio via Resend funziona (prova del 2026-10-19 verso l'email del titolare: accettata da Resend). Se una email non arriva, controllare lo spam e su Resend il dominio del mittente (`RESEND_FROM`).
+2. **Flusso**: «Password dimenticata?» → email → codice di 6 cifre via email (`/api/auth-otp?action=send`, `purpose: reset`, testo «scegliere una nuova password») → codice + nuova password → `/api/auth-otp?action=verify` rilascia un `resetToken` firmato (OTP_SECRET, 10 minuti) → `/api/auth/reset-password` (`api/auth/me.js`) cambia la password, una sola volta per token, e fa entrare. Lo staff non può usarlo (password da variabili server). Account inesistente → messaggio «entra con Google».
+3. **Sicurezza**: i tentativi sbagliati ora sono contati anche su Redis (prima ogni istanza ripartiva da zero); per il recupero non vale la verifica «solo ticket». `getOverrideHash` e `getUserRecord` leggono prima Redis: un'istanza calda non accetta più la vecchia password dopo un cambio.
+4. **File**: `api/auth-otp.js`, `api/auth/me.js`, `vercel.json` (rewrite `/api/auth/reset-password`), `password-reset.js` (nuovo), `app.js`, `index.html`, `i18n.js` (`reset.*`), `style.css` (`.es-reset-*`), `sw.js`, `version.json`. Cache `v20261019_PW1`.
+
+Feature precedente: **2026-10-19** — ST1 — Schede tecniche senza persone e dati inventati:
 
 1. **Cosa era rotto**: `schede-tecniche.js` aggiungeva a ogni candidatura schede «selezionate dall'IA» prese da un elenco di persone inventate (con telefoni ed email finti). In più, per qualsiasi nome cercato da DS/Scout inventava data di nascita, altezza, stato del contratto, GPS e statistiche di carriera.
 2. **Ora**: elenco di esempio tolto (`POOL = []`); le candidature mostrano solo chi si è candidato davvero; «Crea scheda» (DS/Scout) funziona solo per profili presenti sulla piattaforma e mostra solo i dati del profilo o della rosa del club, il resto «—». La compatibilità non dice più «Verificato da AI Scouting Advisor». Le vecchie schede generate salvate nei browser vengono tolte all'apertura.

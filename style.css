@@ -11932,3 +11932,27 @@ html[data-theme="mimetico-chiaro"] .glow-card--red::before {
   outline: 2px solid var(--es-ctrl-accent, #38bdf8);
   outline-offset: 2px;
 }
+
+/* Recupero password (password-reset.js) */
+.es-reset-btn {
+  margin-top: 10px;
+}
+.es-reset-hint {
+  margin: 6px 0 10px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--text-secondary, #94a3b8);
+}
+.es-reset-msg {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #f08a8a;
+}
+.es-reset-msg.is-ok {
+  color: var(--es-ctrl-accent, #38bdf8);
+}
+.es-reset-msg[hidden],
+.es-reset [hidden] {
+  display: none;
+}

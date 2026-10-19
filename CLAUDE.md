@@ -39,7 +39,7 @@
 - **Problemi Noti (Intoccabili senza piano approvato)**:
   - `app.js`: dal 2026-10-19 `window.openEditUserModal` si chiude al punto giusto; il codice che conteneva per errore è stato tolto (copia in `_archivio/app-codice-storico-2026-10-19.js.txt`, fuori dal sito). Non ricaricarlo: contiene contenuti finti e un vecchio login admin insicuro. Se serve una funzione, copiarla controllandola.
   - Gestione squadra: dati su Upstash via `/api/squadra` (`lib/squadra-store.js`). Mai leggere o scrivere i dati squadra direttamente dal browser: contengono dati di minori.
-  - Recupero password: non ancora attivo (il vecchio accesso WhatsApp finto è stato tolto il 2026-10-19). Per farlo vero serve un codice email verificato lato server che rilasci un token di recupero.
+  - Recupero password (dal 2026-10-19): codice email + `resetToken` firmato → `/api/auth/reset-password`. Non rilasciare mai il codice nella risposta HTTP; i tentativi vanno contati su Redis.
   - Dati condivisi in `/api/manager` (GDPR, Ambassador, schede, club, rosa, card): le regole di accesso sono in `lib/data-access.js`. Non leggere mai l'email dal corpo della richiesta: usare il token di sessione. Il ruolo scelto nel profilo (DS, Club, Scout) decide solo cosa mostra il sito, non chi può leggere i dati.
 
 ---
