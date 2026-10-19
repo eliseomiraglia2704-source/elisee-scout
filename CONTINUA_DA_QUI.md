@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-20** — PERF3 — Pagina ancora più leggera per chi non ha fatto l'accesso:
+Ultimo aggiornamento: **2026-10-20** — CK1 — Banner dei cookie senza stili scritti nel codice:
+
+1. `cookie-profiling.js` non scrive più stili dentro il banner, il pannello preferenze e la finestra informativa: usa le classi `es-ck-*` definite in fondo a `style.css`. Il banner si apre e si chiude con la classe `is-open`. Tolta l'emoji del biscotto.
+2. `style.css`: tolta la regola con `!important` su `#cookie-banner`. Aspetto invariato (verificato a 1366 e 390 px).
+3. Versioni `?v=20261020_CK1` per style.css e cookie-profiling.js in index.html, cookie-policy.html, privacy-policy.html, focus.html.
+
+Precedente: PERF3 — Pagina ancora più leggera per chi non ha fatto l'accesso:
 
 1. **Dizionario delle dashboard** (circa 215 KB) tolto da `i18n.js` e messo in `dash-i18n-data.js` (JSON compatto), caricato solo dopo l'accesso subito prima di `dash-i18n.js`. `i18n.js` passa da 440 a 195 KB. Per aggiungere traduzioni delle dashboard ora si modifica `dash-i18n-data.js`. `dash-i18n.js` non memorizza il dizionario finché non è arrivato.
 2. **Avatar 3D e Simulatore ruoli** (`avatar-3d.js`/`.css`, `creator-role-switcher.js`/`.css`): ora fra gli script e gli stili di ruolo; servono solo nelle dashboard e all'admin.

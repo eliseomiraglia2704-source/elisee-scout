@@ -80,7 +80,7 @@
   <link rel="preconnect" href="https://uautnlmnpxgbajtucuko.supabase.co" crossorigin>
   <link rel="dns-prefetch" href="https://nominatim.openstreetmap.org">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261019_CV2">
+  <link rel="stylesheet" href="style.css?v=20261020_CK1">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX65">
@@ -1675,20 +1675,7 @@
   <!-- ============================================================ -->
   <!-- COOKIE CONSENT BANNER -->
   <!-- ============================================================ -->
-  <div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:99999; background:rgba(5,8,16,0.97); border-top:1.5px solid rgba(56,189,248,0.4); padding:1rem 2rem; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);">
-    <div style="max-width:1400px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-      <div style="flex:1; min-width:260px;">
-        <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.55;">
-          <strong style="color:#38bdf8;">ELISEE SCOUT</strong><span data-i18n="cookie.before"> utilizza cookie tecnici, analitici e di profilazione per migliorare la tua esperienza e personalizzare i contenuti. Leggi l’</span><a href="cookie-policy.html" style="color:#38bdf8; text-decoration:underline;" data-i18n="cookie.linkCookies">informativa estesa sui cookie</a><span data-i18n="cookie.mid"> e l’</span><a href="privacy-policy.html" style="color:#38bdf8; text-decoration:underline;" data-i18n="cookie.linkPrivacy">informativa sul trattamento dei dati personali</a><span data-i18n="cookie.after"> (artt. 12 e 13 GDPR).</span>
-        </p>
-      </div>
-      <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
-        <button onclick="acceptCookiesOnly()" data-i18n="cookie.tech" style="padding:0.6rem 1.2rem; border-radius:20px; background:transparent; color:#94a3b8; border:1px solid rgba(148,163,184,0.4); font-size:0.82rem; cursor:pointer; font-weight:600; white-space:nowrap;">Solo tecnici</button>
-        <button type="button" data-i18n="cookie.manage" onclick="if(window.EliseeCookies && EliseeCookies.showPreferencesPanel){EliseeCookies.showPreferencesPanel();}else if(typeof acceptCookiesPartial==='function'){acceptCookiesPartial();}" style="padding:0.6rem 1.2rem; border-radius:20px; background:rgba(2,132,199,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.45); font-size:0.82rem; cursor:pointer; font-weight:700; white-space:nowrap;">Gestisci preferenze</button>
-        <button onclick="acceptCookiesAll()" data-i18n="cookie.accept" style="padding:0.6rem 1.4rem; border-radius:20px; background:linear-gradient(90deg,#0284c7,#38bdf8); color:#ffffff; border:none; font-size:0.82rem; cursor:pointer; font-weight:800; white-space:nowrap;">Accetta tutti</button>
-      </div>
-    </div>
-  </div>
+  <div id="cookie-banner" class="es-ck-banner" role="region" aria-label="Cookie" aria-hidden="true"></div>
 
   <!-- ============================================================ -->
   <!-- MODAL: AREA RISERVATA PERSONALE (Admin / Privacy) -->
@@ -6693,7 +6680,7 @@
       }
     });
   </script>
-  <script src="cookie-profiling.js?v=20261019_DI2"></script>
+  <script src="cookie-profiling.js?v=20261020_CK1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
   <script src="i18n.js?v=20261020_PERF3"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>

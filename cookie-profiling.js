@@ -497,27 +497,35 @@
   /* ------------------------------------------------------------------ */
   /* Banner / Preferences UI                                             */
   /* ------------------------------------------------------------------ */
+  // Aspetto del banner: classi es-ck-* in style.css (niente stili scritti nel codice).
   function ensureBannerEl() {
     var banner = document.getElementById('cookie-banner');
-    if (banner) return banner;
-    banner = document.createElement('div');
-    banner.id = 'cookie-banner';
-    banner.style.cssText =
-      'display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;' +
-      'background:rgba(5,8,16,0.97);border-top:1.5px solid rgba(56,189,248,0.4);' +
-      'padding:1rem 2rem;backdrop-filter:blur(18px);';
-    document.body.appendChild(banner);
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'cookie-banner';
+      document.body.appendChild(banner);
+    }
+    banner.classList.add('es-ck-banner');
+    banner.removeAttribute('style');
     return banner;
   }
 
   function hideBanner() {
     var banner = document.getElementById('cookie-banner');
-    if (banner) banner.style.display = 'none';
+    if (!banner) return;
+    banner.classList.remove('is-open');
+    banner.setAttribute('aria-hidden', 'true');
   }
 
   function showBanner() {
     var banner = ensureBannerEl();
-    banner.style.display = 'block';
+    banner.classList.add('is-open');
+    banner.setAttribute('aria-hidden', 'false');
+  }
+
+  function isBannerOpen() {
+    var banner = document.getElementById('cookie-banner');
+    return !!(banner && banner.classList.contains('is-open'));
   }
 
   function consentStatusLabel(c) {
@@ -549,102 +557,76 @@
   /** Bottone verde luminoso al posto di Accetta tutti se consenso gia espresso */
   function consentAlreadyBtnHtml() {
     return (
-      '<button type="button" class="elisee-consent-done-btn" disabled aria-disabled="true" ' +
-      'title="' + ctr('cookie.doneTitle', 'Hai già espresso le tue preferenze sui cookie') + '" ' +
-      'style="padding:0.6rem 1.35rem;border-radius:20px;border:none;cursor:default;white-space:nowrap;' +
-      'font-size:0.82rem;font-weight:800;letter-spacing:0.02em;color:#052e16;' +
-      'background:linear-gradient(135deg,#4ade80 0%,#22c55e 45%,#16a34a 100%);' +
-      'box-shadow:0 0 18px rgba(34,197,94,0.55),0 0 36px rgba(74,222,128,0.25),inset 0 1px 0 rgba(255,255,255,0.35);">' +
+      '<button type="button" class="es-ck-btn es-ck-btn--done" disabled aria-disabled="true" ' +
+      'title="' + ctr('cookie.doneTitle', 'Hai già espresso le tue preferenze sui cookie') + '">' +
       '\u2713 ' + ctr('cookie.done', 'Consenso già espresso') + '</button>'
     );
   }
 
+
   function showPreferencesPanel() {
     var banner = ensureBannerEl();
     var c = getConsent();
-    var decided = hasDecision();
-    banner.style.cssText =
-      'display:block !important;visibility:visible !important;opacity:1 !important;' +
-      'position:fixed !important;bottom:0 !important;left:0 !important;right:0 !important;' +
-      'z-index:999999 !important;pointer-events:auto !important;' +
-      'background:rgba(5,8,16,0.97);border-top:1.5px solid rgba(56,189,248,0.4);' +
-      'padding:1rem 2rem;backdrop-filter:blur(18px);';
-    banner.setAttribute('aria-hidden', 'false');
-    var acceptOrDone = decided
+    var acceptOrDone = hasDecision()
       ? consentAlreadyBtnHtml()
-      : '<button type="button" onclick="EliseeCookies.acceptAll()" style="padding:0.55rem 1.1rem;border-radius:20px;background:transparent;color:#38bdf8;border:1px solid rgba(56,189,248,0.45);font-size:0.8rem;cursor:pointer;font-weight:700;">' + ctr('cookie.accept', 'Accetta tutti') + '</button>';
+      : '<button type="button" class="es-ck-btn es-ck-btn--outline" onclick="EliseeCookies.acceptAll()">' + ctr('cookie.accept', 'Accetta tutti') + '</button>';
     banner.innerHTML =
-      '<div style="max-width:1400px;margin:0 auto;padding:0.75rem 0;">' +
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.75rem;">' +
-      '<p style="color:#e2e8f0;font-size:0.9rem;margin:0;font-weight:700;">' + ctr('cookie.prefTitle', 'Gestisci le tue preferenze sui cookie (GDPR)') + '</p>' +
-      '<button type="button" onclick="EliseeCookies.hideBanner()" style="background:transparent;border:1px solid rgba(148,163,184,0.35);color:#94a3b8;border-radius:8px;padding:0.3rem 0.65rem;cursor:pointer;font-size:0.75rem;">' + ctr('cookie.close', 'Chiudi') + '</button>' +
+      '<div class="es-ck-inner es-ck-inner--prefs">' +
+      '<div class="es-ck-prefs-head">' +
+      '<p class="es-ck-title">' + ctr('cookie.prefTitle', 'Gestisci le tue preferenze sui cookie (GDPR)') + '</p>' +
+      '<button type="button" class="es-ck-btn es-ck-btn--small" onclick="EliseeCookies.hideBanner()">' + ctr('cookie.close', 'Chiudi') + '</button>' +
       '</div>' +
-      '<div style="display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:1rem;">' +
+      '<div class="es-ck-checks">' +
       prefCheck('tech', ctr('cookie.prefTech', 'Cookie tecnici (obbligatori)'), true, true) +
       prefCheck('pref-analytics', ctr('cookie.prefAnalytics', 'Cookie analitici'), c.analytics, false) +
       prefCheck('pref-profiling', ctr('cookie.prefProfiling', 'Cookie di profilazione'), c.profiling, false) +
       prefCheck('pref-marketing', ctr('cookie.prefMarketing', 'Cookie marketing'), c.marketing, false) +
       '</div>' +
-      '<div style="display:flex;gap:0.65rem;flex-wrap:wrap;align-items:center;">' +
-      '<button type="button" onclick="EliseeCookies.savePreferencesFromUI()" style="padding:0.6rem 1.4rem;border-radius:20px;background:linear-gradient(90deg,#0284c7,#38bdf8);color:#fff;border:none;font-size:0.82rem;cursor:pointer;font-weight:800;">' + ctr('cookie.save', 'Salva preferenze') + '</button>' +
+      '<div class="es-ck-actions">' +
+      '<button type="button" class="es-ck-btn es-ck-btn--primary" onclick="EliseeCookies.savePreferencesFromUI()">' + ctr('cookie.save', 'Salva preferenze') + '</button>' +
       acceptOrDone +
-      '<button type="button" onclick="EliseeCookies.acceptTechnicalOnly()" style="padding:0.55rem 1.1rem;border-radius:20px;background:transparent;color:#94a3b8;border:1px solid rgba(148,163,184,0.4);font-size:0.8rem;cursor:pointer;font-weight:600;">' + ctr('cookie.tech', 'Solo tecnici') + '</button>' +
-      '<button type="button" onclick="EliseeCookies.openCookieBanner()" style="padding:0.55rem 1.1rem;border-radius:20px;background:transparent;color:#94a3b8;border:1px solid rgba(148,163,184,0.25);font-size:0.78rem;cursor:pointer;">' + ctr('cookie.initial', 'Banner iniziale') + '</button>' +
-      '<a href="cookie-policy.html" style="color:#38bdf8;font-size:0.8rem;margin-left:0.5rem;">' + ctr('cookie.noticeCookie', 'Informativa cookie') + '</a>' +
-      '<a href="privacy-policy.html" style="color:#38bdf8;font-size:0.8rem;">' + ctr('cookie.noticePrivacy', 'Informativa privacy') + '</a>' +
+      '<button type="button" class="es-ck-btn es-ck-btn--ghost" onclick="EliseeCookies.acceptTechnicalOnly()">' + ctr('cookie.tech', 'Solo tecnici') + '</button>' +
+      '<button type="button" class="es-ck-btn es-ck-btn--ghost" onclick="EliseeCookies.openCookieBanner()">' + ctr('cookie.initial', 'Banner iniziale') + '</button>' +
+      '<a class="es-ck-link" href="cookie-policy.html">' + ctr('cookie.noticeCookie', 'Informativa cookie') + '</a>' +
+      '<a class="es-ck-link" href="privacy-policy.html">' + ctr('cookie.noticePrivacy', 'Informativa privacy') + '</a>' +
       '</div></div>';
+    showBanner();
   }
 
   function prefCheck(id, label, checked, disabled) {
     return (
-      '<label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;color:#e2e8f0;font-size:0.82rem;">' +
-      '<input type="checkbox" id="' +
-      id +
-      '"' +
-      (checked ? ' checked' : '') +
-      (disabled ? ' disabled' : '') +
-      ' style="accent-color:#38bdf8;"> ' +
+      '<label class="es-ck-check">' +
+      '<input type="checkbox" id="' + id + '"' + (checked ? ' checked' : '') + (disabled ? ' disabled' : '') + '> ' +
       label +
       '</label>'
     );
   }
 
-  /**
-   * Apre il banner cookie come alla prima visita.
-   * Se le preferenze sono gia state salvate, le indica chiaramente.
-   */
   // Cambio lingua: ridisegna il banner nella nuova lingua senza cambiarne la visibilità.
   document.addEventListener('elisee:lang-changed', function () {
     var banner = document.getElementById('cookie-banner');
     if (!banner || !banner.innerHTML) return;
-    var visible = banner.style.display !== 'none';
     if (document.getElementById('pref-analytics')) {
-      if (visible) showPreferencesPanel();
+      if (isBannerOpen()) showPreferencesPanel();
     } else {
       restoreMainBanner();
     }
   });
 
+  /**
+   * Apre il banner cookie come alla prima visita.
+   * Se le preferenze sono gia state salvate, le indica chiaramente.
+   */
   function openCookieBanner() {
     try {
       restoreMainBanner();
-      var banner = ensureBannerEl();
-      banner.style.cssText =
-        'display:block !important;visibility:visible !important;opacity:1 !important;' +
-        'position:fixed !important;bottom:0 !important;left:0 !important;right:0 !important;' +
-        'z-index:999999 !important;pointer-events:auto !important;' +
-        'background:rgba(5,8,16,0.97);border-top:1.5px solid rgba(56,189,248,0.4);' +
-        'padding:1rem 2rem;backdrop-filter:blur(18px);';
-      banner.setAttribute('aria-hidden', 'false');
+      showBanner();
       try {
-        banner.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        document.getElementById('cookie-banner').scrollIntoView({ behavior: 'smooth', block: 'end' });
       } catch (e2) {}
       return true;
     } catch (err) {
       console.error('EliseeCookies.openCookieBanner', err);
-      try {
-        alert('Impossibile aprire le preferenze cookie. Ricarica la pagina (Ctrl+F5).');
-      } catch (e3) {}
       return false;
     }
   }
@@ -662,22 +644,19 @@
     var decided = hasDecision();
     var primaryBtn = decided
       ? consentAlreadyBtnHtml()
-      : '<button type="button" onclick="acceptCookiesAll()" style="padding:0.6rem 1.4rem;border-radius:20px;background:linear-gradient(90deg,#0284c7,#38bdf8);color:#fff;border:none;font-size:0.82rem;cursor:pointer;font-weight:800;white-space:nowrap;">✓ ' + ctr('cookie.accept', 'Accetta tutti') + '</button>';
+      : '<button type="button" class="es-ck-btn es-ck-btn--primary" onclick="acceptCookiesAll()">✓ ' + ctr('cookie.accept', 'Accetta tutti') + '</button>';
     banner.innerHTML =
-      '<div style="max-width:1400px;margin:0 auto;">' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">' +
-      '<div style="flex:1;min-width:260px;">' +
-      '<p style="color:#e2e8f0;font-size:0.88rem;margin:0;line-height:1.55;">🍪 <strong style="color:#38bdf8;">ELISEE SCOUT</strong><span data-i18n="cookie.before">' + ctr('cookie.before', ' utilizza cookie tecnici, analitici e di profilazione. Leggi l\'') + '</span>' +
-      '<a href="cookie-policy.html" style="color:#38bdf8;text-decoration:underline;" data-i18n="cookie.linkCookies">' + ctr('cookie.linkCookies', 'informativa estesa sui cookie') + '</a><span data-i18n="cookie.mid">' + ctr('cookie.mid', ' e l\'') + '</span>' +
-      '<a href="privacy-policy.html" style="color:#38bdf8;text-decoration:underline;" data-i18n="cookie.linkPrivacy">' + ctr('cookie.linkPrivacy', 'informativa sul trattamento dei dati personali') + '</a><span data-i18n="cookie.after">' + ctr('cookie.after', ' (artt. 12 e 13 GDPR).') + '</span></p></div>' +
-      '<div style="display:flex;gap:0.65rem;flex-wrap:wrap;align-items:center;">' +
-      '<button type="button" onclick="acceptCookiesOnly()" style="padding:0.6rem 1.2rem;border-radius:20px;background:transparent;color:#94a3b8;border:1px solid rgba(148,163,184,0.4);font-size:0.82rem;cursor:pointer;font-weight:600;white-space:nowrap;">' + ctr('cookie.tech', 'Solo tecnici') + '</button>' +
-      '<button type="button" onclick="if(window.EliseeCookies&&EliseeCookies.showPreferencesPanel){EliseeCookies.showPreferencesPanel();}else{acceptCookiesPartial();}" style="padding:0.6rem 1.2rem;border-radius:20px;background:rgba(2,132,199,0.2);color:#38bdf8;border:1px solid rgba(56,189,248,0.45);font-size:0.82rem;cursor:pointer;font-weight:700;white-space:nowrap;">' + ctr('cookie.manage', 'Gestisci preferenze') + '</button>' +
+      '<div class="es-ck-inner">' +
+      '<div class="es-ck-text">' +
+      '<p><strong>ELISEE SCOUT</strong><span data-i18n="cookie.before">' + ctr('cookie.before', ' utilizza cookie tecnici, analitici e di profilazione. Leggi l\'') + '</span>' +
+      '<a href="cookie-policy.html" data-i18n="cookie.linkCookies">' + ctr('cookie.linkCookies', 'informativa estesa sui cookie') + '</a><span data-i18n="cookie.mid">' + ctr('cookie.mid', ' e l\'') + '</span>' +
+      '<a href="privacy-policy.html" data-i18n="cookie.linkPrivacy">' + ctr('cookie.linkPrivacy', 'informativa sul trattamento dei dati personali') + '</a><span data-i18n="cookie.after">' + ctr('cookie.after', ' (artt. 12 e 13 GDPR).') + '</span></p></div>' +
+      '<div class="es-ck-actions">' +
+      '<button type="button" class="es-ck-btn es-ck-btn--ghost" onclick="acceptCookiesOnly()">' + ctr('cookie.tech', 'Solo tecnici') + '</button>' +
+      '<button type="button" class="es-ck-btn es-ck-btn--soft" onclick="if(window.EliseeCookies&&EliseeCookies.showPreferencesPanel){EliseeCookies.showPreferencesPanel();}else{acceptCookiesPartial();}">' + ctr('cookie.manage', 'Gestisci preferenze') + '</button>' +
       primaryBtn +
-      (decided
-        ? '<button type="button" onclick="EliseeCookies.hideBanner()" style="padding:0.55rem 0.9rem;border-radius:20px;background:transparent;color:#64748b;border:1px solid rgba(100,116,139,0.35);font-size:0.78rem;cursor:pointer;">' + ctr('cookie.close', 'Chiudi') + '</button>'
-        : '') +
-      '</div></div></div>';
+      (decided ? '<button type="button" class="es-ck-btn es-ck-btn--small" onclick="EliseeCookies.hideBanner()">' + ctr('cookie.close', 'Chiudi') + '</button>' : '') +
+      '</div></div>';
   }
 
   /* ------------------------------------------------------------------ */
@@ -688,10 +667,9 @@
     if (el) return el;
     el = document.createElement('div');
     el.id = 'elisee-policy-modal';
-    el.style.cssText =
-      'display:none;position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,0.78);backdrop-filter:blur(8px);overflow-y:auto;padding:2rem 1rem;';
+    el.className = 'es-ck-modal';
     el.onclick = function (e) {
-      if (e.target === el) el.style.display = 'none';
+      if (e.target === el) el.classList.remove('is-open');
     };
     document.body.appendChild(el);
     return el;
@@ -700,17 +678,13 @@
   function openPolicy(title, html) {
     var el = ensurePolicyModal();
     el.innerHTML =
-      '<div style="max-width:720px;margin:1.5rem auto;background:linear-gradient(160deg,#070d1c,#0a1328);border:1.5px solid rgba(56,189,248,0.45);border-radius:18px;padding:1.75rem 1.5rem;color:#e2e8f0;font-family:Inter,system-ui,sans-serif;box-shadow:0 24px 60px rgba(0,0,0,0.55);">' +
-      '<div style="display:flex;justify-content:space-between;align-items:start;gap:1rem;margin-bottom:1rem;">' +
-      '<h2 style="margin:0;color:#38bdf8;font-size:1.25rem;">' +
-      escapeHtml(title) +
-      '</h2>' +
-      '<button type="button" onclick="document.getElementById(\'elisee-policy-modal\').style.display=\'none\'" style="background:transparent;border:1px solid rgba(148,163,184,0.4);color:#94a3b8;border-radius:8px;padding:0.35rem 0.7rem;cursor:pointer;">' + ctr('cookie.close', 'Chiudi') + '</button>' +
+      '<div class="es-ck-modal-box">' +
+      '<div class="es-ck-modal-head">' +
+      '<h2>' + escapeHtml(title) + '</h2>' +
+      '<button type="button" class="es-ck-btn es-ck-btn--small" onclick="document.getElementById(\'elisee-policy-modal\').classList.remove(\'is-open\')">' + ctr('cookie.close', 'Chiudi') + '</button>' +
       '</div>' +
-      '<div style="font-size:0.88rem;line-height:1.65;color:#cbd5e1;">' +
-      html +
-      '</div></div>';
-    el.style.display = 'block';
+      '<div class="es-ck-modal-body">' + html + '</div></div>';
+    el.classList.add('is-open');
   }
 
   function openCookiePolicy() {
@@ -720,7 +694,7 @@
     } catch (e) {
       openPolicy(
         'Informativa estesa sui cookie - ELISEE SCOUT',
-        '<p>Apri l\'' + '<a href="cookie-policy.html" style="color:#38bdf8;">informativa estesa sui cookie</a>.</p>'
+        '<p>Apri l\'' + '<a href="cookie-policy.html">informativa estesa sui cookie</a>.</p>'
       );
     }
   }
@@ -731,7 +705,7 @@
     } catch (e) {
       openPolicy(
         'Informativa sul trattamento dei dati personali - ELISEE SCOUT',
-        '<p>Apri l\'' + '<a href="privacy-policy.html" style="color:#38bdf8;">informativa ex artt. 12 e 13 GDPR</a>.</p>'
+        '<p>Apri l\'' + '<a href="privacy-policy.html">informativa ex artt. 12 e 13 GDPR</a>.</p>'
       );
     }
   }
