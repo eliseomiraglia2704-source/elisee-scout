@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="elisee-admin-guard.js?v=20261018_SEC1"></script>
+  <script src="role-scripts.js?v=20261019_PERF2"></script>
   <script>
     (function () {
       var BUILD_VERSION = '20261004_FIX41';
@@ -6978,9 +6979,11 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20261018_SEC1"></script>
-  <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
+  <script>EliseeRoleScripts.write([
+    'app-admin-panels.js?v=20260918_CCDROPDOWN1'
+  ]);</script>
   <script src="app.js?v=20261018_SEC1"></script>
-  <script src="admin-login.js?v=20261018_SEC2"></script>
+  <script src="admin-login.js?v=20261019_PERF2"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>
@@ -7006,29 +7009,31 @@
   <script src="persist-sync.js?v=20260918_OTPSYNC1"></script>
   <script src="club-role-ops.js?v=20260917_CLUBOPS1"></script>
   <script src="dash-real.js?v=20260917_FGCLIC1"></script>
-  <script src="player-dash.js?v=20260918_PLAYER3D1"></script>
-  <script src="elisee-supabase.js?v=20261019_SQ1"></script>
-  <script src="coach-dash.js?v=20260918_CLUBCARD1"></script>
-  <script src="ds-dash.js?v=20260917_BUGFIX1"></script>
-  <script src="pres-dash.js?v=20260918_CLUBCARD1"></script>
-  <script src="vice-dash.js?v=20260918_CLUBCARD1"></script>
-  <script src="fisio-dash.js?v=20260917_FGCLIC1"></script>
-  <script src="ma-dash.js?v=20260917_FGCLIC1"></script>
-  <script src="med-dash.js?v=20260917_FGCLIC1"></script>
-  <script src="obs-dash.js?v=20260917_FGCLIC1"></script>
-  <script src="tm-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="gk-dash.js?v=20260917_FGCLIC1"></script>
-  <script src="at-dash.js?v=20260917_FGCLIC1"></script>
-  <script src="yg-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="dg-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="ag-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="mk-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="pr-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="nu-dash.js?v=20260917_FGCLIC1"></script>
-  <script src="eq-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="sg-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="bt-dash.js?v=20260917_ALLPRO1"></script>
-  <script src="tifoso-dash.js?v=20260917_ALLPRO1"></script>
+  <script>EliseeRoleScripts.write([
+    'player-dash.js?v=20260918_PLAYER3D1',
+    'elisee-supabase.js?v=20260916_TACTICBOARD1',
+    'coach-dash.js?v=20260918_CLUBCARD1',
+    'ds-dash.js?v=20260917_BUGFIX1',
+    'pres-dash.js?v=20260918_CLUBCARD1',
+    'vice-dash.js?v=20260918_CLUBCARD1',
+    'fisio-dash.js?v=20260917_FGCLIC1',
+    'ma-dash.js?v=20260917_FGCLIC1',
+    'med-dash.js?v=20260917_FGCLIC1',
+    'obs-dash.js?v=20260917_FGCLIC1',
+    'tm-dash.js?v=20260917_ALLPRO1',
+    'gk-dash.js?v=20260917_FGCLIC1',
+    'at-dash.js?v=20260917_FGCLIC1',
+    'yg-dash.js?v=20260917_ALLPRO1',
+    'dg-dash.js?v=20260917_ALLPRO1',
+    'ag-dash.js?v=20260917_ALLPRO1',
+    'mk-dash.js?v=20260917_ALLPRO1',
+    'pr-dash.js?v=20260917_ALLPRO1',
+    'nu-dash.js?v=20260917_FGCLIC1',
+    'eq-dash.js?v=20260917_ALLPRO1',
+    'sg-dash.js?v=20260917_ALLPRO1',
+    'bt-dash.js?v=20260917_ALLPRO1',
+    'tifoso-dash.js?v=20260917_ALLPRO1'
+  ]);</script>
   <script src="giorn-dash.js?v=20261018_SEC4"></script>
   <script src="scopri-profili.js?v=20261001_FIX21"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
@@ -7037,15 +7042,19 @@
   <script src="mappa-club.js?v=20261001_FIX26"></script>
   <script src="chi-segui.js?v=20261001_FIX21"></script>
   <script src="card-atelier.js?v=20261018_SEC1"></script>
-  <script src="control-center.js?v=20261018_SEC1"></script>
-  <script src="flusso-contatti.js?v=20260925_FLUSSO1"></script>
-  <script src="cc-analytics.js?v=20261018_SEC3"></script>
+  <script>EliseeRoleScripts.write([
+    'control-center.js?v=20261018_SEC1',
+    'flusso-contatti.js?v=20260925_FLUSSO1',
+    'cc-analytics.js?v=20261018_SEC3'
+  ]);</script>
   <script src="ds-hub.js?v=20260917_BUGFIX1"></script>
   <script src="verifica-account.js?v=20261018_SEC1"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="season-wrapped.js?v=20260925_WCF1"></script>
   <script src="creator-role-switcher.js?v=20261018_SEC1"></script>
-  <script src="role-actions-runtime.js?v=20260917_ROLEDASHUP1"></script>
+  <script>EliseeRoleScripts.write([
+    'role-actions-runtime.js?v=20260917_ROLEDASHUP1'
+  ]);</script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

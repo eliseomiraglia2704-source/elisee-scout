@@ -41,6 +41,14 @@
   }
 
   function openDashboard(role) {
+    if (window.EliseeRoleScripts && !window.EliseeRoleScripts.isLoaded()) {
+      window.EliseeRoleScripts.ensure().then(function () { showDashboard(role); });
+      return;
+    }
+    showDashboard(role);
+  }
+
+  function showDashboard(role) {
     var guard = el('admin-login-guard');
     var dash = el('admin-authenticated-dashboard');
     if (guard) guard.style.display = 'none';

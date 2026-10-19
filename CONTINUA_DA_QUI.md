@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — PERF1 — Memoria del browser:
+Ultimo aggiornamento: **2026-10-19** — PERF2 — Script delle aree riservate solo a chi ha fatto l'accesso:
+
+1. **Cosa era rotto**: ogni visitatore scaricava circa 1,7 MB di script delle dashboard di ruolo e del Control Center, che non poteva usare.
+2. **Ora**: `role-scripts.js` (nel `<head>`) decide all'apertura: con login o sessione staff gli script vengono scritti nello stesso punto e ordine di prima (`EliseeRoleScripts.write([...])` in `index.html`); al visitatore no. Login senza ricaricare: `EliseeRoleScripts.ensure()` li carica in ordine (parte da solo quando si salva il login; `admin-login.js` aspetta prima di aprire il Control Center).
+3. **Regola**: una nuova dashboard di ruolo va dentro un blocco `EliseeRoleScripts.write`. Restano caricati per tutti: `tc-panel.js` (modulo iscrizione pubblico), `card-atelier.js` (card pubbliche), `club-role-ops.js`, `dash-real.js`, `ds-hub.js`, `creator-role-switcher.js`, `giorn-dash.js`.
+4. **File**: `role-scripts.js` (nuovo), `index.html`, `admin-login.js`, `sw.js`, `version.json`. Cache `v20261019_PERF2`.
+
+Feature precedente: **2026-10-19** — PERF1 — Memoria del browser:
 
 1. **Cosa era rotto**: `vercel.json` mandava `no-store` su tutto: ogni visita riscaricava circa 250 file.
 2. **Ora**: i file con `?v=` nel link restano in memoria per un anno (`immutable`); pagine e JSON si ricontrollano a ogni visita (`no-cache`); le API non vengono mai memorizzate (`no-store`). Regola: ogni nuovo script o foglio di stile in `index.html` deve avere `?v=`.
