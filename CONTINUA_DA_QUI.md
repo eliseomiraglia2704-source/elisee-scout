@@ -1,6 +1,14 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — RD6 — Dashboard di ruolo in 4 lingue:
+Ultimo aggiornamento: **2026-10-19** — FILE1 — Allegati veri nelle dashboard Allenatore e Vice:
+
+1. **Prima**: il pulsante «Carica file» faceva salire una barra finta (numeri casuali) e poi dava errore; i testi parlavano di «bucket Supabase staff-allegati» che non esiste.
+2. **Ora**: i file vanno nell'archivio della squadra su Upstash, tramite `/api/squadra` (`lib/squadra-store.js`, collezione `file_allegati`). Solo i membri della squadra li vedono e li scaricano. Il file viaggia a pezzi da circa 700 KB (ogni richiesta al server è al massimo 1 MB); i pezzi stanno in chiavi `elisee:sqfile:<squadra>:<id>:<n>`, l'elenco in `file_allegati`. Limite 4 MB, tipi ammessi: PDF, immagini, CSV, JSON, TXT, GPX/FIT/TCX, documenti Office. Per i video: un link.
+3. **Browser**: `elisee-supabase.js` ha `uploadFileAllegato` (barra di avanzamento reale), `downloadFileAllegato`, `removeFileAllegato`; ogni pulsante `[data-sq-dl]` scarica il file. In `coach-dash.js` e `vice-dash.js` gli elenchi (video, GPS, archivio) hanno «Scarica» al posto dei vecchi link `file_url`.
+4. **Provato**: caricato e riscaricato un file di 1,8 MB in 3 pezzi, identico all'originale; un utente non membro riceve 403; un .exe viene rifiutato (415).
+5. **File**: `lib/squadra-store.js`, `elisee-supabase.js`, `coach-dash.js`, `vice-dash.js`, `i18n.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_FILE1`.
+
+Feature precedente: **2026-10-19** — RD6 — Dashboard di ruolo in 4 lingue:
 
 1. **Cosa**: `dash-i18n.js` ora traduce anche `#es-staff-profile`, `#es-player-profile`, `#es-tifoso-profile`, `#es-giorn-profile` (prima solo Allenatore/Vice). Salta i testi con `data-i18n`, che traduce già `i18n.js`.
 2. **Dizionario**: `window.EliseeDashI18n` in `i18n.js` passa da circa 270 a circa 1.150 testi (EN/ES/FR), raccolti aprendo ogni dashboard e ogni scheda: 17 dashboard staff, Calciatore, Tifoso, Giornalista. Nuovi modelli: «X · Squadra non inserita», «Azioni possibili — X», «N% completo», «Scritta il…», «In coda: N · Pubblicati: N». La voce `it` toglie i residui «IA», «Stealth», «FIFA/FM», «Coming soon / Beta» dai pulsanti di `role-actions-runtime.js`.

@@ -3413,9 +3413,7 @@
                             '</div>' +
                           '</div>' +
                         '</div>' +
-                        '<a href="' + esc(vf.file_url || '#') + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.72rem; padding:0.35rem 0.65rem; white-space:nowrap; flex-shrink:0;">' +
-                          'Apri File &rarr;' +
-                        '</a>' +
+                        '<button type="button" data-sq-dl="' + esc(vf.id) + '" data-sq-name="' + esc(fileName) + '" class="es-btn-cos-sec" style="font-size:0.72rem; padding:0.35rem 0.65rem; white-space:nowrap; flex-shrink:0;">Scarica &rarr;</button>' +
                       '</div>'
                     );
                   }).join('') +
@@ -3427,7 +3425,7 @@
                     '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
                   '</div>' +
                   '<div style="font-weight:700; font-size:0.86rem; color:#f3f8fc;">Nessun video analisi o report allegato per ' + esc(activeOpponent) + '</div>' +
-                  '<p style="font-size:0.73rem; color:#8da8bc; margin:0.35rem 0 1rem;">File e video-clip archiviati nel cloud staff-allegati con permessi riservati.</p>' +
+                  '<p style="font-size:0.73rem; color:#8da8bc; margin:0.35rem 0 1rem;">File salvati nell’archivio della squadra, visibili solo allo staff.</p>' +
                   '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="padding:0.48rem 1rem; font-size:0.78rem; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">' +
                     '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
                     'Carica Video / Match Analysis' +
@@ -3480,14 +3478,14 @@
 
         // File GPS Archiviati
         '<div class="es-cos-panel-card">' +
-          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">File Telemetria GPS Archiviati (Bucket Cloud: staff-allegati)</span></div>' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">File GPS archiviati</span></div>' +
           (gpsFiles.length ? (
             '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
               gpsFiles.map(function (gf) {
                 return (
                   '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
-                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(gf.file_url.split('/').pop()) + '</b><div style="font-size:0.72rem; color:#8da8bc;">Caricato il ' + formatDate(gf.created_at) + '</div></div>' +
-                    '<a href="' + esc(gf.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Scarica File &rarr;</a>' +
+                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(gf.nome || 'File GPS') + '</b><div style="font-size:0.72rem; color:#8da8bc;">Caricato il ' + formatDate(gf.created_at) + '</div></div>' +
+                    '<button type="button" data-sq-dl="' + esc(gf.id) + '" data-sq-name="' + esc(gf.nome || 'allegato') + '" class="es-btn-cos-sec" style="font-size:0.74rem;">Scarica &rarr;</button>' +
                   '</div>'
                 );
               }).join('') +
@@ -3539,14 +3537,14 @@
 
         // Box Allegati Cloud
         '<div class="es-cos-panel-card">' +
-          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Archivio File & Allegati Cloud (Bucket: staff-allegati)</span></div>' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Archivio file e allegati</span></div>' +
           (allegati.length ? (
             '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
               allegati.map(function (al) {
                 return (
                   '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
-                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(al.file_url.split('/').pop()) + '</b><div style="font-size:0.72rem; color:#8da8bc;">Categoria: <b>' + esc(al.categoria) + '</b> · ' + formatDate(al.created_at) + '</div></div>' +
-                    '<a href="' + esc(al.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Apri Documento &rarr;</a>' +
+                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(al.nome || 'Allegato') + '</b><div style="font-size:0.72rem; color:#8da8bc;">Categoria: <b>' + esc(al.categoria) + '</b> · ' + formatDate(al.created_at) + '</div></div>' +
+                    '<button type="button" data-sq-dl="' + esc(al.id) + '" data-sq-name="' + esc(al.nome || 'allegato') + '" class="es-btn-cos-sec" style="font-size:0.74rem;">Scarica &rarr;</button>' +
                   '</div>'
                 );
               }).join('') +
@@ -4054,7 +4052,7 @@
     if (btnUploadGps) {
       btnUploadGps.onclick = function () {
         var entId = (data.ultimaSessione && data.ultimaSessione.id) || 'allenamento-current';
-        openStaffUploadModal('gps', entId, 'allenamento', 'Carica Telemetria GPS (Bucket: staff-allegati)');
+        openStaffUploadModal('gps', entId, 'allenamento', 'Carica dati GPS');
       };
     }
     mount.querySelectorAll('[data-upload-gps-tr]').forEach(function (btn) {
@@ -4580,7 +4578,7 @@
     if (btnUploadGps) {
       btnUploadGps.onclick = function () {
         var entId = (data.ultimaSessione && data.ultimaSessione.id) || 'allenamento-current';
-        openStaffUploadModal('gps', entId, 'allenamento', 'Carica Telemetria GPS (Bucket: staff-allegati)');
+        openStaffUploadModal('gps', entId, 'allenamento', 'Carica dati GPS');
       };
     }
     mount.querySelectorAll('[data-upload-gps-tr]').forEach(function (btn) {
@@ -4922,7 +4920,7 @@
     categoria = categoria || 'video_analisi';
     entitaId = entitaId || 'default-entity';
     entitaTipo = entitaTipo || (categoria === 'gps' ? 'allenamento' : (categoria === 'video_analisi' ? 'partita' : 'giocatore'));
-    title = title || 'Carica File su Supabase Storage (staff-allegati)';
+    title = title || 'Carica file';
 
     var acceptMap = {
       gps: '.csv,.json,.fit,.gpx,.txt',
@@ -4937,7 +4935,7 @@
     var content =
       '<form id="form-upload-cloud" style="display:flex; flex-direction:column; gap:1rem;">' +
         '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.85rem; font-size:0.8rem; color:#8da8bc; line-height:1.45;">' +
-          'I file vengono caricati direttamente nel bucket cloud protetto <b style="color:#38bdf8;">staff-allegati</b> e collegati in tabella <code>file_allegati</code> con permessi di accesso riservati.' +
+          'I file restano nell’archivio della squadra e li vedono solo i membri dello staff. Massimo 4 MB per file: per i video carica un link.' +
         '</div>' +
 
         // AREA DRAG & DROP E FILE SELECTOR
@@ -5087,19 +5085,13 @@
         submitBtn.style.opacity = '0.6';
       }
 
-      // Animazione di progresso realistica
-      var currentProgress = 5;
-      if (progressBar) progressBar.style.width = currentProgress + '%';
-      if (percentLabel) percentLabel.textContent = currentProgress + '%';
-
-      var progressInterval = setInterval(function () {
-        if (currentProgress < 85) {
-          currentProgress += Math.floor(Math.random() * 12) + 5;
-          if (currentProgress > 85) currentProgress = 85;
-          if (progressBar) progressBar.style.width = currentProgress + '%';
-          if (percentLabel) percentLabel.textContent = currentProgress + '%';
-        }
-      }, 150);
+      // Avanzamento reale: sale a ogni pezzo inviato al server.
+      var progressInterval = null;
+      var setProgress = function (pct) {
+        if (progressBar) progressBar.style.width = pct + '%';
+        if (percentLabel) percentLabel.textContent = pct + '%';
+      };
+      setProgress(0);
 
       try {
         var u = userObj();
@@ -5107,12 +5099,11 @@
         var staffId = u.staffId || u.id || null;
         var visArr = vis === 'squadra' ? ['allenatore', 'vice_allenatore', 'medico', 'dirigenza', 'calciatore'] : (vis === 'staff_completo' ? ['allenatore', 'vice_allenatore', 'preparatore_atletico', 'match_analyst'] : [vis]);
 
-        var upRes = { ok: true };
+        var upRes = { ok: false };
         if (window.EliseeSupabase && typeof window.EliseeSupabase.uploadFileAllegato === 'function') {
-          upRes = await window.EliseeSupabase.uploadFileAllegato(clubId, selectedCat, entitaId, file, staffId, visArr);
+          upRes = await window.EliseeSupabase.uploadFileAllegato(clubId, selectedCat, entitaId, file, staffId, visArr, setProgress);
         } else {
-          // Fallback locale simulato
-          await new Promise(function (res) { setTimeout(res, 800); });
+          upRes = { ok: false, error: 'Archivio della squadra non disponibile.' };
         }
 
         clearInterval(progressInterval);
@@ -5126,7 +5117,7 @@
           }
 
           setTimeout(async function () {
-            if (window.showToast) window.showToast('File caricato con successo su Supabase Storage!', 'success');
+            if (window.showToast) window.showToast('File caricato.', 'success');
             closeModal();
             await syncLiveCoachData(null, true);
           }, 450);

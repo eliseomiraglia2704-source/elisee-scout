@@ -3933,7 +3933,7 @@ window.EliseeDashI18n = {
       "Menu Staff": "Staff menu",
       "Modifica il filtro per tipo o seleziona un altro mese dal selettore in alto.": "Change the type filter or pick another month above.",
       "Nessun calciatore presente in rosa": "No players in the squad yet",
-      "Nessun documento o referto archiviato.": "No documents stored.",
+      "Nessun documento o referto archiviato.": "No documents saved yet.",
       "Nessun evento corrispondente ai filtri": "No events match the filters",
       "Nessun impegno staff registrato.": "No staff commitments.",
       "Nessun report": "No reports",
@@ -4992,7 +4992,21 @@ window.EliseeDashI18n = {
       "possono mandare contenuti in pubblicazione. Completa documento e selfie anti-fake.": "can submit content for publication. Upload your ID and anti-fake selfie.",
       "· Attuale": "· Current",
       "— Calciatore / Utente": "— Player / user",
-      "🔗 Condividi Scheda Pubblica Atleta": "🔗 Share public player profile"
+      "🔗 Condividi Scheda Pubblica Atleta": "🔗 Share public player profile",
+      "File caricato.": "File uploaded.",
+      "File GPS archiviati": "Saved GPS files",
+      "Archivio file e allegati": "Files and attachments",
+      "Carica dati GPS": "Upload GPS data",
+      "Scarica →": "Download →",
+      "I file restano nell’archivio della squadra e li vedono solo i membri dello staff. Massimo 4 MB per file: per i video carica un link.": "Files stay in the team archive and only staff members can see them. Up to 4 MB per file: for videos, add a link.",
+      "File salvati nell’archivio della squadra, visibili solo allo staff.": "Files saved in the team archive, visible to staff only.",
+      "Tipo di file non ammesso. Usa PDF, immagini, CSV, JSON, GPX/FIT o documenti Office.": "File type not allowed. Use PDF, images, CSV, JSON, GPX/FIT or Office documents.",
+      "Il file supera 4 MB. Per i video carica un link.": "The file is over 4 MB. For videos, add a link.",
+      "Non fai parte dello staff di questa squadra.": "You are not on this team’s staff.",
+      "Accedi di nuovo per caricare file.": "Sign in again to upload files.",
+      "Caricamento non riuscito.": "Upload failed.",
+      "Upload completato con successo!": "Upload complete.",
+      "Archivio della squadra non disponibile.": "Team archive not available."
     },
     "es": {
       "+ Aggiungi Calciatore": "+ Añadir jugador",
@@ -5082,7 +5096,7 @@ window.EliseeDashI18n = {
       "Menu Staff": "Menú del staff",
       "Modifica il filtro per tipo o seleziona un altro mese dal selettore in alto.": "Cambia el filtro por tipo o elige otro mes arriba.",
       "Nessun calciatore presente in rosa": "Aún no hay jugadores en la plantilla",
-      "Nessun documento o referto archiviato.": "Ningún documento guardado.",
+      "Nessun documento o referto archiviato.": "No hay documentos guardados.",
       "Nessun evento corrispondente ai filtri": "Ningún evento coincide con los filtros",
       "Nessun impegno staff registrato.": "Ningún compromiso del staff.",
       "Nessun report": "Ningún informe",
@@ -6141,7 +6155,21 @@ window.EliseeDashI18n = {
       "possono mandare contenuti in pubblicazione. Completa documento e selfie anti-fake.": "pueden enviar contenido para publicar. Completa documento y selfie anti-fake.",
       "· Attuale": "· Actual",
       "— Calciatore / Utente": "— Jugador / usuario",
-      "🔗 Condividi Scheda Pubblica Atleta": "🔗 Compartir perfil público"
+      "🔗 Condividi Scheda Pubblica Atleta": "🔗 Compartir perfil público",
+      "File caricato.": "Archivo subido.",
+      "File GPS archiviati": "Archivos GPS guardados",
+      "Archivio file e allegati": "Archivos y adjuntos",
+      "Carica dati GPS": "Subir datos GPS",
+      "Scarica →": "Descargar →",
+      "I file restano nell’archivio della squadra e li vedono solo i membri dello staff. Massimo 4 MB per file: per i video carica un link.": "Los archivos quedan en el archivo del equipo y solo los ve el staff. Máximo 4 MB por archivo: para vídeos, añade un enlace.",
+      "File salvati nell’archivio della squadra, visibili solo allo staff.": "Archivos guardados en el archivo del equipo, visibles solo para el staff.",
+      "Tipo di file non ammesso. Usa PDF, immagini, CSV, JSON, GPX/FIT o documenti Office.": "Tipo de archivo no permitido. Usa PDF, imágenes, CSV, JSON, GPX/FIT o documentos de Office.",
+      "Il file supera 4 MB. Per i video carica un link.": "El archivo supera 4 MB. Para vídeos, añade un enlace.",
+      "Non fai parte dello staff di questa squadra.": "No formas parte del staff de este equipo.",
+      "Accedi di nuovo per caricare file.": "Vuelve a iniciar sesión para subir archivos.",
+      "Caricamento non riuscito.": "La subida falló.",
+      "Upload completato con successo!": "Subida completada.",
+      "Archivio della squadra non disponibile.": "Archivo del equipo no disponible."
     },
     "fr": {
       "+ Aggiungi Calciatore": "+ Ajouter un joueur",
@@ -6169,7 +6197,7 @@ window.EliseeDashI18n = {
       "Calendario Prossime Gare": "Prochains matchs",
       "Calendario Tecnico Staff & Partite": "Calendrier staff et matchs",
       "Campionato": "Championnat",
-      "Carica file": "Téléverser un fichier",
+      "Carica file": "Importer un fichier",
       "Carico Settimanale Squadra": "Charge hebdomadaire de l’équipe",
       "Carico Squadra": "Charge de l’équipe",
       "Centrocampisti": "Milieux",
@@ -7290,7 +7318,21 @@ window.EliseeDashI18n = {
       "possono mandare contenuti in pubblicazione. Completa documento e selfie anti-fake.": "peuvent envoyer des contenus à publier. Ajoutez votre pièce d’identité et le selfie anti-fake.",
       "· Attuale": "· Actuelle",
       "— Calciatore / Utente": "— Joueur / utilisateur",
-      "🔗 Condividi Scheda Pubblica Atleta": "🔗 Partager le profil public"
+      "🔗 Condividi Scheda Pubblica Atleta": "🔗 Partager le profil public",
+      "File caricato.": "Fichier importé.",
+      "File GPS archiviati": "Fichiers GPS enregistrés",
+      "Archivio file e allegati": "Fichiers et pièces jointes",
+      "Carica dati GPS": "Importer des données GPS",
+      "Scarica →": "Télécharger →",
+      "I file restano nell’archivio della squadra e li vedono solo i membri dello staff. Massimo 4 MB per file: per i video carica un link.": "Les fichiers restent dans l’archive de l’équipe et seul le staff peut les voir. 4 Mo maximum par fichier : pour les vidéos, ajoutez un lien.",
+      "File salvati nell’archivio della squadra, visibili solo allo staff.": "Fichiers enregistrés dans l’archive de l’équipe, visibles uniquement par le staff.",
+      "Tipo di file non ammesso. Usa PDF, immagini, CSV, JSON, GPX/FIT o documenti Office.": "Type de fichier non autorisé. Utilisez PDF, images, CSV, JSON, GPX/FIT ou documents Office.",
+      "Il file supera 4 MB. Per i video carica un link.": "Le fichier dépasse 4 Mo. Pour les vidéos, ajoutez un lien.",
+      "Non fai parte dello staff di questa squadra.": "Vous ne faites pas partie du staff de cette équipe.",
+      "Accedi di nuovo per caricare file.": "Reconnectez-vous pour importer des fichiers.",
+      "Caricamento non riuscito.": "Échec de l’import.",
+      "Upload completato con successo!": "Import terminé.",
+      "Archivio della squadra non disponibile.": "Archive de l’équipe indisponible."
     }
   },
   "patterns": [
@@ -7484,6 +7526,24 @@ window.EliseeDashI18n = {
       "en": "Queued: $1 · Published: $2",
       "es": "En cola: $1 · Publicados: $2",
       "fr": "En attente : $1 · Publiés : $2"
+    },
+    {
+      "re": "^Download non riuscito: (.+)$",
+      "en": "Download failed: $1",
+      "es": "La descarga falló: $1",
+      "fr": "Échec du téléchargement : $1"
+    },
+    {
+      "re": "^Errore upload: (.+)$",
+      "en": "Upload error: $1",
+      "es": "Error de subida: $1",
+      "fr": "Erreur d’import : $1"
+    },
+    {
+      "re": "^Caricamento file (.+) in corso\\.\\.\\.$",
+      "en": "Uploading $1...",
+      "es": "Subiendo $1...",
+      "fr": "Import de $1..."
     }
   ]
 };

@@ -259,11 +259,89 @@
   }
 
   // ============================================================
-  // ALLEGATI — il database del sito non è adatto ai file: per ora non disponibili.
+  // ALLEGATI — salvati nell'archivio della squadra, solo per i membri.
+  // Il file viaggia a pezzi (max 1 MB a richiesta). Limite 4 MB.
   // ============================================================
-  async function uploadFileAllegato() {
-    return { ok: false, error: 'Il caricamento degli allegati sarà disponibile a breve.' };
+  var FILE_MAX = 4 * 1024 * 1024;
+  var PART_CHARS = 700000;
+
+  function readAsBase64(file) {
+    return new Promise(function (resolve, reject) {
+      var r = new FileReader();
+      r.onload = function () { var s = String(r.result || ''); resolve(s.slice(s.indexOf(',') + 1)); };
+      r.onerror = function () { reject(new Error('Lettura del file non riuscita')); };
+      r.readAsDataURL(file);
+    });
   }
+
+  var FILE_ERRORS = {
+    tipo_non_ammesso: 'Tipo di file non ammesso. Usa PDF, immagini, CSV, JSON, GPX/FIT o documenti Office.',
+    file_troppo_grande: 'Il file supera 4 MB. Per i video carica un link.',
+    non_membro: 'Non fai parte dello staff di questa squadra.',
+    login_richiesto: 'Accedi di nuovo per caricare file.'
+  };
+
+  async function uploadFileAllegato(clubId, categoria, entitaId, file, staffId, visibilita, onProgress) {
+    if (!file) return { ok: false, error: 'Nessun file selezionato.' };
+    if (file.size > FILE_MAX) return { ok: false, error: FILE_ERRORS.file_troppo_grande };
+    var b64;
+    try { b64 = await readAsBase64(file); } catch (e) { return { ok: false, error: e.message }; }
+    var parts = [];
+    for (var i = 0; i < b64.length; i += PART_CHARS) parts.push(b64.slice(i, i + PART_CHARS));
+    var fileId = 'f-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    var meta = { name: file.name, size: file.size, type: file.type || '', categoria: categoria || 'altro', entita_id: entitaId || '', visibilita: visibilita || [] };
+    for (var n = 0; n < parts.length; n++) {
+      var r = await call('POST', clubId, 'file_allegati', { chunk: { fileId: fileId, index: n, total: parts.length, data: parts[n], meta: meta } });
+      if (!r.ok) return { ok: false, error: FILE_ERRORS[r.error] || r.error || 'Caricamento non riuscito.' };
+      if (typeof onProgress === 'function') onProgress(Math.round(100 * (n + 1) / parts.length));
+      if (n === parts.length - 1) return { ok: true, item: r.data && r.data.item };
+    }
+    return { ok: false, error: 'Caricamento non riuscito.' };
+  }
+
+  async function downloadFileAllegato(clubId, fileId, fileName) {
+    var tok = authToken();
+    if (clubId === LEGACY_DEFAULT_ID || !clubId) clubId = clubNameOf(activeUser());
+    if (!tok || !clubId) return { ok: false, error: FILE_ERRORS.login_richiesto };
+    var out = '';
+    var parts = 1;
+    for (var n = 0; n < parts; n++) {
+      var url = API + '?club=' + encodeURIComponent(clubId) + '&col=file_allegati&file=' + encodeURIComponent(fileId) + '&part=' + n;
+      var res = await fetch(url, { headers: { Authorization: 'Bearer ' + tok } });
+      var json = null;
+      try { json = await res.json(); } catch (_) {}
+      if (!res.ok || !json || !json.ok) return { ok: false, error: (json && (json.message || json.error)) || ('HTTP ' + res.status) };
+      parts = json.parts || 1;
+      out += json.data;
+    }
+    var bin = atob(out);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    var blob = new Blob([bytes]);
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = fileName || 'allegato';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    return { ok: true };
+  }
+
+  async function removeFileAllegato(clubId, fileId) {
+    return call('POST', clubId, 'file_allegati', { removeId: fileId });
+  }
+
+  // Pulsanti «Scarica» negli elenchi allegati delle dashboard: <button data-sq-dl="id" data-sq-name="nome">.
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-sq-dl]');
+    if (!b) return;
+    e.preventDefault();
+    b.disabled = true;
+    downloadFileAllegato(clubNameOf(activeUser()), b.getAttribute('data-sq-dl'), b.getAttribute('data-sq-name')).then(function (r) {
+      b.disabled = false;
+      if (!r.ok && typeof window.showToast === 'function') window.showToast('Download non riuscito: ' + r.error, 'error');
+    });
+  });
 
   async function getFileAllegati(clubId, categoria, entitaId) {
     var all = await list(clubId, 'file_allegati');
@@ -350,6 +428,8 @@
     getEventiLog: getEventiLog,
     getImpegniStaff: getImpegniStaff,
     uploadFileAllegato: uploadFileAllegato,
+    downloadFileAllegato: downloadFileAllegato,
+    removeFileAllegato: removeFileAllegato,
     getFileAllegati: getFileAllegati,
     getStaff: getStaff,
     saveSchemaTattico: saveSchemaTattico,
