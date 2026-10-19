@@ -921,22 +921,22 @@
   // DATASET DATI REALI (CLEAN STATE)
   // ============================================================
   function getCleanRealDataset(u) {
-    var clubName = (u.clubName || u.societa || u.squadra || 'Il Tuo Club Ufficiale').trim();
+    var clubName = (u.clubName || u.societa || u.squadra || 'Club non inserito').trim();
     return {
       isDemoMode: false,
       lastUpdatedBy: getUserName(u),
       lastUpdatedAt: getFormattedDateTime(),
       clubName: clubName,
       footballScope: u.footballScope || 'dilettanti',
-      category: u.categoria || 'Serie D (Dipartimento Interregionale LND)',
-      region: u.region || 'Puglia',
+      category: u.categoria || 'Categoria non inserita',
+      region: u.region || '',
       season: 'Stagione 2026/27',
       matchDay: 'In attesa di avvio',
       position: '—',
       points: 0,
       standingGap: 'Campionato in fase di caricamento',
-      affiliationStatus: 'Affiliazione FIGC Registrata',
-      logoUrl: u.logoUrl || (/foggia city/i.test(clubName) ? 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1' : ''),
+      affiliationStatus: 'Affiliazione non inserita',
+      logoUrl: u.logoUrl || '',
       presName: getUserName(u),
       presRole: 'Ruolo: ' + (u.staffRole || 'Presidente'),
 
@@ -946,7 +946,7 @@
       sponsors: [],
       scouting: [],
       matches: [],
-      deadlines: getDefaultDeadlinesForScope(u.footballScope || 'dilettanti', u.categoria || 'Serie D (Dipartimento Interregionale LND)', u.region || 'Puglia'),
+      deadlines: [],
 
       safeguarding: {
         isAppointed: false,
@@ -983,8 +983,8 @@
       stadium: {
         name: 'Impianto Sportivo Principale',
         capacity: '—',
-        ticketPriceRegular: '10.00',
-        ticketPriceReduced: '5.00',
+        ticketPriceRegular: '—',
+        ticketPriceReduced: '—',
         safetyStatus: 'In attesa di certificazione agibilità',
         lastInspectionDate: 'Nessuna ispezione registrata',
         cpvProtocol: '—'
@@ -1032,10 +1032,9 @@
     if (!data || typeof data !== 'object') return data;
     var name = String(data.clubName || '').toLowerCase();
     var logo = String(data.logoUrl || '');
-    var is1920Name = /foggia calcio 1920|us foggia/.test(name);
-    var is1920Logo = /squadre-loghi\/foggia\.png|1000345699/.test(logo);
-    if (is1920Name) data.clubName = 'Foggia City';
-    if (is1920Name || is1920Logo || /foggia city/.test(name)) {
+    // Il logo ufficiale di un club reale non si mostra senza autorizzazione: resta solo per i dati dimostrativi.
+    if (/squadre-loghi\/foggia\.png|1000345699/.test(logo)) data.logoUrl = '';
+    if (data.isDemoMode && /foggia city/.test(name)) {
       data.logoUrl = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
     }
     return data;
@@ -1087,7 +1086,8 @@
       localStorage.setItem('elisee_pres_club_master_v3', JSON.stringify(data));
       localStorage.setItem('elisee_pres_club_master_v2', JSON.stringify(data));
       localStorage.setItem('elisee_pres_is_demo_mode', data.isDemoMode ? 'true' : 'false');
-      if (window.EliseePersist && typeof window.EliseePersist.pushClub === 'function') {
+      // I dati dimostrativi restano sul dispositivo: mai nell'archivio condiviso del club.
+      if (!data.isDemoMode && window.EliseePersist && typeof window.EliseePersist.pushClub === 'function') {
         window.EliseePersist.pushClub(data);
       }
     } catch (_) {}
@@ -1482,7 +1482,7 @@
                       '<div>' +
                         '<div style="font-size:0.92rem; font-weight:700; color:#fff;">' + esc(m.name) + '</div>' +
                         '<div style="font-size:0.75rem; color:#38bdf8; margin-top:0.1rem;">' + esc(m.role) + '</div>' +
-                        '<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.15rem;">Qualifica: <b>' + esc(m.patent || 'Patentino FIGC') + '</b></div>' +
+                        '<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.15rem;">Qualifica: <b>' + esc(m.patent || 'Qualifica non inserita') + '</b></div>' +
                       '</div>' +
                       '<span class="' + (m.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(m.status || 'Regolare') + '</span>' +
                     '</div>'
@@ -2277,11 +2277,11 @@
         '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">' +
           '<div class="es-pres-input-group">' +
             '<label>Città Sede *</label>' +
-            '<input type="text" class="es-pres-input-text" id="inp-club-city" required value="' + esc(data.city || 'Foggia') + '" placeholder="Es. Foggia">' +
+            '<input type="text" class="es-pres-input-text" id="inp-club-city" required value="' + esc(data.city || '') + '" placeholder="Es. Foggia">' +
           '</div>' +
           '<div class="es-pres-input-group">' +
             '<label>Provincia *</label>' +
-            '<input type="text" class="es-pres-input-text" id="inp-club-prov" required value="' + esc(data.province || data.region || 'Foggia') + '" placeholder="Es. Foggia">' +
+            '<input type="text" class="es-pres-input-text" id="inp-club-prov" required value="' + esc(data.province || data.region || '') + '" placeholder="Es. Foggia">' +
           '</div>' +
           '<div class="es-pres-input-group">' +
             '<label>Regione *</label>' +
@@ -2329,7 +2329,7 @@
         e.preventDefault();
         data.clubName = document.getElementById('inp-club-name').value.trim() || data.clubName;
         data.logoUrl = document.getElementById('inp-club-logo').value.trim() || data.logoUrl;
-        data.city = document.getElementById('inp-club-city').value.trim() || 'Foggia';
+        data.city = document.getElementById('inp-club-city').value.trim();
         data.province = document.getElementById('inp-club-prov').value.trim() || data.city;
         data.region = document.getElementById('sel-club-reg').value;
         data.kits = {
@@ -2596,7 +2596,7 @@
 
   // 6. UFFICIALIZZAZIONE OPERAZIONI DI MERCATO SUL WALL (PAG. 4 PDF)
   function openOfficializeTransferModal(data) {
-    var clubName = data.clubName || 'Foggia City';
+    var clubName = data.clubName || 'Club non inserito';
     var formHtml =
       '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
         'Come Presidente, approva ufficialmente il trasferimento per pubblicare la notizia sul <b>Wall delle Trattative Chiuse</b> (feed ufficiale stile FIFA) con grafica <b>UFFICIALE</b> e la Card aggiornata:' +
@@ -3689,11 +3689,11 @@
   // ============================================================
   // GESTIONE SUB-VIEWS & ROUTING (PUSHSTATE / POPSTATE)
 
-  var CLUB_CREST = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
-  var CLUB_CREST_FALLBACK = 'immagini/squadre-loghi/foggia-city.png';
+  var currentCrest = '';
 
   function crestImg(club, cls) {
-    return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + CLUB_CREST + '" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'' + CLUB_CREST_FALLBACK + '\';">';
+    if (currentCrest) return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + esc(currentCrest) + '" alt="' + esc(club) + '">';
+    return '<span class="es-pro-crest-ico' + (cls ? ' ' + cls : '') + '"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>';
   }
 
   function renderPresSideBtn(key, label, svgPath) {
@@ -3713,7 +3713,8 @@
   function wrapPresProChrome(innerHtml, data) {
     var user = userObj();
     var name = getUserName(user) || 'Presidente';
-    var club = String((data && (data.clubName || data.squadra)) || user.squadra || user.club || 'Foggia City').trim() || 'Foggia City';
+    var club = String((data && (data.clubName || data.squadra)) || user.squadra || user.club || '').trim() || 'Club non inserito';
+    currentCrest = String((data && data.logoUrl) || user.clubLogo || '').trim();
     var matchStats = computeCompetitionStats((data && data.matches) || []);
     var pendingDead = ((data && data.deadlines) || []).filter(function (d) { return !d.isCompleted; }).length;
     var icoDash = '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>';
@@ -4581,17 +4582,17 @@
             var selectedDate = document.getElementById('inp-cpv-date').value || todayIso;
             var prot = document.getElementById('inp-cpv-protocol').value;
 
-            data.stadium.capacity = numFormatted + ' posti certificati';
+            data.stadium.capacity = numFormatted + ' posti';
             data.stadium.lastInspectionDate = selectedDate;
             data.stadium.cpvProtocol = prot;
-            data.stadium.safetyStatus = 'Omologato CPV / FIGC (' + numFormatted + ' posti)';
+            data.stadium.safetyStatus = 'Verbale CPV inserito dal club (' + numFormatted + ' posti)';
             savePresClubData(data);
 
             if (modalOverlay) modalOverlay.remove();
             renderPresidentialSuite();
 
             if (window.showToast) {
-              window.showToast('Verbale CPV registrato: nuova capienza omologata a ' + numFormatted + ' posti!', 'success');
+              window.showToast('Verbale CPV salvato: capienza ' + numFormatted + ' posti.', 'success');
             }
           };
         }

@@ -32,25 +32,13 @@
     "Valle d'Aosta": ['Aosta'],
     Veneto: ['Belluno', 'Padova', 'Rovigo', 'Treviso', 'Venezia', 'Verona', 'Vicenza']
   };
-  var PLAYERS = [
-    ['Marco Rossi', 'Centravanti', 'Foggia'],
-    ['Lorenzo Bianchi', 'Centrocampista', 'San Severo'],
-    ['Matteo Ferrari', 'Difensore', 'Manfredonia'],
-    ['Roberto Barbieri', 'Portiere', 'Lucera'],
-    ['Sara Esposito', 'Ala', 'Napoli'],
-    ['Kevin Di Bari', 'Trequartista', 'Roma'],
-    ['Andrea Conte', 'Mediano', 'Milano'],
-    ['Francesco Greco', 'Centravanti', 'Palermo'],
-    ['Davide Russo', 'Portiere', 'Verona'],
-    ['Elena Bianco', 'Portiere', 'Bari']
-  ];
+  // Solo profili veri: nessun calciatore di esempio nei suggerimenti dei tag.
+  var PLAYERS = [];
 
   var clubCache = null;
   var composerTags = [];
   var composerType = 'article';
   var activeTab = 'dashboard';
-  var CLUB_CREST = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
-  var CLUB_CREST_FALLBACK = 'immagini/squadre-loghi/foggia-city.png';
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -83,65 +71,20 @@
   function giornName(u) {
     return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Giornalista';
   }
+  // Nessun contenuto precaricato: si vedono solo articoli, sondaggi e video scritti dagli utenti.
   function defaultSeedItems() {
-    return [
-      {
-        id: 'st-seed-1',
-        type: 'article',
-        status: 'approved',
-        authorName: 'Redazione Elisee Scout',
-        authorEmail: 'stampa@elisee-scout.it',
-        title: 'Focus Calciomercato Dilettanti & Serie D: i giovani emergenti del Sud e Nord Italia',
-        body: 'Inizio di stagione entusiasmante sui campi della Serie D e dei massimi campionati regionali di Eccellenza. Cresce l’attenzione dei Direttori Sportivi e degli Osservatori sui fuoriquota classe 2005, 2006 e 2007 che stanno trascinando le rispettive squadre. Ecco l’analisi tattica e i dati prestazionali elaborati dalla piattaforma.',
-        geo: { level: 'nazionale', value: 'Italia' },
-        tags: [
-          { kind: 'club', id: 'cl-foggia', name: 'Calcio Foggia 1920' }
-        ],
-        createdAt: new Date(Date.now() - 3600000 * 4).toISOString()
-      },
-      {
-        id: 'st-seed-2',
-        type: 'poll',
-        status: 'approved',
-        authorName: 'Eliseo Miraglia (Editoriale Sportivo)',
-        authorEmail: 'eliseomiraglia2704@gmail.com',
-        title: 'Sondaggio: Quale girone di Serie D esprimerà il maggior numero di talenti per il professionismo?',
-        body: 'Vota il girone più competitivo e tecnico della stagione secondo la tua visione di scouting.',
-        geo: { level: 'nazionale', value: 'Italia' },
-        pollOptions: [
-          { text: 'Girone H (Puglia, Campania, Basilicata)', votes: 98 },
-          { text: 'Girone D (Emilia-Romagna, Toscana, Lombardia)', votes: 74 },
-          { text: 'Girone I (Sicilia, Calabria, Campania)', votes: 63 },
-          { text: 'Girone A/B (Piemonte, Liguria, Lombardia)', votes: 55 }
-        ],
-        tags: [
-          { kind: 'club', id: 'cl-serie-d', name: 'Serie D Italia' }
-        ],
-        createdAt: new Date(Date.now() - 3600000 * 10).toISOString()
-      },
-      {
-        id: 'st-seed-3',
-        type: 'article',
-        status: 'approved',
-        authorName: 'Ufficio Stampa & Scouting Territoriale',
-        authorEmail: 'scout.territorio@elisee-scout.it',
-        title: 'Guida al Tesseramento Fuoriquota, Premi di Preparazione e Svincoli',
-        body: 'Tutto quello che c’è da sapere sulle finestre di trasferimento, le tutele legali per calciatori dilettanti e l’utilizzo dell’IA per il matching tra società e atleti svincolati.',
-        geo: { level: 'regione', value: 'Puglia' },
-        tags: [],
-        createdAt: new Date(Date.now() - 3600000 * 20).toISOString()
-      }
-    ];
+    return [];
   }
 
   function loadItems() {
     try {
       var rows = JSON.parse(localStorage.getItem(STORE) || '[]');
-      if (Array.isArray(rows) && rows.length > 0) return rows;
-      var seeds = defaultSeedItems();
-      saveItems(seeds);
-      return seeds;
-    } catch (_) { return defaultSeedItems(); }
+      if (!Array.isArray(rows)) return [];
+      // Toglie i vecchi contenuti di esempio salvati dalle versioni precedenti.
+      var clean = rows.filter(function (r) { return !(r && /^st-seed-/.test(String(r.id || ''))); });
+      if (clean.length !== rows.length) saveItems(clean);
+      return clean;
+    } catch (_) { return []; }
   }
   function saveItems(rows) {
     try { localStorage.setItem(STORE, JSON.stringify(rows || [])); } catch (_) {}
@@ -246,7 +189,7 @@
   }
 
   function crestImg(club, cls) {
-    return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + CLUB_CREST + '" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'' + CLUB_CREST_FALLBACK + '\';">';
+    return '<span class="es-pro-crest-ico' + (cls ? ' ' + cls : '') + '"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>';
   }
 
   function renderProSideBtn(key, label, svgPath) {
@@ -263,7 +206,7 @@
 
   function wrapGiornProShell(user, inner) {
     var name = giornName(user);
-    var club = String(user.squadra || user.club || user.pressOutlet || 'Foggia City').trim() || 'Foggia City';
+    var club = String(user.pressOutlet || user.squadra || user.club || '').trim() || 'Testata non inserita';
     var verified = isPressVerified(user);
     var licence = verified ? 'Stampa / Giornalista Verificato' : 'Stampa / Giornalista';
     var icoDash = '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>';
@@ -694,7 +637,7 @@
       source: 'Redazione Elisee Scout · Esempio',
       sourceUrl: '',
       date: '07 Set 2026',
-      tag: { kind: 'club', id: 'cl-foggia', name: 'Calcio Foggia 1920' }
+      tag: null
     },
     {
       id: 'rs-2',

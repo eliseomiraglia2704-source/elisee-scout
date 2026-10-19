@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — RD3 — Dashboard Preparatore atletico, Preparatore portieri, Match analyst e Osservatore senza dati inventati:
+Ultimo aggiornamento: **2026-10-19** — RD4 — Dashboard Calciatore, Giornalista e Presidente senza dati inventati:
+
+1. **Calciatore** (`player-dash.js`): tolti i dati stagionali precaricati (gare «vs Notaresco…», voti, 92% di compatibilità), il grafico di crescita fisso, «Foggia City» e il logo per tutti, «Mario Rossi», ruolo «Attaccante» di ripiego, badge «Validato» fisso e il link «IA Career Projection» che non calcolava niente. «Esporta i miei dati (GDPR)» ora scarica davvero un file JSON con i dati del profilo (senza token o password). «Richiedi intervento umano (art. 22)» apre una email a areaeliseescout@gmail.com, il contatto dell'informativa privacy, invece di dire «presa in carico dal DPO».
+2. **Giornalista** (`giorn-dash.js`): tolti i 3 contenuti «pubblicati» di esempio (con autore Eliseo Miraglia, email inventate e un sondaggio con voti finti); quelli già salvati nei browser vengono cancellati al primo caricamento. Tolti i 10 calciatori inventati suggeriti nei tag. La rassegna resta solo con voci etichettate «Esempio», senza il tag del Calcio Foggia 1920.
+3. **Presidente** (`pres-dash.js`): con i dati reali niente più «Affiliazione FIGC Registrata», Serie D, Puglia, prezzi biglietti e scadenze federali di default. Il nome «US Foggia» non viene più cambiato in «Foggia City» e il logo del club reale non viene mostrato. I dati dimostrativi (Foggia City, con banner «Modalità Dimostrativa») non vengono più inviati all'archivio condiviso del club. Il verbale CPV ora risulta «inserito dal club», non «omologato».
+4. **File**: `player-dash.js`, `giorn-dash.js`, `pres-dash.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_RD4`.
+
+Feature precedente: **2026-10-19** — RD3 — Dashboard Preparatore atletico, Preparatore portieri, Match analyst e Osservatore senza dati inventati:
 
 1. **Cosa c'era**: prossima gara fissa «Foggia City vs Manfredonia Calcio, Stadio Pino Zaccheria», qualifiche «Preparatore FIGC», radar a percentuali fisse, e pulsanti che dicevano «inoltrato al Mister / al DS di Foggia City», «badge conferito», «dati sincronizzati» senza fare niente. Lo scout generava schede «IA» inventate.
 2. **Ora**: anche queste usano `role-dash-honest.js`. Restano le funzioni vere: appunti di lavoro salvati su questo dispositivo (schede del preparatore, sedute e video dei portieri, report e clip del match analyst, relazioni e gare da visionare dello scout), con modulo, elenco ed «Elimina». Collegamenti veri: Secret List e Wall trasferimenti (Hub Mercato), ricerca profili, messaggi. Carichi GPS, test fisici, test dei portieri, mappe di calore: «In arrivo».

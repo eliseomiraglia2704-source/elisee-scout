@@ -4,8 +4,6 @@
 
   var currentSeason = '2026/27';
   var activeTab = 'dashboard';
-  var CLUB_CREST = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
-  var CLUB_CREST_FALLBACK = 'immagini/squadre-loghi/foggia-city.png';
 
   var AXES = [
     'Intercettazioni', 'Tackle', 'Duelli Aerei Vinti', 'Precisione Passaggi',
@@ -14,101 +12,12 @@
   ];
 
   // Dataset per stagione
+  // Nessun dato precaricato: le prestazioni arrivano solo dal profilo (playerProfile.radar / matches).
   var SEASON_DATASETS = {
-    '2026/27': {
-      hasData: true,
-      label: 'Stagione 2026/27 (Corrente)',
-      primary: [93, 89, 81, 92, 86, 78, 94, 89, 93, 96, 91, 88],
-      benchmark: [92, 88, 79, 91, 85, 76, 93, 88, 92, 95, 90, 87],
-      leagueAvg: [82, 80, 75, 81, 78, 73, 83, 82, 84, 85, 83, 81],
-      pgbAvg: '8.2 / 10',
-      matches: [
-        { match: 'vs. Notaresco', min: "90'", g: 1, a: 0, pgb: 8.6, dot: 'g' },
-        { match: 'vs. Vastese', min: "85'", g: 0, a: 1, pgb: 7.2, dot: 'g' },
-        { match: 'vs. Chieti', min: "90'", g: 1, a: 1, pgb: 8.4, dot: 'g' },
-        { match: 'vs. Termoli', min: "90'", g: 2, a: 1, pgb: 9.0, dot: 'g' },
-        { match: 'vs. Campobasso', min: "90'", g: 1, a: 0, pgb: 7.8, dot: 'g' },
-        { match: 'vs. Castelfidardo', min: "88'", g: 0, a: 1, pgb: 8.0, dot: 'g' }
-      ],
-      metrics: {
-        compatibilita: '92%',
-        tackle: '91%',
-        passaggi: '92%',
-        dribbling: '94%',
-        recupero: '96%'
-      }
-    },
-    '2025/26': {
-      hasData: true,
-      label: 'Stagione 2025/26',
-      primary: [92, 88, 79, 91, 85, 76, 93, 88, 92, 95, 90, 87],
-      benchmark: [78, 80, 70, 82, 74, 68, 84, 76, 80, 86, 81, 79],
-      leagueAvg: [81, 79, 74, 80, 77, 72, 82, 81, 83, 84, 82, 80],
-      pgbAvg: '8.1 / 10',
-      matches: [
-        { match: 'vs. Notaresco', min: "90'", g: 1, a: 0, pgb: 8.6, dot: 'g' },
-        { match: 'vs. Vastese', min: "85'", g: 0, a: 1, pgb: 7.0, dot: 'g' },
-        { match: 'vs. Chieti', min: "72'", g: 0, a: 0, pgb: 6.5, dot: 'y' },
-        { match: 'vs. Termoli', min: "90'", g: 2, a: 1, pgb: 9.0, dot: 'g' },
-        { match: 'vs. Campobasso', min: "90'", g: 1, a: 0, pgb: 7.0, dot: 'y' },
-        { match: 'vs. Castelfidardo', min: "80'", g: 0, a: 0, pgb: 7.5, dot: 'g' }
-      ],
-      metrics: {
-        compatibilita: '90%',
-        tackle: '90%',
-        passaggi: '91%',
-        dribbling: '93%',
-        recupero: '95%'
-      }
-    },
-    '2024/25': {
-      hasData: true,
-      label: 'Stagione 2024/25',
-      primary: [84, 82, 75, 85, 79, 72, 86, 81, 85, 89, 84, 82],
-      benchmark: [78, 80, 70, 82, 74, 68, 84, 76, 80, 86, 81, 79],
-      leagueAvg: [80, 78, 73, 79, 76, 71, 81, 80, 82, 83, 81, 79],
-      pgbAvg: '7.6 / 10',
-      matches: [
-        { match: 'vs. Avezzano', min: "80'", g: 0, a: 1, pgb: 7.4, dot: 'g' },
-        { match: 'vs. Sambenedettese', min: "90'", g: 1, a: 0, pgb: 7.8, dot: 'g' },
-        { match: 'vs. Fano', min: "65'", g: 0, a: 0, pgb: 6.8, dot: 'y' },
-        { match: 'vs. Senigallia', min: "90'", g: 1, a: 0, pgb: 8.0, dot: 'g' },
-        { match: 'vs. Sora', min: "75'", g: 0, a: 0, pgb: 6.9, dot: 'y' }
-      ],
-      metrics: {
-        compatibilita: '84%',
-        tackle: '82%',
-        passaggi: '85%',
-        dribbling: '86%',
-        recupero: '89%'
-      }
-    },
-    '2023/24': {
-      hasData: true,
-      label: 'Stagione 2023/24',
-      primary: [78, 80, 70, 82, 74, 68, 84, 76, 80, 86, 81, 79],
-      benchmark: [70, 72, 65, 75, 68, 62, 76, 70, 74, 78, 75, 72],
-      leagueAvg: [78, 76, 71, 77, 74, 69, 79, 78, 80, 81, 79, 77],
-      pgbAvg: '7.1 / 10',
-      matches: [
-        { match: 'vs. Roma City', min: "70'", g: 0, a: 0, pgb: 6.8, dot: 'y' },
-        { match: 'vs. Tivoli', min: "90'", g: 1, a: 0, pgb: 7.5, dot: 'g' },
-        { match: 'vs. Sora', min: "60'", g: 0, a: 0, pgb: 6.4, dot: 'y' },
-        { match: 'vs. Riccione', min: "85'", g: 1, a: 1, pgb: 7.9, dot: 'g' }
-      ],
-      metrics: {
-        compatibilita: '78%',
-        tackle: '80%',
-        passaggi: '82%',
-        dribbling: '84%',
-        recupero: '86%'
-      }
-    },
-    '2022/23': {
-      hasData: false,
-      label: 'Stagione 2022/23',
-      message: 'Nessun dato registrato per la stagione 2022/23 (Tesseramento federale o match analysis non attiva sulla piattaforma).'
-    }
+    '2026/27': { hasData: false, label: 'Stagione 2026/27 (Corrente)' },
+    '2025/26': { hasData: false, label: 'Stagione 2025/26' },
+    '2024/25': { hasData: false, label: 'Stagione 2024/25' },
+    '2023/24': { hasData: false, label: 'Stagione 2023/24' }
   };
 
   var ICONS = {
@@ -201,7 +110,7 @@
   }
 
   function playerName(u) {
-    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Mario Rossi';
+    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Atleta';
   }
 
   function initials(name) {
@@ -294,29 +203,11 @@
     return html;
   }
 
-  function trendSvg() {
-    var series = {
-      '2023': [62, 68, 70, 74, 72, 78],
-      '2024': [70, 72, 76, 80, 84, 86],
-      '2025': [78, 82, 85, 88, 90, 93],
-      '2026': [84, 88, 89, 92, 94, 96]
-    };
-    var cols = { '2023': '#64748b', '2024': '#34d399', '2025': '#fbbf24', '2026': '#38bdf8' };
-    var w = 240, h = 85;
-    var html = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="85">';
-    Object.keys(series).forEach(function (k) {
-      var vals = series[k];
-      var pts = vals.map(function (v, i) {
-        return ((i / 5) * (w - 8) + 4).toFixed(1) + ',' + (h - 8 - (v / 100) * (h - 16)).toFixed(1);
-      }).join(' ');
-      html += '<polyline fill="none" stroke="' + cols[k] + '" stroke-width="2" points="' + pts + '"/>';
-    });
-    html += '</svg>';
-    return html;
-  }
-
   function crestImg(club, cls) {
-    return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + CLUB_CREST + '" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'' + CLUB_CREST_FALLBACK + '\';">';
+    var logo = '';
+    try { var u = userObj(); logo = String(u.clubLogo || u.squadraLogo || u.logoSquadra || '').trim(); } catch (_) {}
+    if (logo) return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + esc(logo) + '" alt="' + esc(club) + '">';
+    return '<span class="es-pro-crest-ico' + (cls ? ' ' + cls : '') + '"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>';
   }
 
   function renderProSideBtn(key, label, svgPath) {
@@ -334,7 +225,7 @@
   function wrapPlayerProShell(meta, inner) {
     var name = meta.name || 'Atleta';
     var role = meta.fieldRole || 'Ruolo di campo';
-    var club = meta.clubName || 'Foggia City';
+    var club = meta.clubName || 'Squadra non inserita';
     var pgb = meta.pgbAvg || '—';
     var season = meta.currentSeason || currentSeason;
     var icoDash = '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>';
@@ -361,7 +252,7 @@
         '<div class="es-pro-sidebar-badge">' +
           '<div class="es-pro-sidebar-club-card">' +
             crestImg(club) +
-            '<div><strong>' + esc(club) + '</strong><span>Prima Squadra</span></div>' +
+            '<div><strong>' + esc(club) + '</strong><span>' + esc(role) + '</span></div>' +
           '</div>' +
         '</div>' +
       '</aside>' +
@@ -385,7 +276,7 @@
               '<div class="es-pro-header-sep"></div>' +
               '<div class="es-pro-header-block es-pro-club-info">' +
                 crestImg(club, 'crest') +
-                '<div><strong>' + esc(club) + '</strong><span>Prima Squadra</span></div>' +
+                '<div><strong>' + esc(club) + '</strong><span>' + esc(role) + '</span></div>' +
               '</div>' +
             '</div>' +
             '<button type="button" class="es-pro-btn-quick-jump" data-pd="edit">Modifica Profilo</button>' +
@@ -514,7 +405,7 @@
       if (!dashVal(value)) return miss(label);
       return '<div class="es-pd-metric-row' + (hi ? ' es-pd-metric-hi' : '') + '"><span>' + esc(label) + '</span><b>' + esc(value) + '</b></div>';
     }
-    var clubLabel = clubName || 'Foggia City';
+    var clubLabel = clubName || 'Squadra non inserita';
     var obiettiviCard =
         '<div class="es-panel-card">' +
           '<div class="es-panel-card__head">' +
@@ -584,7 +475,7 @@
             '<span class="es-badge es-badge--pending">' + (sData.hasData ? 'Storico' : 'Vuoto') + '</span>' +
           '</div>' +
           (sData.hasData
-            ? (trendSvg() || '')
+            ? '<p class="es-empty-note">Lo storico si popola con le stagioni realmente tracciate.</p>'
             : '<p class="es-empty-note">Nessuna serie storica certificata. Il grafico si popola con le stagioni realmente tracciate.</p>'
           ) +
         '</div>' +
@@ -625,7 +516,7 @@
             '</div>' +
             '<div>' +
               '<p class="es-profile-summary__name">' + esc(name) + '</p>' +
-              '<p class="es-profile-summary__role">' + esc(fieldRole || 'Attaccante') + '</p>' +
+              '<p class="es-profile-summary__role">' + esc(fieldRole || 'Ruolo non inserito') + '</p>' +
               '<p class="es-profile-summary__club">' + esc(clubLabel) + '</p>' +
             '</div>' +
           '</div>' +
@@ -651,7 +542,7 @@
         '<div class="es-panel-card">' +
           '<div class="es-panel-card__head">' +
             '<h4>Certificazione &amp; Compliance</h4>' +
-            '<span class="es-badge es-badge--verified">Validato</span>' +
+            '<span class="es-badge ' + (badgeOk ? 'es-badge--verified' : 'es-badge--pending') + '">' + (badgeOk ? 'Validato' : 'Da completare') + '</span>' +
           '</div>' +
           '<ul class="es-checklist">' +
             '<li><span>Email</span><span class="es-badge ' + (emailOk ? 'es-badge--verified' : 'es-badge--pending') + '">' + (emailOk ? 'Verificata' : 'Da verificare') + '</span></li>' +
@@ -721,7 +612,6 @@
           '<a href="#" data-player-action="behavioral_consent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Attivare consenso profilo comportamentale</a>' +
           '<a href="#" data-player-action="human_intervention"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Richiedere intervento umano (art. 22)</a>' +
           '<a href="#" data-player-action="export_gdpr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Esportare i propri dati (GDPR)</a>' +
-          '<a href="#" data-player-action="career_projection"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Percorso di Crescita Proiettato (IA Career Projection)</a>' +
         '</div>' +
       '</div>' +
 
@@ -950,6 +840,28 @@
     });
   }
 
+  // Copia dei dati del profilo salvati su questo dispositivo (diritto di accesso, art. 15 GDPR).
+  function exportMyData() {
+    var u = userObj();
+    var copy = {};
+    Object.keys(u).forEach(function (k) {
+      if (!/token|password|hash|secret/i.test(k)) copy[k] = u[k];
+    });
+    var out = { esportatoIl: new Date().toISOString(), profilo: copy, richiesteContatto: getRichiesteData() };
+    try {
+      var blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'elisee-scout-miei-dati.json';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      if (typeof window.showToast === 'function') window.showToast('File con i tuoi dati scaricato.', 'success');
+    } catch (_) {
+      if (typeof window.showToast === 'function') window.showToast('Download non riuscito su questo browser.', 'error');
+    }
+  }
+
   function bind(root) {
     if (!root || root.dataset.bound === '1') return;
     root.dataset.bound = '1';
@@ -1016,17 +928,13 @@
             window.showToast('Consenso al profilo comportamentale attivato con successo.', 'success');
           }
         } else if (pAct === 'human_intervention') {
-          if (typeof window.showToast === 'function') {
-            window.showToast('Richiesta di intervento umano (art. 22 GDPR) presa in carico dal DPO.', 'info');
-          }
+          // Richiesta art. 22 GDPR: email al contatto privacy indicato nell'informativa.
+          var hu = userObj();
+          window.location.href = 'mailto:areaeliseescout@gmail.com?subject=' +
+            encodeURIComponent('Richiesta intervento umano (art. 22 GDPR)') + '&body=' +
+            encodeURIComponent('Account: ' + (hu.email || '') + '\n\nDescrivi la tua richiesta:\n');
         } else if (pAct === 'export_gdpr') {
-          if (typeof window.showToast === 'function') {
-            window.showToast('Esportazione dati personali (GDPR) generata con successo.', 'success');
-          }
-        } else if (pAct === 'career_projection') {
-          if (typeof window.showToast === 'function') {
-            window.showToast('Percorso di Crescita Proiettato (IA Career Projection) calcolato sui dati agonistici.', 'info');
-          }
+          exportMyData();
         }
         return;
       }
