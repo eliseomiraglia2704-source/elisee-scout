@@ -3490,7 +3490,8 @@
           '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Matricola FIGC</label><input type="text" id="cfg-coach-matr" value="' + esc(data.matricola) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
           '<div style="grid-column:1/-1; display:flex; justify-content:flex-end;"><button type="submit" class="es-btn-cos-primary">Salva Impostazioni</button></div>' +
         '</form>' +
-      '</div>'
+      '</div>' +
+      '<section class="es-cos-panel-card es-sqm" id="es-sqm-mount" aria-live="polite"></section>'
     );
   }
 
@@ -4541,6 +4542,10 @@
         if (window.showToast) window.showToast('Impostazioni tecniche salvate!', 'success');
       };
     }
+
+    // Staff della squadra: membri gestiti dal titolare (squadra-membri.js).
+    var sqmMount = mount.querySelector('#es-sqm-mount');
+    if (sqmMount && window.EliseeSquadraMembri) window.EliseeSquadraMembri.mount(sqmMount);
   }
 
   function openDossierEditModal(data, matchId, focusField) {

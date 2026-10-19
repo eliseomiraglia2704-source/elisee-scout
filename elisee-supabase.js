@@ -312,6 +312,11 @@
     return all.filter(function (d) { return d.partita_id === matchId; })[0] || null;
   }
 
+  // Nome squadra, se sei il titolare (titolare: true) e, solo per lui, l'elenco dei membri.
+  async function getSquadraInfo(clubId) {
+    return call('GET', clubId, '');
+  }
+
   // Solo il titolare della squadra può aggiungere o togliere membri dello staff.
   async function addMembro(clubId, email) {
     return call('POST', clubId, 'membri', { email: email });
@@ -341,6 +346,7 @@
     getSchemiTattici: getSchemiTattici,
     saveDossierTattico: saveDossierTattico,
     getDossierTattico: getDossierTattico,
+    getSquadraInfo: getSquadraInfo,
     addMembro: addMembro,
     removeMembro: removeMembro
   };

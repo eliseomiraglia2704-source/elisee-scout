@@ -1,0 +1,113 @@
+/* ELISEE SCOUT — Staff della squadra (squadra-membri.js), dentro le dashboard Allenatore e Vice. */
+.es-sqm {
+  margin-top: 1.25rem;
+}
+
+.es-sqm-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.es-sqm-lead,
+.es-sqm-team,
+.es-sqm-hint,
+.es-sqm-msg {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--cos-muted, #8da8bc);
+}
+
+.es-sqm-team {
+  color: var(--cos-text, #f3f8fc);
+}
+
+.es-sqm-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--cos-muted, #8da8bc);
+}
+
+.es-sqm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.es-sqm-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--cos-card-border, #12344a);
+  border-radius: var(--cos-radius-sm, 6px);
+}
+
+.es-sqm-email {
+  font-size: 0.85rem;
+  color: var(--cos-text, #f3f8fc);
+  overflow-wrap: anywhere;
+}
+
+.es-sqm-remove {
+  background: transparent;
+  border: 1px solid var(--cos-card-border, #12344a);
+  color: var(--cos-muted, #8da8bc);
+  border-radius: var(--cos-radius-sm, 6px);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.es-sqm-remove:hover,
+.es-sqm-remove:focus-visible {
+  color: var(--cos-text, #f3f8fc);
+  border-color: var(--cos-cyan, #19B9F2);
+}
+
+.es-sqm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.es-sqm-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.es-sqm-input {
+  flex: 1 1 220px;
+  min-width: 0;
+  background: var(--cos-input-bg, #071522);
+  border: 1px solid var(--cos-card-border, #12344a);
+  color: var(--cos-text, #f3f8fc);
+  padding: 0.6rem;
+  border-radius: var(--cos-radius-sm, 6px);
+  font-size: 0.85rem;
+}
+
+.es-sqm-input:focus-visible {
+  outline: 2px solid var(--cos-cyan, #19B9F2);
+  outline-offset: 1px;
+}
+
+.es-sqm-msg--ok {
+  color: var(--cos-cyan, #19B9F2);
+}
+
+.es-sqm-msg--error {
+  color: #f08a8a;
+}
+
+.es-sqm button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}

@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — SEC5 — I dati condivisi li protegge il server:
+Ultimo aggiornamento: **2026-10-19** — SQ2 — Staff della squadra:
+
+1. **Cosa mancava**: il database permetteva al titolare di aggiungere membri, ma non c'era la schermata.
+2. **Ora**: dashboard Allenatore e Vice, scheda Impostazioni, riquadro «Staff della squadra» (`squadra-membri.js` + `squadra-membri.css`). Il titolare vede i membri, li aggiunge con l'email e li toglie. Un membro vede che fa parte dello staff. Chi non è membro vede che la squadra ha un titolare e la sua email da comunicargli. Nuova funzione `EliseeSupabase.getSquadraInfo`. Testi IT/EN in `i18n.js` (chiavi `sqm.*`).
+3. **File**: `squadra-membri.js`, `squadra-membri.css` (nuovi), `coach-dash.js`, `vice-dash.js`, `elisee-supabase.js`, `i18n.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_SQ2`.
+
+Feature precedente: **2026-10-19** — SEC5 — I dati condivisi li protegge il server:
 
 1. **Cosa era rotto**: in `/api/manager` i percorsi `gdpr`, `ambassador`, `schede`, `club`, `coach`, `card` non chiedevano nessun accesso. Chiunque poteva leggere tutto (reclami, pratiche Ambassador con codice fiscale e firma, candidature con telefono, rose) e sovrascrivere tutto. In più ogni visitatore scaricava le code GDPR e Ambassador nel suo browser. Le liste online erano ancora vuote: nessun dato è uscito.
 2. **Ora** (`lib/data-access.js`): staff = token admin/privacy firmato; utente = token di sessione, email presa dal token e mai dal form.
