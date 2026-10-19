@@ -1,6 +1,18 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — APP1 — «Modifica profilo» chiusa al punto giusto (passo 1 di 3):
+Ultimo aggiornamento: **2026-10-19** — APP3 — Codice storico tolto da app.js (passo 3 di 3):
+
+1. **Ora**: le ~7.000 righe parcheggiate sono state tolte da `app.js` (da ~12.650 a ~5.670 righe, da ~620 KB a ~230 KB). Copia di sicurezza in `_archivio/app-codice-storico-2026-10-19.js.txt` (esclusa dal sito in `.vercelignore`). Dentro c'erano: notizie/classifiche/annunci finti con timer, un vecchio login admin che leggeva utente e password dall'indirizzo, doppioni di `switchView`, `filterAndRenderJobs` e simili, vecchie funzioni del pannello admin non più mostrate.
+2. **Prove**: visitatore e utente identici a prima; «Modifica profilo» non cambia la navigazione; login admin senza ricaricare apre il Control Center; nessun pulsante della pagina chiama funzioni mancanti (oltre a quelle già protette da un controllo).
+3. **File**: `app.js`, `_archivio/app-codice-storico-2026-10-19.js.txt`, `.vercelignore`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_APP3`. Pubblicato insieme ad APP2.
+
+Feature precedente: **2026-10-19** — APP2 — Recuperate le funzioni che mancavano (passo 2 di 3):
+
+1. **Come le ho trovate**: controllo di tutti i pulsanti con `onclick` (visitatore e admin) e di tutti i file che chiamano funzioni del codice parcheggiato. Mancavano davvero solo: `requireEliseeLogin` e `isEliseeLoggedIn` (Scopri, Mercato, Schede, area TC: senza, i visitatori entravano senza che il sito chiedesse l'accesso), `openBadgeInfoModal` (link «Legal» del footer, non faceva niente), `closeGovernanceActionModal`, `onCreaProfilo`.
+2. **Ora**: queste funzioni sono in `app.js` subito dopo `openEditUserModal`. «Legal» apre una finestra con la posizione legale (non affiliazione FIGC/LND, link a privacy e cookie), testi IT/EN (`legal.*`, `auth.loginNeeded`), stile `.es-legal-*` in `style.css`. I badge con promesse non verificate (AES-256, GPS, auto-tagging) non sono stati recuperati.
+3. **File**: `app.js`, `i18n.js`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_APP2`.
+
+Feature precedente: **2026-10-19** — APP1 — «Modifica profilo» chiusa al punto giusto (passo 1 di 3):
 
 1. **Cosa era rotto**: in `app.js` `window.openEditUserModal` non si chiudeva: conteneva ~7.000 righe (navigazione, bacheca, pannello admin, vecchio login admin che legge utente e password dall'indirizzo, notizie/classifiche/annunci finti con timer). Partivano solo aprendo «Modifica profilo», e ogni volta da capo: sostituivano `switchView` e `filterAndRenderJobs` di `app-boot-extras.js` e aggiungevano contenuti finti.
 2. **Ora**: la funzione si chiude dopo il proprio modulo. Il resto è parcheggiato in `_eliseeCodiceStoricoNonEseguito()` (mai chiamata). Il sito al caricamento è identico a prima (verificato da visitatore e da utente); aprire «Modifica profilo» non cambia più la navigazione.

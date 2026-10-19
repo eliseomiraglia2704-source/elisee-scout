@@ -28,6 +28,7 @@ CREDENZIALI_TEMPORANEE.txt
 /*.lnk
 /_*.js
 /_*.json
+/_archivio/
 .claude/
 .grok/
 .vscode/
