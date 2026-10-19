@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — PW1 — Recupero password vero con codice email:
+Ultimo aggiornamento: **2026-10-19** — HOME1 — Home: niente più «verificati FIGC/LND»:
+
+1. **Perché**: la home diceva «Dossier verificati FIGC/LND» e mostrava «FIGC» tra i numeri del curriculum, mentre la pagina Legal dice che la piattaforma non è affiliata né collegata a FIGC/LND.
+2. **Ora**: «Dossier verificati» (IT/EN/ES/FR, `home.badgeDossier`) e «Verifica» al posto di «FIGC» (`home.statDossierKicker`).
+3. **Aperto**: la pagina Curriculum (`#dashboard-skills`) ha pulsanti con promesse non verificate (GPS «convalidata K-Sport / Catapult», «Status federale FIGC registrato», certificato medico, video certificati).
+4. **File**: `index.html`, `i18n.js`, `sw.js`, `version.json`. Cache `v20261019_HOME1`.
+
+Feature precedente: **2026-10-19** — PW1 — Recupero password vero con codice email:
 
 1. **Email**: l'invio via Resend funziona (prova del 2026-10-19 verso l'email del titolare: accettata da Resend). Se una email non arriva, controllare lo spam e su Resend il dominio del mittente (`RESEND_FROM`).
 2. **Flusso**: «Password dimenticata?» → email → codice di 6 cifre via email (`/api/auth-otp?action=send`, `purpose: reset`, testo «scegliere una nuova password») → codice + nuova password → `/api/auth-otp?action=verify` rilascia un `resetToken` firmato (OTP_SECRET, 10 minuti) → `/api/auth/reset-password` (`api/auth/me.js`) cambia la password, una sola volta per token, e fa entrare. Lo staff non può usarlo (password da variabili server). Account inesistente → messaggio «entra con Google».
