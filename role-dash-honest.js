@@ -108,6 +108,51 @@
       }).join('') + '</ul>');
   }
 
+  function loadList(key) {
+    try { var v = JSON.parse(localStorage.getItem(key) || '[]'); return Array.isArray(v) ? v : []; } catch (_) { return []; }
+  }
+  function saveList(key, list) {
+    try { localStorage.setItem(key, JSON.stringify(list)); return true; } catch (_) { return false; }
+  }
+
+  // Appunti di lavoro dell'utente: restano su questo dispositivo e il sito lo dice.
+  function tabNotes(cfg, t) {
+    var p = cfg.prefix;
+    var rows = loadList(t.storeKey);
+    var form = '<form class="es-rdh-form" data-rdh-form="' + esc(t.id) + '">' +
+      (t.fields || []).map(function (f) {
+        var tag = f.long
+          ? '<textarea name="' + esc(f.k) + '" rows="3" placeholder="' + esc(f.ph || '') + '"' + (f.req ? ' required' : '') + '></textarea>'
+          : '<input name="' + esc(f.k) + '" placeholder="' + esc(f.ph || '') + '"' + (f.req ? ' required' : '') + '>';
+        return '<label class="es-rdh-field' + (f.long ? ' is-long' : '') + '"><span>' + esc(f.label) + '</span>' + tag + '</label>';
+      }).join('') +
+      '<div class="es-rdh-form-actions"><button type="submit" class="es-' + p + '-quick-btn">' + esc(t.addLabel || 'Aggiungi') + '</button></div>' +
+      '</form>';
+    var list = rows.length
+      ? '<ul class="es-rdh-notes">' + rows.map(function (r) {
+          var main = r[(t.fields[0] || {}).k] || '';
+          var rest = (t.fields || []).slice(1).map(function (f) {
+            return r[f.k] ? '<span><b>' + esc(f.label) + ':</b> ' + esc(r[f.k]) + '</span>' : '';
+          }).join('');
+          return '<li><div><strong>' + esc(main) + '</strong>' + rest + '<small>' + esc(r.at || '') + '</small></div>' +
+            '<button type="button" class="es-rdh-del" data-rdh-del="' + esc(t.id) + '" data-id="' + esc(r.id) + '" aria-label="Elimina">Elimina</button></li>';
+        }).join('') + '</ul>'
+      : '<div class="es-rdh-empty">' + esc(t.emptyText || 'Ancora niente qui.') + '</div>';
+    return card(p, t.title || t.label, t.ico, { text: 'Su questo dispositivo', tone: 'cyan' },
+      '<p class="es-rdh-lead">' + esc(t.text || '') + '</p>' +
+      '<p class="es-rdh-note">Gli appunti restano salvati solo su questo dispositivo. Non inserire dati sanitari o recapiti di altre persone.</p>' +
+      form + list);
+  }
+
+  function tabLinks(cfg, t) {
+    var p = cfg.prefix;
+    return card(p, t.title || t.label, t.ico, null,
+      '<p class="es-rdh-lead">' + esc(t.text || '') + '</p>' +
+      '<div class="es-' + p + '-quick-actions">' + (t.links || []).map(function (l, i) {
+        return '<button type="button" class="es-' + p + '-quick-btn" data-rdh-link="' + esc(t.id) + '" data-i="' + i + '">' + esc(l.label) + '</button>';
+      }).join('') + '</div>');
+  }
+
   function tabProfile(cfg, u) {
     var p = cfg.prefix;
     var rows = [['Nome e cognome', nameOf(u)], ['Ruolo', cfg.roleLabel], ['Squadra', clubOf(u)],
@@ -119,7 +164,7 @@
         return '<div class="es-' + p + '-cred-item"><span>' + esc(r[0]) + '</span><b>' + esc(r[1] || 'Non inserito') + '</b></div>';
       }).join('') + '</div>' +
       '<p class="es-rdh-note">Le qualifiche le inserisci tu nel profilo. Elisee Scout non le verifica presso albi o federazioni.</p>' +
-      '<button type="button" class="es-' + p + '-btn-primary" data-rdh-act="edit">Modifica profilo</button>');
+      '<div class="es-' + p + '-quick-actions"><button type="button" class="es-' + p + '-quick-btn" data-rdh-act="edit">Modifica profilo</button></div>');
   }
 
   function tabContent(cfg, id, u) {
@@ -127,7 +172,10 @@
     if (id === 'impostazioni') return tabProfile(cfg, u);
     var t = cfg.tabs.filter(function (x) { return x.id === id; })[0];
     if (!t) return tabDashboard(cfg, u);
-    return t.kind === 'info' ? tabInfo(cfg, t) : tabSoon(cfg, t);
+    if (t.kind === 'info') return tabInfo(cfg, t);
+    if (t.kind === 'notes') return tabNotes(cfg, t);
+    if (t.kind === 'links') return tabLinks(cfg, t);
+    return tabSoon(cfg, t);
   }
 
   function html(cfg, u, active) {
@@ -183,11 +231,43 @@
     else if (typeof window.switchView === 'function') window.switchView('user-dossier');
   }
 
+  function tabById(cfg, id) {
+    return cfg.tabs.filter(function (x) { return x.id === id; })[0];
+  }
+  function runLink(l) {
+    if (l.fn && typeof window[l.fn] === 'function') { window[l.fn](); return; }
+    if (l.view && typeof window.switchView === 'function') { window.switchView(l.view, l.hash || ''); return; }
+    if (typeof window.showToast === 'function') window.showToast('Sezione non disponibile in questa pagina.', 'info');
+  }
+
   function mount(box, cfg, u) {
     var state = box.__rdh || (box.__rdh = { active: 'dashboard' });
+    function refresh() {
+      var c = box.querySelector('[data-rdh-content]');
+      if (c) c.innerHTML = tabContent(cfg, state.active, box.__rdhUser || u);
+    }
     box.innerHTML = html(cfg, u, state.active);
     if (box.__rdhBound) return;
     box.__rdhBound = true;
+    box.addEventListener('submit', function (e) {
+      var f = e.target.closest('[data-rdh-form]');
+      if (!f) return;
+      e.preventDefault();
+      var tf = tabById(cfg, f.getAttribute('data-rdh-form'));
+      if (!tf) return;
+      var row = { id: 'n' + Date.now(), at: new Date().toLocaleString('it-IT') };
+      (tf.fields || []).forEach(function (fd) {
+        var el = f.elements[fd.k];
+        row[fd.k] = el ? String(el.value || '').trim().slice(0, 2000) : '';
+      });
+      if (!row[(tf.fields[0] || {}).k]) return;
+      var list = loadList(tf.storeKey);
+      list.unshift(row);
+      if (saveList(tf.storeKey, list.slice(0, 200)) && typeof window.showToast === 'function') {
+        window.showToast('Salvato su questo dispositivo.', 'success');
+      }
+      refresh();
+    });
     box.addEventListener('click', function (e) {
       var nav = e.target.closest('[data-rdh-nav]');
       if (nav) {
@@ -200,6 +280,22 @@
         });
         var sb = box.querySelector('[data-rdh-sidebar]');
         if (sb) sb.classList.remove('is-open');
+        return;
+      }
+      var del = e.target.closest('[data-rdh-del]');
+      if (del) {
+        var td = tabById(cfg, del.getAttribute('data-rdh-del'));
+        if (td && window.confirm('Eliminare questa voce?')) {
+          saveList(td.storeKey, loadList(td.storeKey).filter(function (r) { return String(r.id) !== del.getAttribute('data-id'); }));
+          refresh();
+        }
+        return;
+      }
+      var link = e.target.closest('[data-rdh-link]');
+      if (link) {
+        var tl = tabById(cfg, link.getAttribute('data-rdh-link'));
+        var l = tl && tl.links && tl.links[Number(link.getAttribute('data-i'))];
+        if (l) runLink(l);
         return;
       }
       var act = e.target.closest('[data-rdh-act]');

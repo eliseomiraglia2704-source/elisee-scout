@@ -1464,3 +1464,20 @@ body.es-tifoso-on #user-dossier-view-group {
 .es-rdh-list li { border: 1px solid rgba(56, 189, 248, 0.14); border-radius: 8px; padding: 10px 12px; }
 .es-rdh-list b { display: block; color: #f8fafc; font-size: 0.85rem; margin-bottom: 3px; }
 .es-rdh-list span { color: #94a3b8; font-size: 0.75rem; line-height: 1.45; }
+.es-rdh-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 0 0 14px; }
+.es-rdh-field { display: flex; flex-direction: column; gap: 4px; font-size: 0.72rem; color: #94a3b8; font-weight: 700; }
+.es-rdh-field.is-long { grid-column: 1 / -1; }
+.es-rdh-field input,
+.es-rdh-field textarea {
+  background: rgba(4, 9, 18, 0.85); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 6px;
+  color: #f8fafc; font: inherit; font-size: 0.82rem; font-weight: 400; padding: 8px 10px;
+}
+.es-rdh-field input:focus-visible,
+.es-rdh-field textarea:focus-visible { outline: 2px solid #38bdf8; outline-offset: 1px; }
+.es-rdh-form-actions { grid-column: 1 / -1; }
+.es-rdh-notes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.es-rdh-notes li { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; border: 1px solid rgba(56, 189, 248, 0.14); border-radius: 8px; padding: 10px 12px; }
+.es-rdh-notes strong { display: block; color: #f8fafc; font-size: 0.86rem; margin-bottom: 3px; }
+.es-rdh-notes span { display: block; color: #94a3b8; font-size: 0.76rem; line-height: 1.45; white-space: pre-wrap; }
+.es-rdh-notes small { display: block; color: #64748b; font-size: 0.68rem; margin-top: 4px; }
+.es-rdh-del { background: none; border: 1px solid rgba(248, 113, 113, 0.35); color: #f87171; border-radius: 6px; padding: 4px 8px; font-size: 0.72rem; cursor: pointer; flex-shrink: 0; }

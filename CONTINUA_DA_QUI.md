@@ -1,6 +1,15 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — RD2 — Dashboard Fisioterapista, Medico sociale e Nutrizionista senza dati inventati:
+Ultimo aggiornamento: **2026-10-19** — RD3 — Dashboard Preparatore atletico, Preparatore portieri, Match analyst e Osservatore senza dati inventati:
+
+1. **Cosa c'era**: prossima gara fissa «Foggia City vs Manfredonia Calcio, Stadio Pino Zaccheria», qualifiche «Preparatore FIGC», radar a percentuali fisse, e pulsanti che dicevano «inoltrato al Mister / al DS di Foggia City», «badge conferito», «dati sincronizzati» senza fare niente. Lo scout generava schede «IA» inventate.
+2. **Ora**: anche queste usano `role-dash-honest.js`. Restano le funzioni vere: appunti di lavoro salvati su questo dispositivo (schede del preparatore, sedute e video dei portieri, report e clip del match analyst, relazioni e gare da visionare dello scout), con modulo, elenco ed «Elimina». Collegamenti veri: Secret List e Wall trasferimenti (Hub Mercato), ricerca profili, messaggi. Carichi GPS, test fisici, test dei portieri, mappe di calore: «In arrivo».
+3. **Nuovo in `role-dash-honest.js`**: tipi di sezione «notes» (appunti) e «links» (collegamenti). Stili `es-rdh-form`, `es-rdh-notes` in `dash-luxury.css`. Le chiavi dei nuovi appunti finiscono in `_v2`; i vecchi appunti finti non vengono più letti.
+4. **Export mantenuti**: `EliseeAtDash`, `EliseeGkDash`, `EliseeMaDash`, `EliseeObsDash` con `render`, `isX`, `inStaff`, `underContract` (usato da `mercato-hub.js`), `qualificaOf`.
+5. **Aperto**: su telefono la barra «Verifica anti-fake» copre l'inizio delle dashboard. Le dashboard di ruolo sono solo in italiano.
+6. **File**: `at-dash.js`, `gk-dash.js`, `ma-dash.js`, `obs-dash.js`, `role-dash-honest.js`, `dash-luxury.css`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_RD3`.
+
+Feature precedente: **2026-10-19** — RD2 — Dashboard Fisioterapista, Medico sociale e Nutrizionista senza dati inventati:
 
 1. **Cosa c'era**: pazienti con nomi di calciatori (Peralta, Odjer, Embalo) con infortuni, terapie e misure inventate; iscrizioni AIFI/Albo finte («AIFI-FT-7731», «Albo TSRM PSTRP FG #4421»); «Foggia City» per tutti; numeri fissi (94% recupero, 82% profilo); radar a percentuali fisse; pulsanti che dicevano «inviato allo staff» senza inviare niente.
 2. **Ora**: le tre dashboard usano la struttura comune nuova `role-dash-honest.js`. Mostrano solo nome, ruolo, squadra, qualifica e iscrizione all'albo inserite dall'utente, con completamento profilo calcolato. Le sezioni con dati sanitari dei tesserati (trattamenti, visite, infortuni, idoneità, ritorno in campo, piani nutrizionali, composizione corporea…) sono «In arrivo»: non si salvano nel browser (GDPR art. 9, spesso minori) e si attiveranno con l'archivio squadra protetto. «Tecniche» del fisioterapista resta come guida generale. «Modifica profilo» apre la modifica del profilo.
