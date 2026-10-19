@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — SQ3 — Partite, allenamenti e report salvati per tutto lo staff:
+Ultimo aggiornamento: **2026-10-19** — AUTH1 — Niente più accesso finto con WhatsApp:
+
+1. **Cosa era rotto**: «Password dimenticata?» apriva un accesso con codice WhatsApp. Il codice nasceva nel browser e non arrivava nessun messaggio: non faceva entrare.
+2. **Ora**: il blocco WhatsApp è tolto da `index.html`. «Password dimenticata?» dice la verità: il recupero non è ancora attivo; chi è registrato con Google entra con Google; gli altri scrivono a areaeliseescout@gmail.com (chiave `auth.forgot.msg`, IT/EN). `submitWhatsAppOtp` rimanda allo stesso messaggio.
+3. **Aperto**: recupero password vero via codice email (`/api/auth-otp` esiste, ma serve un token di recupero lato server e l'invio email via Resend funzionante).
+4. **File**: `app.js`, `index.html`, `i18n.js`, `sw.js`, `version.json`. Cache `v20261019_AUTH1`.
+
+Feature precedente: **2026-10-19** — SQ3 — Partite, allenamenti e report salvati per tutto lo staff:
 
 1. **Cosa era rotto**: il calendario e «Pianifica seduta» salvavano solo nel browser; la seduta spariva appena arrivavano i dati online. I report si potevano solo caricare come file. In più i dati online della squadra non venivano mai caricati all'apertura della dashboard (una riga con una variabile inesistente bloccava l'aggiornamento) e la squadra veniva letta con un ripiego «Foggia City».
 2. **Ora** (dashboard Allenatore e Vice): partite, amichevoli e sedute create o modificate nel calendario vanno anche su `/api/squadra` (`partite`, `allenamenti`); eliminarle le toglie anche online. «Pianifica seduta» apre lo stesso modulo con «Seduta di allenamento» già scelto. Nella scheda Report c'è «Scrivi report» (tipo, titolo, testo) salvato in `report`. All'apertura la dashboard carica i dati della squadra (al massimo una volta al minuto). Se la rosa online è ancora vuota resta quella del dispositivo. Se il salvataggio online non riesce, un avviso dice che è rimasto solo sul dispositivo.

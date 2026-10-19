@@ -8699,10 +8699,9 @@ window.forgotAccessoPassword = function () {
   var box = document.getElementById('accesso-error-general');
   var msg = document.getElementById('accesso-error-msg');
   if (box && msg) {
-    msg.textContent = 'Per entrare senza password usa Google, oppure chiedi un codice su WhatsApp.';
+    msg.textContent = esTr('auth.forgot.msg', 'Il recupero della password non è ancora attivo. Se ti sei registrato con Google, entra con Google. Altrimenti scrivi a areaeliseescout@gmail.com dalla email con cui ti sei registrato.');
     box.style.display = 'block';
   }
-  if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('whatsapp');
 };
 
 window.eliseeOAuthErrorText = function (err) {
@@ -9479,20 +9478,9 @@ window.completeAccessoGooglePassword = function () {
   });
 };
 
+// L'accesso con codice WhatsApp non è collegato a un servizio reale: rimanda al messaggio di recupero.
 window.submitWhatsAppOtp = function () {
-  const phone = ((document.getElementById('accesso-wa-phone') || {}).value || '').trim();
-  const box = document.getElementById('accesso-error-general');
-  const msg = document.getElementById('accesso-error-msg');
-  if (!phone || phone.replace(/\D/g, '').length < 8) {
-    if (box && msg) { msg.textContent = 'Inserisci un numero di telefono valido.'; box.style.display = 'block'; }
-    return;
-  }
-  const step1 = document.getElementById('accesso-wa-phone-step');
-  const step2 = document.getElementById('accesso-wa-code-step');
-  if (step1) step1.style.display = 'none';
-  if (step2) step2.style.display = 'block';
-  if (box) box.style.display = 'none';
-  if (typeof window.openEliseeOtp === 'function') window.openEliseeOtp(phone);
+  if (typeof window.forgotAccessoPassword === 'function') window.forgotAccessoPassword();
 };
 
 window.verifyWhatsAppOtp = function () {
