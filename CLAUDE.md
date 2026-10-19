@@ -38,6 +38,7 @@
 - **Accesso staff (dal 2026-10-18)**: solo token firmato da `/api/auth-admin`, 2FA TOTP opzionale lato server. Nel client usare `window.EliseeAdmin.isAdmin()` / `isPrivacy()` / `isStaff()` (`elisee-admin-guard.js`). Mai leggere `localStorage['elisee_admin_auth']` per dare permessi. Nessun segreto nel repository (è pubblico): solo variabili d'ambiente.
 - **Problemi Noti (Intoccabili senza piano approvato)**:
   - `app.js`: `window.openEditUserModal` (riga ~241) non si chiude dove dovrebbe e contiene ~7.000 righe (fino a ~7392), che quindi partono solo aprendo "modifica profilo". Il login admin è collegato a parte in `admin-login.js`. Correggere la parentesi richiede un piano: farebbe partire tutto quel codice al caricamento.
+  - Gestione squadra: dati su Upstash via `/api/squadra` (`lib/squadra-store.js`). Mai leggere o scrivere i dati squadra direttamente dal browser: contengono dati di minori.
   - Login WhatsApp/telefono: è una demo (codice generato nel browser), non dà accesso.
   - Permessi dei ruoli non-staff (DS, Club, Scout) letti dal profilo in `localStorage`: vanno spostati lato server.
 

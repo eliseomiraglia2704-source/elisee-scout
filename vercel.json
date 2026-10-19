@@ -110,6 +110,10 @@
     {
       "source": "/api/card-data",
       "destination": "/api/manager?path=card"
+    },
+    {
+      "source": "/api/squadra",
+      "destination": "/api/manager?path=squadra"
     }
   ]
 }

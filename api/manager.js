@@ -670,6 +670,25 @@ module.exports = async function handler(req, res) {
     return send(res, out.statusCode, out.body);
   }
 
+  if (pathParam === 'squadra') {
+    const squadra = require('../lib/squadra-store');
+    const session = sessionUser(req);
+    const body = req.method === 'POST' ? await readBody(req) : {};
+    try {
+      const out = await squadra.handle({
+        method: req.method,
+        query: url.searchParams,
+        body: body,
+        email: session && session.email,
+        admin: isAdmin(req)
+      });
+      res.setHeader('Cache-Control', 'no-store');
+      return send(res, out.status, out.body);
+    } catch (e) {
+      return send(res, 503, { ok: false, error: 'database_non_disponibile' });
+    }
+  }
+
   if (pathParam === 'search') {
     const searchGateway = require('../lib/search-gateway');
     return searchGateway(req, res);

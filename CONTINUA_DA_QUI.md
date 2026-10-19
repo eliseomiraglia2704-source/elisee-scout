@@ -1,6 +1,18 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-18** — SEC4 — Contenuti onesti e meno richieste:
+Ultimo aggiornamento: **2026-10-19** — SQ1 — Gestione squadra sul database:
+
+1. **Cosa era rotto**: Allenatore e Vice (`coach-dash.js`, `vice-dash.js`) leggevano e scrivevano su Supabase con la chiave pubblica, ma le tabelle non esistevano: niente veniva salvato. Con le tabelle create, chiunque avrebbe potuto leggere rosa e dati dei calciatori (anche minori).
+2. **Ora**: `elisee-supabase.js` (stesso nome e stesse funzioni) chiama `/api/squadra` → `api/manager.js?path=squadra` → `lib/squadra-store.js`, che salva su Upstash (`elisee:squadra:<slug>`). Serve il login; il primo utente che apre una squadra ne è il titolare; gli altri entrano solo se il titolare li aggiunge (`EliseeSupabase.addMembro`). L'admin vede tutte le squadre. Scrivibili: rosa, schemi tattici, dossier tattico. Allegati: "disponibile a breve" (servirà uno spazio file, es. Vercel Blob).
+3. **Aperto**: manca la schermata per aggiungere membri dello staff alla squadra; partite, allenamenti, staff, report, impegni non hanno ancora moduli di inserimento.
+
+Feature precedente: **2026-10-19** — DB1 — Database collegato:
+
+1. **Ora**: Upstash Redis `elisee-scout-db` (Free, Frankfurt eu-central-1) collegato con `KV_REST_API_URL` e `KV_REST_API_TOKEN` su Vercel (Production). Utenti, password, verifiche documenti, bacheca, candidature, schede e attività vengono salvati lì e non si perdono più ai riavvii.
+2. **Verifica**: POST vuoto a `/api/activity` → 400 "userId required" (con database), non `kv:false`.
+3. **Aperto**: tabelle Supabase della gestione squadra ancora assenti.
+
+Feature precedente: **2026-10-18** — SEC4 — Contenuti onesti e meno richieste:
 
 1. **Cosa era rotto**: badge "99+ messaggi" e "1 notifica" finti anche per chi non è loggato; Area Stampa con articoli inventati attribuiti a Sky Sport, Gazzetta, FIGC/LND, TuttoCampo e altri, con link ai loro siti; comunicati con "3.130 agenti IA"; contatore "8.230 iscritti" fisso; classifiche scaricate circa 20 volte in pochi secondi; ogni visitatore avviava l'AutoPilot; version.json controllato ogni 2 s.
 2. **Ora**: badge a zero e nascosti ai visitatori (`dynamic-sync.js`); articoli firmati "Redazione Elisee Scout · Esempio", senza link esterni, con nota "Contenuti di esempio" (`giorn-dash.js`, `area-stampa-comunicazione.html`); tolto il conteggio agenti; tolto il contatore iscritti (`index.html`, `api/wrapped.js`); classifiche in una sola richiesta condivisa ogni 60 s (`campionati-agents.js`); AutoPilot avviato solo da admin (`autopilot-runtime.js`); controllo versione ogni 15 s (`live-reload.js`).

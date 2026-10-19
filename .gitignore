@@ -46,3 +46,6 @@ data/autopilot/log.jsonl
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Dati squadra salvati in locale (sviluppo)
+data/squadre-dati/
