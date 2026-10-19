@@ -1594,10 +1594,10 @@
                 '<div class="es-pres-standing-sub">' + (data.matchDay || '28ª Giornata') + ' · ' + esc(data.season) + '</div>' +
               '</div>' +
               '<div style="display:flex; gap:0.45rem; flex-wrap:wrap; justify-content:flex-end;">' +
-                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-guide" style="padding:4px 9px; font-size:0.75rem; border-color:rgba(56,189,248,0.4); color:#38bdf8;">📖 Guida Operativa</button>' +
-                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-edit-club" style="padding:4px 9px; font-size:0.75rem;">🛡️ Dati Club &amp; Maglie</button>' +
-                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-organigramma" style="padding:4px 9px; font-size:0.75rem;">👥 Organigramma</button>' +
-                '<button type="button" class="es-pres-btn-primary" id="btn-pres-publish-job" style="padding:4px 11px; font-size:0.75rem; background:linear-gradient(135deg,#0284c7,#059669);">📢 Pubblica Candidatura</button>' +
+                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-guide" style="padding:4px 9px; font-size:0.75rem; border-color:rgba(56,189,248,0.4); color:#38bdf8;">Guida Operativa</button>' +
+                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-edit-club" style="padding:4px 9px; font-size:0.75rem;">Dati Club &amp; Maglie</button>' +
+                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-organigramma" style="padding:4px 9px; font-size:0.75rem;">Organigramma</button>' +
+                '<button type="button" class="es-pres-btn-primary" id="btn-pres-publish-job" style="padding:4px 11px; font-size:0.75rem; background:linear-gradient(135deg,#0284c7,#059669);">Pubblica Candidatura</button>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -1651,7 +1651,7 @@
         '<!-- 0. REGOLA FONDAMENTALE PROFILO SQUADRA (PAG. 1 PDF) -->' +
 '        <div style="background:rgba(2,132,199,0.09); border:1.5px solid #0284c7; border-radius:6px; padding:1.1rem 1.4rem; margin-bottom:1.5rem;">' +
 '          <div style="display:flex; align-items:center; gap:0.6rem; color:#38bdf8; font-weight:800; font-size:1.05rem; margin-bottom:0.4rem;">' +
-'            <span>🛡️</span> <span>REGOLA FONDAMENTALE: IL PROFILO SQUADRA</span>' +
+'            <span>REGOLA FONDAMENTALE: IL PROFILO SQUADRA</span>' +
 '          </div>' +
 '          <p style="font-size:0.86rem; color:#e2e8f0; margin:0; line-height:1.55;">' +
 '            <b>Il Profilo Squadra non è un account autonomo e non può esistere senza un Profilo Presidente associato.</b> Il Presidente è il titolare e responsabile legale della scheda societaria sulla piattaforma. Insieme al Segretario (o collaboratore amministrativo delegato), compila e aggiorna i dati ufficiali, le foto delle maglie ufficiali e la rosa generale.' +
@@ -1663,13 +1663,13 @@
 '          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; border-bottom:1px solid rgba(148,163,184,0.12); padding-bottom:0.65rem;">' +
 '            <div>' +
 '              <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
-'                <span>👕</span> Foto Maglie Ufficiali (Kit da Gara che vestono le Card dei Tesserati)' +
+'                Foto Maglie Ufficiali (Kit da Gara che vestono le Card dei Tesserati)' +
 '              </h3>' +
 '              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94a3b8;">' +
 '                Le maglie ufficiali caricate dal Presidente/Segretario personalizzano in tempo reale la grafica delle Card dei calciatori registrati.' +
 '              </p>' +
 '            </div>' +
-'            <button type="button" class="es-pres-btn-primary" id="btn-quick-edit-club-kits" style="font-size:0.8rem; padding:6px 14px;">✏️ Aggiorna Dati Club &amp; Maglie</button>' +
+'            <button type="button" class="es-pres-btn-primary" id="btn-quick-edit-club-kits" style="font-size:0.8rem; padding:6px 14px;">Aggiorna Dati Club &amp; Maglie</button>' +
 '          </div>' +
 '' +
 '          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">' +
@@ -1705,13 +1705,13 @@
 '          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:0.85rem; border-bottom:1px solid rgba(148,163,184,0.12); padding-bottom:0.65rem;">' +
 '            <div>' +
 '              <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
-'                <span>👥</span> Collegamento Rosa con i Profili Atleti' +
+'                Collegamento Rosa con i Profili Atleti' +
 '              </h3>' +
 '              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94a3b8;">' +
 '                Distinzione tra atleti con <b>Profilo Attivo</b> (link Card ufficiale completo) e atleti con <b>Anteprima Limitata</b> (non registrati, scheda sintetica non cliccabile).' +
 '              </p>' +
 '            </div>' +
-'            <button type="button" class="es-pres-btn-primary" id="btn-quick-manage-squad-top" style="font-size:0.8rem; padding:6px 14px;">👥 Gestisci &amp; Inserisci Calciatori</button>' +
+'            <button type="button" class="es-pres-btn-primary" id="btn-quick-manage-squad-top" style="font-size:0.8rem; padding:6px 14px;">Gestisci &amp; Inserisci Calciatori</button>' +
 '          </div>' +
 '' +
 '          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">' +
@@ -1741,9 +1741,9 @@
 '        <div id="sec-pres-candidatura-direct" style="background:#090e17; border:1.5px solid rgba(2,132,199,0.4); border-radius:6px; padding:1.35rem; margin-bottom:1.5rem;">' +
 '          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; border-bottom:1px solid rgba(148,163,184,0.15); padding-bottom:0.75rem;">' +
 '            <div>' +
-'              <span class="es-tag es-tag-blue" style="margin-bottom:0.3rem;">📢 Modulo Istituzionale Club</span>' +
+'              <span class="es-tag es-tag-blue" style="margin-bottom:0.3rem;">Modulo Istituzionale Club</span>' +
 '              <h3 style="margin:0; font-size:1.15rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
-'                <span>📢</span> Come Pubblicare una Candidatura (Richiesta Personale / Staff / Calciatori)' +
+'                Come Pubblicare una Candidatura (Richiesta Personale / Staff / Calciatori)' +
 '              </h3>' +
 '              <p style="margin:0.2rem 0 0; font-size:0.8rem; color:#94a3b8;">' +
 '                Compila i due blocchi ufficiali (<b>Cosa Offriamo</b> / <b>Cosa Richiediamo</b>) con opzione di <b>Scouting AI Automatico</b>.' +
@@ -1755,7 +1755,7 @@
 '          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:1rem;">' +
 '            <!-- Blocco Cosa Offriamo -->' +
 '            <div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:1rem;">' +
-'              <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800;">🟡 Cosa Offriamo</h4>' +
+'              <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800;">Cosa Offriamo</h4>' +
 '              <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:0.25rem;">' +
 '                <li>• <b>Tipologia di incarico:</b> Contratto Federale, Accordo Sportivo, Stage Tecnico.</li>' +
 '                <li>• <b>Eventuale compenso o rimborso spese:</b> Indennità fissa mensile / premi.</li>' +
@@ -1768,7 +1768,7 @@
 '' +
 '            <!-- Blocco Cosa Richiediamo -->' +
 '            <div style="background:#040810; border:1px solid rgba(34,197,94,0.25); border-radius:4px; padding:1rem;">' +
-'              <h4 style="margin:0 0 0.5rem; color:#34d399; font-size:0.92rem; font-weight:800;">🔵 Cosa Richiediamo / Il Profilo che Cerchiamo</h4>' +
+'              <h4 style="margin:0 0 0.5rem; color:#34d399; font-size:0.92rem; font-weight:800;">Cosa Richiediamo / Il Profilo che Cerchiamo</h4>' +
 '              <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:0.25rem;">' +
 '                <li>• <b>Ruolo ricercato:</b> Calciatore, Allenatore, Match Analyst, Preparatore, Medico.</li>' +
 '                <li>• <b>Competenze tecniche richieste:</b> Requisiti di campo e tattici.</li>' +
@@ -1783,7 +1783,7 @@
 '          <!-- Opzione AI Scouting -->' +
 '          <div style="background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.3); border-radius:4px; padding:0.85rem 1rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.8rem;">' +
 '            <div style="display:flex; align-items:center; gap:0.6rem;">' +
-'              <span style="font-size:1.4rem;">🤖</span>' +
+'              ' +
 '              <div>' +
 '                <b style="color:#a5b4fc; font-size:0.86rem;">Opzione AI (Candidatura Automatica Intelligente):</b>' +
 '                <p style="margin:0; font-size:0.76rem; color:#cbd5e1;">Il sistema analizza tutti i profili del sito, individua i più compatibili e li candida in automatico archiviando le schede tecniche nell\'annuncio.</p>' +
@@ -1797,7 +1797,7 @@
 '        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:1.5rem;">' +
 '          <div style="background:#090e17; border:1px solid rgba(56,189,248,0.2); border-radius:6px; padding:1.1rem;">' +
 '            <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800; display:flex; align-items:center; gap:0.4rem;">' +
-'              <span>⚖️</span> Attività e Permessi Ufficiali del Presidente' +
+'              Attività e Permessi Ufficiali del Presidente' +
 '            </h4>' +
 '            <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
 '              <li>• <b>Gestione Organigramma:</b> Delega dei permessi e invito nel team per Segretario, Direttore Sportivo, Allenatore e Match Analyst.</li>' +
@@ -1807,7 +1807,7 @@
 '' +
 '          <div style="background:#090e17; border:1px solid rgba(239,68,68,0.25); border-radius:6px; padding:1.1rem;">' +
 '            <h4 style="margin:0 0 0.5rem; color:#f87171; font-size:0.92rem; font-weight:800; display:flex; align-items:center; gap:0.4rem;">' +
-'              <span>🚫</span> Limiti Istituzionali di Ruolo del Presidente' +
+'              Limiti Istituzionali di Ruolo del Presidente' +
 '            </h4>' +
 '            <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
 '              <li>• <b>Nessuna Candidatura Calciatore:</b> Non può candidarsi come calciatore alle offerte di ingaggio.</li>' +
@@ -2240,7 +2240,7 @@
 
       '<div style="background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.25); border-radius:6px; padding:1rem;">' +
         '<div style="display:flex; align-items:center; gap:0.5rem; color:#a5b4fc; font-weight:800; font-size:0.88rem; margin-bottom:0.35rem;">' +
-          '<span>🤖</span> <span>5. COME PUBBLICARE UNA CANDIDATURA & RECLUTAMENTO IA</span>' +
+          '<span>5. COME PUBBLICARE UNA CANDIDATURA & RECLUTAMENTO IA</span>' +
         '</div>' +
         '<p style="margin:0; font-size:0.78rem; color:#cbd5e1; line-height:1.55;">' +
           'Il club pubblica la ricerca compilando le sezioni <b>Cosa offriamo</b> (incarico, compenso/rimborso, durata, orari, benefit, crescita) e <b>Cosa richiediamo / Il profilo che cerchiamo</b> (ruolo, competenze tecniche, esperienza, qualifiche, attitudini, requisiti extra). Attivando l\'<b>Opzione AI</b>, il sistema analizza i profili iscritti e candida automaticamente i più compatibili, archiviando le schede tecniche direttamente nell\'annuncio.' +
@@ -2293,7 +2293,7 @@
 
         '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:1rem;">' +
           '<h4 style="margin:0 0 0.6rem; color:#38bdf8; font-size:0.88rem; display:flex; align-items:center; gap:0.4rem;">' +
-            '<span>🎽</span> Foto Maglie Ufficiali (per Card Tesserati)' +
+            'Foto Maglie Ufficiali (per Card Tesserati)' +
           '</h4>' +
           '<p style="margin:0 0 0.85rem; font-size:0.76rem; color:#94a3b8;">I colori e le maglie caricate personalizzano automaticamente la visualizzazione grafica delle Card dei tuoi calciatori:</p>' +
           '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.85rem;">' +
@@ -2366,7 +2366,7 @@
       '</div>' +
 
       '<div style="background:rgba(56,189,248,0.04); border:1px solid rgba(56,189,248,0.18); border-radius:6px; padding:0.75rem 1rem; margin-bottom:1rem; font-size:0.77rem; color:#cbd5e1; line-height:1.5;">' +
-        '💡 <b>Regola Collegamento Card (Specifica PDF):</b> Cliccando su un atleta con <b>Profilo Attivo</b> accedi alla sua Card completa (Fronte/Retro, Heatmap, GPS, Highlight) con maglia ufficiale. Per gli atleti <b>Non Registrati</b> è visibile solo l\'anteprima sintetica non cliccabile (dati e contatti bloccati).' +
+        '<b>Regola Collegamento Card (Specifica PDF):</b> Cliccando su un atleta con <b>Profilo Attivo</b> accedi alla sua Card completa (Fronte/Retro, Heatmap, GPS, Highlight) con maglia ufficiale. Per gli atleti <b>Non Registrati</b> è visibile solo l\'anteprima sintetica non cliccabile (dati e contatti bloccati).' +
       '</div>';
 
     if (!squad.length) {
@@ -2481,7 +2481,7 @@
           '<div style="display:flex; flex-direction:column; gap:1rem;">' +
             '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
               '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#38bdf8; display:flex; align-items:center; gap:0.4rem;">' +
-                '<span>📍</span> Heatmap &amp; Presidio Tattico di Ruolo' +
+                'Heatmap &amp; Presidio Tattico di Ruolo' +
               '</h4>' +
               '<p style="margin:0; font-size:0.78rem; color:#cbd5e1; line-height:1.5;">' +
                 'Copertura intensiva della corsia di competenza e dell\'area avversaria. Dati allineati al modulo tattico societario (4-3-3).' +
@@ -2490,7 +2490,7 @@
 
             '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
               '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#34d399; display:flex; align-items:center; gap:0.4rem;">' +
-                '<span>⚡</span> Metriche Fisiche &amp; GPS' +
+                'Metriche Fisiche &amp; GPS' +
               '</h4>' +
               '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.78rem; color:#cbd5e1;">' +
                 '<div>• Velocità di picco: <b style="color:#fff;">30.4 km/h</b></div>' +
@@ -2502,7 +2502,7 @@
 
             '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
               '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#a5b4fc; display:flex; align-items:center; gap:0.4rem;">' +
-                '<span>🎬</span> Video Highlight &amp; Scheda Analitica' +
+                'Video Highlight &amp; Scheda Analitica' +
               '</h4>' +
               '<p style="margin:0; font-size:0.78rem; color:#cbd5e1;">' +
                 'Reel video azioni salienti, gol e assist archiviati nel dossier dell\'atleta.' +
@@ -2635,12 +2635,12 @@
         '</div>' +
 
         '<div style="background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.25); border-radius:6px; padding:0.85rem 1rem; font-size:0.78rem; color:#cbd5e1;">' +
-          '📢 <b>Impatto Community & Social:</b> L\'ufficialità sarà visibile sul Wall (#wall-trasferimenti) per tutti i tifosi, i giornalisti e gli scout della piattaforma.' +
+          '<b>Impatto Community & Social:</b> L\'ufficialità sarà visibile sul Wall (#wall-trasferimenti) per tutti i tifosi, i giornalisti e gli scout della piattaforma.' +
         '</div>' +
 
         '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-off">Annulla</button>' +
-          '<button type="submit" class="es-pres-btn-primary" style="background:linear-gradient(135deg,#0284c7,#059669);">🚀 Ufficializza &amp; Pubblica sul Wall</button>' +
+          '<button type="submit" class="es-pres-btn-primary" style="background:linear-gradient(135deg,#0284c7,#059669);">Ufficializza &amp; Pubblica sul Wall</button>' +
         '</div>' +
       '</form>';
 
@@ -2703,8 +2703,8 @@
         '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.85rem 1rem;">' +
           '<label style="font-size:0.78rem; color:#38bdf8; font-weight:700; display:block; margin-bottom:0.35rem;">Tipologia Collegamento Profilo (Specifica PDF) *</label>' +
           '<select class="es-pres-input-text" id="sel-pl-reg-type" style="background:#080e1e; color:#fff; font-weight:600;">' +
-            '<option value="registered">🟢 Giocatore già Registrato su Elisee Scout (Profilo Attivo & Card completa)</option>' +
-            '<option value="unregistered">⚪ Giocatore NON Registrato (Anteprima Limitata non cliccabile)</option>' +
+            '<option value="registered">Giocatore già Registrato su Elisee Scout (Profilo Attivo & Card completa)</option>' +
+            '<option value="unregistered">Giocatore NON Registrato (Anteprima Limitata non cliccabile)</option>' +
           '</select>' +
         '</div>' +
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
@@ -2864,7 +2864,7 @@
           '</div>' +
         '</div>' +
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
-          '🔒 <b>Audit Trail:</b> L\'adempimento sarà registrato con marca temporale certificata.' +
+          '<b>Audit Trail:</b> L\'adempimento sarà registrato con marca temporale certificata.' +
         '</div>' +
         '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-sg">Annulla</button>' +
@@ -2935,7 +2935,7 @@
           '</div>' +
         '</div>' +
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
-          '📋 <b>Contenuto Prescritto:</b> Il MOG deve contenere le misure di prevenzione dei rischi, le sanzioni interne e le modalità di segnalazione al Safeguarding Officer nominato.' +
+          '<b>Contenuto Prescritto:</b> Il MOG deve contenere le misure di prevenzione dei rischi, le sanzioni interne e le modalità di segnalazione al Safeguarding Officer nominato.' +
         '</div>' +
         '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-mog">Annulla</button>' +
@@ -3233,6 +3233,75 @@
         if (window.showToast) window.showToast('Seduta del ' + day + ' aggiunta al piano settimanale!', 'success');
       };
     }
+  }
+
+  // Partite: inserimento manuale di gare in programma o risultati.
+  function openAddMatchModal(data) {
+    var formHtml =
+      '<p class="es-pres-form-hint">Inserisci una partita in programma oppure un risultato. Se scrivi i gol, la partita conta come giocata.</p>' +
+      '<form id="form-add-match" class="es-pres-form">' +
+        '<div class="es-pres-form-grid">' +
+          '<div class="es-pres-input-group"><label for="inp-match-date">Data *</label><input type="date" class="es-pres-input-text" id="inp-match-date" required></div>' +
+          '<div class="es-pres-input-group"><label for="inp-match-round">Giornata o turno</label><input type="text" class="es-pres-input-text" id="inp-match-round" placeholder="Es. 12ª G"></div>' +
+          '<div class="es-pres-input-group"><label for="inp-match-opp">Avversario *</label><input type="text" class="es-pres-input-text" id="inp-match-opp" required></div>' +
+          '<div class="es-pres-input-group"><label for="sel-match-type">Casa o trasferta</label><select class="es-pres-input-text" id="sel-match-type"><option value="H">In casa</option><option value="A">In trasferta</option></select></div>' +
+          '<div class="es-pres-input-group"><label for="inp-match-gf">Gol fatti</label><input type="number" min="0" step="1" class="es-pres-input-text" id="inp-match-gf"></div>' +
+          '<div class="es-pres-input-group"><label for="inp-match-ga">Gol subiti</label><input type="number" min="0" step="1" class="es-pres-input-text" id="inp-match-ga"></div>' +
+        '</div>' +
+        '<div class="es-pres-input-group"><label for="inp-match-ref">Arbitro o designazione</label><input type="text" class="es-pres-input-text" id="inp-match-ref"></div>' +
+        '<div class="es-pres-form-foot">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-match-modal">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Salva partita</button>' +
+        '</div>' +
+      '</form>';
+
+    openDetailModal('Nuova partita', ICONS.calendar, formHtml);
+    var modalOverlay = document.getElementById('es-pres-detail-overlay');
+    var form = document.getElementById('form-add-match');
+    var btnCancel = document.getElementById('btn-cancel-match-modal');
+    if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
+    if (!form) return;
+
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      var iso = document.getElementById('inp-match-date').value;
+      var opp = document.getElementById('inp-match-opp').value.trim();
+      if (!iso || !opp) {
+        if (window.showToast) window.showToast('Inserisci data e avversario.', 'error');
+        return;
+      }
+      var gfRaw = document.getElementById('inp-match-gf').value;
+      var gaRaw = document.getElementById('inp-match-ga').value;
+      var played = gfRaw !== '' && gaRaw !== '';
+      var gf = played ? Math.max(0, parseInt(gfRaw, 10) || 0) : 0;
+      var ga = played ? Math.max(0, parseInt(gaRaw, 10) || 0) : 0;
+      var parts = iso.split('-');
+      var match = {
+        id: Date.now(),
+        round: document.getElementById('inp-match-round').value.trim() || '—',
+        date: parts[2] + '/' + parts[1] + '/' + parts[0],
+        type: document.getElementById('sel-match-type').value === 'A' ? 'A' : 'H',
+        opponent: opp,
+        goalsFor: gf,
+        goalsAgainst: ga,
+        res: played ? (gf + ' - ' + ga) : '- - -',
+        status: played ? (gf > ga ? 'W' : (gf < ga ? 'L' : 'D')) : 'UPCOMING',
+        isPlayed: played,
+        referee: document.getElementById('inp-match-ref').value.trim() || ''
+      };
+      data.matches = data.matches || [];
+      data.matches.push(match);
+      data.matches.sort(function (a, b) {
+        function key(m) { var d = String(m.date || '').split('/'); return d.length === 3 ? d[2] + d[1] + d[0] : ''; }
+        return key(a) < key(b) ? -1 : (key(a) > key(b) ? 1 : 0);
+      });
+      data.lastUpdatedBy = 'Presidente';
+      data.lastUpdatedAt = getFormattedDateTime();
+      savePresClubData(data);
+      if (modalOverlay) modalOverlay.remove();
+      renderPresidentialSuite();
+      if (window.showToast) window.showToast(played ? 'Risultato salvato.' : 'Partita aggiunta al calendario.', 'success');
+    };
   }
 
   function advanceFootballSeason(data, targetSeason) {
@@ -4037,7 +4106,7 @@
 
         listHtml += '<div style="display:flex; gap:0.6rem; margin-top:1rem; flex-wrap:wrap;">' +
           '<button type="button" class="es-pres-btn-primary" id="btn-add-transfer-in-modal" style="flex:1 1 140px;">+ Nuova Trattativa</button>' +
-          '<button type="button" class="es-pres-btn-primary" id="btn-officialize-in-modal" style="flex:1 1 160px; background:linear-gradient(135deg,#0284c7,#059669);">🚀 Ufficializza sul Wall</button>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-officialize-in-modal" style="flex:1 1 160px; background:linear-gradient(135deg,#0284c7,#059669);">Ufficializza sul Wall</button>' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-open-hub-in-modal" style="flex:1 1 140px;">Apri Hub Mercato &rsaquo;</button>' +
         '</div>';
 
@@ -4540,7 +4609,7 @@
               '<label>Allegato Verbale Firmato (PDF / Scansione)</label>' +
               '<div style="background:#040810; border:1px dashed rgba(56,189,248,0.4); border-radius:4px; padding:0.9rem; text-align:center; cursor:pointer;" id="box-cpv-upload">' +
                 '<input type="file" id="file-cpv-doc" accept=".pdf,.png,.jpg,.jpeg" style="display:none;">' +
-                '<div style="font-size:0.85rem; color:#38bdf8; font-weight:600;" id="lbl-cpv-doc-name">&#128196; Seleziona o trascina il Verbale CPV / Prefettura</div>' +
+                '<div style="font-size:0.85rem; color:#38bdf8; font-weight:600;" id="lbl-cpv-doc-name">Seleziona o trascina il Verbale CPV / Prefettura</div>' +
                 '<div style="font-size:0.75rem; color:#64748b; margin-top:0.25rem;">Formati ammessi: PDF, JPG, PNG (Max 15MB)</div>' +
               '</div>' +
             '</div>' +

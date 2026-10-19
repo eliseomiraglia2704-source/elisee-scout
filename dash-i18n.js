@@ -8,7 +8,7 @@
   'use strict';
 
   // Dashboard Allenatore/Vice e tutte le dashboard di ruolo (staff, calciatore, tifoso, giornalista).
-  var ROOTS = ['es-cd', 'es-cos-modal-box', 'es-staff-profile', 'es-player-profile', 'es-tifoso-profile', 'es-giorn-profile', 'es-ra-modal'];
+  var ROOTS = ['es-cd', 'es-cos-modal-box', 'es-staff-profile', 'es-player-profile', 'es-tifoso-profile', 'es-giorn-profile', 'es-ra-modal', 'es-pres-detail-overlay'];
   var ATTRS = ['placeholder', 'title', 'aria-label'];
   var originals = new WeakMap();
   var compiled = null;

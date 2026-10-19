@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-20** — RA1 — Azioni rapide di ruolo riscritte (`role-actions-runtime.js`):
+Ultimo aggiornamento: **2026-10-20** — PRES1 — Dashboard Presidente tradotta e sistemata:
+
+1. Traduzioni EN/ES/FR della dashboard Presidente (circa 560 testi + 34 regole per i testi con numeri o nomi) in `dash-i18n-data.js`. Aggiunta una regola generica «numero + parola» (es. «3 gare»): va in fondo all'elenco delle regole.
+2. La finestra di dettaglio del Presidente (`#es-pres-detail-overlay`) ora è tradotta (aggiunta alle radici di `dash-i18n.js`).
+3. Errore corretto: i pulsanti «Registra risultato partita» / «Aggiungi partita» chiamavano `openAddMatchModal`, che non esisteva. Ora c'è il modulo (data, giornata, avversario, casa o trasferta, gol, arbitro) e la partita entra nel calendario e nelle statistiche. Stili in `pres-dash.css` (`.es-pres-form*`).
+4. Tolte le emoji da `pres-dash.js`.
+
+Precedente: RA1 — Azioni rapide di ruolo riscritte (`role-actions-runtime.js`):
 
 1. Tolti tutti i dati inventati (incassi, nomi di calciatori, idoneità mediche, consensi «confermati» senza fare nulla, discorsi «generati dall'IA», QR da servizio esterno). Ogni azione ora: apre una sezione vera (schede, pubblica candidatura, Secret List, wall, pannello club), oppure apre un modulo semplice salvato solo sul dispositivo (chiave `elisee_role_notes:<email>`), oppure apre un'e-mail al supporto, oppure dice «In arrivo».
 2. Medico, fisioterapista e nutrizionista: solo «In arrivo», perché i dati sanitari non vanno salvati nel browser.
