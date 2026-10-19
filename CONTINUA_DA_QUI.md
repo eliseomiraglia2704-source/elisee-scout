@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — RD5 — La barra «Verifica anti-fake» non copre più le pagine:
+Ultimo aggiornamento: **2026-10-19** — RD6 — Dashboard di ruolo in 4 lingue:
+
+1. **Cosa**: `dash-i18n.js` ora traduce anche `#es-staff-profile`, `#es-player-profile`, `#es-tifoso-profile`, `#es-giorn-profile` (prima solo Allenatore/Vice). Salta i testi con `data-i18n`, che traduce già `i18n.js`.
+2. **Dizionario**: `window.EliseeDashI18n` in `i18n.js` passa da circa 270 a circa 1.150 testi (EN/ES/FR), raccolti aprendo ogni dashboard e ogni scheda: 17 dashboard staff, Calciatore, Tifoso, Giornalista. Nuovi modelli: «X · Squadra non inserita», «Azioni possibili — X», «N% completo», «Scritta il…», «In coda: N · Pubblicati: N». La voce `it` toglie i residui «IA», «Stealth», «FIFA/FM», «Coming soon / Beta» dai pulsanti di `role-actions-runtime.js`.
+3. **Aperto**: la dashboard Presidente (`pres-dash.js`, circa 4.700 righe) è ancora solo in italiano.
+4. **File**: `i18n.js`, `dash-i18n.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_RD6`.
+
+Feature precedente: **2026-10-19** — RD5 — La barra «Verifica anti-fake» non copre più le pagine:
 
 1. **Cosa succedeva**: la barra è fissa sotto la navbar e copriva l'inizio delle dashboard. Su telefono era peggio: lo script mobile in `index.html` le metteva `height:0` quando era nascosta e il valore restava anche dopo, quindi il testo usciva senza sfondo sopra i contenuti.
 2. **Ora**: computer: `verifica-account.js` misura la barra e mette `--es-verify-h` sul body; `verifica-account.css` aggiunge quello spazio in alto (nelle aree interne fino al bordo inferiore della barra). Telefono: in `mobile-webapp.css` la barra sta nel flusso della pagina (spinge giù il contenuto) e mostra solo titolo e pulsante. Quando la barra appare viene tolto l'`height:0` messo dallo script mobile.

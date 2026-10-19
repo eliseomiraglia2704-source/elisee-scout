@@ -1,5 +1,5 @@
 /**
- * ELISEE SCOUT — Traduzione delle dashboard Allenatore e Vice.
+ * ELISEE SCOUT — Traduzione delle dashboard di ruolo.
  * I testi di coach-dash.js / vice-dash.js sono scritti in italiano nel codice:
  * qui vengono sostituiti con il dizionario window.EliseeDashI18n (in i18n.js)
  * secondo la lingua scelta. Si applica solo dentro la dashboard e le sue finestre.
@@ -7,7 +7,8 @@
 (function () {
   'use strict';
 
-  var ROOTS = ['es-cd', 'es-cos-modal-box'];
+  // Dashboard Allenatore/Vice e tutte le dashboard di ruolo (staff, calciatore, tifoso, giornalista).
+  var ROOTS = ['es-cd', 'es-cos-modal-box', 'es-staff-profile', 'es-player-profile', 'es-tifoso-profile', 'es-giorn-profile'];
   var ATTRS = ['placeholder', 'title', 'aria-label'];
   var originals = new WeakMap();
   var compiled = null;
@@ -50,6 +51,8 @@
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     var node;
     while ((node = walker.nextNode())) {
+      // I testi con data-i18n li traduce già i18n.js.
+      if (node.parentElement && node.parentElement.closest('[data-i18n]')) continue;
       var orig = originals.has(node) ? originals.get(node) : node.nodeValue;
       var trimmed = orig.trim();
       if (!trimmed) continue;
