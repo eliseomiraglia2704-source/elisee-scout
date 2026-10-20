@@ -1104,9 +1104,9 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+          '<div class="es-prx-1">' +
             '<h2>' + ICONS.building + ' Stadio &amp; Impianto Sportivo</h2>' +
-            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:4px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+            '<button type="button" class="es-pres-btn-back es-prx-2" data-action="go-back">&larr; Torna alla Panoramica</button>' +
           '</div>' +
           '<p>Gestisci i dati anagrafici, le tariffe e le condizioni di sicurezza del tuo impianto sportivo</p>' +
           '<div class="es-pres-audit-badge">' + ICONS.clock + ' Provenienza dato: <b>' + esc(data.lastUpdatedBy) + '</b> (' + esc(data.lastUpdatedAt) + ')</div>' +
@@ -1116,8 +1116,8 @@
           '<div class="es-pres-grid-2">' +
             '<div class="es-pres-detail-box">' +
               '<h3>Tariffe Biglietteria Ufficiale</h3>' +
-              '<p style="color:#94a3b8; font-size:0.85rem; margin-top:-0.5rem; margin-bottom:1.2rem;">Prezzo praticato dal club per le gare casalinghe.</p>' +
-              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
+              '<p class="es-prx-3">Prezzo praticato dal club per le gare casalinghe.</p>' +
+              '<div class="es-prx-4">' +
                 '<div class="es-pres-input-group">' +
                   '<label>Intero (€)</label>' +
                   '<input type="number" step="0.50" class="es-pres-input-text" id="inp-ticket-regular" value="' + esc(data.stadium.ticketPriceRegular) + '">' +
@@ -1132,10 +1132,10 @@
 
             '<div class="es-pres-detail-box">' +
               '<h3>Capienza &amp; Omologazione Impianto</h3>' +
-              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1.2rem;">' +
-                '<div style="font-size:0.75rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Capienza Ufficiale Certificata</div>' +
-                '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8; margin:0.3rem 0;">' + esc(data.stadium.capacity) + '</div>' +
-                '<p style="font-size:0.8rem; color:#64748b; margin:0;">Verbale CPV di riferimento: <b>' + esc(data.stadium.cpvProtocol || 'Non registrato') + '</b></p>' +
+              '<div class="es-prx-5">' +
+                '<div class="es-prx-6">Capienza Ufficiale Certificata</div>' +
+                '<div class="es-prx-7">' + esc(data.stadium.capacity) + '</div>' +
+                '<p class="es-prx-8">Verbale CPV di riferimento: <b>' + esc(data.stadium.cpvProtocol || 'Non registrato') + '</b></p>' +
               '</div>' +
               '<button type="button" class="es-pres-btn-secondary" id="btn-req-capacity-update">Richiedi variazione con verbale CPV</button>' +
             '</div>' +
@@ -1144,16 +1144,16 @@
           '<div class="es-pres-grid-2">' +
             '<div class="es-pres-detail-box">' +
               '<h3>Nome Impianto &amp; Stato Agibilità</h3>' +
-              '<div style="margin-bottom:0.8rem;">' +
+              '<div class="es-prx-9">' +
                 '<span class="es-pres-status es-pres-status-ok">' + esc(data.stadium.safetyStatus) + '</span>' +
               '</div>' +
-              '<p style="color:#cbd5e1; font-size:0.85rem; line-height:1.5;">• <b>Impianto:</b> ' + esc(data.stadium.name) + '<br>• <b>Ultimo Controllo CPV:</b> ' + esc(data.stadium.lastInspectionDate) + '<br>• <b>Presidio Sanitario:</b> 2 Postazioni BLSD omologate</p>' +
+              '<p class="es-prx-10">• <b>Impianto:</b> ' + esc(data.stadium.name) + '<br>• <b>Ultimo Controllo CPV:</b> ' + esc(data.stadium.lastInspectionDate) + '<br>• <b>Presidio Sanitario:</b> 2 Postazioni BLSD omologate</p>' +
             '</div>' +
 
             '<div class="es-pres-detail-box">' +
               '<h3>Modifica Anagrafica Impianto</h3>' +
-              '<p style="color:#94a3b8; font-size:0.85rem;">Aggiorna la denominazione ufficiale dello stadio o del campo sportivo:</p>' +
-              '<div class="es-pres-input-group" style="margin-bottom:1rem;">' +
+              '<p class="es-prx-11">Aggiorna la denominazione ufficiale dello stadio o del campo sportivo:</p>' +
+              '<div class="es-pres-input-group es-prx-12">' +
                 '<label>Denominazione Stadio</label>' +
                 '<input type="text" class="es-pres-input-text" id="inp-stadium-name" value="' + esc(data.stadium.name) + '">' +
               '</div>' +
@@ -1176,15 +1176,15 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+          '<div class="es-prx-1">' +
             '<h2>' + ICONS.barChart + ' Statistiche Club &amp; Storico Campionati</h2>' +
-            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:4px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+            '<button type="button" class="es-pres-btn-back es-prx-2" data-action="go-back">&larr; Torna alla Panoramica</button>' +
           '</div>' +
           '<p>Rendimento statistico calcolato su ' + matchStats.played + ' partite reali registrate</p>' +
         '</div>' +
 
-        '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:1.5rem;">' +
-          '<div style="display:flex; gap:0.5rem;">' +
+        '<div class="es-prx-13">' +
+          '<div class="es-prx-14">' +
             '<button type="button" class="es-pres-btn-secondary ' + (statsActiveTab === 'records' ? 'is-active' : '') + '" id="btn-tab-records" style="' + (statsActiveTab === 'records' ? 'background:#0284c7; color:#fff; border-color:#0284c7;' : '') + '">Record di Club</button>' +
             '<button type="button" class="es-pres-btn-secondary ' + (statsActiveTab === 'history' ? 'is-active' : '') + '" id="btn-tab-history" style="' + (statsActiveTab === 'history' ? 'background:#0284c7; color:#fff; border-color:#0284c7;' : '') + '">Partite Registrate</button>' +
           '</div>' +
@@ -1196,20 +1196,20 @@
             '<div class="es-pres-grid-3">' +
               '<div class="es-pres-detail-box">' +
                 '<h3>Gare Disputate</h3>' +
-                '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + matchStats.played + '</div>' +
-                '<p style="color:#94a3b8; font-size:0.85rem; margin-top:0.3rem;">' + matchStats.won + ' Vinte · ' + matchStats.drawn + ' Pareggiate · ' + matchStats.lost + ' Perse</p>' +
+                '<div class="es-prx-15">' + matchStats.played + '</div>' +
+                '<p class="es-prx-16">' + matchStats.won + ' Vinte · ' + matchStats.drawn + ' Pareggiate · ' + matchStats.lost + ' Perse</p>' +
               '</div>' +
 
               '<div class="es-pres-detail-box">' +
                 '<h3>Gol Fatti / Subiti</h3>' +
-                '<div style="font-size:1.6rem; font-weight:800; color:#34d399;">' + matchStats.gf + ' / ' + matchStats.ga + '</div>' +
-                '<p style="color:#94a3b8; font-size:0.85rem; margin-top:0.3rem;">Differenza reti: ' + matchStats.gd + '</p>' +
+                '<div class="es-prx-17">' + matchStats.gf + ' / ' + matchStats.ga + '</div>' +
+                '<p class="es-prx-16">Differenza reti: ' + matchStats.gd + '</p>' +
               '</div>' +
 
               '<div class="es-pres-detail-box">' +
                 '<h3>Punti Conquistati</h3>' +
-                '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + matchStats.pts + ' pt</div>' +
-                '<p style="color:#94a3b8; font-size:0.85rem; margin-top:0.3rem;">Media: ' + (matchStats.played ? (matchStats.pts / matchStats.played).toFixed(2) : '0') + ' pt/gara</p>' +
+                '<div class="es-prx-15">' + matchStats.pts + ' pt</div>' +
+                '<p class="es-prx-16">Media: ' + (matchStats.played ? (matchStats.pts / matchStats.played).toFixed(2) : '0') + ' pt/gara</p>' +
               '</div>' +
             '</div>'
           ) : (
@@ -1234,7 +1234,7 @@
                             '<td>' + esc(m.date) + '</td>' +
                             '<td>' + (m.type === 'H' ? 'Casa' : 'Trasferta') + '</td>' +
                             '<td><b>' + esc(m.opponent) + '</b></td>' +
-                            '<td style="font-weight:700; color:#38bdf8;">' + esc(m.res || (m.goalsFor + ' - ' + m.goalsAgainst)) + '</td>' +
+                            '<td class="es-prx-18">' + esc(m.res || (m.goalsFor + ' - ' + m.goalsAgainst)) + '</td>' +
                             '<td><span class="es-pres-status ' + (m.status === 'W' ? 'es-pres-status-ok' : (m.status === 'L' ? 'es-pres-status-urgent' : 'es-pres-status-neutral')) + '">' + (m.status === 'W' ? 'Vittoria' : (m.status === 'L' ? 'Sconfitta' : (m.status === 'D' ? 'Pareggio' : 'Programmata'))) + '</span></td>' +
                           '</tr>'
                         );
@@ -1261,17 +1261,17 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+          '<div class="es-prx-1">' +
             '<h2>' + ICONS.award + ' Sponsor &amp; Accordi Commerciali</h2>' +
-            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:4px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+            '<button type="button" class="es-pres-btn-back es-prx-2" data-action="go-back">&larr; Torna alla Panoramica</button>' +
           '</div>' +
           '<p>Gestione contratti commerciali reali, durata accordi e documenti depositati</p>' +
         '</div>' +
 
         '<div class="es-pres-detail-body">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">' +
-            '<div style="font-size:1.05rem; font-weight:700; color:#fff;">' + (sponsors.length ? (sponsors.length + ' Contratti Sponsor Attivi') : 'Nessuno sponsor registrato') + '</div>' +
-            '<div style="display:flex; gap:0.6rem;">' +
+          '<div class="es-prx-19">' +
+            '<div class="es-prx-20">' + (sponsors.length ? (sponsors.length + ' Contratti Sponsor Attivi') : 'Nessuno sponsor registrato') + '</div>' +
+            '<div class="es-prx-21">' +
               '<button type="button" class="es-pres-btn-primary" id="btn-add-sponsor">+ Inserisci Nuovo Accordo</button>' +
               '<button type="button" class="es-pres-btn-secondary" id="btn-bacheca-sponsor">Bacheca Opportunità B2B</button>' +
             '</div>' +
@@ -1289,16 +1289,16 @@
               sponsors.map(function (sp) {
                 return (
                   '<div class="es-pres-detail-box">' +
-                    '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem;">' +
+                    '<div class="es-prx-22">' +
                       '<span class="es-pres-status es-pres-status-neutral">' + esc(sp.tier || 'Sponsor') + '</span>' +
                       '<span class="es-pres-status ' + (sp.isWarning ? 'es-pres-status-warning' : 'es-pres-status-ok') + '">' + esc(sp.status || 'Attivo') + '</span>' +
                     '</div>' +
-                    '<h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin:0 0 0.3rem;">' + esc(sp.name) + '</h4>' +
-                    '<div style="background:#040810; border-radius:4px; padding:0.75rem; margin:0.8rem 0;">' +
-                      '<div style="font-size:0.72rem; color:#94a3b8;">Valore Contrattuale</div>' +
-                      '<div style="font-size:1.3rem; font-weight:800; color:#38bdf8;">' + esc(sp.value) + '</div>' +
+                    '<h4 class="es-prx-23">' + esc(sp.name) + '</h4>' +
+                    '<div class="es-prx-24">' +
+                      '<div class="es-prx-25">Valore Contrattuale</div>' +
+                      '<div class="es-prx-26">' + esc(sp.value) + '</div>' +
                     '</div>' +
-                    '<div style="font-size:0.78rem; color:#cbd5e1;">• Scadenza: <b>' + esc(sp.expiry) + '</b><br>• Documento: <span style="color:#38bdf8;">' + esc(sp.doc || 'Contratto_Firmato.pdf') + '</span></div>' +
+                    '<div class="es-prx-27">• Scadenza: <b>' + esc(sp.expiry) + '</b><br>• Documento: <span class="es-prx-28">' + esc(sp.doc || 'Contratto_Firmato.pdf') + '</span></div>' +
                   '</div>'
                 );
               }).join('') +
@@ -1320,18 +1320,18 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+          '<div class="es-prx-1">' +
             '<h2>' + ICONS.layers + ' Classifica Ufficiale di Campionato</h2>' +
-            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:4px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+            '<button type="button" class="es-pres-btn-back es-prx-2" data-action="go-back">&larr; Torna alla Panoramica</button>' +
           '</div>' +
           '<p>Dati federali ufficiali LND · Aggiornati all\'ultimo referto di gara</p>' +
         '</div>' +
 
         '<div class="es-pres-detail-body">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">' +
-            '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-              '<span style="font-size:0.82rem; font-weight:700; color:#94a3b8;">CAMPIONATO:</span>' +
-              '<span style="font-size:0.88rem; font-weight:700; color:#fff;">' + esc(data.category) + '</span>' +
+          '<div class="es-prx-19">' +
+            '<div class="es-prx-29">' +
+              '<span class="es-prx-30">CAMPIONATO:</span>' +
+              '<span class="es-prx-31">' + esc(data.category) + '</span>' +
             '</div>' +
             '<button type="button" class="es-pres-btn-secondary" id="btn-edit-standings">Aggiorna Posizione &amp; Punti</button>' +
           '</div>' +
@@ -1344,25 +1344,25 @@
               '<button type="button" class="es-pres-empty-btn" id="btn-setup-standings">' + ICONS.plus + ' Imposta Classifica</button>' +
             '</div>'
           ) : (
-            '<div class="es-pres-detail-box" style="padding:1rem;">' +
+            '<div class="es-pres-detail-box es-prx-32">' +
               '<div class="es-pres-table-wrap">' +
                 '<table class="es-pres-table">' +
-                  '<thead><tr><th style="width:45px;">Pos</th><th>Squadra</th><th style="text-align:center;">G</th><th style="text-align:center;">V</th><th style="text-align:center;">P</th><th style="text-align:center;">S</th><th style="text-align:center;">GF</th><th style="text-align:center;">GS</th><th style="text-align:center;">DR</th><th style="text-align:center; color:#38bdf8;">PT</th></tr></thead>' +
+                  '<thead><tr><th class="es-prx-33">Pos</th><th>Squadra</th><th class="es-prx-34">G</th><th class="es-prx-34">V</th><th class="es-prx-34">P</th><th class="es-prx-34">S</th><th class="es-prx-34">GF</th><th class="es-prx-34">GS</th><th class="es-prx-34">DR</th><th class="es-prx-35">PT</th></tr></thead>' +
                   '<tbody>' +
                     standings.map(function (row) {
                       var isMyTeam = row.isUser;
                       return (
                         '<tr class="' + (isMyTeam ? 'is-my-club' : '') + '">' +
                           '<td style="font-weight:800; color:' + (row.pos <= 2 ? '#38bdf8' : (row.pos <= 5 ? '#34d399' : '#94a3b8')) + ';">' + row.pos + '</td>' +
-                          '<td><b>' + esc(row.team) + '</b>' + (isMyTeam ? ' <span class="es-pres-status es-pres-status-neutral" style="font-size:0.68rem; margin-left:0.4rem;">Il tuo Club</span>' : '') + '</td>' +
-                          '<td style="text-align:center;">' + row.played + '</td>' +
-                          '<td style="text-align:center; color:#34d399; font-weight:700;">' + row.won + '</td>' +
-                          '<td style="text-align:center; color:#94a3b8;">' + row.drawn + '</td>' +
-                          '<td style="text-align:center; color:#f87171;">' + row.lost + '</td>' +
-                          '<td style="text-align:center;">' + row.gf + '</td>' +
-                          '<td style="text-align:center;">' + row.ga + '</td>' +
+                          '<td><b>' + esc(row.team) + '</b>' + (isMyTeam ? ' <span class="es-pres-status es-pres-status-neutral es-prx-36">Il tuo Club</span>' : '') + '</td>' +
+                          '<td class="es-prx-34">' + row.played + '</td>' +
+                          '<td class="es-prx-37">' + row.won + '</td>' +
+                          '<td class="es-prx-38">' + row.drawn + '</td>' +
+                          '<td class="es-prx-39">' + row.lost + '</td>' +
+                          '<td class="es-prx-34">' + row.gf + '</td>' +
+                          '<td class="es-prx-34">' + row.ga + '</td>' +
                           '<td style="text-align:center; color:' + (String(row.gd).startsWith('+') ? '#34d399' : '#f87171') + ';">' + row.gd + '</td>' +
-                          '<td style="text-align:center; font-size:1.05rem; font-weight:800; color:#38bdf8;">' + row.pts + '</td>' +
+                          '<td class="es-prx-40">' + row.pts + '</td>' +
                         '</tr>'
                       );
                     }).join('') +
@@ -1387,16 +1387,16 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+          '<div class="es-prx-1">' +
             '<h2>' + ICONS.calendar + ' Calendario Gare &amp; Designazioni AIA</h2>' +
-            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:4px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+            '<button type="button" class="es-pres-btn-back es-prx-2" data-action="go-back">&larr; Torna alla Panoramica</button>' +
           '</div>' +
           '<p>Programmazione incontri, esiti ufficiali e designazioni arbitrali federali</p>' +
         '</div>' +
 
         '<div class="es-pres-detail-body">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">' +
-            '<div style="font-size:1.05rem; font-weight:700; color:#fff;">Gare della Stagione</div>' +
+          '<div class="es-prx-41">' +
+            '<div class="es-prx-20">Gare della Stagione</div>' +
             '<button type="button" class="es-pres-btn-primary" id="btn-add-schedule-match">+ Aggiungi Incontro al Calendario</button>' +
           '</div>' +
 
@@ -1408,20 +1408,20 @@
               '<button type="button" class="es-pres-empty-btn" id="btn-add-first-schedule-match">' + ICONS.plus + ' Aggiungi Prima Partita</button>' +
             '</div>'
           ) : (
-            '<div class="es-pres-detail-box" style="padding:1.2rem;">' +
-              '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+            '<div class="es-pres-detail-box es-prx-42">' +
+              '<div class="es-prx-43">' +
                 matches.map(function (m) {
                   var borderCol = m.status === 'W' ? '#34d399' : (m.status === 'D' ? '#94a3b8' : (m.status === 'L' ? '#ef4444' : '#38bdf8'));
                   return (
                     '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-left:3px solid ' + borderCol + '; border-radius:4px; padding:0.85rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
-                      '<div style="display:flex; align-items:center; gap:1rem;">' +
-                        '<span class="es-pres-status es-pres-status-neutral" style="font-size:0.7rem;">' + (m.type === 'H' ? 'Casa (H)' : 'Trasferta (A)') + '</span>' +
+                      '<div class="es-prx-44">' +
+                        '<span class="es-pres-status es-pres-status-neutral es-prx-45">' + (m.type === 'H' ? 'Casa (H)' : 'Trasferta (A)') + '</span>' +
                         '<div>' +
-                          '<div style="font-size:0.95rem; font-weight:700; color:#fff;">' + esc(m.round) + ' · vs ' + esc(m.opponent) + '</div>' +
-                          '<div style="font-size:0.75rem; color:#94a3b8; margin-top:0.15rem;">' + esc(m.date) + (m.referee ? (' · Arbitro: ' + esc(m.referee)) : '') + '</div>' +
+                          '<div class="es-prx-46">' + esc(m.round) + ' · vs ' + esc(m.opponent) + '</div>' +
+                          '<div class="es-prx-47">' + esc(m.date) + (m.referee ? (' · Arbitro: ' + esc(m.referee)) : '') + '</div>' +
                         '</div>' +
                       '</div>' +
-                      '<div style="display:flex; align-items:center; gap:0.8rem;">' +
+                      '<div class="es-prx-48">' +
                         '<div style="font-size:1.2rem; font-weight:800; color:' + (!m.isPlayed ? '#38bdf8' : '#ffffff') + ';">' + esc(m.res || (m.isPlayed ? (m.goalsFor + ' - ' + m.goalsAgainst) : '- - -')) + '</div>' +
                         (m.status === 'W' ? '<span class="es-pres-status es-pres-status-ok">Vittoria</span>' :
                          m.status === 'D' ? '<span class="es-pres-status es-pres-status-neutral">Pareggio</span>' :
@@ -1450,19 +1450,19 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+          '<div class="es-prx-1">' +
             '<h2>' + ICONS.stopwatch + ' Centro Sportivo &amp; Staff Tecnico</h2>' +
-            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:4px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+            '<button type="button" class="es-pres-btn-back es-prx-2" data-action="go-back">&larr; Torna alla Panoramica</button>' +
           '</div>' +
           '<p>Programma settimanale degli allenamenti, presenze atleti e qualifiche federali staff</p>' +
         '</div>' +
 
         '<div class="es-pres-detail-body">' +
           '<div class="es-pres-detail-box">' +
-            '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">' +
+            '<div class="es-prx-41">' +
               '<div>' +
-                '<h3 style="margin:0;">Staff Tecnico &amp; Qualifiche Ufficiali FIGC</h3>' +
-                '<p style="color:#94a3b8; font-size:0.82rem; margin:0.2rem 0 0;">Anagrafica reale e patentini federali omologati per la stagione in corso.</p>' +
+                '<h3 class="es-prx-49">Staff Tecnico &amp; Qualifiche Ufficiali FIGC</h3>' +
+                '<p class="es-prx-50">Anagrafica reale e patentini federali omologati per la stagione in corso.</p>' +
               '</div>' +
               (staff.length ? '<button type="button" class="es-pres-btn-primary" id="btn-add-staff-member">+ Aggiungi Membro Staff</button>' : '') +
             '</div>' +
@@ -1478,11 +1478,11 @@
               '<div class="es-pres-grid-2">' +
                 staff.map(function (m) {
                   return (
-                    '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                    '<div class="es-prx-51">' +
                       '<div>' +
-                        '<div style="font-size:0.92rem; font-weight:700; color:#fff;">' + esc(m.name) + '</div>' +
-                        '<div style="font-size:0.75rem; color:#38bdf8; margin-top:0.1rem;">' + esc(m.role) + '</div>' +
-                        '<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.15rem;">Qualifica: <b>' + esc(m.patent || 'Qualifica non inserita') + '</b></div>' +
+                        '<div class="es-prx-52">' + esc(m.name) + '</div>' +
+                        '<div class="es-prx-53">' + esc(m.role) + '</div>' +
+                        '<div class="es-prx-54">Qualifica: <b>' + esc(m.patent || 'Qualifica non inserita') + '</b></div>' +
                       '</div>' +
                       '<span class="' + (m.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(m.status || 'Regolare') + '</span>' +
                     '</div>'
@@ -1493,10 +1493,10 @@
           '</div>' +
 
           '<div class="es-pres-detail-box">' +
-            '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">' +
+            '<div class="es-prx-41">' +
               '<div>' +
-                '<h3 style="margin:0;">Piano di Lavoro Settimanale &amp; Presenze</h3>' +
-                '<p style="color:#94a3b8; font-size:0.82rem; margin:0.2rem 0 0;">Programmazione sedute sul campo, orari e focus tattico redatto dallo staff.</p>' +
+                '<h3 class="es-prx-49">Piano di Lavoro Settimanale &amp; Presenze</h3>' +
+                '<p class="es-prx-50">Programmazione sedute sul campo, orari e focus tattico redatto dallo staff.</p>' +
               '</div>' +
               (data.trainingWeek && data.trainingWeek.length ? '<button type="button" class="es-pres-btn-primary" id="btn-add-training-session">+ Nuova Seduta</button>' : '') +
             '</div>' +
@@ -1509,16 +1509,16 @@
                 '<button type="button" class="es-pres-empty-btn" id="btn-add-first-training-session">' + ICONS.plus + ' Pianifica Seduta di Allenamento</button>' +
               '</div>'
             ) : (
-              '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+              '<div class="es-prx-43">' +
                 data.trainingWeek.map(function (tw) {
                   return (
-                    '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
+                    '<div class="es-prx-55">' +
                       '<div>' +
-                        '<div style="font-size:0.95rem; font-weight:700; color:#38bdf8;">' + esc(tw.day) + ' <span style="font-size:0.8rem; color:#94a3b8; font-weight:400;">(' + esc(tw.time) + ')</span></div>' +
-                        '<div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.25rem;"><b>Focus seduta:</b> ' + esc(tw.focus) + '</div>' +
-                        '<div style="font-size:0.75rem; color:#94a3b8; margin-top:0.15rem;">Ubicazione: ' + esc(tw.pitch || 'Campo Principale') + '</div>' +
+                        '<div class="es-prx-56">' + esc(tw.day) + ' <span class="es-prx-57">(' + esc(tw.time) + ')</span></div>' +
+                        '<div class="es-prx-58"><b>Focus seduta:</b> ' + esc(tw.focus) + '</div>' +
+                        '<div class="es-prx-47">Ubicazione: ' + esc(tw.pitch || 'Campo Principale') + '</div>' +
                       '</div>' +
-                      '<div style="text-align:right;">' +
+                      '<div class="es-prx-59">' +
                         '<span class="es-pres-status es-pres-status-ok">' + esc(tw.attendance || 'Da rilevare') + '</span>' +
                       '</div>' +
                     '</div>'
@@ -1561,13 +1561,13 @@
         // Banner Modalità Demo vs Reale
         (isDemo ? (
           '<div class="es-pres-demo-banner">' +
-            '<div style="display:flex; align-items:center; gap:0.65rem;">' +
+            '<div class="es-prx-60">' +
               '<span class="es-pres-demo-tag">Modalità Dimostrativa</span>' +
               '<span>Stai visualizzando il dataset di prova (Foggia City). Nessun dato reale del tuo club è stato ancora inserito.</span>' +
             '</div>' +
-            '<div style="display:flex; gap:0.5rem;">' +
-              '<button type="button" class="es-pres-btn-primary" id="btn-switch-to-real" style="padding:4px 10px; font-size:0.75rem;">Passa a Dati Reali del Tuo Club</button>' +
-              '<button type="button" class="es-pres-btn-secondary" id="btn-reset-demo" style="padding:4px 10px; font-size:0.75rem;">Azzera Dati</button>' +
+            '<div class="es-prx-14">' +
+              '<button type="button" class="es-pres-btn-primary es-prx-61" id="btn-switch-to-real">Passa a Dati Reali del Tuo Club</button>' +
+              '<button type="button" class="es-pres-btn-secondary es-prx-61" id="btn-reset-demo">Azzera Dati</button>' +
             '</div>' +
           '</div>'
         ) : '') +
@@ -1580,157 +1580,157 @@
                 '<img src="' + esc(data.logoUrl || 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1') + '" alt="' + esc(data.clubName) + '" class="es-pres-crest-img">' +
               '</div>' +
               '<div class="es-pres-club-meta-text">' +
-                '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+                '<div class="es-prx-29">' +
                   '<h1 class="es-pres-club-name">' + esc(data.clubName) + '</h1>' +
-                  (!isDemo ? '<button type="button" class="es-pres-btn-secondary" id="btn-load-demo" style="padding:2px 7px; font-size:0.7rem; color:#94a3b8;">Carica Dati Demo</button>' : '') +
+                  (!isDemo ? '<button type="button" class="es-pres-btn-secondary es-prx-62" id="btn-load-demo">Carica Dati Demo</button>' : '') +
                 '</div>' +
                 '<div class="es-pres-club-subtitle">' + esc(data.category) + ' · ' + esc(data.affiliationStatus) + ' · ' + esc(data.presRole) + '</div>' +
               '</div>' +
             '</div>' +
 
-            '<div style="display:flex; flex-direction:column; align-items:flex-end; gap:0.6rem;">' +
-              '<div class="es-pres-standings-meta" style="margin:0;">' +
+            '<div class="es-prx-63">' +
+              '<div class="es-pres-standings-meta es-prx-49">' +
                 '<div class="es-pres-standing-row"><span class="es-pres-standing-highlight">' + (data.position && data.position !== '—' ? esc(data.position) : (matchStats.played ? ('Gare: ' + matchStats.played) : 'Stagione 2026/27')) + '</span> · <span>' + matchStats.pts + ' punti</span></div>' +
                 '<div class="es-pres-standing-sub">' + (data.matchDay || '28ª Giornata') + ' · ' + esc(data.season) + '</div>' +
               '</div>' +
-              '<div style="display:flex; gap:0.45rem; flex-wrap:wrap; justify-content:flex-end;">' +
-                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-guide" style="padding:4px 9px; font-size:0.75rem; border-color:rgba(56,189,248,0.4); color:#38bdf8;">Guida Operativa</button>' +
-                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-edit-club" style="padding:4px 9px; font-size:0.75rem;">Dati Club &amp; Maglie</button>' +
-                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-organigramma" style="padding:4px 9px; font-size:0.75rem;">Organigramma</button>' +
-                '<button type="button" class="es-pres-btn-primary" id="btn-pres-publish-job" style="padding:4px 11px; font-size:0.75rem; background:linear-gradient(135deg,#0284c7,#059669);">Pubblica Candidatura</button>' +
+              '<div class="es-prx-64">' +
+                '<button type="button" class="es-pres-btn-secondary es-prx-65" id="btn-pres-guide">Guida Operativa</button>' +
+                '<button type="button" class="es-pres-btn-secondary es-prx-66" id="btn-pres-edit-club">Dati Club &amp; Maglie</button>' +
+                '<button type="button" class="es-pres-btn-secondary es-prx-66" id="btn-pres-organigramma">Organigramma</button>' +
+                '<button type="button" class="es-pres-btn-primary es-prx-67" id="btn-pres-publish-job">Pubblica Candidatura</button>' +
               '</div>' +
             '</div>' +
           '</div>' +
         '</div>' +
 
         // Selettore Ambito & Categoria Federale (Stagione 2026/27)
-        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.2); border-radius:4px; padding:0.9rem 1.25rem; margin-bottom:1.5rem;">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:0.75rem;">' +
-            '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-              '<span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:rgba(56,189,248,0.12); color:#38bdf8; border-radius:4px;">' + ICONS.landmark + '</span>' +
+        '<div class="es-prx-68">' +
+          '<div class="es-prx-69">' +
+            '<div class="es-prx-29">' +
+              '<span class="es-prx-70">' + ICONS.landmark + '</span>' +
               '<div>' +
-                '<h4 style="margin:0; font-size:0.92rem; font-weight:700; color:#fff;">Tassonomia Categorie &amp; Ambito Federale (Stagione 2026/2027)</h4>' +
-                '<p style="margin:0; font-size:0.75rem; color:#94a3b8;">Imposta l\'ambito e il comitato di competenza per visualizzare solo le scadenze e i documenti pertinenti</p>' +
+                '<h4 class="es-prx-71">Tassonomia Categorie &amp; Ambito Federale (Stagione 2026/2027)</h4>' +
+                '<p class="es-prx-72">Imposta l\'ambito e il comitato di competenza per visualizzare solo le scadenze e i documenti pertinenti</p>' +
               '</div>' +
             '</div>' +
-            '<div style="font-size:0.75rem; color:#38bdf8; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:4px 9px;">' +
+            '<div class="es-prx-73">' +
               'Stagione 2026/27 · Termini Ufficiali Co.Vi.So.C. / LND' +
             '</div>' +
           '</div>' +
-          '<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap:0.75rem; align-items:end;">' +
-            '<div class="es-pres-input-group" style="margin:0;">' +
-              '<label style="font-size:0.75rem; color:#94a3b8; font-weight:600; margin-bottom:0.3rem;">Ambito Federale *</label>' +
-              '<select class="es-pres-input-text" id="sel-pres-scope" style="background:#080e1e; color:#fff; font-size:0.82rem; padding:0.45rem 0.65rem;">' +
+          '<div class="es-prx-74">' +
+            '<div class="es-pres-input-group es-prx-49">' +
+              '<label class="es-prx-75">Ambito Federale *</label>' +
+              '<select class="es-pres-input-text es-prx-76" id="sel-pres-scope">' +
                 FOOTBALL_SCOPES.map(function (sc) {
                   return '<option value="' + esc(sc.id) + '"' + ((data.footballScope || 'dilettanti') === sc.id ? ' selected' : '') + '>' + esc(sc.name) + '</option>';
                 }).join('') +
               '</select>' +
             '</div>' +
-            '<div class="es-pres-input-group" style="margin:0;">' +
-              '<label style="font-size:0.75rem; color:#94a3b8; font-weight:600; margin-bottom:0.3rem;">Categoria di Competenza *</label>' +
-              '<select class="es-pres-input-text" id="sel-pres-cat" style="background:#080e1e; color:#fff; font-size:0.82rem; padding:0.45rem 0.65rem;">' +
+            '<div class="es-pres-input-group es-prx-49">' +
+              '<label class="es-prx-75">Categoria di Competenza *</label>' +
+              '<select class="es-pres-input-text es-prx-76" id="sel-pres-cat">' +
                 (SCOPE_CATEGORIES[data.footballScope || 'dilettanti'] || []).map(function (c) {
                   return '<option value="' + esc(c) + '"' + (data.category === c ? ' selected' : '') + '>' + esc(c) + '</option>';
                 }).join('') +
               '</select>' +
             '</div>' +
-            '<div class="es-pres-input-group" style="margin:0;">' +
-              '<label style="font-size:0.75rem; color:#94a3b8; font-weight:600; margin-bottom:0.3rem;">Comitato Regionale (LND / SGS) *</label>' +
-              '<select class="es-pres-input-text" id="sel-pres-reg" style="background:#080e1e; color:#fff; font-size:0.82rem; padding:0.45rem 0.65rem;">' +
+            '<div class="es-pres-input-group es-prx-49">' +
+              '<label class="es-prx-75">Comitato Regionale (LND / SGS) *</label>' +
+              '<select class="es-pres-input-text es-prx-76" id="sel-pres-reg">' +
                 ITALIAN_REGIONS.map(function (r) {
                   return '<option value="' + esc(r) + '"' + ((data.region || 'Puglia') === r ? ' selected' : '') + '>C.R. ' + esc(r) + '</option>';
                 }).join('') +
               '</select>' +
             '</div>' +
-            '<button type="button" class="es-pres-btn-primary" id="btn-apply-football-scope" style="height:35px; padding:0 14px; font-size:0.8rem; white-space:nowrap;">Applica e Carica Scadenze</button>' +
+            '<button type="button" class="es-pres-btn-primary es-prx-77" id="btn-apply-football-scope">Applica e Carica Scadenze</button>' +
           '</div>' +
         '</div>' +
 
         // 2. Barra di Navigazione Interna a Tab
         '' +
         '<!-- 0. REGOLA FONDAMENTALE PROFILO SQUADRA (PAG. 1 PDF) -->' +
-'        <div style="background:rgba(2,132,199,0.09); border:1.5px solid #0284c7; border-radius:6px; padding:1.1rem 1.4rem; margin-bottom:1.5rem;">' +
-'          <div style="display:flex; align-items:center; gap:0.6rem; color:#38bdf8; font-weight:800; font-size:1.05rem; margin-bottom:0.4rem;">' +
+'        <div class="es-prx-78">' +
+'          <div class="es-prx-79">' +
 '            <span>REGOLA FONDAMENTALE: IL PROFILO SQUADRA</span>' +
 '          </div>' +
-'          <p style="font-size:0.86rem; color:#e2e8f0; margin:0; line-height:1.55;">' +
+'          <p class="es-prx-80">' +
 '            <b>Il Profilo Squadra non è un account autonomo e non può esistere senza un Profilo Presidente associato.</b> Il Presidente è il titolare e responsabile legale della scheda societaria sulla piattaforma. Insieme al Segretario (o collaboratore amministrativo delegato), compila e aggiorna i dati ufficiali, le foto delle maglie ufficiali e la rosa generale.' +
 '          </p>' +
 '        </div>' +
 '' +
 '        <!-- 1. GESTIONE PROFILO SQUADRA & FOTO MAGLIE UFFICIALI (PAG. 2-3 PDF) -->' +
-'        <div style="background:#090e17; border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">' +
-'          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; border-bottom:1px solid rgba(148,163,184,0.12); padding-bottom:0.65rem;">' +
+'        <div class="es-prx-81">' +
+'          <div class="es-prx-82">' +
 '            <div>' +
-'              <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
+'              <h3 class="es-prx-83">' +
 '                Foto Maglie Ufficiali (Kit da Gara che vestono le Card dei Tesserati)' +
 '              </h3>' +
-'              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94a3b8;">' +
+'              <p class="es-prx-84">' +
 '                Le maglie ufficiali caricate dal Presidente/Segretario personalizzano in tempo reale la grafica delle Card dei calciatori registrati.' +
 '              </p>' +
 '            </div>' +
-'            <button type="button" class="es-pres-btn-primary" id="btn-quick-edit-club-kits" style="font-size:0.8rem; padding:6px 14px;">Aggiorna Dati Club &amp; Maglie</button>' +
+'            <button type="button" class="es-pres-btn-primary es-prx-85" id="btn-quick-edit-club-kits">Aggiorna Dati Club &amp; Maglie</button>' +
 '          </div>' +
 '' +
-'          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">' +
+'          <div class="es-prx-86">' +
 '            <!-- Kit Casa -->' +
-'            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">' +
-'              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Prima Maglia (Home)</div>' +
-'              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">' +
+'            <div class="es-prx-87">' +
+'              <div class="es-prx-88">Prima Maglia (Home)</div>' +
+'              <div class="es-prx-89">' +
 '                <img src="' + esc((data.kits && data.kits.home) || 'immagini/squadre-kits/foggia-home.png') + '" style="max-height:95px; object-fit:contain;" alt="Home Kit">' +
 '              </div>' +
-'              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>' +
+'              <span class="es-pres-status es-pres-status-ok es-prx-90">✓ Attiva su Card Ufficiali</span>' +
 '            </div>' +
 '            <!-- Kit Trasferta -->' +
-'            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">' +
-'              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Seconda Maglia (Away)</div>' +
-'              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">' +
+'            <div class="es-prx-87">' +
+'              <div class="es-prx-88">Seconda Maglia (Away)</div>' +
+'              <div class="es-prx-89">' +
 '                <img src="' + esc((data.kits && data.kits.away) || 'immagini/squadre-kits/foggia-away.png') + '" style="max-height:95px; object-fit:contain;" alt="Away Kit">' +
 '              </div>' +
-'              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>' +
+'              <span class="es-pres-status es-pres-status-ok es-prx-90">✓ Attiva su Card Ufficiali</span>' +
 '            </div>' +
 '            <!-- Kit Portiere -->' +
-'            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">' +
-'              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Maglia Portiere (GK)</div>' +
-'              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">' +
+'            <div class="es-prx-87">' +
+'              <div class="es-prx-88">Maglia Portiere (GK)</div>' +
+'              <div class="es-prx-89">' +
 '                <img src="' + esc((data.kits && data.kits.gk) || 'immagini/squadre-kits/foggia-gk.png') + '" style="max-height:95px; object-fit:contain;" alt="GK Kit">' +
 '              </div>' +
-'              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>' +
+'              <span class="es-pres-status es-pres-status-ok es-prx-90">✓ Attiva su Card Ufficiali</span>' +
 '            </div>' +
 '          </div>' +
 '        </div>' +
 '' +
 '        <!-- 2. COLLEGAMENTO DELLA ROSA: PROFILO ATTIVO VS ANTEPRIMA LIMITATA (PAG. 3 PDF) -->' +
-'        <div style="background:#090e17; border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">' +
-'          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:0.85rem; border-bottom:1px solid rgba(148,163,184,0.12); padding-bottom:0.65rem;">' +
+'        <div class="es-prx-81">' +
+'          <div class="es-prx-91">' +
 '            <div>' +
-'              <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
+'              <h3 class="es-prx-83">' +
 '                Collegamento Rosa con i Profili Atleti' +
 '              </h3>' +
-'              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94a3b8;">' +
+'              <p class="es-prx-84">' +
 '                Distinzione tra atleti con <b>Profilo Attivo</b> (link Card ufficiale completo) e atleti con <b>Anteprima Limitata</b> (non registrati, scheda sintetica non cliccabile).' +
 '              </p>' +
 '            </div>' +
-'            <button type="button" class="es-pres-btn-primary" id="btn-quick-manage-squad-top" style="font-size:0.8rem; padding:6px 14px;">Gestisci &amp; Inserisci Calciatori</button>' +
+'            <button type="button" class="es-pres-btn-primary es-prx-85" id="btn-quick-manage-squad-top">Gestisci &amp; Inserisci Calciatori</button>' +
 '          </div>' +
 '' +
-'          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">' +
-'            <div style="background:#040810; border:1px solid rgba(34,197,94,0.25); border-radius:4px; padding:0.9rem;">' +
-'              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">' +
-'                <span style="font-size:0.82rem; font-weight:800; color:#22c55e;">1. GIOCATORI REGISTRATI (PROFILO ATTIVO)</span>' +
+'          <div class="es-prx-92">' +
+'            <div class="es-prx-93">' +
+'              <div class="es-prx-94">' +
+'                <span class="es-prx-95">1. GIOCATORI REGISTRATI (PROFILO ATTIVO)</span>' +
 '                <span class="es-pres-status es-pres-status-ok">' + (data.squad ? data.squad.filter(function(p){return p.isRegistered!==false;}).length : 0) + ' Atleti</span>' +
 '              </div>' +
-'              <p style="font-size:0.76rem; color:#cbd5e1; margin:0; line-height:1.45;">' +
+'              <p class="es-prx-96">' +
 '                Il sistema riconosce l\'atleta presente nel database e crea un <b>collegamento diretto (link)</b> con la sua Card ufficiale (Fronte/Retro, Heatmap, Dati GPS, Video). La Card indossa automaticamente i colori della foto maglia ufficiale della società.' +
 '              </p>' +
 '            </div>' +
 '' +
-'            <div style="background:#040810; border:1px solid rgba(245,158,11,0.25); border-radius:4px; padding:0.9rem;">' +
-'              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">' +
-'                <span style="font-size:0.82rem; font-weight:800; color:#fbbf24;">2. GIOCATORI NON REGISTRATI (ANTEPRIMA LIMITATA)</span>' +
+'            <div class="es-prx-97">' +
+'              <div class="es-prx-94">' +
+'                <span class="es-prx-98">2. GIOCATORI NON REGISTRATI (ANTEPRIMA LIMITATA)</span>' +
 '                <span class="es-pres-status es-pres-status-warning">' + (data.squad ? data.squad.filter(function(p){return p.isRegistered===false;}).length : 0) + ' Atleti</span>' +
 '              </div>' +
-'              <p style="font-size:0.76rem; color:#cbd5e1; margin:0; line-height:1.45;">' +
+'              <p class="es-prx-96">' +
 '                Mostrata solo una scheda di anteprima sintetica e <b>non cliccabile</b> con Nome e Cognome. Informazioni dettagliate (contatti, dati fisici, video) non sono accessibili né modificabili dalla società finché l\'atleta non crea e rivendica il proprio profilo.' +
 '              </p>' +
 '            </div>' +
@@ -1738,25 +1738,25 @@
 '        </div>' +
 '' +
 '        <!-- 3. COME PUBBLICARE UNA CANDIDATURA (PAG. 4-5 PDF) -->' +
-'        <div id="sec-pres-candidatura-direct" style="background:#090e17; border:1.5px solid rgba(2,132,199,0.4); border-radius:6px; padding:1.35rem; margin-bottom:1.5rem;">' +
-'          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; border-bottom:1px solid rgba(148,163,184,0.15); padding-bottom:0.75rem;">' +
+'        <div class="es-prx-99" id="sec-pres-candidatura-direct">' +
+'          <div class="es-prx-100">' +
 '            <div>' +
-'              <span class="es-tag es-tag-blue" style="margin-bottom:0.3rem;">Modulo Istituzionale Club</span>' +
-'              <h3 style="margin:0; font-size:1.15rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
+'              <span class="es-tag es-tag-blue es-prx-101">Modulo Istituzionale Club</span>' +
+'              <h3 class="es-prx-102">' +
 '                Come Pubblicare una Candidatura (Richiesta Personale / Staff / Calciatori)' +
 '              </h3>' +
-'              <p style="margin:0.2rem 0 0; font-size:0.8rem; color:#94a3b8;">' +
+'              <p class="es-prx-103">' +
 '                Compila i due blocchi ufficiali (<b>Cosa Offriamo</b> / <b>Cosa Richiediamo</b>) con opzione di <b>Scouting AI Automatico</b>.' +
 '              </p>' +
 '            </div>' +
-'            <button type="button" class="es-pres-btn-primary" id="btn-open-candidatura-modal-now" style="font-size:0.84rem; padding:7px 16px; background:linear-gradient(135deg,#0284c7,#059669);">+ Nuova Pubblicazione Candidatura</button>' +
+'            <button type="button" class="es-pres-btn-primary es-prx-104" id="btn-open-candidatura-modal-now">+ Nuova Pubblicazione Candidatura</button>' +
 '          </div>' +
 '' +
-'          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:1rem;">' +
+'          <div class="es-prx-105">' +
 '            <!-- Blocco Cosa Offriamo -->' +
-'            <div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:1rem;">' +
-'              <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800;">Cosa Offriamo</h4>' +
-'              <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:0.25rem;">' +
+'            <div class="es-prx-106">' +
+'              <h4 class="es-prx-107">Cosa Offriamo</h4>' +
+'              <ul class="es-prx-108">' +
 '                <li>• <b>Tipologia di incarico:</b> Contratto Federale, Accordo Sportivo, Stage Tecnico.</li>' +
 '                <li>• <b>Eventuale compenso o rimborso spese:</b> Indennità fissa mensile / premi.</li>' +
 '                <li>• <b>Durata della collaborazione:</b> Stagione 2026/2027 o pluriennale.</li>' +
@@ -1767,9 +1767,9 @@
 '            </div>' +
 '' +
 '            <!-- Blocco Cosa Richiediamo -->' +
-'            <div style="background:#040810; border:1px solid rgba(34,197,94,0.25); border-radius:4px; padding:1rem;">' +
-'              <h4 style="margin:0 0 0.5rem; color:#34d399; font-size:0.92rem; font-weight:800;">Cosa Richiediamo / Il Profilo che Cerchiamo</h4>' +
-'              <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:0.25rem;">' +
+'            <div class="es-prx-109">' +
+'              <h4 class="es-prx-110">Cosa Richiediamo / Il Profilo che Cerchiamo</h4>' +
+'              <ul class="es-prx-108">' +
 '                <li>• <b>Ruolo ricercato:</b> Calciatore, Allenatore, Match Analyst, Preparatore, Medico.</li>' +
 '                <li>• <b>Competenze tecniche richieste:</b> Requisiti di campo e tattici.</li>' +
 '                <li>• <b>Esperienza minima preferibile:</b> Anni di militanza in categoria.</li>' +
@@ -1781,35 +1781,35 @@
 '          </div>' +
 '' +
 '          <!-- Opzione AI Scouting -->' +
-'          <div style="background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.3); border-radius:4px; padding:0.85rem 1rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.8rem;">' +
-'            <div style="display:flex; align-items:center; gap:0.6rem;">' +
+'          <div class="es-prx-111">' +
+'            <div class="es-prx-29">' +
 '              ' +
 '              <div>' +
-'                <b style="color:#a5b4fc; font-size:0.86rem;">Opzione AI (Candidatura Automatica Intelligente):</b>' +
-'                <p style="margin:0; font-size:0.76rem; color:#cbd5e1;">Il sistema analizza tutti i profili del sito, individua i più compatibili e li candida in automatico archiviando le schede tecniche nell\'annuncio.</p>' +
+'                <b class="es-prx-112">Opzione AI (Candidatura Automatica Intelligente):</b>' +
+'                <p class="es-prx-113">Il sistema analizza tutti i profili del sito, individua i più compatibili e li candida in automatico archiviando le schede tecniche nell\'annuncio.</p>' +
 '              </div>' +
 '            </div>' +
-'            <button type="button" class="es-pres-btn-primary" id="btn-open-candidatura-modal-now-2" style="font-size:0.78rem; padding:5px 12px; background:#4f46e5;">Compila &amp; Pubblica con AI &rsaquo;</button>' +
+'            <button type="button" class="es-pres-btn-primary es-prx-114" id="btn-open-candidatura-modal-now-2">Compila &amp; Pubblica con AI &rsaquo;</button>' +
 '          </div>' +
 '        </div>' +
 '' +
 '        <!-- 4. ATTIVITÀ, PERMESSI & LIMITI DI RUOLO (PAG. 3-4 PDF) -->' +
-'        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:1.5rem;">' +
-'          <div style="background:#090e17; border:1px solid rgba(56,189,248,0.2); border-radius:6px; padding:1.1rem;">' +
-'            <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800; display:flex; align-items:center; gap:0.4rem;">' +
+'        <div class="es-prx-115">' +
+'          <div class="es-prx-116">' +
+'            <h4 class="es-prx-117">' +
 '              Attività e Permessi Ufficiali del Presidente' +
 '            </h4>' +
-'            <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+'            <ul class="es-prx-118">' +
 '              <li>• <b>Gestione Organigramma:</b> Delega dei permessi e invito nel team per Segretario, Direttore Sportivo, Allenatore e Match Analyst.</li>' +
 '              <li>• <b>Ufficializzazione Mercato:</b> Approvazione finale dei trasferimenti e pubblicazione automatica della notizia sul <b>Wall delle Trattative Chiuse</b> (con la Card del giocatore aggiornata e grafica UFFICIALE).</li>' +
 '            </ul>' +
 '          </div>' +
 '' +
-'          <div style="background:#090e17; border:1px solid rgba(239,68,68,0.25); border-radius:6px; padding:1.1rem;">' +
-'            <h4 style="margin:0 0 0.5rem; color:#f87171; font-size:0.92rem; font-weight:800; display:flex; align-items:center; gap:0.4rem;">' +
+'          <div class="es-prx-119">' +
+'            <h4 class="es-prx-120">' +
 '              Limiti Istituzionali di Ruolo del Presidente' +
 '            </h4>' +
-'            <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+'            <ul class="es-prx-118">' +
 '              <li>• <b>Nessuna Candidatura Calciatore:</b> Non può candidarsi come calciatore alle offerte di ingaggio.</li>' +
 '              <li>• <b>Nessun Profilo Squadra Duplicato:</b> Non può creare un Profilo Squadra duplicato o scollegato dalla figura presidenziale e legale.</li>' +
 '            </ul>' +
@@ -1846,11 +1846,11 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">Rating Rosa</h3>' +
                   (squadMetrics.isEmpty ? (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#94a3b8;">Rosa non inserita</div>' +
+                    '<div class="es-pres-card-metric es-prx-121">Rosa non inserita</div>' +
                     '<p class="es-pres-card-desc">Inserisci gli atleti per calcolare automaticamente il rendimento e l\'età media.</p>'
                   ) : (
                     '<div class="es-pres-card-metric">' + squadMetrics.score + ' <span class="es-pres-unit">indice / 100</span></div>' +
-                    '<p class="es-pres-card-desc" style="font-size:0.75rem; color:#94a3b8; margin-bottom:0.35rem;">' + squadMetrics.scoreSub + '</p>' +
+                    '<p class="es-pres-card-desc es-prx-122">' + squadMetrics.scoreSub + '</p>' +
                     '<p class="es-pres-card-desc">Età media ' + squadMetrics.avgAge + ' · ' + squadMetrics.minutesCoverage + '</p>'
                   )) +
                 '</div>' +
@@ -1869,7 +1869,7 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">Trattative di Mercato</h3>' +
                   (!data.transfers || !data.transfers.length ? (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#94a3b8;">Nessuna negoziazione</div>' +
+                    '<div class="es-pres-card-metric es-prx-121">Nessuna negoziazione</div>' +
                     '<p class="es-pres-card-desc">Inserisci le trattative aperte per monitorare acquisti, cessioni e prestiti.</p>'
                   ) : (
                     '<div class="es-pres-card-metric">' + data.transfers.length + ' <span class="es-pres-unit">trattative attive</span></div>' +
@@ -1888,7 +1888,7 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">Staff Tecnico</h3>' +
                   (!data.staff || !data.staff.length ? (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#94a3b8;">Nessun membro inserito</div>' +
+                    '<div class="es-pres-card-metric es-prx-121">Nessun membro inserito</div>' +
                     '<p class="es-pres-card-desc">Inserisci mister, vice, preparatore e medico con le qualifiche FIGC ufficiali.</p>'
                   ) : (
                     '<div class="es-pres-card-metric">' + data.staff.length + ' <span class="es-pres-unit">membri staff</span></div>' +
@@ -1899,7 +1899,7 @@
               '</div>' +
             '</div>' +
 
-            '<div class="es-pres-grid-2" style="margin-top:1.15rem;">' +
+            '<div class="es-pres-grid-2 es-prx-123">' +
               // Card Settore Giovanile
               '<div class="es-pres-card" id="card-pres-youth">' +
                 '<div class="es-pres-card-top">' +
@@ -1983,26 +1983,26 @@
               '</div>' +
 
               // Finanze & Budget
-              '<div class="es-pres-card" id="card-pres-finances" style="grid-column: span 2;">' +
+              '<div class="es-pres-card es-prx-124" id="card-pres-finances">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.card + '</div>' +
-                  '<span class="es-pres-status es-pres-status-ok" style="font-size:0.7rem;">Esenzione IVA 2026</span>' +
+                  '<span class="es-pres-status es-pres-status-ok es-prx-45">Esenzione IVA 2026</span>' +
                 '</div>' +
                 '<div>' +
                   '<h4 class="es-pres-card-title">Finanze &amp; Budget Societario</h4>' +
                   (canSeeFinances ? (
                     (!data.finances || !data.finances.isConfigured ? (
-                      '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#94a3b8;">Budget non configurato</div>' +
+                      '<div class="es-pres-card-metric es-prx-121">Budget non configurato</div>' +
                       '<p class="es-pres-card-desc">Imposta il rendiconto economico per tracciare saldo cassa e monte ingaggi mensile.</p>'
                     ) : (
                       '<div class="es-pres-card-metric">' + data.finances.cashBalance + ' <span class="es-pres-unit">saldo cassa</span></div>' +
                       '<p class="es-pres-card-desc">Monte ingaggi mensile: ' + data.finances.monthlyPayroll + ' · Budget stagionale: ' + data.finances.annualBudget + '</p>'
                     ))
                   ) : (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#94a3b8;">Dati protetti da autorizzazione RBAC</div>' +
+                    '<div class="es-pres-card-metric es-prx-121">Dati protetti da autorizzazione RBAC</div>' +
                     '<p class="es-pres-card-desc">I dati finanziari dettagliati sono visibili esclusivamente al ruolo Presidente e Tesoriere.</p>'
                   )) +
-                  '<div style="font-size:0.75rem; color:#38bdf8; margin-top:0.4rem; font-weight:600;">Regime Fiscale: Esenzione IVA ex D.Lgs. 36/2021 (in vigore dal 01/01/2026 per ASD/SSD)</div>' +
+                  '<div class="es-prx-125">Regime Fiscale: Esenzione IVA ex D.Lgs. 36/2021 (in vigore dal 01/01/2026 per ASD/SSD)</div>' +
                 '</div>' +
                 '<div class="es-pres-card-footer"><span>Bilancio Club</span><span>' + (canSeeFinances ? 'Apri rendiconto &rsaquo;' : 'Richiedi accesso &rsaquo;') + '</span></div>' +
               '</div>' +
@@ -2029,7 +2029,7 @@
               // Calendario
               '<div class="es-pres-card" id="card-pres-schedule-screen">' +
                 '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.calendar + '</div><span class="es-pres-status es-pres-status-neutral">' + (data.matches ? data.matches.length : 0) + ' gare</span></div>' +
-                '<div><h3 class="es-pres-card-title">Calendario Ufficiale</h3><div class="es-pres-card-metric" style="font-size:1.15rem;">' + (data.matches && data.matches.length ? esc(data.matches[0].opponent) : 'Nessuna gara inserita') + '</div><p class="es-pres-card-desc">Programmazione gare e designazioni arbitrali ufficiali AIA.</p></div>' +
+                '<div><h3 class="es-pres-card-title">Calendario Ufficiale</h3><div class="es-pres-card-metric es-prx-126">' + (data.matches && data.matches.length ? esc(data.matches[0].opponent) : 'Nessuna gara inserita') + '</div><p class="es-pres-card-desc">Programmazione gare e designazioni arbitrali ufficiali AIA.</p></div>' +
                 '<div class="es-pres-card-footer"><span>Designazioni AIA</span><span>Calendario completo &rsaquo;</span></div>' +
               '</div>' +
 
@@ -2063,10 +2063,10 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">Tutela Minori (Safeguarding)</h3>' +
                   (data.safeguarding && data.safeguarding.isAppointed ? (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#fff;">' + esc(data.safeguarding.officerName) + '</div>' +
-                    '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• Delibera: <b>' + esc(data.safeguarding.appointmentDate) + '</b><br>• Ente federale: <b>' + (data.safeguarding.federationNotified ? 'Notificato via PEC' : 'In attesa') + '</b><br>• Obbligo art. 33 D.Lgs. 36/2021 assolto.</p>'
+                    '<div class="es-pres-card-metric es-prx-127">' + esc(data.safeguarding.officerName) + '</div>' +
+                    '<p class="es-pres-card-desc es-prx-128">• Delibera: <b>' + esc(data.safeguarding.appointmentDate) + '</b><br>• Ente federale: <b>' + (data.safeguarding.federationNotified ? 'Notificato via PEC' : 'In attesa') + '</b><br>• Obbligo art. 33 D.Lgs. 36/2021 assolto.</p>'
                   ) : (
-                    '<div class="es-pres-card-metric" style="font-size:1.05rem; color:#94a3b8;">Nessun responsabile</div>' +
+                    '<div class="es-pres-card-metric es-prx-129">Nessun responsabile</div>' +
                     '<p class="es-pres-card-desc">Obbligo di legge non ancora assolto. Nomina il responsabile per la prevenzione di abusi e violenze.</p>'
                   )) +
                 '</div>' +
@@ -2084,10 +2084,10 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">MOG &amp; Codice di Condotta</h3>' +
                   (data.mog && data.mog.isAdopted ? (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#34d399;">Modello Conforme</div>' +
-                    '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• Approvato il: <b>' + esc(data.mog.adoptionDate) + '</b><br>• Documento: <b>' + esc(data.mog.docName || 'MOG_2026.pdf') + '</b><br>• Presidi di prevenzione e controllo attivi.</p>'
+                    '<div class="es-pres-card-metric es-prx-130">Modello Conforme</div>' +
+                    '<p class="es-pres-card-desc es-prx-128">• Approvato il: <b>' + esc(data.mog.adoptionDate) + '</b><br>• Documento: <b>' + esc(data.mog.docName || 'MOG_2026.pdf') + '</b><br>• Presidi di prevenzione e controllo attivi.</p>'
                   ) : (
-                    '<div class="es-pres-card-metric" style="font-size:1.05rem; color:#94a3b8;">MOG non ancora adottato</div>' +
+                    '<div class="es-pres-card-metric es-prx-129">MOG non ancora adottato</div>' +
                     '<p class="es-pres-card-desc">Documento formale obbligatorio per la tutela dei tesserati e prevenzione illeciti.</p>'
                   )) +
                 '</div>' +
@@ -2105,7 +2105,7 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">Casellario Giudiziale Staff</h3>' +
                   '<div class="es-pres-card-metric">' + (data.staff ? data.staff.filter(function(s){ return s.penaleStatus === 'Regolare'; }).length : 0) + ' <span class="es-pres-unit">certificati validi</span></div>' +
-                  '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• <b>Staff con minori:</b> ' + (data.staff ? data.staff.length : 0) + ' collaboratori<br>• <b>Da acquisire/rinnovare:</b> ' + (data.staff ? (data.staff.length - data.staff.filter(function(s){ return s.penaleStatus === 'Regolare'; }).length) : 0) + '<br>• Obbligo ex art. 25-bis DPR 313/2002.</p>' +
+                  '<p class="es-pres-card-desc es-prx-128">• <b>Staff con minori:</b> ' + (data.staff ? data.staff.length : 0) + ' collaboratori<br>• <b>Da acquisire/rinnovare:</b> ' + (data.staff ? (data.staff.length - data.staff.filter(function(s){ return s.penaleStatus === 'Regolare'; }).length) : 0) + '<br>• Obbligo ex art. 25-bis DPR 313/2002.</p>' +
                 '</div>' +
                 '<div class="es-pres-card-footer"><span>Art. 25-bis DPR 313/2002</span><span>Gestisci casellario &rsaquo;</span></div>' +
               '</div>' +
@@ -2121,10 +2121,10 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">Registro RAS &amp; Statuto</h3>' +
                   (data.ras && data.ras.isRegistered ? (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#38bdf8;">' + esc(data.ras.rasCode || 'RAS Attivo') + '</div>' +
-                    '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• Iscritto il: <b>' + esc(data.ras.registrationDate || '—') + '</b><br>• Statuto: <b>' + esc(data.ras.statuteStatus || 'Adeguato') + '</b><br>• Copertura assicurativa collaboratori attiva.</p>'
+                    '<div class="es-pres-card-metric es-prx-131">' + esc(data.ras.rasCode || 'RAS Attivo') + '</div>' +
+                    '<p class="es-pres-card-desc es-prx-128">• Iscritto il: <b>' + esc(data.ras.registrationDate || '—') + '</b><br>• Statuto: <b>' + esc(data.ras.statuteStatus || 'Adeguato') + '</b><br>• Copertura assicurativa collaboratori attiva.</p>'
                   ) : (
-                    '<div class="es-pres-card-metric" style="font-size:1.05rem; color:#94a3b8;">Non iscritto al RAS</div>' +
+                    '<div class="es-pres-card-metric es-prx-129">Non iscritto al RAS</div>' +
                     '<p class="es-pres-card-desc">Necessaria iscrizione per agevolazioni e copertura assicurativa collaboratori.</p>'
                   )) +
                 '</div>' +
@@ -2134,7 +2134,7 @@
               // 5. Tesseramenti & Privacy
               '<div class="es-pres-card" id="card-pres-gov-status">' +
                 '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.fileText + '</div><span class="es-pres-status es-pres-status-ok">' + (squadMetrics.totalPlayers ? '100% conforme' : 'In attesa') + '</span></div>' +
-                '<div><h3 class="es-pres-card-title">Tesseramenti &amp; Privacy</h3><p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• <b>Tesseramenti Atleti:</b> ' + (squadMetrics.totalPlayers ? (squadMetrics.totalPlayers + ' / ' + squadMetrics.totalPlayers + ' Tesserati FIGC') : 'Nessun atleta registrato') + '<br>• <b>GDPR Minori:</b> Consensi depositati con firma digitale<br>• <b>Certificati BLSD:</b> Staff abilitato</p></div>' +
+                '<div><h3 class="es-pres-card-title">Tesseramenti &amp; Privacy</h3><p class="es-pres-card-desc es-prx-128">• <b>Tesseramenti Atleti:</b> ' + (squadMetrics.totalPlayers ? (squadMetrics.totalPlayers + ' / ' + squadMetrics.totalPlayers + ' Tesserati FIGC') : 'Nessun atleta registrato') + '<br>• <b>GDPR Minori:</b> Consensi depositati con firma digitale<br>• <b>Certificati BLSD:</b> Staff abilitato</p></div>' +
                 '<div class="es-pres-card-footer"><span>Archivio Documentale</span><span>Verifica tessere &rsaquo;</span></div>' +
               '</div>' +
 
@@ -2148,16 +2148,16 @@
                 '</div>' +
                 '<div>' +
                   '<h3 class="es-pres-card-title">Scadenziario Federale</h3>' +
-                  '<div style="font-size:0.75rem; color:#38bdf8; font-weight:600; margin-bottom:0.4rem;">' +
+                  '<div class="es-prx-132">' +
                     esc(scopeObj.name.split(' (')[0]) + ' · ' + esc(data.category || 'Serie D') + ' (' + esc(data.activeSeason || '2026/27') + ')' +
                   '</div>' +
-                  (inTransition ? ('<div style="font-size:0.72rem; color:#fde68a; margin-bottom:0.35rem;">Transizione a ' + esc(getNextSeason(data.activeSeason)) + '</div>') : '') +
-                  (deadlines.length ? ('<div style="font-size:0.8rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem;">' +
+                  (inTransition ? ('<div class="es-prx-133">Transizione a ' + esc(getNextSeason(data.activeSeason)) + '</div>') : '') +
+                  (deadlines.length ? ('<div class="es-prx-134">' +
                     deadlines.slice(0, 3).map(function (d) {
                       if (d.isCompleted) {
-                        return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:#34d399;">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
+                        return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span class="es-prx-135">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span class="es-prx-136">(' + esc(d.amount) + ')</span>') : '') + '</div>';
                       }
-                      return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:' + (d.isWarning ? (d.isEmptyDate ? '#94a3b8' : '#fbbf24') : '#38bdf8') + ';">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
+                      return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:' + (d.isWarning ? (d.isEmptyDate ? '#94a3b8' : '#fbbf24') : '#38bdf8') + ';">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span class="es-prx-136">(' + esc(d.amount) + ')</span>') : '') + '</div>';
                     }).join('') +
                   '</div>') : '<p class="es-pres-card-desc">Nessuna scadenza o termine perentorio federale registrato.</p>') +
                 '</div>' +
@@ -2182,21 +2182,21 @@
   // 1. GUIDA OPERATIVA ALLA GESTIONE DELLA SOCIETÀ SPORTIVA (PAG. 1-5 PDF)
   function openGuidaPresidenteModal() {
     var body =
-      '<div style="background:rgba(56,189,248,0.07); border:1.5px solid rgba(56,189,248,0.3); border-radius:8px; padding:1rem 1.2rem; margin-bottom:1.2rem;">' +
-        '<div style="display:flex; align-items:center; gap:0.6rem; color:#38bdf8; font-weight:800; font-size:1rem; margin-bottom:0.4rem;">' +
+      '<div class="es-prx-137">' +
+        '<div class="es-prx-138">' +
           '<span>' + ICONS.shield + '</span> <span>PROFILO PRESIDENTE — GUIDA OPERATIVA UFFICIALE</span>' +
         '</div>' +
-        '<p style="font-size:0.82rem; color:#cbd5e1; margin:0; line-height:1.5;">' +
+        '<p class="es-prx-139">' +
           'Il Profilo Presidente è l\'account istituzionale con i massimi permessi di gestione sulla società sportiva. Regola fondamentale: <b>Il Profilo Squadra non è un account autonomo e non può esistere senza un Profilo Presidente associato</b>, che ne è il titolare e responsabile legale sulla piattaforma.' +
         '</p>' +
       '</div>' +
 
-      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
-        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:6px; padding:1rem;">' +
-          '<h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.9rem; display:flex; align-items:center; gap:0.4rem;">' +
+      '<div class="es-prx-4">' +
+        '<div class="es-prx-140">' +
+          '<h4 class="es-prx-141">' +
             '<span>' + ICONS.building + '</span> 1. Creazione e Gestione Profilo Squadra' +
           '</h4>' +
-          '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+          '<ul class="es-prx-118">' +
             '<li><b>Nome Ufficiale Squadra:</b> es. A.S.D. Foggia City.</li>' +
             '<li><b>Logo / Stemma Societario:</b> Crest aziendale ad alta risoluzione.</li>' +
             '<li><b>Città & Sede:</b> Geolocalizzazione (Città, Provincia, Regione) per indicizzazione ricerche a imbuto.</li>' +
@@ -2205,44 +2205,44 @@
           '</ul>' +
         '</div>' +
 
-        '<div style="background:#040810; border:1px solid rgba(34,197,94,0.2); border-radius:6px; padding:1rem;">' +
-          '<h4 style="margin:0 0 0.5rem; color:#34d399; font-size:0.9rem; display:flex; align-items:center; gap:0.4rem;">' +
+        '<div class="es-prx-142">' +
+          '<h4 class="es-prx-143">' +
             '<span>' + ICONS.users + '</span> 2. Collegamento Rosa con i Profili Atleti' +
           '</h4>' +
-          '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+          '<ul class="es-prx-118">' +
             '<li><b>Giocatori già Registrati (Profilo Attivo):</b> Il sistema crea un link diretto con la sua Card ufficiale (Fronte/Retro, Heatmap, Dati GPS, Video). La Card indossa automaticamente i colori della maglia ufficiale caricata dalla società.</li>' +
             '<li><b>Giocatori NON Registrati (Anteprima Limitata):</b> Viene mostrata solo una scheda sintetica e <b>non cliccabile</b> con Nome, Cognome, Ruolo e N° maglia. Contatti e schede avanzate rimangono bloccati finché l\'atleta non crea o rivendica il suo profilo.</li>' +
           '</ul>' +
         '</div>' +
       '</div>' +
 
-      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
-        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.2); border-radius:6px; padding:1rem;">' +
-          '<h4 style="margin:0 0 0.5rem; color:#fff; font-size:0.9rem; display:flex; align-items:center; gap:0.4rem;">' +
+      '<div class="es-prx-4">' +
+        '<div class="es-prx-144">' +
+          '<h4 class="es-prx-145">' +
             '<span>' + ICONS.briefcase + '</span> 3. Attività e Permessi del Presidente' +
           '</h4>' +
-          '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+          '<ul class="es-prx-118">' +
             '<li><b>Gestione Organigramma:</b> Delega dei permessi e invito nel team per Segretario, Direttore Sportivo, Allenatore e Match Analyst.</li>' +
             '<li><b>Ufficializzazione Mercato:</b> Approvazione finale dei trasferimenti e pubblicazione sul Wall delle Trattative Chiuse con grafica UFFICIALE e Card maglia.</li>' +
           '</ul>' +
         '</div>' +
 
-        '<div style="background:#040810; border:1px solid rgba(239,68,68,0.25); border-radius:6px; padding:1rem;">' +
-          '<h4 style="margin:0 0 0.5rem; color:#f87171; font-size:0.9rem; display:flex; align-items:center; gap:0.4rem;">' +
+        '<div class="es-prx-146">' +
+          '<h4 class="es-prx-147">' +
             '<span>' + ICONS.shieldAlert + '</span> 4. Limiti di Ruolo del Presidente' +
           '</h4>' +
-          '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+          '<ul class="es-prx-118">' +
             '<li><b>Nessuna Candidatura Calciatore:</b> Il Presidente non può candidarsi come calciatore alle offerte di ingaggio.</li>' +
             '<li><b>Nessun Profilo Squadra Duplicato:</b> La squadra è univocamente legata alla figura presidenziale e legale.</li>' +
           '</ul>' +
         '</div>' +
       '</div>' +
 
-      '<div style="background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.25); border-radius:6px; padding:1rem;">' +
-        '<div style="display:flex; align-items:center; gap:0.5rem; color:#a5b4fc; font-weight:800; font-size:0.88rem; margin-bottom:0.35rem;">' +
+      '<div class="es-prx-148">' +
+        '<div class="es-prx-149">' +
           '<span>5. COME PUBBLICARE UNA CANDIDATURA & RECLUTAMENTO IA</span>' +
         '</div>' +
-        '<p style="margin:0; font-size:0.78rem; color:#cbd5e1; line-height:1.55;">' +
+        '<p class="es-prx-150">' +
           'Il club pubblica la ricerca compilando le sezioni <b>Cosa offriamo</b> (incarico, compenso/rimborso, durata, orari, benefit, crescita) e <b>Cosa richiediamo / Il profilo che cerchiamo</b> (ruolo, competenze tecniche, esperienza, qualifiche, attitudini, requisiti extra). Attivando l\'<b>Opzione AI</b>, il sistema analizza i profili iscritti e candida automaticamente i più compatibili, archiviando le schede tecniche direttamente nell\'annuncio.' +
         '</p>' +
       '</div>';
@@ -2259,11 +2259,11 @@
     };
 
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
+      '<p class="es-prx-151">' +
         'Compila e aggiorna i dati ufficiali del Club, la sede operativa e carica le foto delle <b>Maglie Ufficiali</b> che vestiranno le Card dei tesserati della tua rosa:' +
       '</p>' +
-      '<form id="form-edit-club-profile" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+      '<form class="es-prx-152" id="form-edit-club-profile">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Nome Ufficiale della Squadra *</label>' +
             '<input type="text" class="es-pres-input-text" id="inp-club-name" required value="' + esc(data.clubName) + '" placeholder="Es. Foggia City">' +
@@ -2274,7 +2274,7 @@
           '</div>' +
         '</div>' +
 
-        '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-154">' +
           '<div class="es-pres-input-group">' +
             '<label>Città Sede *</label>' +
             '<input type="text" class="es-pres-input-text" id="inp-club-city" required value="' + esc(data.city || '') + '" placeholder="Es. Foggia">' +
@@ -2285,34 +2285,34 @@
           '</div>' +
           '<div class="es-pres-input-group">' +
             '<label>Regione *</label>' +
-            '<select class="es-pres-input-text" id="sel-club-reg" style="background:#040810; color:#fff;">' +
+            '<select class="es-pres-input-text es-prx-155" id="sel-club-reg">' +
               ITALIAN_REGIONS.map(function(r){ return '<option value="' + esc(r) + '"' + ((data.region || 'Puglia') === r ? ' selected' : '') + '>Regione ' + esc(r) + '</option>'; }).join('') +
             '</select>' +
           '</div>' +
         '</div>' +
 
-        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:1rem;">' +
-          '<h4 style="margin:0 0 0.6rem; color:#38bdf8; font-size:0.88rem; display:flex; align-items:center; gap:0.4rem;">' +
+        '<div class="es-prx-156">' +
+          '<h4 class="es-prx-157">' +
             'Foto Maglie Ufficiali (per Card Tesserati)' +
           '</h4>' +
-          '<p style="margin:0 0 0.85rem; font-size:0.76rem; color:#94a3b8;">I colori e le maglie caricate personalizzano automaticamente la visualizzazione grafica delle Card dei tuoi calciatori:</p>' +
-          '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.85rem;">' +
+          '<p class="es-prx-158">I colori e le maglie caricate personalizzano automaticamente la visualizzazione grafica delle Card dei tuoi calciatori:</p>' +
+          '<div class="es-prx-159">' +
             '<div class="es-pres-input-group">' +
-              '<label style="font-size:0.75rem; color:#e2e8f0;">Prima Maglia (Home)</label>' +
+              '<label class="es-prx-160">Prima Maglia (Home)</label>' +
               '<input type="text" class="es-pres-input-text" id="inp-kit-home" value="' + esc(kits.home || 'immagini/squadre-kits/foggia-home.png') + '" placeholder="URL Maglia Casa">' +
             '</div>' +
             '<div class="es-pres-input-group">' +
-              '<label style="font-size:0.75rem; color:#e2e8f0;">Seconda Maglia (Away)</label>' +
+              '<label class="es-prx-160">Seconda Maglia (Away)</label>' +
               '<input type="text" class="es-pres-input-text" id="inp-kit-away" value="' + esc(kits.away || 'immagini/squadre-kits/foggia-away.png') + '" placeholder="URL Maglia Trasferta">' +
             '</div>' +
             '<div class="es-pres-input-group">' +
-              '<label style="font-size:0.75rem; color:#e2e8f0;">Maglia Portiere (GK)</label>' +
+              '<label class="es-prx-160">Maglia Portiere (GK)</label>' +
               '<input type="text" class="es-pres-input-text" id="inp-kit-gk" value="' + esc(kits.gk || 'immagini/squadre-kits/foggia-gk.png') + '" placeholder="URL Maglia Portiere">' +
             '</div>' +
           '</div>' +
         '</div>' +
 
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-club-profile">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Salva Dati Societari & Maglie</button>' +
         '</div>' +
@@ -2352,20 +2352,20 @@
     var unregCount = squad.length - regCount;
 
     var html =
-      '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; margin-bottom:1.1rem;">' +
-        '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+      '<div class="es-prx-162">' +
+        '<div class="es-prx-163">' +
           '<div>' +
-            '<h4 style="margin:0; font-size:0.95rem; color:#fff; font-weight:700;">Rosa Ufficiale: ' + squad.length + ' Atleti Registrati</h4>' +
-            '<p style="margin:0.2rem 0 0; font-size:0.76rem; color:#cbd5e1;">' +
-              '<span style="color:#22c55e; font-weight:700;">' + regCount + ' Profili Attivi (Card completa)</span> · ' +
-              '<span style="color:#f59e0b; font-weight:700;">' + unregCount + ' Anteprime Limitate (Non registrati)</span>' +
+            '<h4 class="es-prx-164">Rosa Ufficiale: ' + squad.length + ' Atleti Registrati</h4>' +
+            '<p class="es-prx-165">' +
+              '<span class="es-prx-166">' + regCount + ' Profili Attivi (Card completa)</span> · ' +
+              '<span class="es-prx-167">' + unregCount + ' Anteprime Limitate (Non registrati)</span>' +
             '</p>' +
           '</div>' +
           '<button type="button" class="es-pres-btn-primary" id="btn-add-player-from-squad-mgr">+ Inserisci Nuovo Calciatore</button>' +
         '</div>' +
       '</div>' +
 
-      '<div style="background:rgba(56,189,248,0.04); border:1px solid rgba(56,189,248,0.18); border-radius:6px; padding:0.75rem 1rem; margin-bottom:1rem; font-size:0.77rem; color:#cbd5e1; line-height:1.5;">' +
+      '<div class="es-prx-168">' +
         '<b>Regola Collegamento Card (Specifica PDF):</b> Cliccando su un atleta con <b>Profilo Attivo</b> accedi alla sua Card completa (Fronte/Retro, Heatmap, GPS, Highlight) con maglia ufficiale. Per gli atleti <b>Non Registrati</b> è visibile solo l\'anteprima sintetica non cliccabile (dati e contatti bloccati).' +
       '</div>';
 
@@ -2379,28 +2379,28 @@
         '</div>';
     } else {
       html +=
-        '<div style="display:flex; flex-direction:column; gap:0.65rem; max-height:420px; overflow-y:auto; padding-right:0.3rem;" id="es-squad-list-box">' +
+        '<div class="es-prx-169" id="es-squad-list-box">' +
           squad.map(function (p, idx) {
             var isReg = p.isRegistered !== false;
             var numStr = p.number ? ('N° ' + p.number + ' · ') : '';
             return (
               '<div style="background:#040810; border:1px solid ' + (isReg ? 'rgba(34,197,94,0.25)' : 'rgba(245,158,11,0.25)') + '; border-radius:6px; padding:0.85rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">' +
-                '<div style="flex:1 1 240px;">' +
-                  '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+                '<div class="es-prx-170">' +
+                  '<div class="es-prx-29">' +
                     '<span style="display:inline-block; width:28px; height:28px; border-radius:4px; background:' + (isReg ? 'rgba(34,197,94,0.15)' : 'rgba(245,158,11,0.15)') + '; color:' + (isReg ? '#22c55e' : '#f59e0b') + '; font-weight:800; font-size:0.85rem; line-height:28px; text-align:center;">' + (p.number || (idx + 1)) + '</span>' +
                     '<div>' +
-                      '<h4 style="margin:0; font-size:0.95rem; font-weight:700; color:#fff;">' + esc(p.name) + '</h4>' +
-                      '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">' + numStr + esc(p.role) + ' · ' + (p.age || 22) + ' anni · ' + (p.isUnder ? '<b style="color:#38bdf8;">Under</b>' : 'Over') + '</div>' +
+                      '<h4 class="es-prx-171">' + esc(p.name) + '</h4>' +
+                      '<div class="es-prx-172">' + numStr + esc(p.role) + ' · ' + (p.age || 22) + ' anni · ' + (p.isUnder ? '<b class="es-prx-28">Under</b>' : 'Over') + '</div>' +
                     '</div>' +
                   '</div>' +
                 '</div>' +
 
-                '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+                '<div class="es-prx-29">' +
                   (isReg ? (
-                    '<span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">Profilo Attivo</span>' +
+                    '<span class="es-pres-status es-pres-status-ok es-prx-90">Profilo Attivo</span>' +
                     '<button type="button" class="es-pres-btn-primary es-btn-open-player-card" data-idx="' + idx + '" style="padding:4px 10px; font-size:0.75rem;">Visualizza Card &rsaquo;</button>'
                   ) : (
-                    '<span class="es-pres-status es-pres-status-warning" style="font-size:0.72rem;" title="Anteprima limitata non cliccabile finché l\'atleta non crea l\'account">Non Registrato (Anteprima Limitata)</span>'
+                    '<span class="es-pres-status es-pres-status-warning es-prx-90" title="Anteprima limitata non cliccabile finché l\'atleta non crea l\'account">Non Registrato (Anteprima Limitata)</span>'
                   )) +
                   '<button type="button" class="es-dl-btn-remove es-btn-remove-player" data-idx="' + idx + '" style="background:transparent; border:none; color:#94a3b8; font-size:0.72rem; cursor:pointer; text-decoration:underline;" title="Rimuovi dalla rosa">Rimuovi</button>' +
                 '</div>' +
@@ -2457,19 +2457,19 @@
     var rating = player.rating || (78 + (player.id ? (player.id % 12) : 5));
 
     var cardHtml =
-      '<div style="display:flex; flex-direction:column; gap:1.2rem;">' +
-        '<div style="display:grid; grid-template-columns:260px 1fr; gap:1.5rem; align-items:start; flex-wrap:wrap;">' +
+      '<div class="es-prx-173">' +
+        '<div class="es-prx-174">' +
           // Visual Card Calciatore (Fronte con colori maglia societaria)
-          '<div style="background:linear-gradient(145deg, #090e17, #040810); border:1.5px solid rgba(56,189,248,0.4); border-radius:12px; padding:1.25rem; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.8); position:relative; overflow:hidden;">' +
-            '<div style="position:absolute; top:8px; left:12px; font-weight:800; font-size:1.4rem; color:#38bdf8;">' + rating + '<div style="font-size:0.65rem; color:#94a3b8; font-weight:700;">OVR</div></div>' +
-            '<div style="position:absolute; top:8px; right:12px; width:34px; height:34px;"><img src="' + esc(logoUrl) + '" alt="" style="max-width:100%; max-height:100%; object-fit:contain;"></div>' +
-            '<div style="width:110px; height:110px; margin:1.2rem auto 0.75rem; border-radius:50%; background:rgba(56,189,248,0.1); border:2px solid rgba(56,189,248,0.3); display:flex; align-items:center; justify-content:center; overflow:hidden;">' +
+          '<div class="es-prx-175">' +
+            '<div class="es-prx-176">' + rating + '<div class="es-prx-177">OVR</div></div>' +
+            '<div class="es-prx-178"><img src="' + esc(logoUrl) + '" alt="" style="max-width:100%; max-height:100%; object-fit:contain;"></div>' +
+            '<div class="es-prx-179">' +
               '<img src="' + esc(player.photoUrl || kitHome) + '" alt="" style="max-width:85%; max-height:85%; object-fit:contain;">' +
             '</div>' +
-            '<h3 style="margin:0; font-size:1.15rem; color:#fff; font-weight:800;">' + esc(player.name) + '</h3>' +
-            '<div style="font-size:0.8rem; color:#38bdf8; font-weight:700; margin-top:0.2rem;">' + esc(player.role) + ' · N° ' + (player.number || '10') + '</div>' +
-            '<div style="font-size:0.75rem; color:#94a3b8; margin-top:0.3rem;">' + esc(clubData.clubName) + '</div>' +
-            '<div style="margin-top:0.85rem; padding-top:0.75rem; border-top:1px solid rgba(148,163,184,0.15); display:grid; grid-template-columns:1fr 1fr; gap:0.4rem; font-size:0.75rem; color:#cbd5e1;">' +
+            '<h3 class="es-prx-180">' + esc(player.name) + '</h3>' +
+            '<div class="es-prx-181">' + esc(player.role) + ' · N° ' + (player.number || '10') + '</div>' +
+            '<div class="es-prx-182">' + esc(clubData.clubName) + '</div>' +
+            '<div class="es-prx-183">' +
               '<div>PAC <b>' + (75 + (player.id % 15)) + '</b></div>' +
               '<div>SHO <b>' + (70 + (player.id % 18)) + '</b></div>' +
               '<div>PAS <b>' + (72 + (player.id % 14)) + '</b></div>' +
@@ -2478,41 +2478,41 @@
           '</div>' +
 
           // Dati Tattici: Heatmap, Performance GPS & Video Highlight
-          '<div style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
-              '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#38bdf8; display:flex; align-items:center; gap:0.4rem;">' +
+          '<div class="es-prx-152">' +
+            '<div class="es-prx-184">' +
+              '<h4 class="es-prx-185">' +
                 'Heatmap &amp; Presidio Tattico di Ruolo' +
               '</h4>' +
-              '<p style="margin:0; font-size:0.78rem; color:#cbd5e1; line-height:1.5;">' +
+              '<p class="es-prx-186">' +
                 'Copertura intensiva della corsia di competenza e dell\'area avversaria. Dati allineati al modulo tattico societario (4-3-3).' +
               '</p>' +
             '</div>' +
 
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
-              '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#34d399; display:flex; align-items:center; gap:0.4rem;">' +
+            '<div class="es-prx-184">' +
+              '<h4 class="es-prx-187">' +
                 'Metriche Fisiche &amp; GPS' +
               '</h4>' +
-              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.78rem; color:#cbd5e1;">' +
-                '<div>• Velocità di picco: <b style="color:#fff;">30.4 km/h</b></div>' +
-                '<div>• Distanza media/gara: <b style="color:#fff;">10.2 km</b></div>' +
-                '<div>• Sprint ad alta intensità: <b style="color:#fff;">38 / match</b></div>' +
-                '<div>• Minutaggio totale: <b style="color:#fff;">' + (player.minutesPlayed || 1800) + ' min</b></div>' +
+              '<div class="es-prx-188">' +
+                '<div>• Velocità di picco: <b class="es-prx-189">30.4 km/h</b></div>' +
+                '<div>• Distanza media/gara: <b class="es-prx-189">10.2 km</b></div>' +
+                '<div>• Sprint ad alta intensità: <b class="es-prx-189">38 / match</b></div>' +
+                '<div>• Minutaggio totale: <b class="es-prx-189">' + (player.minutesPlayed || 1800) + ' min</b></div>' +
               '</div>' +
             '</div>' +
 
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
-              '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#a5b4fc; display:flex; align-items:center; gap:0.4rem;">' +
+            '<div class="es-prx-184">' +
+              '<h4 class="es-prx-190">' +
                 'Video Highlight &amp; Scheda Analitica' +
               '</h4>' +
-              '<p style="margin:0; font-size:0.78rem; color:#cbd5e1;">' +
+              '<p class="es-prx-191">' +
                 'Reel video azioni salienti, gol e assist archiviati nel dossier dell\'atleta.' +
               '</p>' +
             '</div>' +
           '</div>' +
         '</div>' +
 
-        '<div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
-          '<span style="font-size:0.75rem; color:#22c55e;">&#10003; Atleta tesserato e collegato alla maglia ufficiale ' + esc(clubData.clubName) + '</span>' +
+        '<div class="es-prx-192">' +
+          '<span class="es-prx-193">&#10003; Atleta tesserato e collegato alla maglia ufficiale ' + esc(clubData.clubName) + '</span>' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-back-to-squad-mgr">&larr; Torna alla Rosa</button>' +
         '</div>' +
       '</div>';
@@ -2533,45 +2533,45 @@
     var staff = data.staff || [];
 
     var html =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
+      '<p class="es-prx-151">' +
         'Delega i permessi operativi sulla piattaforma e invita nel team societario le figure chiave del Club (<b>Segretario Generale</b>, <b>Direttore Sportivo</b>, <b>Allenatore</b>, <b>Match Analyst</b>):' +
       '</p>' +
 
-      '<div style="display:flex; flex-direction:column; gap:0.75rem; margin-bottom:1.2rem;">' +
-        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+      '<div class="es-prx-194">' +
+        '<div class="es-prx-195">' +
           '<div>' +
-            '<div style="font-size:0.92rem; font-weight:700; color:#fff;">Segretario Generale / Club Manager</div>' +
-            '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">Permessi: Gestione anagrafica rosa, pratiche tesseramento LND e scadenze societarie.</div>' +
+            '<div class="es-prx-52">Segretario Generale / Club Manager</div>' +
+            '<div class="es-prx-172">Permessi: Gestione anagrafica rosa, pratiche tesseramento LND e scadenze societarie.</div>' +
           '</div>' +
           '<span class="es-pres-status es-pres-status-ok">Delega Attiva</span>' +
         '</div>' +
 
-        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+        '<div class="es-prx-195">' +
           '<div>' +
-            '<div style="font-size:0.92rem; font-weight:700; color:#fff;">Direttore Sportivo (DS)</div>' +
-            '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">Permessi: Secret List, AI Scouting Advisor, trattative di mercato e candidature bacheca.</div>' +
+            '<div class="es-prx-52">Direttore Sportivo (DS)</div>' +
+            '<div class="es-prx-172">Permessi: Secret List, AI Scouting Advisor, trattative di mercato e candidature bacheca.</div>' +
           '</div>' +
           '<span class="es-pres-status es-pres-status-ok">Delega Attiva</span>' +
         '</div>' +
 
-        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+        '<div class="es-prx-195">' +
           '<div>' +
-            '<div style="font-size:0.92rem; font-weight:700; color:#fff;">Allenatore Prima Squadra</div>' +
-            '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">Permessi: Modulo tattico, piano settimanale allenamenti, convocazioni e discorso pre-gara.</div>' +
+            '<div class="es-prx-52">Allenatore Prima Squadra</div>' +
+            '<div class="es-prx-172">Permessi: Modulo tattico, piano settimanale allenamenti, convocazioni e discorso pre-gara.</div>' +
           '</div>' +
           '<span class="es-pres-status es-pres-status-ok">Delega Attiva</span>' +
         '</div>' +
 
-        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+        '<div class="es-prx-195">' +
           '<div>' +
-            '<div style="font-size:0.92rem; font-weight:700; color:#fff;">Match Analyst / Video Analyst</div>' +
-            '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">Permessi: Caricamento video analisi, report avversari e tracciamento GPS.</div>' +
+            '<div class="es-prx-52">Match Analyst / Video Analyst</div>' +
+            '<div class="es-prx-172">Permessi: Caricamento video analisi, report avversari e tracciamento GPS.</div>' +
           '</div>' +
           '<span class="es-pres-status es-pres-status-ok">Delega Attiva</span>' +
         '</div>' +
       '</div>' +
 
-      '<div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+      '<div class="es-prx-192">' +
         '<button type="button" class="es-pres-btn-primary" id="btn-invite-staff-member">+ Invita Nuovo Membro nel Team</button>' +
         '<button type="button" class="es-pres-btn-secondary" id="btn-close-organigramma">Chiudi</button>' +
       '</div>';
@@ -2598,11 +2598,11 @@
   function openOfficializeTransferModal(data) {
     var clubName = data.clubName || 'Club non inserito';
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
+      '<p class="es-prx-151">' +
         'Come Presidente, approva ufficialmente il trasferimento per pubblicare la notizia sul <b>Wall delle Trattative Chiuse</b> (feed ufficiale stile FIFA) con grafica <b>UFFICIALE</b> e la Card aggiornata:' +
       '</p>' +
-      '<form id="form-officialize-transfer" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+      '<form class="es-prx-152" id="form-officialize-transfer">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Nome e Cognome Calciatore *</label>' +
             '<input type="text" class="es-pres-input-text" id="inp-off-player" required placeholder="Es. Simone De Rosa">' +
@@ -2613,7 +2613,7 @@
           '</div>' +
         '</div>' +
 
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Club di Provenienza / Status *</label>' +
             '<input type="text" class="es-pres-input-text" id="inp-off-from" required placeholder="Es. Fidelis Andria o Svincolato">' +
@@ -2626,7 +2626,7 @@
 
         '<div class="es-pres-input-group">' +
           '<label>Tipologia Trasferimento</label>' +
-          '<select class="es-pres-input-text" id="sel-off-type" style="background:#040810; color:#fff;">' +
+          '<select class="es-pres-input-text es-prx-155" id="sel-off-type">' +
             '<option value="Acquisto a titolo definitivo">Acquisto a titolo definitivo</option>' +
             '<option value="Prestito annuale con diritto">Prestito annuale con diritto</option>' +
             '<option value="Tesseramento calciatore svincolato">Tesseramento calciatore svincolato</option>' +
@@ -2634,13 +2634,13 @@
           '</select>' +
         '</div>' +
 
-        '<div style="background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.25); border-radius:6px; padding:0.85rem 1rem; font-size:0.78rem; color:#cbd5e1;">' +
+        '<div class="es-prx-196">' +
           '<b>Impatto Community & Social:</b> L\'ufficialità sarà visibile sul Wall (#wall-trasferimenti) per tutti i tifosi, i giornalisti e gli scout della piattaforma.' +
         '</div>' +
 
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-off">Annulla</button>' +
-          '<button type="submit" class="es-pres-btn-primary" style="background:linear-gradient(135deg,#0284c7,#059669);">Ufficializza &amp; Pubblica sul Wall</button>' +
+          '<button type="submit" class="es-pres-btn-primary es-prx-197">Ufficializza &amp; Pubblica sul Wall</button>' +
         '</div>' +
       '</form>';
 
@@ -2698,29 +2698,29 @@
 
   function openAddPlayerModal(data) {
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci un atleta nella <b>Rosa Ufficiale del Club</b> selezionando la tipologia di collegamento:</p>' +
-      '<form id="form-add-player" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.85rem 1rem;">' +
-          '<label style="font-size:0.78rem; color:#38bdf8; font-weight:700; display:block; margin-bottom:0.35rem;">Tipologia Collegamento Profilo (Specifica PDF) *</label>' +
-          '<select class="es-pres-input-text" id="sel-pl-reg-type" style="background:#080e1e; color:#fff; font-weight:600;">' +
+      '<p class="es-prx-198">Inserisci un atleta nella <b>Rosa Ufficiale del Club</b> selezionando la tipologia di collegamento:</p>' +
+      '<form class="es-prx-152" id="form-add-player">' +
+        '<div class="es-prx-199">' +
+          '<label class="es-prx-200">Tipologia Collegamento Profilo (Specifica PDF) *</label>' +
+          '<select class="es-pres-input-text es-prx-201" id="sel-pl-reg-type">' +
             '<option value="registered">Giocatore già Registrato su Elisee Scout (Profilo Attivo & Card completa)</option>' +
             '<option value="unregistered">Giocatore NON Registrato (Anteprima Limitata non cliccabile)</option>' +
           '</select>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group"><label>Nome e Cognome Atleta *</label><input type="text" class="es-pres-input-text" id="inp-pl-name" required placeholder="Es. Marco Rossi"></div>' +
-          '<div class="es-pres-input-group"><label>Ruolo Principale *</label><select class="es-pres-input-text" id="sel-pl-role" style="background:#040810; color:#fff;"><option>Portiere</option><option>Difensore Centrale</option><option>Terzino Destro</option><option>Terzino Sinistro</option><option>Centrocampista / Regista</option><option>Mezzala</option><option>Ala Destra</option><option>Ala Sinistra</option><option>Punta Centrale</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Ruolo Principale *</label><select class="es-pres-input-text es-prx-155" id="sel-pl-role"><option>Portiere</option><option>Difensore Centrale</option><option>Terzino Destro</option><option>Terzino Sinistro</option><option>Centrocampista / Regista</option><option>Mezzala</option><option>Ala Destra</option><option>Ala Sinistra</option><option>Punta Centrale</option></select></div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-154">' +
           '<div class="es-pres-input-group"><label>Numero Maglia</label><input type="number" class="es-pres-input-text" id="inp-pl-num" value="10" min="1" max="99"></div>' +
           '<div class="es-pres-input-group"><label>Età (Anni) *</label><input type="number" class="es-pres-input-text" id="inp-pl-age" value="22" min="15" max="45" required></div>' +
           '<div class="es-pres-input-group"><label>Valore Mercato (€)</label><input type="number" class="es-pres-input-text" id="inp-pl-val" value="50000" min="1000"></div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Status Titolare</label><select class="es-pres-input-text" id="sel-pl-starter" style="background:#040810; color:#fff;"><option value="1">Titolare abituale (XI base)</option><option value="0">Rotazione / Riserva</option></select></div>' +
-          '<div class="es-pres-input-group"><label>Tesseramento &amp; Privacy</label><select class="es-pres-input-text" id="sel-pl-tess" style="background:#040810; color:#fff;"><option value="1">Tesserato FIGC &amp; GDPR Conforme</option><option value="0">In attesa di deposito</option></select></div>' +
+        '<div class="es-prx-153">' +
+          '<div class="es-pres-input-group"><label>Status Titolare</label><select class="es-pres-input-text es-prx-155" id="sel-pl-starter"><option value="1">Titolare abituale (XI base)</option><option value="0">Rotazione / Riserva</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Tesseramento &amp; Privacy</label><select class="es-pres-input-text es-prx-155" id="sel-pl-tess"><option value="1">Tesserato FIGC &amp; GDPR Conforme</option><option value="0">In attesa di deposito</option></select></div>' +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-add-pl">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Registra Atleta in Rosa</button>' +
         '</div>' +
@@ -2773,21 +2773,21 @@
     var contractOptionsHtml = CONTRACT_TYPES.map(function(c){ return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
 
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci un nuovo membro dello staff tecnico con inquadramento Riforma dello Sport (D.Lgs. 36/2021) e qualifica FIGC:</p>' +
-      '<form id="form-add-staff" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+      '<p class="es-prx-198">Inserisci un nuovo membro dello staff tecnico con inquadramento Riforma dello Sport (D.Lgs. 36/2021) e qualifica FIGC:</p>' +
+      '<form class="es-prx-152" id="form-add-staff">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group"><label>Nome e Cognome *</label><input type="text" class="es-pres-input-text" id="inp-st-name" required placeholder="Es. Giuseppe Rossi"></div>' +
-          '<div class="es-pres-input-group"><label>Incarico / Ruolo Staff *</label><select class="es-pres-input-text" id="sel-st-role" style="background:#040810; color:#fff;"><option>Allenatore Prima Squadra</option><option>Vice Allenatore</option><option>Direttore Sportivo</option><option>Preparatore Atletico</option><option>Preparatore Portieri</option><option>Match Analyst</option><option>Medico Sociale</option><option>Fisioterapista</option><option>Team Manager</option><option>Collaboratore Tecnico</option><option>Magazziniere</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Incarico / Ruolo Staff *</label><select class="es-pres-input-text es-prx-155" id="sel-st-role"><option>Allenatore Prima Squadra</option><option>Vice Allenatore</option><option>Direttore Sportivo</option><option>Preparatore Atletico</option><option>Preparatore Portieri</option><option>Match Analyst</option><option>Medico Sociale</option><option>Fisioterapista</option><option>Team Manager</option><option>Collaboratore Tecnico</option><option>Magazziniere</option></select></div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Qualifica Ufficiale FIGC *</label><select class="es-pres-input-text" id="sel-st-patent" style="background:#040810; color:#fff;">' + optionsHtml + '</select></div>' +
-          '<div class="es-pres-input-group"><label>Tipologia Contratto (D.Lgs. 36/2021) *</label><select class="es-pres-input-text" id="sel-st-contract" style="background:#040810; color:#fff;">' + contractOptionsHtml + '</select></div>' +
+        '<div class="es-prx-153">' +
+          '<div class="es-pres-input-group"><label>Qualifica Ufficiale FIGC *</label><select class="es-pres-input-text es-prx-155" id="sel-st-patent">' + optionsHtml + '</select></div>' +
+          '<div class="es-pres-input-group"><label>Tipologia Contratto (D.Lgs. 36/2021) *</label><select class="es-pres-input-text es-prx-155" id="sel-st-contract">' + contractOptionsHtml + '</select></div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group"><label>Scadenza Contratto</label><input type="date" class="es-pres-input-text" id="inp-st-exp" value="2027-06-30"></div>' +
-          '<div class="es-pres-input-group"><label>Casellario Giudiziale (art. 25-bis DPR 313/2002)</label><select class="es-pres-input-text" id="sel-st-penale" style="background:#040810; color:#fff;"><option value="Regolare">Regolare (Depositato)</option><option value="In attesa">In attesa di rilascio</option><option value="Da richiedere">Da richiedere / Non depositato</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Casellario Giudiziale (art. 25-bis DPR 313/2002)</label><select class="es-pres-input-text es-prx-155" id="sel-st-penale"><option value="Regolare">Regolare (Depositato)</option><option value="In attesa">In attesa di rilascio</option><option value="Da richiedere">Da richiedere / Non depositato</option></select></div>' +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-add-st">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Registra Membro Staff</button>' +
         '</div>' +
@@ -2834,26 +2834,26 @@
   function openSafeguardingModal(data) {
     var cur = data.safeguarding || {};
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Adempimento obbligatorio <b>ex art. 33 D.Lgs. 36/2021</b> — Nomina del Responsabile contro abusi, violenze e discriminazioni su atleti minori:</p>' +
-      '<form id="form-safeguarding" style="display:flex; flex-direction:column; gap:1rem;">' +
+      '<p class="es-prx-198">Adempimento obbligatorio <b>ex art. 33 D.Lgs. 36/2021</b> — Nomina del Responsabile contro abusi, violenze e discriminazioni su atleti minori:</p>' +
+      '<form class="es-prx-152" id="form-safeguarding">' +
         '<div class="es-pres-input-group">' +
           '<label>Nome e Cognome del Responsabile Nominato *</label>' +
           '<input type="text" class="es-pres-input-text" id="inp-sg-name" required placeholder="Es. Avv. Roberto Santoro o Dott.ssa Elena Neri" value="' + esc(cur.officerName || '') + '">' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Data Delibera di Nomina *</label>' +
             '<input type="date" class="es-pres-input-text" id="inp-sg-date" required value="' + (cur.appointmentDate ? (cur.appointmentDate.includes('/') ? cur.appointmentDate.split('/').reverse().join('-') : cur.appointmentDate) : new Date().toISOString().split('T')[0]) + '">' +
           '</div>' +
           '<div class="es-pres-input-group">' +
             '<label>Stato Notifica Ente Affiliante (FIGC/LND/EPS) *</label>' +
-            '<select class="es-pres-input-text" id="sel-sg-notif" style="background:#040810; color:#fff;">' +
+            '<select class="es-pres-input-text es-prx-155" id="sel-sg-notif">' +
               '<option value="1"' + (cur.federationNotified ? ' selected' : '') + '>Comunicato alla Federazione (via PEC / Portale)</option>' +
               '<option value="0"' + (!cur.federationNotified ? ' selected' : '') + '>Da comunicare all\'Ente Affiliante</option>' +
             '</select>' +
           '</div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Protocollo / Riferimento Notifica</label>' +
             '<input type="text" class="es-pres-input-text" id="inp-sg-prot" placeholder="Es. PEC-FIGC-88219/26" value="' + esc(cur.notificationProtocol || '') + '">' +
@@ -2863,10 +2863,10 @@
             '<input type="email" class="es-pres-input-text" id="inp-sg-email" placeholder="tutela.minori@club.it" value="' + esc(cur.contactEmail || '') + '">' +
           '</div>' +
         '</div>' +
-        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
+        '<div class="es-prx-202">' +
           '<b>Audit Trail:</b> L\'adempimento sarà registrato con marca temporale certificata.' +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-sg">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Salva Nomina Safeguarding</button>' +
         '</div>' +
@@ -2909,12 +2909,12 @@
   function openMogModal(data) {
     var cur = data.mog || {};
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Adozione formale del <b>Modello Organizzativo e di Controllo (MOG)</b> e del <b>Codice di Condotta</b> ai sensi del D.Lgs. 36/2021:</p>' +
-      '<form id="form-mog" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+      '<p class="es-prx-198">Adozione formale del <b>Modello Organizzativo e di Controllo (MOG)</b> e del <b>Codice di Condotta</b> ai sensi del D.Lgs. 36/2021:</p>' +
+      '<form class="es-prx-152" id="form-mog">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Stato Adozione MOG *</label>' +
-            '<select class="es-pres-input-text" id="sel-mog-status" style="background:#040810; color:#fff;">' +
+            '<select class="es-pres-input-text es-prx-155" id="sel-mog-status">' +
               '<option value="1"' + (cur.isAdopted ? ' selected' : '') + '>Adottato e Approvato dal CdA</option>' +
               '<option value="0"' + (!cur.isAdopted ? ' selected' : '') + '>Non ancora adottato / In redazione</option>' +
             '</select>' +
@@ -2924,7 +2924,7 @@
             '<input type="date" class="es-pres-input-text" id="inp-mog-date" value="' + (cur.adoptionDate ? (cur.adoptionDate.includes('/') ? cur.adoptionDate.split('/').reverse().join('-') : cur.adoptionDate) : new Date().toISOString().split('T')[0]) + '">' +
           '</div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Denominazione File MOG Allegato</label>' +
             '<input type="text" class="es-pres-input-text" id="inp-mog-file" placeholder="Es. MOG_CodiceCondotta_2026_27.pdf" value="' + esc(cur.docName || '') + '">' +
@@ -2934,10 +2934,10 @@
             '<input type="text" class="es-pres-input-text" id="inp-mog-channel" placeholder="Es. Sito Web Ufficiale & Bacheca Stadio" value="' + esc(cur.publishedChannel || '') + '">' +
           '</div>' +
         '</div>' +
-        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
+        '<div class="es-prx-202">' +
           '<b>Contenuto Prescritto:</b> Il MOG deve contenere le misure di prevenzione dei rischi, le sanzioni interne e le modalità di segnalazione al Safeguarding Officer nominato.' +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-mog">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Salva MOG &amp; Codice di Condotta</button>' +
         '</div>' +
@@ -2978,7 +2978,7 @@
   function openPenaleModal(data) {
     var staff = data.staff || [];
     var html =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1rem;">Verifica obbligatoria <b>ex art. 25-bis DPR 313/2002</b> del Certificato Penale del Casellario Giudiziale per tutti i tecnici e collaboratori a contatto con minori:</p>';
+      '<p class="es-prx-203">Verifica obbligatoria <b>ex art. 25-bis DPR 313/2002</b> del Certificato Penale del Casellario Giudiziale per tutti i tecnici e collaboratori a contatto con minori:</p>';
 
     if (!staff.length) {
       html +=
@@ -2990,16 +2990,16 @@
         '</div>';
     } else {
       html +=
-        '<div style="display:flex; flex-direction:column; gap:0.75rem; max-height:360px; overflow-y:auto; padding-right:0.3rem; margin-bottom:1.2rem;">' +
+        '<div class="es-prx-204">' +
           staff.map(function (s, idx) {
             var isOk = s.penaleStatus === 'Regolare';
             return (
-              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+              '<div class="es-prx-205">' +
                 '<div>' +
-                  '<div style="font-weight:700; color:#fff; font-size:0.92rem;">' + esc(s.name) + ' <span style="font-weight:400; color:#94a3b8; font-size:0.8rem;">(' + esc(s.role) + ')</span></div>' +
-                  '<div style="font-size:0.78rem; color:#cbd5e1; margin-top:0.2rem;">Contratto: <b>' + esc(s.contractType || 'Co.co.co. Sportivo') + '</b> · Rilascio: ' + esc(s.penaleIssueDate || 'Non registrata') + '</div>' +
+                  '<div class="es-prx-206">' + esc(s.name) + ' <span class="es-prx-207">(' + esc(s.role) + ')</span></div>' +
+                  '<div class="es-prx-208">Contratto: <b>' + esc(s.contractType || 'Co.co.co. Sportivo') + '</b> · Rilascio: ' + esc(s.penaleIssueDate || 'Non registrata') + '</div>' +
                 '</div>' +
-                '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+                '<div class="es-prx-29">' +
                   '<select class="es-penale-select" data-idx="' + idx + '" style="background:#0b1329; color:#fff; border:1px solid rgba(148,163,184,0.3); border-radius:4px; font-size:0.78rem; padding:0.35rem 0.6rem;">' +
                     '<option value="Regolare"' + (isOk ? ' selected' : '') + '>Regolare (Depositato)</option>' +
                     '<option value="In attesa"' + (s.penaleStatus === 'In attesa' ? ' selected' : '') + '>In attesa di rilascio</option>' +
@@ -3010,7 +3010,7 @@
             );
           }).join('') +
         '</div>' +
-        '<div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-192">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-add-new-staff-penale">+ Aggiungi Membro Staff</button>' +
           '<button type="button" class="es-pres-btn-primary" id="btn-save-all-penale">Salva Conformità Casellario</button>' +
         '</div>';
@@ -3054,12 +3054,12 @@
   function openRasModal(data) {
     var cur = data.ras || {};
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Iscrizione al <b>Registro Nazionale delle Attività Sportive Dilettantistiche (RAS)</b> e verifica adeguamento statutario D.Lgs. 36/2021:</p>' +
-      '<form id="form-ras" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+      '<p class="es-prx-198">Iscrizione al <b>Registro Nazionale delle Attività Sportive Dilettantistiche (RAS)</b> e verifica adeguamento statutario D.Lgs. 36/2021:</p>' +
+      '<form class="es-prx-152" id="form-ras">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Stato Iscrizione al RAS *</label>' +
-            '<select class="es-pres-input-text" id="sel-ras-reg" style="background:#040810; color:#fff;">' +
+            '<select class="es-pres-input-text es-prx-155" id="sel-ras-reg">' +
               '<option value="1"' + (cur.isRegistered ? ' selected' : '') + '>Iscritto al Registro Nazionale RAS</option>' +
               '<option value="0"' + (!cur.isRegistered ? ' selected' : '') + '>Non iscritto / In fase di iscrizione</option>' +
             '</select>' +
@@ -3069,14 +3069,14 @@
             '<input type="text" class="es-pres-input-text" id="inp-ras-code" placeholder="Es. RAS-FG-2026-9811" value="' + esc(cur.rasCode || '') + '">' +
           '</div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group">' +
             '<label>Data Iscrizione / Rinnovo</label>' +
             '<input type="date" class="es-pres-input-text" id="inp-ras-date" value="' + (cur.registrationDate ? (cur.registrationDate.includes('/') ? cur.registrationDate.split('/').reverse().join('-') : cur.registrationDate) : new Date().toISOString().split('T')[0]) + '">' +
           '</div>' +
           '<div class="es-pres-input-group">' +
             '<label>Adeguamento Statuto D.Lgs. 36/2021 *</label>' +
-            '<select class="es-pres-input-text" id="sel-ras-statute" style="background:#040810; color:#fff;">' +
+            '<select class="es-pres-input-text es-prx-155" id="sel-ras-statute">' +
               '<option value="Adeguato D.Lgs. 36/2021"' + (cur.statuteStatus === 'Adeguato D.Lgs. 36/2021' || cur.statuteStatus === 'Adeguato' ? ' selected' : '') + '>Statuto Conforme &amp; Adeguato</option>' +
               '<option value="Da adeguare"' + (cur.statuteStatus === 'Da adeguare' ? ' selected' : '') + '>Da adeguare entro il termine perentorio</option>' +
             '</select>' +
@@ -3086,10 +3086,10 @@
           '<label>Scadenza per Adeguamento Statutario</label>' +
           '<input type="date" class="es-pres-input-text" id="inp-ras-deadline" value="' + (cur.statuteDeadline ? (cur.statuteDeadline.includes('/') ? cur.statuteDeadline.split('/').reverse().join('-') : cur.statuteDeadline) : '2026-12-31') + '">' +
         '</div>' +
-        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
+        '<div class="es-prx-202">' +
           '<b>Copertura Assicurativa:</b> L\'iscrizione al RAS è indispensabile per la validità della copertura assicurativa INAIL/federale dei collaboratori sportivi retribuiti.' +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-ras">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Salva Registro RAS</button>' +
         '</div>' +
@@ -3131,23 +3131,23 @@
   function openEditFinancesModal(data) {
     var cur = data.finances || {};
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Imposta i parametri economico-finanziari del club (riservato al Presidente):</p>' +
-      '<form id="form-edit-fin" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+      '<p class="es-prx-198">Imposta i parametri economico-finanziari del club (riservato al Presidente):</p>' +
+      '<form class="es-prx-152" id="form-edit-fin">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group"><label>Saldo Cassa Attuale (€)</label><input type="text" class="es-pres-input-text" id="inp-fin-cash" value="' + esc(cur.cashBalance || '€ 48.500,00') + '"></div>' +
           '<div class="es-pres-input-group"><label>Monte Ingaggi Mensile (€)</label><input type="text" class="es-pres-input-text" id="inp-fin-pay" value="' + esc(cur.monthlyPayroll || '€ 18.200,00') + '"></div>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+        '<div class="es-prx-153">' +
           '<div class="es-pres-input-group"><label>Budget Totale Stagionale (€)</label><input type="text" class="es-pres-input-text" id="inp-fin-bud" value="' + esc(cur.annualBudget || '€ 240.000,00') + '"></div>' +
-          '<div class="es-pres-input-group"><label>Stato del Bilancio</label><select class="es-pres-input-text" id="sel-fin-health" style="background:#040810; color:#fff;"><option>Bilancio in pareggio</option><option>Utile d\'esercizio (+ margine)</option><option>Disavanzo controllato</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Stato del Bilancio</label><select class="es-pres-input-text es-prx-155" id="sel-fin-health"><option>Bilancio in pareggio</option><option>Utile d\'esercizio (+ margine)</option><option>Disavanzo controllato</option></select></div>' +
         '</div>' +
-        '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:0.85rem 1rem;">' +
-          '<div style="color:#38bdf8; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">Regime Fiscale IVA (Riforma dello Sport):</div>' +
-          '<div style="font-size:0.8rem; color:#cbd5e1; line-height:1.5;">' +
+        '<div class="es-prx-209">' +
+          '<div class="es-prx-210">Regime Fiscale IVA (Riforma dello Sport):</div>' +
+          '<div class="es-prx-211">' +
             'Dal <b>1° Gennaio 2026</b>: le ASD e SSD operano in regime di <b>Esenzione IVA</b> (ex D.Lgs. 36/2021 e s.m.i.) per tutte le attività sportive istituzionali e didattiche.' +
           '</div>' +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-edit-fin">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Salva Rendiconto</button>' +
         '</div>' +
@@ -3188,16 +3188,16 @@
 
   function openAddTrainingModal(data) {
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Pianifica una seduta di allenamento settimanale con orario e focus tattico:</p>' +
-      '<form id="form-add-trn-session" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Giorno della Settimana *</label><select class="es-pres-input-text" id="sel-trn-day" style="background:#040810; color:#fff;"><option>Martedì</option><option>Mercoledì</option><option>Giovedì</option><option>Venerdì</option><option>Sabato</option><option>Domenica</option><option>Lunedì</option></select></div>' +
+      '<p class="es-prx-198">Pianifica una seduta di allenamento settimanale con orario e focus tattico:</p>' +
+      '<form class="es-prx-152" id="form-add-trn-session">' +
+        '<div class="es-prx-153">' +
+          '<div class="es-pres-input-group"><label>Giorno della Settimana *</label><select class="es-pres-input-text es-prx-155" id="sel-trn-day"><option>Martedì</option><option>Mercoledì</option><option>Giovedì</option><option>Venerdì</option><option>Sabato</option><option>Domenica</option><option>Lunedì</option></select></div>' +
           '<div class="es-pres-input-group"><label>Fascia Oraria (es. 15:00 - 17:30) *</label><input type="text" class="es-pres-input-text" id="inp-trn-time" value="15:00 - 17:30" required></div>' +
         '</div>' +
         '<div class="es-pres-input-group"><label>Campo / Ubicazione</label><input type="text" class="es-pres-input-text" id="inp-trn-pitch" value="Campo A (Erba Naturale)" placeholder="Es. Campo A o Palestra"></div>' +
         '<div class="es-pres-input-group"><label>Focus della Seduta *</label><textarea class="es-pres-input-text" id="inp-trn-focus" rows="2" required placeholder="Es. Attivazione preventiva, possesso palla e transizioni offensive"></textarea></div>' +
         '<div class="es-pres-input-group"><label>Stima Presenze</label><input type="text" class="es-pres-input-text" id="inp-trn-att" value="Tutta la rosa convocata" placeholder="Es. 28/28 Presenti"></div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<div class="es-prx-161">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-trn-modal">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Pianifica Seduta</button>' +
         '</div>' +
@@ -3363,17 +3363,17 @@
     var oneOffCount = curItems.filter(function (d) { return d.recurrence === 'one_off'; }).length;
 
     var html =
-      '<div style="color:#cbd5e1; font-size:0.88rem; line-height:1.6; margin-bottom:1.2rem;">' +
-        '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem 1rem; margin-bottom:1rem;">' +
-          '<h4 style="color:#38bdf8; font-size:0.92rem; font-weight:700; margin:0 0 0.35rem 0;">Avvio Stagione Sportiva ' + esc(nxtSeason) + '</h4>' +
-          '<p style="margin:0; font-size:0.78rem; color:#cbd5e1;">' +
+      '<div class="es-prx-212">' +
+        '<div class="es-prx-213">' +
+          '<h4 class="es-prx-214">Avvio Stagione Sportiva ' + esc(nxtSeason) + '</h4>' +
+          '<p class="es-prx-191">' +
             'Il passaggio alla nuova stagione sportiva prepara le scadenze e i termini federali per la nuova annata mantenendo inalterato l\'archivio storico di conformità.' +
           '</p>' +
         '</div>' +
 
-        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.9rem 1rem; margin-bottom:1rem;">' +
-          '<div style="font-weight:700; color:#fff; font-size:0.82rem; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.04em;">Dettaglio Operazioni di Roll-over:</div>' +
-          '<ul style="margin:0; padding-left:1.2rem; font-size:0.8rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.45rem;">' +
+        '<div class="es-prx-215">' +
+          '<div class="es-prx-216">Dettaglio Operazioni di Roll-over:</div>' +
+          '<ul class="es-prx-217">' +
             '<li><b>Archiviazione Storico:</b> Le scadenze della stagione <b>' + esc(curSeason) + '</b> vengono congelate nel registro storico con il relativo stato di completamento e le date di deposito registrate.</li>' +
             '<li><b>Duplicazione Voci Ricorrenti (' + seasonalCount + ' adempimenti):</b> Vengono create le nuove voci per la stagione <b>' + esc(nxtSeason) + '</b> in stato <i>"Da completare"</i> con date da impostare dai Comunicati Ufficiali.</li>' +
             '<li><b>Voci Una Tantum (' + oneOffCount + ' adempimenti):</b> Obblighi a validità continuativa (Safeguarding/Tutela Minori, Statuto RAS, MOG) rimangono validi senza duplicazioni.</li>' +
@@ -3381,7 +3381,7 @@
         '</div>' +
       '</div>' +
 
-      '<div style="display:flex; justify-content:flex-end; gap:0.75rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+      '<div class="es-prx-218">' +
         '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-season-advance">Annulla</button>' +
         '<button type="button" class="es-pres-btn-primary" id="btn-confirm-season-advance">Conferma &amp; Apri Stagione ' + esc(nxtSeason) + '</button>' +
       '</div>';
@@ -3437,12 +3437,12 @@
     var inTransition = isSeasonTransitionPeriod();
 
     var html =
-      '<div style="margin-bottom:1rem;">' +
+      '<div class="es-prx-12">' +
         // Barra di Selezione Stagione & Storico
-        '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
-          '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-            '<span style="font-size:0.78rem; color:#94a3b8; font-weight:600;">Stagione:</span>' +
-            '<select id="sel-deadlines-season-view" style="background:#080e1e; color:#38bdf8; font-weight:700; font-size:0.82rem; border:1px solid rgba(56,189,248,0.3); border-radius:3px; padding:3px 8px;">' +
+        '<div class="es-prx-219">' +
+          '<div class="es-prx-29">' +
+            '<span class="es-prx-220">Stagione:</span>' +
+            '<select class="es-prx-221" id="sel-deadlines-season-view">' +
               allSeasons.map(function (s) {
                 return '<option value="' + esc(s) + '"' + (s === viewingSeason ? ' selected' : '') + '>' +
                   esc(s) + (s === data.activeSeason ? ' (Attiva)' : ' (Archivio)') +
@@ -3452,11 +3452,11 @@
           '</div>' +
 
           (isActiveSeasonView ? (
-            '<button type="button" class="es-pres-btn-secondary" id="btn-open-advance-season-modal" style="padding:4px 10px; font-size:0.75rem; border-color:rgba(52,211,153,0.35); color:#34d399;">' +
+            '<button type="button" class="es-pres-btn-secondary es-prx-222" id="btn-open-advance-season-modal">' +
               'Avvia Nuova Stagione ' + esc(getNextSeason(data.activeSeason)) + ' &rsaquo;' +
             '</button>'
           ) : (
-            '<span style="font-size:0.75rem; color:#94a3b8; background:rgba(148,163,184,0.08); padding:3px 8px; border-radius:3px; border:1px solid rgba(148,163,184,0.15);">' +
+            '<span class="es-prx-223">' +
               'Archivio Storico Certificato' +
             '</span>'
           )) +
@@ -3464,44 +3464,44 @@
 
         // Banner Avviso Transizione (se attiva e in periodo transizione)
         (isActiveSeasonView && inTransition ? (
-          '<div style="background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2); border-radius:4px; padding:0.65rem 0.9rem; margin-bottom:1rem; font-size:0.78rem; color:#fde68a; line-height:1.5;">' +
+          '<div class="es-prx-224">' +
             '<b>Periodo di Transizione Stagionale:</b> È possibile verificare i nuovi Comunicati Ufficiali e avviare il roll-over controllato alla stagione ' + esc(getNextSeason(data.activeSeason)) + ' mantenendo l\'archivio.' +
           '</div>'
         ) : '') +
 
         // Banner di spiegazione modalità
         (isActiveSeasonView ? (
-          '<div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
-            '<div style="color:#38bdf8; font-weight:700; font-size:0.82rem; margin-bottom:0.25rem;">Scadenziario Ufficiale Stagione ' + esc(viewingSeason) + ' — Ambito ' + esc(scopeObj.name) + '</div>' +
-            '<div style="font-size:0.78rem; color:#cbd5e1; line-height:1.5;">' +
+          '<div class="es-prx-225">' +
+            '<div class="es-prx-226">Scadenziario Ufficiale Stagione ' + esc(viewingSeason) + ' — Ambito ' + esc(scopeObj.name) + '</div>' +
+            '<div class="es-prx-227">' +
               'Registra l\'assolvimento degli adempimenti con la relativa data reale. Gli adempimenti contrassegnati come <b>Completati</b> escono dalle allerte e non vengono conteggiati tra quelli pendenti.' +
             '</div>' +
           '</div>'
         ) : (
-          '<div style="background:rgba(148,163,184,0.05); border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
-            '<div style="color:#cbd5e1; font-weight:700; font-size:0.82rem; margin-bottom:0.25rem;">Archivio Storico Federale Stagione ' + esc(viewingSeason) + '</div>' +
-            '<div style="font-size:0.78rem; color:#94a3b8; line-height:1.5;">' +
+          '<div class="es-prx-228">' +
+            '<div class="es-prx-229">Archivio Storico Federale Stagione ' + esc(viewingSeason) + '</div>' +
+            '<div class="es-prx-230">' +
               'Questo registro attesta lo stato di conformità con cui il club ha concluso la stagione ' + esc(viewingSeason) + '. I record storici restano immutabili.' +
             '</div>' +
           '</div>'
         )) +
 
-        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">' +
-          '<span style="font-size:0.8rem; color:#cbd5e1;">' +
-            '<span style="color:#34d399; font-weight:700;">' + completedCount + ' completati</span> · ' +
+        '<div class="es-prx-231">' +
+          '<span class="es-prx-232">' +
+            '<span class="es-prx-233">' + completedCount + ' completati</span> · ' +
             '<span style="color:' + (pendingCount > 0 ? '#fbbf24' : '#94a3b8') + '; font-weight:700;">' + pendingCount + ' da assolvere</span>' +
           '</span>' +
           (isActiveSeasonView ? (
-            '<div style="display:flex; gap:0.5rem;">' +
-              '<button type="button" class="es-pres-btn-secondary" id="btn-reset-scope-deadlines" style="padding:3px 8px; font-size:0.74rem;">Ripristina Default</button>' +
-              '<button type="button" class="es-pres-btn-secondary" id="btn-add-custom-deadline" style="padding:3px 9px; font-size:0.74rem;">+ Nuova Scadenza</button>' +
+            '<div class="es-prx-14">' +
+              '<button type="button" class="es-pres-btn-secondary es-prx-234" id="btn-reset-scope-deadlines">Ripristina Default</button>' +
+              '<button type="button" class="es-pres-btn-secondary es-prx-235" id="btn-add-custom-deadline">+ Nuova Scadenza</button>' +
             '</div>'
           ) : '') +
         '</div>' +
 
-        '<div style="display:flex; flex-direction:column; gap:0.75rem; max-height:400px; overflow-y:auto; padding-right:0.3rem;" id="es-deadlines-list-container">' +
+        '<div class="es-prx-236" id="es-deadlines-list-container">' +
           (!seasonDeadlines.length ? (
-            '<div class="es-pres-empty-box" style="padding:2rem 1rem;">' +
+            '<div class="es-pres-empty-box es-prx-237">' +
               '<div class="es-pres-empty-icon">' + ICONS.bell + '</div>' +
               '<h4 class="es-pres-empty-title">Nessun adempimento in archivio per la stagione ' + esc(viewingSeason) + '</h4>' +
               '<p class="es-pres-empty-desc">Non sono stati registrati adempimenti per questa specifica annata sportiva.</p>' +
@@ -3513,12 +3513,12 @@
               return (
                 '<div style="background:#040810; border:1px solid ' + (d.isCompleted ? 'rgba(52,211,153,0.22)' : 'rgba(148,163,184,0.18)') + '; border-radius:4px; padding:0.85rem 1rem;" class="es-dl-item" data-id="' + esc(d.id) + '">' +
                   // Titolo adempimento
-                  '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.75rem; margin-bottom:0.6rem;">' +
-                    '<div style="flex:1;">' +
+                  '<div class="es-prx-238">' +
+                    '<div class="es-prx-239">' +
                       (isActiveSeasonView ? (
                         '<input type="text" class="es-pres-input-text es-dl-task" value="' + esc(d.task) + '" placeholder="Descrizione adempimento" style="font-weight:700; font-size:0.88rem; padding:0.35rem 0.5rem; width:100%;">'
                       ) : (
-                        '<div style="font-weight:700; font-size:0.88rem; color:#fff;">' + esc(d.task) + '</div>'
+                        '<div class="es-prx-240">' + esc(d.task) + '</div>'
                       )) +
                     '</div>' +
                     (isActiveSeasonView ? (
@@ -3527,55 +3527,55 @@
                   '</div>' +
 
                   // Griglia campi standard allineati
-                  '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:0.6rem; margin-bottom:0.75rem;">' +
+                  '<div class="es-prx-241">' +
                     '<div>' +
-                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem; font-weight:600;">Organo Competente</label>' +
+                      '<label class="es-prx-242">Organo Competente</label>' +
                       (isActiveSeasonView ? (
                         '<input type="text" class="es-pres-input-text es-dl-auth" value="' + esc(d.authority || 'FIGC / LND') + '" style="font-size:0.78rem; padding:0.3rem 0.45rem; width:100%;">'
                       ) : (
-                        '<div style="font-size:0.78rem; color:#cbd5e1;">' + esc(d.authority || 'FIGC / LND') + '</div>'
+                        '<div class="es-prx-27">' + esc(d.authority || 'FIGC / LND') + '</div>'
                       )) +
                     '</div>' +
                     '<div>' +
-                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem; font-weight:600;">Importo / Fideiussione</label>' +
+                      '<label class="es-prx-242">Importo / Fideiussione</label>' +
                       (isActiveSeasonView ? (
                         '<input type="text" class="es-pres-input-text es-dl-amount" value="' + esc(d.amount || '—') + '" style="font-size:0.78rem; padding:0.3rem 0.45rem; width:100%;">'
                       ) : (
-                        '<div style="font-size:0.78rem; color:#cbd5e1;">' + esc(d.amount || '—') + '</div>'
+                        '<div class="es-prx-27">' + esc(d.amount || '—') + '</div>'
                       )) +
                     '</div>' +
                     '<div>' +
-                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem; font-weight:600;">Ricorrenza</label>' +
+                      '<label class="es-prx-242">Ricorrenza</label>' +
                       (isActiveSeasonView ? (
-                        '<select class="es-pres-input-text es-dl-rec" style="font-size:0.78rem; padding:0.3rem 0.45rem; background:#080e1e; color:#cbd5e1; width:100%;">' +
+                        '<select class="es-pres-input-text es-dl-rec es-prx-243">' +
                           '<option value="seasonal"' + (isSeasonal ? ' selected' : '') + '>Stagionale</option>' +
                           '<option value="one_off"' + (!isSeasonal ? ' selected' : '') + '>Una Tantum</option>' +
                         '</select>'
                       ) : (
-                        '<div style="font-size:0.78rem; color:#cbd5e1;">' + (isSeasonal ? 'Stagionale' : 'Una Tantum') + '</div>'
+                        '<div class="es-prx-27">' + (isSeasonal ? 'Stagionale' : 'Una Tantum') + '</div>'
                       )) +
                     '</div>' +
                     '<div>' +
-                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem; font-weight:600;">Scadenza Perentoria</label>' +
+                      '<label class="es-prx-242">Scadenza Perentoria</label>' +
                       (isActiveSeasonView ? (
                         '<input type="date" class="es-pres-input-text es-dl-date" value="' + esc(d.date || '') + '" style="font-size:0.78rem; padding:0.3rem 0.45rem; width:100%;">'
                       ) : (
-                        '<div style="font-size:0.78rem; color:#cbd5e1;">' + esc(comp.dateText || d.date || '—') + '</div>'
+                        '<div class="es-prx-27">' + esc(comp.dateText || d.date || '—') + '</div>'
                       )) +
                     '</div>' +
                   '</div>' +
 
                   // Barra di stato inferiore e azione di completamento
-                  '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; border-top:1px solid rgba(148,163,184,0.1); padding-top:0.5rem; margin-top:0.4rem;">' +
-                    '<div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">' +
+                  '<div class="es-prx-244">' +
+                    '<div class="es-prx-245">' +
                       '<span class="' + (d.isCompleted ? 'es-pres-status es-pres-status-ok' : (comp.isWarning ? (comp.isEmptyDate ? 'es-pres-status es-pres-status-neutral' : 'es-pres-status-warning') : 'es-pres-status-ok')) + '" style="font-size:0.74rem;">' +
                         (d.isCompleted ? 'Completato' : esc(comp.status)) +
                       '</span>' +
                       (d.isCompleted ? (
                         isActiveSeasonView ? (
-                          '<span style="font-size:0.74rem; color:#94a3b8;">Data completamento: <input type="date" class="es-pres-input-text es-dl-comp-date" value="' + esc(d.completedDate || new Date().toISOString().split('T')[0]) + '" style="width:125px; display:inline-block; font-size:0.74rem; padding:1px 4px; background:#080e1e; color:#fff; border:1px solid rgba(148,163,184,0.3); border-radius:3px;"></span>'
+                          '<span class="es-prx-246">Data completamento: <input type="date" class="es-pres-input-text es-dl-comp-date" value="' + esc(d.completedDate || new Date().toISOString().split('T')[0]) + '" style="width:125px; display:inline-block; font-size:0.74rem; padding:1px 4px; background:#080e1e; color:#fff; border:1px solid rgba(148,163,184,0.3); border-radius:3px;"></span>'
                         ) : (
-                          '<span style="font-size:0.74rem; color:#94a3b8;">Depositato in data: <b style="color:#cbd5e1;">' + esc(d.completedDate || '—') + '</b></span>'
+                          '<span class="es-prx-246">Depositato in data: <b class="es-prx-247">' + esc(d.completedDate || '—') + '</b></span>'
                         )
                       ) : '') +
                     '</div>' +
@@ -3589,7 +3589,7 @@
                     ) : '') +
                   '</div>' +
 
-                  (d.note ? ('<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.4rem; font-style:italic;">Note: ' + esc(d.note) + '</div>') : '') +
+                  (d.note ? ('<div class="es-prx-248">Note: ' + esc(d.note) + '</div>') : '') +
                 '</div>'
               );
             }).join('')
@@ -3597,7 +3597,7 @@
         '</div>' +
       '</div>' +
 
-      '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+      '<div class="es-prx-249">' +
         '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-dl-manager">Chiudi</button>' +
         (isActiveSeasonView ? (
           '<button type="button" class="es-pres-btn-primary" id="btn-save-all-deadlines">Salva Scadenziario Federale</button>'
@@ -3845,8 +3845,8 @@
           '</div>' +
           '<div class="es-pro-header-match-row">' +
             '<div class="es-pro-target-box"><p class="label">Stato club</p><strong>' + esc(posLabel) + '</strong><span>' + matchStats.pts + ' punti · ' + esc((data && data.season) || '2026/27') + '</span></div>' +
-            '<div class="es-pro-target-box"><p class="label">Governance</p><strong style="color:#38bdf8;">' + pendingDead + ' scadenze aperte</strong><span>Conformità federale e adempimenti</span></div>' +
-            '<div class="es-pro-target-box"><p class="label">Focus</p><strong style="color:#38bdf8;">Rosa, stadio e mercato</strong><span>Presidenza operativa del club</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Governance</p><strong class="es-prx-28">' + pendingDead + ' scadenze aperte</strong><span>Conformità federale e adempimenti</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Focus</p><strong class="es-prx-28">Rosa, stadio e mercato</strong><span>Presidenza operativa del club</span></div>' +
           '</div>' +
         '</div>' +
         '<nav class="es-pro-nav-tabs">' +
@@ -4096,18 +4096,18 @@
         ) : (
           transfers.map(function (t) {
             return (
-              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;">' +
-                '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(t.player) + ' (' + esc(t.role) + ')</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Club: ' + esc(t.club) + ' · Tipo: ' + esc(t.type) + '</div></div>' +
+              '<div class="es-prx-250">' +
+                '<div><h4 class="es-prx-251">' + esc(t.player) + ' (' + esc(t.role) + ')</h4><div class="es-prx-252">Club: ' + esc(t.club) + ' · Tipo: ' + esc(t.type) + '</div></div>' +
                 '<span class="es-pres-status es-pres-status-ok">' + esc(t.status) + '</span>' +
               '</div>'
             );
           }).join('')
         );
 
-        listHtml += '<div style="display:flex; gap:0.6rem; margin-top:1rem; flex-wrap:wrap;">' +
-          '<button type="button" class="es-pres-btn-primary" id="btn-add-transfer-in-modal" style="flex:1 1 140px;">+ Nuova Trattativa</button>' +
-          '<button type="button" class="es-pres-btn-primary" id="btn-officialize-in-modal" style="flex:1 1 160px; background:linear-gradient(135deg,#0284c7,#059669);">Ufficializza sul Wall</button>' +
-          '<button type="button" class="es-pres-btn-secondary" id="btn-open-hub-in-modal" style="flex:1 1 140px;">Apri Hub Mercato &rsaquo;</button>' +
+        listHtml += '<div class="es-prx-253">' +
+          '<button type="button" class="es-pres-btn-primary es-prx-254" id="btn-add-transfer-in-modal">+ Nuova Trattativa</button>' +
+          '<button type="button" class="es-pres-btn-primary es-prx-255" id="btn-officialize-in-modal">Ufficializza sul Wall</button>' +
+          '<button type="button" class="es-pres-btn-secondary es-prx-254" id="btn-open-hub-in-modal">Apri Hub Mercato &rsaquo;</button>' +
         '</div>';
 
         openDetailModal('Trattative di Mercato & Negoziazioni', ICONS.arrows, listHtml);
@@ -4150,15 +4150,15 @@
             '<button type="button" class="es-pres-empty-btn" id="btn-add-first-staff-modal">' + ICONS.plus + ' Aggiungi Membro Staff</button>' +
           '</div>'
         ) : (
-          '<div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">' +
-            '<span style="font-size:0.85rem; color:#94a3b8;">' + staff.length + ' componenti staff registrati</span>' +
+          '<div class="es-prx-256">' +
+            '<span class="es-prx-257">' + staff.length + ' componenti staff registrati</span>' +
             '<button type="button" class="es-pres-btn-primary" id="btn-add-staff-top">+ Aggiungi Membro</button>' +
           '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+          '<div class="es-prx-43">' +
             staff.map(function (s) {
               return (
-                '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
-                  '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(s.name) + '</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Ruolo: ' + esc(s.role) + ' · Qualifica: ' + esc(s.patent || 'FIGC') + '</div></div>' +
+                '<div class="es-prx-51">' +
+                  '<div><h4 class="es-prx-251">' + esc(s.name) + '</h4><div class="es-prx-252">Ruolo: ' + esc(s.role) + ' · Qualifica: ' + esc(s.patent || 'FIGC') + '</div></div>' +
                   '<span class="es-pres-status es-pres-status-ok">Contratto Attivo</span>' +
                 '</div>'
               );
@@ -4195,15 +4195,15 @@
             '<button type="button" class="es-pres-empty-btn" id="btn-add-first-under-player">' + ICONS.plus + ' Aggiungi Atleta Under</button>' +
           '</div>'
         ) : (
-          '<div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">' +
-            '<span style="font-size:0.85rem; color:#94a3b8;">' + underPlayers.length + ' Under in rosa · Obbligo LND rispettato</span>' +
+          '<div class="es-prx-256">' +
+            '<span class="es-prx-257">' + underPlayers.length + ' Under in rosa · Obbligo LND rispettato</span>' +
             '<button type="button" class="es-pres-btn-primary" id="btn-add-under-player">+ Aggiungi Under</button>' +
           '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+          '<div class="es-prx-43">' +
             underPlayers.map(function (p) {
               return (
-                '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
-                  '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(p.name) + ' (' + esc(p.role) + ')</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Età: ' + (p.age || 'Under') + ' anni · Minuti: ' + (p.minutesPlayed || 0) + '\'</div></div>' +
+                '<div class="es-prx-51">' +
+                  '<div><h4 class="es-prx-251">' + esc(p.name) + ' (' + esc(p.role) + ')</h4><div class="es-prx-252">Età: ' + (p.age || 'Under') + ' anni · Minuti: ' + (p.minutesPlayed || 0) + '\'</div></div>' +
                   '<span class="es-pres-status es-pres-status-ok">Under Conforme</span>' +
                 '</div>'
               );
@@ -4241,21 +4241,21 @@
             '<div class="es-pres-empty-icon">' + ICONS.growth + '</div>' +
             '<h4 class="es-pres-empty-title">Nessuna scheda tecnica attiva</h4>' +
             '<p class="es-pres-empty-desc">Non ci sono atleti registrati in rosa per cui monitorare la progressione fisica, tecnica e tattica.</p>' +
-            '<div style="display:flex; gap:0.6rem; margin-top:0.85rem; justify-content:center;">' +
+            '<div class="es-prx-258">' +
               '<button type="button" class="es-pres-empty-btn" id="btn-add-first-player-dev">' + ICONS.plus + ' Aggiungi Primo Atleta</button>' +
               '<button type="button" class="es-pres-btn-secondary" id="btn-open-schede-tecniche">Apri Schede Tecniche IA &rsaquo;</button>' +
             '</div>' +
           '</div>'
         ) : (
-          '<div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">' +
-            '<span style="font-size:0.85rem; color:#94a3b8;">' + squad.length + ' Schede Tecniche e Indici Fisici Attivi</span>' +
+          '<div class="es-prx-256">' +
+            '<span class="es-prx-257">' + squad.length + ' Schede Tecniche e Indici Fisici Attivi</span>' +
             '<button type="button" class="es-pres-btn-secondary" id="btn-open-schede-tecniche-top">Apri Hub Schede &rsaquo;</button>' +
           '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+          '<div class="es-prx-43">' +
             squad.map(function (p) {
               return (
-                '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
-                  '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(p.name) + ' (' + esc(p.role) + ')</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Valutazione: € ' + (p.marketValue ? Number(p.marketValue).toLocaleString() : '—') + ' · ' + (p.minutesPlayed || 0) + ' min giocati</div></div>' +
+                '<div class="es-prx-51">' +
+                  '<div><h4 class="es-prx-251">' + esc(p.name) + ' (' + esc(p.role) + ')</h4><div class="es-prx-252">Valutazione: € ' + (p.marketValue ? Number(p.marketValue).toLocaleString() : '—') + ' · ' + (p.minutesPlayed || 0) + ' min giocati</div></div>' +
                   '<span class="es-pres-status es-pres-status-ok">Report Attivo</span>' +
                 '</div>'
               );
@@ -4309,9 +4309,9 @@
         ) : (
           items.map(function (m) {
             return (
-              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; margin-bottom:0.6rem;">' +
-                '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;"><span style="font-size:0.75rem; font-weight:700; color:#38bdf8;">' + esc(m.from) + '</span><span style="font-size:0.72rem; color:#94a3b8;">' + esc(m.date) + '</span></div>' +
-                '<h5 style="font-size:0.92rem; font-weight:700; color:#ffffff; margin:0;">' + esc(m.subject) + '</h5>' +
+              '<div class="es-prx-259">' +
+                '<div class="es-prx-260"><span class="es-prx-261">' + esc(m.from) + '</span><span class="es-prx-25">' + esc(m.date) + '</span></div>' +
+                '<h5 class="es-prx-262">' + esc(m.subject) + '</h5>' +
               '</div>'
             );
           }).join('')
@@ -4325,18 +4325,18 @@
       cardStore.onclick = function () {
         var mer = data.merchandising || { isConfigured: false, ordersCount: 0, revenue: '€ 0,00' };
         var html =
-          '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Stato del Merchandising ufficiale e vendite Print on Demand (POD):</p>' +
-          '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
-              '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">ORDINI EVASI</div>' +
-              '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + mer.ordersCount + ' <span class="es-pres-unit">ordini</span></div>' +
+          '<p class="es-prx-263">Stato del Merchandising ufficiale e vendite Print on Demand (POD):</p>' +
+          '<div class="es-prx-4">' +
+            '<div class="es-prx-264">' +
+              '<div class="es-prx-265">ORDINI EVASI</div>' +
+              '<div class="es-prx-15">' + mer.ordersCount + ' <span class="es-pres-unit">ordini</span></div>' +
             '</div>' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
-              '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">RICAVI ACCREDITATI</div>' +
-              '<div style="font-size:1.6rem; font-weight:800; color:#34d399;">' + mer.revenue + '</div>' +
+            '<div class="es-prx-264">' +
+              '<div class="es-prx-265">RICAVI ACCREDITATI</div>' +
+              '<div class="es-prx-17">' + mer.revenue + '</div>' +
             '</div>' +
           '</div>' +
-          '<button type="button" class="es-pres-btn-primary" id="btn-manage-store-modal" style="width:100%;">Gestisci Catalogo Merchandising &rsaquo;</button>';
+          '<button type="button" class="es-pres-btn-primary es-prx-266" id="btn-manage-store-modal">Gestisci Catalogo Merchandising &rsaquo;</button>';
         openDetailModal('Store Ufficiale & Merchandising POD', ICONS.bag, html);
       };
     }
@@ -4354,14 +4354,14 @@
         ) : (
           scouts.map(function (s) {
             return (
-              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;">' +
-                '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(s.player) + ' (' + esc(s.role) + ')</h4><div style="font-size:0.78rem; color:#94a3b8;">Club: ' + esc(s.club) + ' · Scout: ' + esc(s.scout) + '</div></div>' +
+              '<div class="es-prx-250">' +
+                '<div><h4 class="es-prx-251">' + esc(s.player) + ' (' + esc(s.role) + ')</h4><div class="es-prx-267">Club: ' + esc(s.club) + ' · Scout: ' + esc(s.scout) + '</div></div>' +
                 '<span class="es-pres-status es-pres-status-ok">Rating: ' + esc(s.rating) + '</span>' +
               '</div>'
             );
           }).join('')
         );
-        html += '<button type="button" class="es-pres-btn-primary" id="btn-open-scouting-hub" style="width:100%; margin-top:0.75rem;">Apri Hub Mercato &amp; Scouting &rsaquo;</button>';
+        html += '<button type="button" class="es-pres-btn-primary es-prx-268" id="btn-open-scouting-hub">Apri Hub Mercato &amp; Scouting &rsaquo;</button>';
         openDetailModal('Scouting Club &amp; Secret List', ICONS.search, html);
         var bSc = document.getElementById('btn-open-scouting-hub');
         if (bSc) {
@@ -4446,16 +4446,16 @@
       cardGovStatus.onclick = function () {
         var squad = data.squad || [];
         var html =
-          '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Stato della conformità legale, tesseramenti federali FIGC e consensi privacy:</p>' +
-          '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1.1rem; margin-bottom:1.2rem;">' +
-            '<div style="color:#cbd5e1; font-size:0.88rem; line-height:1.8;">' +
+          '<p class="es-prx-263">Stato della conformità legale, tesseramenti federali FIGC e consensi privacy:</p>' +
+          '<div class="es-prx-269">' +
+            '<div class="es-prx-270">' +
               '• <b>Tesseramenti Prima Squadra:</b> ' + squad.length + ' Atleti registrati<br>' +
               '• <b>Consensi GDPR Minori:</b> Depositati con firma digitale<br>' +
               '• <b>Abilitazioni BLSD:</b> 100% dello staff abilitato<br>' +
               '• <b>Provenienza Record:</b> Responsabile Privacy (' + esc(data.lastUpdatedAt) + ')' +
             '</div>' +
           '</div>' +
-          '<button type="button" class="es-pres-btn-primary" id="btn-manage-squad-doc" style="width:100%;">Gestisci Organico Atleti &rsaquo;</button>';
+          '<button type="button" class="es-pres-btn-primary es-prx-266" id="btn-manage-squad-doc">Gestisci Organico Atleti &rsaquo;</button>';
         openDetailModal('Tesseramenti Federali & Privacy GDPR', ICONS.fileText, html);
         var bDoc = document.getElementById('btn-manage-squad-doc');
         if (bDoc) {
@@ -4494,15 +4494,15 @@
       btn.onclick = function (e) {
         if (e) { e.preventDefault(); e.stopPropagation(); }
         var formHtml =
-          '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci un nuovo partner commerciale o sponsor di maglia:</p>' +
-          '<form id="form-add-sp-real" style="display:flex; flex-direction:column; gap:1rem;">' +
+          '<p class="es-prx-198">Inserisci un nuovo partner commerciale o sponsor di maglia:</p>' +
+          '<form class="es-prx-152" id="form-add-sp-real">' +
             '<div class="es-pres-input-group"><label>Nome Azienda / Brand *</label><input type="text" class="es-pres-input-text" id="inp-sp-name" required placeholder="Es. Enel Energia"></div>' +
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-              '<div class="es-pres-input-group"><label>Tipologia Sponsor</label><select class="es-pres-input-text" id="sel-sp-tier" style="background:#040810; color:#fff;"><option>Main Sponsor Maglia</option><option>Sponsor Tecnico</option><option>Top Sponsor Territoriale</option><option>Sleeve Sponsor</option></select></div>' +
+            '<div class="es-prx-153">' +
+              '<div class="es-pres-input-group"><label>Tipologia Sponsor</label><select class="es-pres-input-text es-prx-155" id="sel-sp-tier"><option>Main Sponsor Maglia</option><option>Sponsor Tecnico</option><option>Top Sponsor Territoriale</option><option>Sleeve Sponsor</option></select></div>' +
               '<div class="es-pres-input-group"><label>Valore Annuo (€)</label><input type="text" class="es-pres-input-text" id="inp-sp-val" placeholder="€ 20.000,00" value="€ 20.000,00"></div>' +
             '</div>' +
             '<div class="es-pres-input-group"><label>Scadenza Accordo</label><input type="date" class="es-pres-input-text" id="inp-sp-exp" value="2027-06-30"></div>' +
-            '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+            '<div class="es-prx-161">' +
               '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-sp-modal">Annulla</button>' +
               '<button type="submit" class="es-pres-btn-primary">Registra Sponsor</button>' +
             '</div>' +
@@ -4546,14 +4546,14 @@
     if (btnBacheca) {
       btnBacheca.onclick = function () {
         var html =
-          '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1rem;">Opportunità di visibilità e spazi pubblicitari disponibili per i partner:</p>' +
-          '<div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.2rem;">' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
-              '<div><div style="font-weight:700; color:#fff;">LED Bordocampo Stadio</div><div style="font-size:0.75rem; color:#94a3b8;">15 Minuti a rotazione durante i match ufficiali</div></div>' +
+          '<p class="es-prx-203">Opportunità di visibilità e spazi pubblicitari disponibili per i partner:</p>' +
+          '<div class="es-prx-271">' +
+            '<div class="es-prx-51">' +
+              '<div><div class="es-prx-272">LED Bordocampo Stadio</div><div class="es-prx-273">15 Minuti a rotazione durante i match ufficiali</div></div>' +
               '<span class="es-pres-status es-pres-status-ok">Disponibile</span>' +
             '</div>' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
-              '<div><div style="font-weight:700; color:#fff;">Backdrop Sala Stampa & Interviste</div><div style="font-size:0.75rem; color:#94a3b8;">Presenza logo in tutte le conferenze post-partita</div></div>' +
+            '<div class="es-prx-51">' +
+              '<div><div class="es-prx-272">Backdrop Sala Stampa & Interviste</div><div class="es-prx-273">Presenza logo in tutte le conferenze post-partita</div></div>' +
               '<span class="es-pres-status es-pres-status-ok">Disponibile</span>' +
             '</div>' +
           '</div>';
@@ -4569,22 +4569,22 @@
         var todayIso = new Date().toISOString().split('T')[0];
 
         var formHtml =
-          '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
+          '<p class="es-prx-151">' +
             'Compila la pratica ufficiale di variazione capienza o adeguamento agibilità per la trasmissione alla <b>Commissione Provinciale di Vigilanza (CPV)</b> e alla <b>FIGC / LND</b>.' +
           '</p>' +
-          '<form id="form-pres-cpv-request" style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<form class="es-prx-152" id="form-pres-cpv-request">' +
+            '<div class="es-prx-153">' +
               '<div class="es-pres-input-group">' +
                 '<label>Capienza Attuale Omologata</label>' +
                 '<input type="text" class="es-pres-input-text" value="' + esc(data.stadium.capacity) + '" disabled style="opacity:0.7; cursor:not-allowed;">' +
               '</div>' +
               '<div class="es-pres-input-group">' +
-                '<label style="color:#38bdf8;">Nuova Capienza Richiesta (Posti) *</label>' +
+                '<label class="es-prx-28">Nuova Capienza Richiesta (Posti) *</label>' +
                 '<input type="number" class="es-pres-input-text" id="inp-cpv-new-capacity" value="' + curCapNum + '" min="100" max="100000" required style="border-color:#38bdf8;">' +
               '</div>' +
             '</div>' +
 
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+            '<div class="es-prx-153">' +
               '<div class="es-pres-input-group">' +
                 '<label>N° Protocollo / Verbale CPV</label>' +
                 '<input type="text" class="es-pres-input-text" id="inp-cpv-protocol" placeholder="Es. CPV-2026/08-FG" value="' + esc(data.stadium.cpvProtocol || 'CPV-2026/08-FG') + '">' +
@@ -4597,7 +4597,7 @@
 
             '<div class="es-pres-input-group">' +
               '<label>Motivazione / Tipologia Intervento</label>' +
-              '<select class="es-pres-input-text" id="sel-cpv-reason" style="background:#040810; color:#fff;">' +
+              '<select class="es-pres-input-text es-prx-155" id="sel-cpv-reason">' +
                 '<option value="Riapertura settore / Ampliamento agibilità">Riapertura settore / Ampliamento agibilità</option>' +
                 '<option value="Installazione nuovi seggiolini e numerazione posti">Installazione nuovi seggiolini e numerazione posti</option>' +
                 '<option value="Adeguamento varchi di sicurezza e tornelli">Adeguamento varchi di sicurezza e tornelli</option>' +
@@ -4607,14 +4607,14 @@
 
             '<div class="es-pres-input-group">' +
               '<label>Allegato Verbale Firmato (PDF / Scansione)</label>' +
-              '<div style="background:#040810; border:1px dashed rgba(56,189,248,0.4); border-radius:4px; padding:0.9rem; text-align:center; cursor:pointer;" id="box-cpv-upload">' +
-                '<input type="file" id="file-cpv-doc" accept=".pdf,.png,.jpg,.jpeg" style="display:none;">' +
-                '<div style="font-size:0.85rem; color:#38bdf8; font-weight:600;" id="lbl-cpv-doc-name">Seleziona o trascina il Verbale CPV / Prefettura</div>' +
-                '<div style="font-size:0.75rem; color:#64748b; margin-top:0.25rem;">Formati ammessi: PDF, JPG, PNG (Max 15MB)</div>' +
+              '<div class="es-prx-274" id="box-cpv-upload">' +
+                '<input class="es-prx-275" type="file" id="file-cpv-doc" accept=".pdf,.png,.jpg,.jpeg">' +
+                '<div class="es-prx-276" id="lbl-cpv-doc-name">Seleziona o trascina il Verbale CPV / Prefettura</div>' +
+                '<div class="es-prx-277">Formati ammessi: PDF, JPG, PNG (Max 15MB)</div>' +
               '</div>' +
             '</div>' +
 
-            '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+            '<div class="es-prx-161">' +
               '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-cpv-modal">Annulla</button>' +
               '<button type="submit" class="es-pres-btn-primary" id="btn-submit-cpv-modal">Invia Pratica &amp; Aggiorna Capienza</button>' +
             '</div>' +
@@ -4722,9 +4722,9 @@
     modal.innerHTML =
       '<div class="es-pres-modal-sheet" role="dialog" aria-modal="true">' +
         '<button type="button" class="es-pres-modal-close-btn" id="btn-close-pres-detail" aria-label="Chiudi">&times;</button>' +
-        '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1.2rem; padding-bottom:0.65rem; border-bottom:1px solid rgba(148,163,184,0.15);">' +
-          '<span style="color:#38bdf8;">' + iconSvg + '</span>' +
-          '<h2 style="font-size:1.3rem; font-weight:800; color:#ffffff; margin:0;">' + esc(title) + '</h2>' +
+        '<div class="es-prx-278">' +
+          '<span class="es-prx-28">' + iconSvg + '</span>' +
+          '<h2 class="es-prx-279">' + esc(title) + '</h2>' +
         '</div>' +
         '<div>' + contentHtml + '</div>' +
       '</div>';

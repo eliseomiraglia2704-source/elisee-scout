@@ -331,7 +331,7 @@
     // 2. Main Workspace a Due Colonne
     html += '<div class="es-panels es-tc-grid-main">' +
       // Colonna Principale (Sinistra)
-      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+      '<div class="es-tcx-1">' +
         '<div class="es-panel-box es-tc-panel">' +
           '<div class="es-panel-box__head es-tc-panel-header">' +
             '<h3 class="es-tc-panel-title">Attività recenti &amp; Iscrizioni</h3>' +
@@ -373,7 +373,7 @@
     '</div>' + // chiude colonna sinistra
 
     // Colonna Secondaria (Destra)
-    '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+    '<div class="es-tcx-1">' +
       // Box Condivisione Modulo Pubblico
       '<div class="es-panel-box es-tc-panel">' +
         '<div class="es-panel-box__head es-tc-panel-header">' +
@@ -383,7 +383,7 @@
         '<div class="es-link-box es-tc-share-box">' +
           '<span class="es-tc-share-url">' + esc(shareUrl(team)) + '</span>' +
         '</div>' +
-        '<div style="display:flex; gap:0.5rem;">' +
+        '<div class="es-tcx-2">' +
           '<button type="button" class="es-btn-outline es-tc-btn-copy" data-tc="copy-link">Copia link</button>' +
           '<button type="button" class="es-btn-outline es-tc-btn-back" data-tc="open-form">Apri modulo</button>' +
         '</div>' +
@@ -395,15 +395,15 @@
           '<h3 class="es-tc-panel-title">Scadenze e adempimenti</h3>' +
         '</div>' +
         '<p class="sub es-tc-panel-desc">Promemoria automatici per la segreteria del club.</p>' +
-        '<ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.75rem; font-size:0.82rem;">' +
-          '<li style="display:flex; justify-content:space-between; padding-bottom:0.5rem; border-bottom:1px solid var(--es-border);">' +
-            '<span>Certificati medici</span><span style="color:var(--es-accent); font-weight:600;">Regolari</span>' +
+        '<ul class="es-tcx-3">' +
+          '<li class="es-tcx-4">' +
+            '<span>Certificati medici</span><span class="es-tcx-5">Regolari</span>' +
           '</li>' +
-          '<li style="display:flex; justify-content:space-between; padding-bottom:0.5rem; border-bottom:1px solid var(--es-border);">' +
-            '<span>Quote mese corrente</span><span style="color:var(--es-verified); font-weight:600;">Monitorate</span>' +
+          '<li class="es-tcx-4">' +
+            '<span>Quote mese corrente</span><span class="es-tcx-6">Monitorate</span>' +
           '</li>' +
-          '<li style="display:flex; justify-content:space-between;">' +
-            '<span>Libro soci &amp; assemblea</span><span style="color:var(--es-text-muted);">In ordine</span>' +
+          '<li class="es-tcx-7">' +
+            '<span>Libro soci &amp; assemblea</span><span class="es-tcx-8">In ordine</span>' +
           '</li>' +
         '</ul>' +
       '</div>' +
@@ -438,7 +438,7 @@
       '</div>' +
       '<div class="es-tc-kpi-item">' +
         '<div class="es-tc-kpi-label">Modulo pubblico</div>' +
-        '<div class="es-tc-kpi-val" style="font-size:1.3rem; color:#059669;">● Attivo</div>' +
+        '<div class="es-tc-kpi-val es-tcx-9">● Attivo</div>' +
         '<div class="es-tc-kpi-sub">Ricezione candidature aperta</div>' +
       '</div>' +
     '</div>';
@@ -455,11 +455,11 @@
         '<div class="es-tc-share-box">' +
           '<span class="es-tc-share-url" id="es-tc-share">' + esc(url) + '</span>' +
         '</div>' +
-        '<div style="display:flex; gap:0.5rem; margin-bottom:1rem;">' +
+        '<div class="es-tcx-10">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="copy-link">Copia link</button>' +
           '<button type="button" class="es-tc-btn-back" data-tc="open-form">Apri modulo</button>' +
         '</div>' +
-        '<p style="font-size:0.78rem; color:#64748B; margin:0; line-height:1.5;">' +
+        '<p class="es-tcx-11">' +
           'Condividi il link con atleti, genitori e collaboratori per ricevere direttamente le richieste in questa schermata.' +
         '</p>' +
       '</div>' +
@@ -468,7 +468,7 @@
       '<div class="es-tc-panel">' +
         '<div class="es-tc-panel-header">' +
           '<h3 class="es-tc-panel-title">Richieste ricevute (' + pending.length + ')</h3>' +
-          '<span style="font-size:0.75rem; color:#64748B;">Inbox tesseramenti</span>' +
+          '<span class="es-tcx-12">Inbox tesseramenti</span>' +
         '</div>';
 
     if (!pending.length) {
@@ -481,11 +481,11 @@
         '<thead><tr><th>Nominativo</th><th>Ruolo</th><th>Data</th><th>Azione</th></tr></thead><tbody>';
       pending.forEach(function (e) {
         html += '<tr>' +
-          '<td><strong>' + esc(e.nome) + ' ' + esc(e.cognome) + '</strong><br><small style="color:#64748B;">' + esc(e.email) + '</small></td>' +
+          '<td><strong>' + esc(e.nome) + ' ' + esc(e.cognome) + '</strong><br><small class="es-tcx-13">' + esc(e.email) + '</small></td>' +
           '<td>' + esc(e.role) + '</td>' +
           '<td>' + fmtDate(e.createdAt) + '</td>' +
           '<td>' +
-            '<div style="display:flex; gap:0.35rem;">' +
+            '<div class="es-tcx-14">' +
               '<button type="button" class="es-tc-btn-primary" style="padding:0.35rem 0.65rem; font-size:0.75rem;" data-tc="acc-enr" data-id="' + esc(e.id) + '">Accetta</button>' +
               '<button type="button" class="es-tc-btn-back" style="padding:0.35rem 0.65rem; font-size:0.75rem;" data-tc="dec-enr" data-id="' + esc(e.id) + '">Rifiuta</button>' +
             '</div>' +
@@ -501,7 +501,7 @@
       '<div class="es-tc-panel-header">' +
         '<div>' +
           '<h3 class="es-tc-panel-title">Anagrafica tesserati (' + st.members.length + ')</h3>' +
-          '<p class="es-tc-panel-desc" style="margin:0.25rem 0 0;">L\'elenco degli atleti e dello staff approvati e dei relativi dati societari.</p>' +
+          '<p class="es-tc-panel-desc es-tcx-15">L\'elenco degli atleti e dello staff approvati e dei relativi dati societari.</p>' +
         '</div>' +
         '<button type="button" class="es-tc-btn-back" data-tc="open-form">+ Nuovo tesserato</button>' +
       '</div>';
@@ -543,7 +543,7 @@
     html += '<div class="es-tc-kpi-strip">' +
       '<div class="es-tc-kpi-item">' +
         '<div class="es-tc-kpi-label">Totale incassato</div>' +
-        '<div class="es-tc-kpi-val" style="color:#059669;">€ ' + totalIncassato.toLocaleString('it-IT') + '</div>' +
+        '<div class="es-tc-kpi-val es-tcx-16">€ ' + totalIncassato.toLocaleString('it-IT') + '</div>' +
         '<div class="es-tc-kpi-sub">' + paidCount + ' pagamenti registrati</div>' +
       '</div>' +
       '<div class="es-tc-kpi-item">' +
@@ -558,7 +558,7 @@
       '</div>' +
       '<div class="es-tc-kpi-item">' +
         '<div class="es-tc-kpi-label">Pagamenti in ritardo</div>' +
-        '<div class="es-tc-kpi-val" style="color:#DC2626;">0</div>' +
+        '<div class="es-tc-kpi-val es-tcx-17">0</div>' +
         '<div class="es-tc-kpi-sub">Nessun insoluto critico</div>' +
       '</div>' +
       '<div class="es-tc-kpi-item">' +
@@ -584,7 +584,7 @@
       '<div class="es-tc-panel">' +
         '<div class="es-tc-panel-header">' +
           '<h3 class="es-tc-panel-title">Crea una nuova quota</h3>' +
-          '<span style="font-size:0.75rem; color:#64748B;">Operazione rapida</span>' +
+          '<span class="es-tcx-12">Operazione rapida</span>' +
         '</div>' +
         '<p class="es-tc-panel-desc">Assegna una nuova quota o quota mensile a un atleta registrato.</p>' +
         '<div class="es-tc-field">' +
@@ -616,9 +616,9 @@
             '</select>' +
           '</div>' +
         '</div>' +
-        '<div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.75rem;">' +
-          '<button type="button" class="es-tc-btn-primary" data-tc="add-fee" style="justify-content:center;">Crea quota</button>' +
-          '<button type="button" class="es-tc-btn-back" data-tc="pay-fee-new" style="justify-content:center;">Crea e registra incasso</button>' +
+        '<div class="es-tcx-18">' +
+          '<button type="button" class="es-tc-btn-primary es-tcx-19" data-tc="add-fee">Crea quota</button>' +
+          '<button type="button" class="es-tc-btn-back es-tcx-19" data-tc="pay-fee-new">Crea e registra incasso</button>' +
         '</div>' +
       '</div>' +
     '</div>'; // chiude grid-main
@@ -627,9 +627,9 @@
     html += '<div class="es-tc-panel">' +
       '<div class="es-tc-panel-header">' +
         '<h3 class="es-tc-panel-title">Attenzione richiesta</h3>' +
-        '<span style="font-size:0.75rem; color:#059669; font-weight:600;">Monitoraggio attivo</span>' +
+        '<span class="es-tcx-20">Monitoraggio attivo</span>' +
       '</div>' +
-      '<p class="es-tc-panel-desc" style="margin-bottom:0.5rem;">' +
+      '<p class="es-tc-panel-desc es-tcx-21">' +
         (unpaid ? 'Ci sono ' + unpaid + ' pagamenti pendenti in attesa di quietanza.' : 'Nessuna anomalia finanziaria da gestire.') +
       '</p>' +
     '</div>';
@@ -710,7 +710,7 @@
       '</div>' +
       '<div class="es-tc-kpi-item">' +
         '<div class="es-tc-kpi-label">Ultimo invio</div>' +
-        '<div class="es-tc-kpi-val" style="font-size:1.25rem;">' + esc(lastSent) + '</div>' +
+        '<div class="es-tc-kpi-val es-tcx-22">' + esc(lastSent) + '</div>' +
         '<div class="es-tc-kpi-sub">Data ultima circolare</div>' +
       '</div>' +
     '</div>';
@@ -722,7 +722,7 @@
       '<div class="es-tc-panel" id="es-tc-composer-panel">' +
         '<div class="es-tc-panel-header">' +
           '<h3 class="es-tc-panel-title">Nuova comunicazione</h3>' +
-          '<span style="font-size:0.75rem; color:#64748B;">Canale certificato societario</span>' +
+          '<span class="es-tcx-12">Canale certificato societario</span>' +
         '</div>' +
         '<p class="es-tc-panel-desc">Prepara e invia un messaggio agli utenti interessati.</p>' +
 
@@ -758,7 +758,7 @@
         '</div>' +
 
         // Allegati ed opzioni
-        '<div style="display:flex; align-items:center; gap:0.6rem; margin-top:0.4rem;">' +
+        '<div class="es-tcx-23">' +
           '<button type="button" class="es-tc-attach-pill" data-tc="comm-attach">' +
             '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>' +
             'Allega documento / convocazione (PDF)' +
@@ -767,13 +767,13 @@
 
         // Azioni
         '<div class="es-tc-composer-footer">' +
-          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<div class="es-tcx-24">' +
             '<button type="button" class="es-tc-btn-primary" data-tc="send-comm">' +
               '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>' +
               'Invia comunicazione' +
             '</button>' +
           '</div>' +
-          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<div class="es-tcx-24">' +
             '<button type="button" class="es-tc-btn-back" data-tc="save-comm-draft">Salva bozza</button>' +
             '<button type="button" class="es-tc-btn-back" data-tc="preview-comm">Anteprima</button>' +
           '</div>' +
@@ -782,13 +782,13 @@
       '</div>' + // chiude colonna sinistra (composer)
 
       // Colonna Secondaria: Storico e Strumenti
-      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+      '<div class="es-tcx-1">' +
 
         // Pannello Attività Recenti
         '<div class="es-tc-panel">' +
           '<div class="es-tc-panel-header">' +
             '<h3 class="es-tc-panel-title">Attività recenti</h3>' +
-            '<span style="font-size:0.75rem; color:#64748B;">Archivio invii</span>' +
+            '<span class="es-tcx-12">Archivio invii</span>' +
           '</div>' +
           '<p class="es-tc-panel-desc">Registro tracciato dei messaggi e circolari societarie trasmesse.</p>';
 
@@ -798,7 +798,7 @@
         '<p class="es-tc-empty-sub">Le comunicazioni inviate dalla società saranno archiviate qui.</p>' +
       '</div>';
     } else {
-      html += '<div style="display:flex; flex-direction:column;">';
+      html += '<div class="es-tcx-25">';
       st.comms.slice(0, 10).forEach(function (c) {
         html += '<div class="es-tc-history-item">' +
           '<div class="es-tc-history-top">' +
@@ -820,7 +820,7 @@
         '<div class="es-tc-panel">' +
           '<div class="es-tc-panel-header">' +
             '<h3 class="es-tc-panel-title">Gruppi di destinatari</h3>' +
-            '<span style="font-size:0.75rem; color:#64748B;">5 Segmenti</span>' +
+            '<span class="es-tcx-12">5 Segmenti</span>' +
           '</div>' +
           '<p class="es-tc-panel-desc">Elenco delle audience societarie configurate per la ricezione.</p>' +
           '<div class="es-tc-group-list">' +
@@ -852,12 +852,12 @@
               '</div>' +
               '<span class="es-tc-group-badge">' + countDirigenti + ' dirigenti</span>' +
             '</div>' +
-            '<div class="es-tc-group-item" style="background:#FFFFFF; border-color:rgba(15,23,42,0.15);">' +
+            '<div class="es-tc-group-item es-tcx-26">' +
               '<div class="es-tc-group-info">' +
-                '<span class="es-tc-group-name" style="font-weight:700;">Tutti i tesserati</span>' +
+                '<span class="es-tc-group-name es-tcx-27">Tutti i tesserati</span>' +
                 '<span class="es-tc-group-sub">Broadcast generale della società</span>' +
               '</div>' +
-              '<span class="es-tc-group-badge" style="background:#0F172A; color:#FFFFFF; border-color:#0F172A;">' + countTotal + ' totale</span>' +
+              '<span class="es-tc-group-badge es-tcx-28">' + countTotal + ' totale</span>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -867,22 +867,22 @@
     '</div>'; // chiude grid-main
 
     // 4. Sezione Istituzionale: Accessi e permessi (Aree riservate)
-    html += '<div class="es-tc-panel" style="margin-top:1.5rem;">' +
+    html += '<div class="es-tc-panel es-tcx-29">' +
       '<div class="es-tc-panel-header">' +
         '<h3 class="es-tc-panel-title">Accessi e permessi</h3>' +
-        '<span style="font-size:0.75rem; color:#059669; font-weight:600;">Controllo Ruoli Attivo</span>' +
+        '<span class="es-tcx-20">Controllo Ruoli Attivo</span>' +
       '</div>' +
-      '<p class="es-tc-panel-desc" style="margin-bottom:1rem;">' +
+      '<p class="es-tc-panel-desc es-tcx-30">' +
         'Ogni ruolo visualizza esclusivamente le sezioni della piattaforma pertinenti alle proprie responsabilità.' +
       '</p>' +
       '<div class="es-tc-table-wrap">' +
         '<table class="es-tc-perm-table">' +
           '<thead>' +
             '<tr>' +
-              '<th style="width:160px;">Ruolo</th>' +
+              '<th class="es-tcx-31">Ruolo</th>' +
               '<th>Accesso consentito</th>' +
               '<th>Permessi operativi</th>' +
-              '<th style="width:180px;">Autenticazione</th>' +
+              '<th class="es-tcx-32">Autenticazione</th>' +
             '</tr>' +
           '</thead>' +
           '<tbody>' +
@@ -988,7 +988,7 @@
       '</div>' +
       '<div class="es-tc-kpi-item">' +
         '<div class="es-tc-kpi-label">Prossimo evento</div>' +
-        '<div class="es-tc-kpi-val" style="font-size:1.1rem; line-height:1.2; word-break:break-word;">' + nextEvText + '</div>' +
+        '<div class="es-tc-kpi-val es-tcx-33">' + nextEvText + '</div>' +
         '<div class="es-tc-kpi-sub">Impegno in agenda</div>' +
       '</div>' +
       '<div class="es-tc-kpi-item">' +
@@ -1014,7 +1014,7 @@
             '<button type="button" class="es-tc-cal-nav-btn" data-tc="cal-prev-month" title="Mese precedente">&larr;</button>' +
             '<div class="es-tc-cal-month-title">' + MONTH_NAMES[m] + ' ' + y + '</div>' +
             '<button type="button" class="es-tc-cal-nav-btn" data-tc="cal-next-month" title="Mese successivo">&rarr;</button>' +
-            '<button type="button" class="es-tc-btn-back" data-tc="cal-today" style="padding:0.35rem 0.65rem; font-size:0.75rem;">Oggi</button>' +
+            '<button type="button" class="es-tc-btn-back es-tcx-34" data-tc="cal-today">Oggi</button>' +
           '</div>' +
           '<div class="es-tc-cal-view-group">' +
             '<button type="button" class="es-tc-cal-view-btn ' + (UI.calView === 'month' ? 'is-active' : '') + '" data-tc="set-cal-view" data-view="month">Mese</button>' +
@@ -1041,11 +1041,11 @@
     html += '</div>' + // chiude colonna principale
 
       // Colonna Laterale: Prossime Attività
-      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+      '<div class="es-tcx-1">' +
         '<div class="es-tc-panel">' +
           '<div class="es-tc-panel-header">' +
             '<h3 class="es-tc-panel-title">Prossimi appuntamenti</h3>' +
-            '<span style="font-size:0.75rem; color:#64748B;">' + sortedEvents.length + ' eventi</span>' +
+            '<span class="es-tcx-12">' + sortedEvents.length + ' eventi</span>' +
           '</div>' +
           '<p class="es-tc-panel-desc">Attività programmate e impegni del club.</p>';
 
@@ -1055,25 +1055,25 @@
         '<p class="es-tc-empty-sub">Le prossime attività della società appariranno qui.</p>' +
       '</div>';
     } else {
-      html += '<div style="display:flex; flex-direction:column; gap:0.6rem;">';
+      html += '<div class="es-tcx-35">';
       sortedEvents.slice(0, 6).forEach(function (ev) {
         var att = st.attendance[ev.id] || {};
         var attPresent = Object.keys(att).filter(function (k) { return att[k] === 'presente'; }).length;
         var attTotal = Object.keys(att).length;
         var attLabel = attTotal ? (attPresent + ' presenti') : 'Presenze aperte';
 
-        html += '<div class="es-tc-history-item" style="border:1px solid rgba(15,23,42,0.08); border-radius:6px; padding:0.75rem;">' +
+        html += '<div class="es-tc-history-item es-tcx-36">' +
           '<div class="es-tc-history-top">' +
             '<span class="es-tc-history-subject">' + esc(ev.title) + '</span>' +
             '<span class="es-tc-badge es-tc-badge-pending">' + esc(ev.type) + '</span>' +
           '</div>' +
-          '<div class="es-tc-history-meta" style="margin-bottom:0.5rem;">' +
+          '<div class="es-tc-history-meta es-tcx-21">' +
             '<span>🗓️ ' + fmtDate(ev.date) + ' ' + esc(ev.time || '17:30') + '</span>' +
             '<span>·</span>' +
             '<span>📍 ' + esc(ev.place || 'Campo sportivo') + '</span>' +
           '</div>' +
-          '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem; padding-top:0.4rem; border-top:1px solid rgba(15,23,42,0.05);">' +
-            '<span style="font-size:0.72rem; color:#64748B;">👥 ' + attLabel + '</span>' +
+          '<div class="es-tcx-37">' +
+            '<span class="es-tcx-38">👥 ' + attLabel + '</span>' +
             '<button type="button" class="es-tc-btn-back" data-tc="open-att-modal" data-id="' + esc(ev.id) + '" style="padding:0.25rem 0.55rem; font-size:0.72rem;">' +
               'Gestione presenze' +
             '</button>' +
@@ -1151,7 +1151,7 @@
         '</div>';
       });
       if (evs.length > 3) {
-        html += '<span style="font-size:0.65rem; color:#64748B;">+' + (evs.length - 3) + ' altre</span>';
+        html += '<span class="es-tcx-39">+' + (evs.length - 3) + ' altre</span>';
       }
 
       html += '</div></td>';
@@ -1185,26 +1185,26 @@
       days.push(d.toISOString().slice(0, 10));
     }
 
-    var html = '<div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:0.5rem; background:#F8FAFC; padding:0.75rem; border-radius:8px; border:1px solid rgba(15,23,42,0.08);">';
+    var html = '<div class="es-tcx-40">';
     days.forEach(function (dateStr, idx) {
       var evs = (st.events || []).filter(function (ev) { return ev.date === dateStr; });
       var isToday = dateStr === addDays(0);
 
-      html += '<div style="background:#FFFFFF; border:1px solid rgba(15,23,42,0.08); border-radius:6px; padding:0.5rem; min-height:220px; display:flex; flex-direction:column;">' +
-        '<div style="text-align:center; padding-bottom:0.4rem; border-bottom:1px solid rgba(15,23,42,0.06); margin-bottom:0.4rem;">' +
-          '<div style="font-size:0.7rem; font-weight:700; color:#64748B; text-transform:uppercase;">' + DAY_NAMES[idx] + '</div>' +
+      html += '<div class="es-tcx-41">' +
+        '<div class="es-tcx-42">' +
+          '<div class="es-tcx-43">' + DAY_NAMES[idx] + '</div>' +
           '<div style="font-size:0.95rem; font-weight:700; color:' + (isToday ? '#059669' : '#0F172A') + ';">' + dateStr.slice(8, 10) + '</div>' +
         '</div>' +
-        '<div style="display:flex; flex-direction:column; gap:0.35rem; flex:1;">';
+        '<div class="es-tcx-44">';
 
       if (!evs.length) {
-        html += '<span style="font-size:0.68rem; color:#94A3B8; text-align:center; margin-top:1rem;">Nessuna attività</span>';
+        html += '<span class="es-tcx-45">Nessuna attività</span>';
       } else {
         evs.forEach(function (ev) {
           var cls = getEventClass(ev.type);
           html += '<div class="es-tc-event-chip ' + cls + '" data-tc="open-att-modal" data-id="' + esc(ev.id) + '" style="white-space:normal; flex-direction:column; align-items:flex-start; padding:0.35rem 0.45rem;">' +
-            '<div style="font-size:0.68rem; color:#64748B;">' + esc(ev.time || '17:30') + ' · ' + esc(ev.type) + '</div>' +
-            '<div style="font-weight:600; color:#0F172A; font-size:0.75rem;">' + esc(ev.title) + '</div>' +
+            '<div class="es-tcx-46">' + esc(ev.time || '17:30') + ' · ' + esc(ev.type) + '</div>' +
+            '<div class="es-tcx-47">' + esc(ev.title) + '</div>' +
           '</div>';
         });
       }
@@ -1229,7 +1229,7 @@
       '</div>';
     }
 
-    var html = '<div style="display:flex; flex-direction:column; gap:0.85rem;">';
+    var html = '<div class="es-tcx-48">';
     var grouped = {};
     sorted.forEach(function (ev) {
       if (!grouped[ev.date]) grouped[ev.date] = [];
@@ -1240,7 +1240,7 @@
       html += '<div class="es-tc-agenda-group">' +
         '<div class="es-tc-agenda-date-header">' +
           '<span>🗓️ ' + fmtDate(dateStr) + '</span>' +
-          '<span style="font-weight:500; font-size:0.7rem;">' + grouped[dateStr].length + ' attività</span>' +
+          '<span class="es-tcx-49">' + grouped[dateStr].length + ' attività</span>' +
         '</div>';
 
       grouped[dateStr].forEach(function (ev) {
@@ -1253,10 +1253,10 @@
           '<div class="es-tc-agenda-left">' +
             '<div class="es-tc-agenda-time">' + esc(ev.time || '17:30') + '</div>' +
             '<div class="es-tc-agenda-info">' +
-              '<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.2rem;">' +
+              '<div class="es-tcx-50">' +
                 '<span class="es-tc-agenda-title">' + esc(ev.title) + '</span>' +
                 '<span class="es-tc-badge es-tc-badge-pending">' + esc(ev.type) + '</span>' +
-                (ev.cat ? '<span class="es-tc-badge" style="background:#F1F5F9; color:#475569;">' + esc(ev.cat) + '</span>' : '') +
+                (ev.cat ? '<span class="es-tc-badge es-tcx-51">' + esc(ev.cat) + '</span>' : '') +
               '</div>' +
               '<div class="es-tc-agenda-meta">' +
                 '<span>📍 ' + esc(ev.place || 'Campo sportivo') + '</span>' +
@@ -1265,7 +1265,7 @@
               '</div>' +
             '</div>' +
           '</div>' +
-          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<div class="es-tcx-24">' +
             '<button type="button" class="es-tc-btn-primary" data-tc="open-att-modal" data-id="' + esc(ev.id) + '">' +
               'Gestione presenze' +
             '</button>' +
@@ -1287,7 +1287,7 @@
           '<h3 class="es-tc-modal-title">Nuova attività sportiva</h3>' +
           '<button type="button" class="es-tc-modal-close" data-tc="close-cal-modal">&times;</button>' +
         '</div>' +
-        '<p class="es-tc-panel-desc" style="margin-bottom:1rem;">Inserisci i parametri dell\'evento nel calendario societario.</p>' +
+        '<p class="es-tc-panel-desc es-tcx-30">Inserisci i parametri dell\'evento nel calendario societario.</p>' +
         '<div class="es-tc-form-row">' +
           '<div class="es-tc-field">' +
             '<label>Tipo attività *</label>' +
@@ -1329,8 +1329,8 @@
           '<label>Note operative</label>' +
           '<textarea id="es-tc-ev-notes" rows="2" placeholder="Indicazioni su divisa, ritrovo o programma seduta..."></textarea>' +
         '</div>' +
-        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
-          '<div style="display:flex; gap:0.5rem;">' +
+        '<div class="es-tcx-52">' +
+          '<div class="es-tcx-2">' +
             '<button type="button" class="es-tc-btn-primary" data-tc="save-ev">Salva attività</button>' +
             '<button type="button" class="es-tc-btn-back" data-tc="save-ev-notify">Salva e comunica</button>' +
           '</div>' +
@@ -1361,11 +1361,11 @@
     var perc = total ? Math.round((pres / total) * 100) : 0;
 
     var html = '<div class="es-tc-modal-backdrop">' +
-      '<div class="es-tc-modal" style="max-width:680px;">' +
+      '<div class="es-tc-modal es-tcx-53">' +
         '<div class="es-tc-modal-header">' +
           '<div>' +
             '<h3 class="es-tc-modal-title">Gestione presenze</h3>' +
-            '<span style="font-size:0.8rem; color:#64748B;">' + esc(ev.type) + ' · ' + esc(ev.title) + ' (' + fmtDate(ev.date) + ' ' + esc(ev.time || '') + ')</span>' +
+            '<span class="es-tcx-54">' + esc(ev.type) + ' · ' + esc(ev.title) + ' (' + fmtDate(ev.date) + ' ' + esc(ev.time || '') + ')</span>' +
           '</div>' +
           '<button type="button" class="es-tc-modal-close" data-tc="close-att-modal">&times;</button>' +
         '</div>' +
@@ -1374,24 +1374,24 @@
         '<div class="es-tc-att-stats">' +
           '<div class="es-tc-att-stat-box">' +
             '<div class="es-tc-att-stat-label">Partecipazione</div>' +
-            '<div class="es-tc-att-stat-val" style="color:#059669;">' + perc + '%</div>' +
+            '<div class="es-tc-att-stat-val es-tcx-16">' + perc + '%</div>' +
           '</div>' +
           '<div class="es-tc-att-stat-box">' +
             '<div class="es-tc-att-stat-label">Presenti</div>' +
-            '<div class="es-tc-att-stat-val" style="color:#059669;">' + pres + '</div>' +
+            '<div class="es-tc-att-stat-val es-tcx-16">' + pres + '</div>' +
           '</div>' +
           '<div class="es-tc-att-stat-box">' +
             '<div class="es-tc-att-stat-label">Assenti</div>' +
-            '<div class="es-tc-att-stat-val" style="color:#DC2626;">' + ass + '</div>' +
+            '<div class="es-tc-att-stat-val es-tcx-17">' + ass + '</div>' +
           '</div>' +
           '<div class="es-tc-att-stat-box">' +
             '<div class="es-tc-att-stat-label">Giustificati</div>' +
-            '<div class="es-tc-att-stat-val" style="color:#D97706;">' + giust + '</div>' +
+            '<div class="es-tc-att-stat-val es-tcx-55">' + giust + '</div>' +
           '</div>' +
         '</div>' +
 
         // Elenco Atleti con Toggle a 4 Stati
-        '<div style="border:1px solid rgba(15,23,42,0.08); border-radius:8px; overflow:hidden; max-height:350px; overflow-y:auto; margin-bottom:1.25rem;">';
+        '<div class="es-tcx-56">';
 
     if (!members.length) {
       html += '<div class="es-tc-empty">' +
@@ -1403,8 +1403,8 @@
         var cur = att[m.id] || 'pending';
         html += '<div class="es-tc-att-row">' +
           '<div>' +
-            '<strong style="font-size:0.86rem; color:#0F172A;">' + esc(m.nome) + ' ' + esc(m.cognome) + '</strong>' +
-            '<span style="font-size:0.72rem; color:#64748B; margin-left:0.4rem;">(' + esc(m.role) + ')</span>' +
+            '<strong class="es-tcx-57">' + esc(m.nome) + ' ' + esc(m.cognome) + '</strong>' +
+            '<span class="es-tcx-58">(' + esc(m.role) + ')</span>' +
           '</div>' +
           '<div class="es-tc-att-toggle-group">' +
             '<button type="button" class="es-tc-att-state-btn ' + (cur === 'presente' ? 'is-presente' : '') + '" data-tc="set-att-state" data-ev="' + esc(ev.id) + '" data-m="' + esc(m.id) + '" data-state="presente">Presente</button>' +
@@ -1417,7 +1417,7 @@
     }
 
     html += '</div>' +
-        '<div style="display:flex; justify-content:flex-end;">' +
+        '<div class="es-tcx-59">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="close-att-modal">Salva e chiudi distinta</button>' +
         '</div>' +
       '</div>' +
@@ -1499,7 +1499,7 @@
       '<div class="es-tc-panel">' +
         '<div class="es-tc-panel-header">' +
           '<h3 class="es-tc-panel-title">Archivio documenti</h3>' +
-          '<span style="font-size:0.75rem; color:#64748B;">Repository societario sicuro</span>' +
+          '<span class="es-tcx-12">Repository societario sicuro</span>' +
         '</div>' +
         '<p class="es-tc-panel-desc">Catalogo completo della documentazione caricata per atleti, tecnici e dirigenti.</p>' +
 
@@ -1509,7 +1509,7 @@
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
             '<input id="es-tc-doc-search" placeholder="Cerca documento o tesserato..." value="' + esc(UI.docSearch || '') + '">' +
           '</div>' +
-          '<div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">' +
+          '<div class="es-tcx-60">' +
             '<select class="es-tc-cal-filter-select" id="es-tc-doc-filter-type">' +
               '<option value="all">Tutte le tipologie</option>' +
               DOCS.map(function (d) { return '<option value="' + esc(d.name) + '" ' + (UI.docFilterType === d.name ? 'selected' : '') + '>' + esc(d.name) + '</option>'; }).join('') +
@@ -1557,7 +1557,7 @@
             '<th>Data carico</th>' +
             '<th>Scadenza</th>' +
             '<th>Stato</th>' +
-            '<th style="text-align:right;">Azioni</th>' +
+            '<th class="es-tcx-61">Azioni</th>' +
           '</tr>' +
         '</thead>' +
         '<tbody>';
@@ -1565,11 +1565,11 @@
         html += '<tr>' +
           '<td><strong>📄 ' + esc(d.fileName || 'documento.pdf') + '</strong></td>' +
           '<td>' + esc(d.memberName) + '</td>' +
-          '<td><span class="es-tc-badge" style="background:#F1F5F9; color:#0F172A;">' + esc(d.type) + '</span></td>' +
+          '<td><span class="es-tc-badge es-tcx-62">' + esc(d.type) + '</span></td>' +
           '<td>' + fmtDate(d.at) + '</td>' +
           '<td>' + (d.expires ? fmtDate(d.expires) : '—') + '</td>' +
           '<td>' + docStatusBadge(d) + '</td>' +
-          '<td style="text-align:right;">' +
+          '<td class="es-tcx-61">' +
             '<button type="button" class="es-tc-btn-back" data-tc="dl-doc" data-id="' + esc(d.id) + '" style="padding:0.25rem 0.6rem; font-size:0.75rem;">' +
               'Scarica' +
             '</button>' +
@@ -1582,11 +1582,11 @@
     html += '</div>' + // chiude colonna principale
 
       // Colonna Laterale: Modelli Precompilati
-      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+      '<div class="es-tcx-1">' +
         '<div class="es-tc-panel">' +
           '<div class="es-tc-panel-header">' +
             '<h3 class="es-tc-panel-title">Modelli precompilati</h3>' +
-            '<span style="font-size:0.75rem; color:#64748B;">4 Format</span>' +
+            '<span class="es-tcx-12">4 Format</span>' +
           '</div>' +
           '<p class="es-tc-panel-desc">Documentazione societaria ufficiale conforme alle normative federali.</p>' +
           '<div class="es-tc-doc-model-list">';
@@ -1612,12 +1612,12 @@
     '</div>'; // chiude grid-main
 
     // 4. Sezione Scadenziario & Compliance (A tutta larghezza)
-    html += '<div class="es-tc-panel" style="margin-top:1.5rem;">' +
+    html += '<div class="es-tc-panel es-tcx-29">' +
       '<div class="es-tc-panel-header">' +
         '<h3 class="es-tc-panel-title">Scadenziario &amp; Compliance</h3>' +
-        '<span style="font-size:0.75rem; color:#059669; font-weight:600;">Monitoraggio Automatico Attivo</span>' +
+        '<span class="es-tcx-20">Monitoraggio Automatico Attivo</span>' +
       '</div>' +
-      '<p class="es-tc-panel-desc" style="margin-bottom:1rem;">' +
+      '<p class="es-tc-panel-desc es-tcx-30">' +
         'Monitoraggio attivo delle certificazioni mediche, rinnovi delle quote societarie e conformità legale dei tesserati.' +
       '</p>' +
       renderComplianceSection(st) +
@@ -1679,7 +1679,7 @@
           '<th>Data scadenza</th>' +
           '<th>Giorni rimanenti</th>' +
           '<th>Stato conformità</th>' +
-          '<th style="text-align:right;">Azione</th>' +
+          '<th class="es-tcx-61">Azione</th>' +
         '</tr>' +
       '</thead>' +
       '<tbody>';
@@ -1698,7 +1698,7 @@
         '<td>' + fmtDate(r.date) + '</td>' +
         '<td style="color:' + (isPast ? '#DC2626' : (diffDays <= 15 ? '#D97706' : '#475569')) + '; font-weight:600;">' + daysLabel + '</td>' +
         '<td>' + statusBadge + '</td>' +
-        '<td style="text-align:right;">' +
+        '<td class="es-tcx-61">' +
           '<button type="button" class="es-tc-btn-back" data-tc="notify-compliance" data-who="' + esc(r.who) + '" style="padding:0.25rem 0.55rem; font-size:0.72rem;">' +
             'Notifica sollecito' +
           '</button>' +
@@ -1717,7 +1717,7 @@
           '<h3 class="es-tc-modal-title">Archivia nuovo documento</h3>' +
           '<button type="button" class="es-tc-modal-close" data-tc="close-doc-modal">&times;</button>' +
         '</div>' +
-        '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+        '<p class="es-tc-panel-desc es-tcx-63">' +
           'Associa un certificato medico o un documento societario a un tesserato registrato.' +
         '</p>' +
         '<div class="es-tc-field">' +
@@ -1743,14 +1743,14 @@
         '<div class="es-tc-field">' +
           '<label>File documento (PDF, Immagine, Scansione)</label>' +
           '<div class="es-tc-dragzone" onclick="var f = document.getElementById(\'es-tc-doc-file\'); if(f) f.click();">' +
-            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:0.4rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
-            '<div style="font-size:0.84rem; font-weight:600; color:#0F172A;">Trascina qui il file oppure clicca per sfogliare</div>' +
-            '<div style="font-size:0.72rem; color:#64748B; margin-top:0.2rem;">Formati ammessi: PDF, PNG, JPG fino a 10MB</div>' +
-            '<input id="es-tc-doc-file" type="file" style="display:none;" onchange="var l = document.getElementById(\'es-tc-drag-label\'); if(l && this.files[0]) l.innerText = this.files[0].name;">' +
-            '<div id="es-tc-drag-label" style="font-size:0.75rem; color:#059669; font-weight:600; margin-top:0.4rem;"></div>' +
+            '<svg class="es-tcx-64" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+            '<div class="es-tcx-65">Trascina qui il file oppure clicca per sfogliare</div>' +
+            '<div class="es-tcx-66">Formati ammessi: PDF, PNG, JPG fino a 10MB</div>' +
+            '<input class="es-tcx-67" id="es-tc-doc-file" type="file" onchange="var l = document.getElementById(\'es-tc-drag-label\'); if(l && this.files[0]) l.innerText = this.files[0].name;">' +
+            '<div class="es-tcx-68" id="es-tc-drag-label"></div>' +
           '</div>' +
         '</div>' +
-        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+        '<div class="es-tcx-52">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="add-doc">Archivia documento</button>' +
           '<button type="button" class="es-tc-btn-back" data-tc="close-doc-modal">Annulla</button>' +
         '</div>' +
@@ -1798,7 +1798,7 @@
         '<h2>Profili atleta</h2>' +
         '<p>Consulta lo storico sportivo e accedi ai dossier scouting collegati agli atleti della società.</p>' +
       '</div>' +
-      '<div style="display:flex; gap:0.5rem;">' +
+      '<div class="es-tcx-2">' +
         '<button type="button" class="es-tc-btn-primary" data-tc="focus-ath-search">' +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
           'Cerca atleta' +
@@ -1816,7 +1816,7 @@
       '</div>' +
       '<div class="es-tc-kpi-item">' +
         '<div class="es-tc-kpi-label">Profili collegati allo scouting</div>' +
-        '<div class="es-tc-kpi-val" style="color:#C6A15B;">' + connectedScout + '</div>' +
+        '<div class="es-tc-kpi-val es-tcx-69">' + connectedScout + '</div>' +
         '<div class="es-tc-kpi-sub">Dossier digitali attivi</div>' +
       '</div>' +
       '<div class="es-tc-kpi-item">' +
@@ -1826,7 +1826,7 @@
       '</div>' +
       '<div class="es-tc-kpi-item">' +
         '<div class="es-tc-kpi-label">Ultimo aggiornamento</div>' +
-        '<div class="es-tc-kpi-val" style="font-size:1.15rem;">' + esc(lastUpdate) + '</div>' +
+        '<div class="es-tc-kpi-val es-tcx-70">' + esc(lastUpdate) + '</div>' +
         '<div class="es-tc-kpi-sub">Stato continuo del database</div>' +
       '</div>' +
     '</div>';
@@ -1838,7 +1838,7 @@
       '<div class="es-tc-panel">' +
         '<div class="es-tc-panel-header">' +
           '<h3 class="es-tc-panel-title">Anagrafica sportiva</h3>' +
-          '<span style="font-size:0.75rem; color:#64748B;">Patrimonio sportivo del club</span>' +
+          '<span class="es-tcx-12">Patrimonio sportivo del club</span>' +
         '</div>' +
         '<p class="es-tc-panel-desc">Elenco ufficiale dei tesserati con indice di continuità e dossier tecnico.</p>' +
 
@@ -1848,7 +1848,7 @@
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
             '<input id="es-tc-athlete-search" placeholder="Cerca atleta per nome o codice fiscale..." value="' + esc(UI.athleteSearch || '') + '">' +
           '</div>' +
-          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<div class="es-tcx-24">' +
             '<select class="es-tc-cal-filter-select" id="es-tc-ath-cat">' +
               '<option' + (catFilter === 'Tutte le categorie' ? ' selected' : '') + '>Tutte le categorie</option>' +
               '<option' + (catFilter === 'Prima Squadra' ? ' selected' : '') + '>Prima Squadra</option>' +
@@ -1863,7 +1863,7 @@
       html += '<div class="es-tc-empty">' +
         '<div class="es-tc-empty-title">Nessun atleta disponibile</div>' +
         '<p class="es-tc-empty-sub">I profili appariranno automaticamente quando gli atleti verranno registrati nella società.</p>' +
-        '<button type="button" class="es-tc-btn-primary" data-tc-tab="iscrizioni" style="margin-top:0.85rem;">Vai alle iscrizioni</button>' +
+        '<button type="button" class="es-tc-btn-primary es-tcx-71" data-tc-tab="iscrizioni">Vai alle iscrizioni</button>' +
       '</div>';
     } else {
       html += '<div class="es-tc-table-wrap"><table class="es-tc-table">' +
@@ -1875,7 +1875,7 @@
             '<th>Stato</th>' +
             '<th>Ultima attività</th>' +
             '<th>Profilo scouting</th>' +
-            '<th style="text-align:right;">Azioni</th>' +
+            '<th class="es-tcx-61">Azioni</th>' +
           '</tr>' +
         '</thead>' +
         '<tbody>';
@@ -1889,24 +1889,24 @@
 
         html += '<tr class="es-tc-athlete-row ' + (isSel ? 'is-selected' : '') + '" data-tc="select-athlete" data-id="' + esc(m.id) + '">' +
           '<td>' +
-            '<div style="display:flex; align-items:center; gap:0.65rem;">' +
+            '<div class="es-tcx-72">' +
               '<span class="es-tc-athlete-avatar">' + initial + '</span>' +
               '<div>' +
-                '<strong style="color:#0F172A; font-size:0.86rem;">' + esc(m.nome) + ' ' + esc(m.cognome) + '</strong>' +
-                '<div style="font-size:0.72rem; color:#64748B;">' + esc(m.email || 'Nessuna email') + '</div>' +
+                '<strong class="es-tcx-73">' + esc(m.nome) + ' ' + esc(m.cognome) + '</strong>' +
+                '<div class="es-tcx-38">' + esc(m.email || 'Nessuna email') + '</div>' +
               '</div>' +
             '</div>' +
           '</td>' +
           '<td>' + esc(m.category || 'Prima Squadra') + '</td>' +
-          '<td><span class="es-tc-badge" style="background:#F1F5F9; color:#0F172A;">' + esc(m.role || 'Atleta') + '</span></td>' +
+          '<td><span class="es-tc-badge es-tcx-62">' + esc(m.role || 'Atleta') + '</span></td>' +
           '<td><span class="es-tc-badge es-tc-badge-paid">Attivo</span></td>' +
-          '<td style="font-size:0.8rem; color:#475569;">' + esc(lastActStr) + '</td>' +
+          '<td class="es-tcx-74">' + esc(lastActStr) + '</td>' +
           '<td>' +
             (hasScout ?
               '<span class="es-tc-scout-badge">● Profilo scouting collegato</span>' :
               '<span class="es-tc-scout-badge is-pending">In attesa di collegamento</span>') +
           '</td>' +
-          '<td style="text-align:right;">' +
+          '<td class="es-tcx-61">' +
             '<button type="button" class="es-tc-btn-back" data-tc="select-athlete" data-id="' + esc(m.id) + '" style="padding:0.25rem 0.6rem; font-size:0.72rem;">' +
               'Dossier' +
             '</button>' +
@@ -1920,11 +1920,11 @@
     html += '</div>' + // chiude colonna principale
 
       // Colonna Laterale: Athlete Profile Preview
-      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+      '<div class="es-tcx-1">' +
         '<div class="es-tc-panel">' +
           '<div class="es-tc-panel-header">' +
             '<h3 class="es-tc-panel-title">Scheda intelligence</h3>' +
-            '<span style="font-size:0.75rem; color:#C6A15B; font-weight:600;">Dossier Live</span>' +
+            '<span class="es-tcx-75">Dossier Live</span>' +
           '</div>';
 
     if (selAthlete) {
@@ -1940,7 +1940,7 @@
           '<div class="es-tc-preview-meta">' +
             '<h3>' + esc(selAthlete.nome) + ' ' + esc(selAthlete.cognome) + '</h3>' +
             '<p>' + esc(selAthlete.role || 'Atleta') + ' · Prima Squadra</p>' +
-            '<div style="margin-top:0.35rem;">' +
+            '<div class="es-tcx-76">' +
               (selAthlete.email ?
                 '<span class="es-tc-scout-badge">● Profilo Scouting Verificato</span>' :
                 '<span class="es-tc-scout-badge is-pending">Email non associata</span>') +
@@ -1952,43 +1952,43 @@
         '<div class="es-tc-intelligence-stat-grid">' +
           '<div class="es-tc-intel-stat-box">' +
             '<div class="es-tc-intel-stat-label">Presenze stagionali</div>' +
-            '<div class="es-tc-intel-stat-val" style="color:#059669;">' + selAtt + '%</div>' +
+            '<div class="es-tc-intel-stat-val es-tcx-16">' + selAtt + '%</div>' +
             '<div class="es-tc-progress-wrap"><div class="es-tc-progress-bar" style="width:' + selAtt + '%;"></div></div>' +
           '</div>' +
           '<div class="es-tc-intel-stat-box">' +
             '<div class="es-tc-intel-stat-label">Stato amministrativo</div>' +
             '<div class="es-tc-intel-stat-val" style="color:' + (selDue ? '#DC2626' : '#059669') + ';">' + (selDue ? (selDue + ' rate aperte') : 'In regola') + '</div>' +
-            '<div style="font-size:0.7rem; color:#64748B; margin-top:0.25rem;">' + selPaid + ' quietanze registrate</div>' +
+            '<div class="es-tcx-77">' + selPaid + ' quietanze registrate</div>' +
           '</div>' +
           '<div class="es-tc-intel-stat-box">' +
             '<div class="es-tc-intel-stat-label">Certificato medico</div>' +
-            '<div class="es-tc-intel-stat-val" style="font-size:0.82rem; color:#0F172A;">' + (selDoc ? esc(selDoc.type) : 'In attesa upload') + '</div>' +
-            '<div style="font-size:0.7rem; color:#64748B; margin-top:0.25rem;">' + (selDoc && selDoc.expires ? ('Scade: ' + fmtDate(selDoc.expires)) : 'Nessuna scadenza') + '</div>' +
+            '<div class="es-tc-intel-stat-val es-tcx-78">' + (selDoc ? esc(selDoc.type) : 'In attesa upload') + '</div>' +
+            '<div class="es-tcx-77">' + (selDoc && selDoc.expires ? ('Scade: ' + fmtDate(selDoc.expires)) : 'Nessuna scadenza') + '</div>' +
           '</div>' +
           '<div class="es-tc-intel-stat-box">' +
             '<div class="es-tc-intel-stat-label">Rating potenziale</div>' +
-            '<div class="es-tc-intel-stat-val" style="color:#C6A15B;">8.4 / 10</div>' +
-            '<div style="font-size:0.7rem; color:#64748B; margin-top:0.25rem;">Indice continuità sportiva</div>' +
+            '<div class="es-tc-intel-stat-val es-tcx-69">8.4 / 10</div>' +
+            '<div class="es-tcx-77">Indice continuità sportiva</div>' +
           '</div>' +
         '</div>' +
 
         // Dati Anagrafici
-        '<div style="background:#F8FAFC; border:1px solid rgba(15,23,42,0.06); border-radius:6px; padding:0.75rem; font-size:0.78rem; color:#475569;">' +
-          '<div style="margin-bottom:0.25rem;"><strong>Data di nascita:</strong> ' + esc(selAthlete.dob || 'Non specificata') + '</div>' +
-          '<div style="margin-bottom:0.25rem;"><strong>Codice Fiscale:</strong> ' + esc(selAthlete.cf || '—') + '</div>' +
-          '<div style="margin-bottom:0.25rem;"><strong>Luogo di nascita:</strong> ' + esc(selAthlete.pob || '—') + '</div>' +
+        '<div class="es-tcx-79">' +
+          '<div class="es-tcx-80"><strong>Data di nascita:</strong> ' + esc(selAthlete.dob || 'Non specificata') + '</div>' +
+          '<div class="es-tcx-80"><strong>Codice Fiscale:</strong> ' + esc(selAthlete.cf || '—') + '</div>' +
+          '<div class="es-tcx-80"><strong>Luogo di nascita:</strong> ' + esc(selAthlete.pob || '—') + '</div>' +
           '<div><strong>Contatto:</strong> ' + esc(selAthlete.phone || selAthlete.email || '—') + '</div>' +
         '</div>' +
 
         // Azioni
-        '<div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.5rem;">' +
+        '<div class="es-tcx-81">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="open-scout" data-email="' + esc(selAthlete.email || '') + '" style="justify-content:center; background:#0F172A; border-color:#0F172A;">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
             'Apri dossier scouting' +
           '</button>' +
-          '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">' +
-            '<button type="button" class="es-tc-btn-back" data-tc-tab="calendario" style="justify-content:center;">Visualizza storico</button>' +
-            '<button type="button" class="es-tc-btn-back" data-tc-tab="docs" style="justify-content:center;">Apri documenti</button>' +
+          '<div class="es-tcx-82">' +
+            '<button type="button" class="es-tc-btn-back es-tcx-19" data-tc-tab="calendario">Visualizza storico</button>' +
+            '<button type="button" class="es-tc-btn-back es-tcx-19" data-tc-tab="docs">Apri documenti</button>' +
           '</div>' +
         '</div>' +
 
@@ -2005,35 +2005,35 @@
     '</div>'; // chiude grid-main
 
     // 4. Sezione Istituzionale: Scouting Intelligence & Continuous Athlete Record
-    html += '<div class="es-tc-panel" style="margin-top:1.5rem;">' +
+    html += '<div class="es-tc-panel es-tcx-29">' +
       '<div class="es-tc-panel-header">' +
-        '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+        '<div class="es-tcx-24">' +
           '<h3 class="es-tc-panel-title">Scouting intelligence</h3>' +
         '</div>' +
-        '<span style="font-size:0.75rem; color:#C6A15B; font-weight:600; border:1px solid rgba(198,161,91,0.3); padding:0.2rem 0.55rem; border-radius:4px; background:rgba(198,161,91,0.06);">' +
+        '<span class="es-tcx-83">' +
           'Tecnologia Proprietaria Elisée Scout' +
         '</span>' +
       '</div>' +
-      '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+      '<p class="es-tc-panel-desc es-tcx-63">' +
         'Il profilo amministrativo viene collegato automaticamente al dossier scouting quando l\'email dell\'atleta coincide con quella registrata sulla piattaforma Elisée Scout. ' +
         'Questo ponte tecnologico garantisce la valorizzazione tecnica, lo storico delle presenze e la continuità del patrimonio sportivo del club.' +
       '</p>' +
-      '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">' +
-        '<div style="background:#F8FAFC; border:1px solid rgba(15,23,42,0.08); border-radius:8px; padding:1rem;">' +
-          '<div style="font-weight:700; color:#0F172A; font-size:0.86rem; margin-bottom:0.35rem;">1. Anagrafica &amp; Compliance</div>' +
-          '<p style="font-size:0.78rem; color:#64748B; margin:0; line-height:1.4;">' +
+      '<div class="es-tcx-84">' +
+        '<div class="es-tcx-85">' +
+          '<div class="es-tcx-86">1. Anagrafica &amp; Compliance</div>' +
+          '<p class="es-tcx-87">' +
             'Iscrizione, consenso privacy, tesseramento federale e certificazioni mediche archiviate in forma protetta.' +
           '</p>' +
         '</div>' +
-        '<div style="background:#F8FAFC; border:1px solid rgba(15,23,42,0.08); border-radius:8px; padding:1rem;">' +
-          '<div style="font-weight:700; color:#0F172A; font-size:0.86rem; margin-bottom:0.35rem;">2. Continuità di Campo</div>' +
-          '<p style="font-size:0.78rem; color:#64748B; margin:0; line-height:1.4;">' +
+        '<div class="es-tcx-85">' +
+          '<div class="es-tcx-86">2. Continuità di Campo</div>' +
+          '<p class="es-tcx-87">' +
             'Registro presenze, convocazioni, minuti giocati e diario atletico validati in tempo reale dallo staff tecnico.' +
           '</p>' +
         '</div>' +
-        '<div style="background:#F8FAFC; border:1px solid rgba(15,23,42,0.08); border-radius:8px; padding:1rem;">' +
-          '<div style="font-weight:700; color:#0F172A; font-size:0.86rem; margin-bottom:0.35rem;">3. Dossier &amp; Scouting Hub</div>' +
-          '<p style="font-size:0.78rem; color:#64748B; margin:0; line-height:1.4;">' +
+        '<div class="es-tcx-85">' +
+          '<div class="es-tcx-86">3. Dossier &amp; Scouting Hub</div>' +
+          '<p class="es-tcx-87">' +
             'Radar delle caratteristiche, report osservatori, clip video e valorizzazione del profilo nella rete Elisée.' +
           '</p>' +
         '</div>' +
@@ -2084,7 +2084,7 @@
         '<h2>Governance societaria</h2>' +
         '<p>Gestisci i dati ufficiali del club, il registro soci e la documentazione delle assemblee.</p>' +
       '</div>' +
-      '<div style="display:flex; gap:0.5rem;">' +
+      '<div class="es-tcx-2">' +
         '<button type="button" class="es-tc-btn-primary" data-tc="open-min-modal">' +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>' +
           'Nuovo verbale' +
@@ -2114,7 +2114,7 @@
       '</div>' +
       '<div class="es-tc-kpi-item">' +
         '<div class="es-tc-kpi-label">Ultima assemblea</div>' +
-        '<div class="es-tc-kpi-val" style="font-size:1.15rem;">' + (lastMinute ? fmtDate(lastMinute.date) : 'Nessuna') + '</div>' +
+        '<div class="es-tc-kpi-val es-tcx-70">' + (lastMinute ? fmtDate(lastMinute.date) : 'Nessuna') + '</div>' +
         '<div class="es-tc-kpi-sub">Seduta assembleare</div>' +
       '</div>' +
       '<div class="es-tc-kpi-item">' +
@@ -2125,17 +2125,17 @@
     '</div>';
 
     // 3. SEZIONE A — Profilo Societario (Company Profile / Organization Settings)
-    html += '<div class="es-tc-panel" style="margin-bottom:1.5rem;">' +
+    html += '<div class="es-tc-panel es-tcx-88">' +
       '<div class="es-tc-panel-header">' +
         '<div>' +
           '<h3 class="es-tc-panel-title">Dati ufficiali della società</h3>' +
           '<p class="es-tc-panel-desc">Anagrafica istituzionale, sede legale e identificativi fiscali del club.</p>' +
         '</div>' +
-        '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+        '<div class="es-tcx-89">' +
           (isProfileComplete ?
-            '<span class="es-tc-badge" style="background:rgba(5,150,105,0.08); color:#059669; border:1px solid rgba(5,150,105,0.25);">● Profilo societario completo</span>' :
-            '<span class="es-tc-badge" style="background:rgba(217,119,6,0.08); color:#D97706; border:1px solid rgba(217,119,6,0.25);">● Configurazione incompleta</span>') +
-          '<button type="button" class="es-tc-btn-back" data-tc="open-soc-modal" style="padding:0.35rem 0.75rem; font-size:0.76rem;">Modifica dati societari</button>' +
+            '<span class="es-tc-badge es-tcx-90">● Profilo societario completo</span>' :
+            '<span class="es-tc-badge es-tcx-91">● Configurazione incompleta</span>') +
+          '<button type="button" class="es-tc-btn-back es-tcx-92" data-tc="open-soc-modal">Modifica dati societari</button>' +
         '</div>' +
       '</div>' +
       '<div class="es-tc-gov-grid">' +
@@ -2159,13 +2159,13 @@
     '</div>';
 
     // 4. SEZIONE B — Registro Soci
-    html += '<div class="es-tc-panel" style="margin-bottom:1.5rem;">' +
+    html += '<div class="es-tc-panel es-tcx-88">' +
       '<div class="es-tc-panel-header">' +
         '<div>' +
           '<h3 class="es-tc-panel-title">Registro soci</h3>' +
           '<p class="es-tc-panel-desc">Gestisci l\'elenco ufficiale dei soci della società e mantieni aggiornata l\'anagrafica istituzionale del club.</p>' +
         '</div>' +
-        '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+        '<div class="es-tcx-24">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="open-add-socio-modal">' +
             '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
             'Aggiungi socio' +
@@ -2179,7 +2179,7 @@
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
           '<input id="es-tc-socio-search" placeholder="Cerca socio per nome, cognome o codice fiscale..." value="' + esc(UI.socioSearch || '') + '">' +
         '</div>' +
-        '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+        '<div class="es-tcx-24">' +
           '<select class="es-tc-cal-filter-select" id="es-tc-socio-filter">' +
             '<option' + (socioFilterRole === 'Tutti i ruoli' ? ' selected' : '') + '>Tutti i ruoli</option>' +
             '<option' + (socioFilterRole === 'Socio Fondatore' ? ' selected' : '') + '>Socio Fondatore</option>' +
@@ -2187,7 +2187,7 @@
             '<option' + (socioFilterRole === 'Consigliere' ? ' selected' : '') + '>Consigliere</option>' +
             '<option' + (socioFilterRole === 'Presidente' ? ' selected' : '') + '>Presidente</option>' +
           '</select>' +
-          '<button type="button" class="es-tc-btn-back" data-tc="export-soci" style="padding:0.35rem 0.75rem; font-size:0.76rem;">' +
+          '<button type="button" class="es-tc-btn-back es-tcx-92" data-tc="export-soci">' +
             'Esporta registro' +
           '</button>' +
         '</div>' +
@@ -2197,7 +2197,7 @@
       html += '<div class="es-tc-empty">' +
         '<div class="es-tc-empty-title">Nessun socio registrato</div>' +
         '<p class="es-tc-empty-sub">Il registro societario verrà popolato con i soci presenti in anagrafica o registrati manualmente.</p>' +
-        '<div style="display:flex; gap:0.5rem; justify-content:center; margin-top:0.85rem;">' +
+        '<div class="es-tcx-93">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="open-add-socio-modal">Aggiungi socio</button>' +
           '<button type="button" class="es-tc-btn-back" data-tc="sync-soci">Sincronizza anagrafica</button>' +
         '</div>' +
@@ -2210,7 +2210,7 @@
             '<th>Ruolo societario</th>' +
             '<th>Data ingresso</th>' +
             '<th>Stato</th>' +
-            '<th style="text-align:right;">Azioni</th>' +
+            '<th class="es-tcx-61">Azioni</th>' +
           '</tr>' +
         '</thead>' +
         '<tbody>';
@@ -2219,18 +2219,18 @@
         var initial = (s.nome || 'S').charAt(0).toUpperCase();
         html += '<tr>' +
           '<td>' +
-            '<div style="display:flex; align-items:center; gap:0.65rem;">' +
+            '<div class="es-tcx-72">' +
               '<span class="es-tc-socio-avatar">' + initial + '</span>' +
               '<div>' +
-                '<strong style="color:#0F172A; font-size:0.86rem;">' + esc(s.nome) + ' ' + esc(s.cognome) + '</strong>' +
-                '<div style="font-size:0.72rem; color:#64748B;">CF: ' + esc(s.cf || '—') + (s.email ? ' · ' + esc(s.email) : '') + '</div>' +
+                '<strong class="es-tcx-73">' + esc(s.nome) + ' ' + esc(s.cognome) + '</strong>' +
+                '<div class="es-tcx-38">CF: ' + esc(s.cf || '—') + (s.email ? ' · ' + esc(s.email) : '') + '</div>' +
               '</div>' +
             '</div>' +
           '</td>' +
-          '<td><span class="es-tc-badge" style="background:#F1F5F9; color:#0F172A; font-weight:600;">' + esc(s.role || 'Socio Ordinario') + '</span></td>' +
-          '<td style="font-size:0.8rem; color:#475569;">' + fmtDate(s.joinedAt || s.createdAt) + '</td>' +
+          '<td><span class="es-tc-badge es-tcx-94">' + esc(s.role || 'Socio Ordinario') + '</span></td>' +
+          '<td class="es-tcx-74">' + fmtDate(s.joinedAt || s.createdAt) + '</td>' +
           '<td><span class="es-tc-badge es-tc-badge-paid">● Attivo</span></td>' +
-          '<td style="text-align:right;">' +
+          '<td class="es-tcx-61">' +
             '<button type="button" class="es-tc-ghost" data-tc="del-socio" data-id="' + esc(s.id) + '" style="font-size:0.75rem; color:#DC2626;">Rimuovi</button>' +
           '</td>' +
         '</tr>';
@@ -2258,7 +2258,7 @@
       html += '<div class="es-tc-empty">' +
         '<div class="es-tc-empty-title">Nessun verbale assembleare generato</div>' +
         '<p class="es-tc-empty-sub">Archivia gli atti del Consiglio Direttivo e delle Assemblee Generali per mantenere la piena conformità statutaria.</p>' +
-        '<button type="button" class="es-tc-btn-primary" data-tc="open-min-modal" style="margin-top:0.85rem;">Genera nuovo verbale</button>' +
+        '<button type="button" class="es-tc-btn-primary es-tcx-71" data-tc="open-min-modal">Genera nuovo verbale</button>' +
       '</div>';
     } else {
       html += '<div class="es-tc-table-wrap"><table class="es-tc-table">' +
@@ -2268,7 +2268,7 @@
             '<th>Oggetto / Ordine del giorno</th>' +
             '<th>Stato</th>' +
             '<th>Data generazione</th>' +
-            '<th style="text-align:right;">Azioni</th>' +
+            '<th class="es-tcx-61">Azioni</th>' +
           '</tr>' +
         '</thead>' +
         '<tbody>';
@@ -2276,18 +2276,18 @@
       minutes.forEach(function (m) {
         html += '<tr>' +
           '<td>' +
-            '<div style="font-weight:600; color:#0F172A; font-size:0.84rem;">Assemblea del ' + esc(m.date) + '</div>' +
-            '<div style="font-size:0.72rem; color:#64748B;">Atto societario N. ' + esc(m.id.slice(-4).toUpperCase()) + '</div>' +
+            '<div class="es-tcx-95">Assemblea del ' + esc(m.date) + '</div>' +
+            '<div class="es-tcx-38">Atto societario N. ' + esc(m.id.slice(-4).toUpperCase()) + '</div>' +
           '</td>' +
           '<td>' +
-            '<div style="font-size:0.82rem; color:#334155; max-width:340px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' +
+            '<div class="es-tcx-96">' +
               esc((m.odg || 'Assemblea soci ordinaria').slice(0, 100)) +
             '</div>' +
           '</td>' +
-          '<td><span class="es-tc-badge" style="background:rgba(5,150,105,0.08); color:#059669; border:1px solid rgba(5,150,105,0.25);">● Atto Ufficiale Approvato</span></td>' +
-          '<td style="font-size:0.8rem; color:#64748B;">' + fmtDate(m.at) + '</td>' +
-          '<td style="text-align:right;">' +
-            '<div style="display:inline-flex; gap:0.4rem;">' +
+          '<td><span class="es-tc-badge es-tcx-90">● Atto Ufficiale Approvato</span></td>' +
+          '<td class="es-tcx-54">' + fmtDate(m.at) + '</td>' +
+          '<td class="es-tcx-61">' +
+            '<div class="es-tcx-97">' +
               '<button type="button" class="es-tc-btn-back" data-tc="view-min" data-id="' + esc(m.id) + '" style="padding:0.25rem 0.55rem; font-size:0.72rem;">Visualizza</button>' +
               '<button type="button" class="es-tc-btn-back" data-tc="dl-min" data-id="' + esc(m.id) + '" style="padding:0.25rem 0.55rem; font-size:0.72rem;">Scarica</button>' +
               '<button type="button" class="es-tc-ghost" data-tc="archive-min" data-id="' + esc(m.id) + '" style="padding:0.25rem 0.5rem; font-size:0.72rem; color:#64748B;">Archivia</button>' +
@@ -2318,7 +2318,7 @@
           '<h3 class="es-tc-modal-title">Redazione Verbale Assembleare</h3>' +
           '<button type="button" class="es-tc-modal-close" data-tc="close-min-modal">&times;</button>' +
         '</div>' +
-        '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+        '<p class="es-tc-panel-desc es-tcx-63">' +
           'Genera l\'atto assembleare ufficiale del club. Verrà formattato con i presenti dell\'organico societario e scaricabile immediatamente.' +
         '</p>' +
         '<div class="es-tc-field">' +
@@ -2333,7 +2333,7 @@
           '<label>Delibere e decisioni adottate *</label>' +
           '<textarea id="es-tc-min-del" rows="3" placeholder="L\'Assemblea approva all\'unanimità i punti all\'ordine del giorno..."></textarea>' +
         '</div>' +
-        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+        '<div class="es-tcx-52">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="gen-min">Genera e archivia verbale</button>' +
           '<button type="button" class="es-tc-btn-back" data-tc="close-min-modal">Annulla</button>' +
         '</div>' +
@@ -2350,7 +2350,7 @@
           '<h3 class="es-tc-modal-title">Modifica dati societari ufficiali</h3>' +
           '<button type="button" class="es-tc-modal-close" data-tc="close-soc-modal">&times;</button>' +
         '</div>' +
-        '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+        '<p class="es-tc-panel-desc es-tcx-63">' +
           'I dati configurati appariranno nelle intestazioni dei verbali, ricevute delle quote e documenti federali del club.' +
         '</p>' +
         '<div class="es-tc-field">' +
@@ -2371,7 +2371,7 @@
           '<label>Sede Legale (Indirizzo e CAP)</label>' +
           '<input id="es-tc-soc-sede" value="' + esc(soc.sede || '') + '" placeholder="Es. Via dello Sport 12, 71121 Foggia (FG)">' +
         '</div>' +
-        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+        '<div class="es-tcx-52">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="save-soc">Salva dati societari</button>' +
           '<button type="button" class="es-tc-btn-back" data-tc="close-soc-modal">Annulla</button>' +
         '</div>' +
@@ -2386,7 +2386,7 @@
           '<h3 class="es-tc-modal-title">Aggiungi nuovo socio nel registro</h3>' +
           '<button type="button" class="es-tc-modal-close" data-tc="close-add-socio-modal">&times;</button>' +
         '</div>' +
-        '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+        '<p class="es-tc-panel-desc es-tcx-63">' +
           'Registra un nuovo membro nel libro soci ufficiale della società.' +
         '</p>' +
         '<div class="es-tc-form-row">' +
@@ -2418,7 +2418,7 @@
           '<label>Email istituzionale</label>' +
           '<input id="es-tc-add-socio-email" type="email" placeholder="email@esempio.it">' +
         '</div>' +
-        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+        '<div class="es-tcx-52">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="save-new-socio">Registra socio</button>' +
           '<button type="button" class="es-tc-btn-back" data-tc="close-add-socio-modal">Annulla</button>' +
         '</div>' +
@@ -2430,13 +2430,13 @@
     var min = (st.minutes || []).filter(function (x) { return x.id === UI.viewMinId; })[0];
     if (!min) return '';
     return '<div class="es-tc-modal-backdrop">' +
-      '<div class="es-tc-modal" style="max-width:640px;">' +
+      '<div class="es-tc-modal es-tcx-98">' +
         '<div class="es-tc-modal-header">' +
           '<h3 class="es-tc-modal-title">Verbale Assembleare del ' + esc(min.date) + '</h3>' +
           '<button type="button" class="es-tc-modal-close" data-tc="close-view-min">&times;</button>' +
         '</div>' +
         '<div class="es-tc-min-view-box">' + esc(min.text || '') + '</div>' +
-        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+        '<div class="es-tcx-52">' +
           '<button type="button" class="es-tc-btn-primary" data-tc="dl-min" data-id="' + esc(min.id) + '">Scarica documento (.txt)</button>' +
           '<button type="button" class="es-tc-btn-back" data-tc="close-view-min">Chiudi</button>' +
         '</div>' +
@@ -3016,7 +3016,7 @@
     ROLES.forEach(function (r) { html += '<option>' + r + '</option>'; });
     html += '</select></div><div class="es-tc-field"><span>Email genitore (minori)</span><input name="parentEmail" type="email"></div></div>';
     html += '<div class="es-tc-field"><span>Quota prevista €</span><input name="quota" type="number" value="80" min="0"></div>';
-    html += '<label class="es-tc-field" style="flex-direction:row;align-items:center;gap:0.5rem"><input type="checkbox" name="gdpr" required> <span>Acconsento al trattamento dei dati (GDPR) *</span></label>';
+    html += '<label class="es-tc-field es-tcx-99"><input type="checkbox" name="gdpr" required> <span>Acconsento al trattamento dei dati (GDPR) *</span></label>';
     html += '<button type="submit" class="es-tc-go">Invia iscrizione</button>';
     box.innerHTML = html;
   }

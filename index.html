@@ -80,8 +80,8 @@
   <link rel="preconnect" href="https://uautnlmnpxgbajtucuko.supabase.co" crossorigin>
   <link rel="dns-prefetch" href="https://nominatim.openstreetmap.org">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261020_CK1">
-  <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
+  <link rel="stylesheet" href="style.css?v=20261020_STY1">
+  <link rel="stylesheet" href="player-card.css?v=20261020_STY1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX65">
   <link rel="stylesheet" href="bacheca-board.css?v=20261001_FIX17">
@@ -743,24 +743,24 @@
   <link rel="stylesheet" href="formazione-squadra.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="verifica-account.css?v=20261019_RD5">
   <link rel="stylesheet" href="manager.css?v=20260914_CANDMGR1">
-  <link rel="stylesheet" href="tc-panel.css?v=20260915_TCSERIF1">
+  <link rel="stylesheet" href="tc-panel.css?v=20261020_STY1">
   <link rel="stylesheet" href="player-profile.css?v=20260917_ALLPRO1">
-  <link rel="stylesheet" href="player-dash.css?v=20260917_ALLPRO1">
+  <link rel="stylesheet" href="player-dash.css?v=20261020_STY1">
   <link rel="stylesheet" href="dash-luxury.css?v=20261020_FIX2">
   <link rel="stylesheet" href="card-atelier.css?v=20260914_PLAYERDOSSIER1">
   <script>EliseeRoleScripts.writeStyles([
-    'coach-dash.css?v=20260917_VICEFIX1',
+    'coach-dash.css?v=20261020_STY1',
     'role-actions.css?v=20261020_RA1',
     'squadra-membri.css?v=20261019_SQ3',
     'ds-dash.css?v=20260827_LUX1',
     'ds-hub.css?v=20260827_DS1',
-    'pres-dash.css?v=20261020_PRES1',
-    'vice-dash.css?v=20260917_VICEFIX1',
+    'pres-dash.css?v=20261020_STY1',
+    'vice-dash.css?v=20261020_STY1',
     'fisio-dash.css?v=20260917_BUGFIX1',
     'ma-dash.css?v=20260917_MAPRO1',
     'med-dash.css?v=20260917_ALLPRO1',
     'tifoso-dash.css?v=20260827_LUX1',
-    'giorn-dash.css?v=20260917_ALLPRO1',
+    'giorn-dash.css?v=20261020_STY1',
     'obs-dash.css?v=20260917_SCOUTPRO1',
     'tm-dash.css?v=20260827_LUX1',
     'gk-dash.css?v=20260917_ALLPRO1',
@@ -1694,7 +1694,7 @@
           </div>
           <div class="pf-header-actions">
             <button type="button" class="btn btn-outline-pill" onclick="closeAreaRiservataModal()">
-              <i data-lucide="arrow-left" style="width:14px;height:14px;"></i> Torna al sito
+              <i class="es-ix-1" data-lucide="arrow-left"></i> Torna al sito
             </button>
           </div>
         </header>
@@ -1707,7 +1707,7 @@
             </div>
             <p class="es-ar-photo-title">Foto profilo</p>
             <label class="es-ar-upload">
-              <i data-lucide="upload" style="width:14px;height:14px;"></i> Carica immagine
+              <i class="es-ix-1" data-lucide="upload"></i> Carica immagine
               <input type="file" id="ar-photo-input" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" style="display:none;" onchange="handleArPhotoUpload(this)">
             </label>
             <p class="es-ar-photo-hint">JPG, PNG o WebP / max 2MB</p>
@@ -1768,7 +1768,7 @@
                 </div>
                 <div class="es-ar-span">
                   <label class="es-ar-label">Titoli di studio e corsi di qualifica</label>
-                  <p class="es-ar-photo-hint" style="text-align:left;margin:0 0 0.6rem;">Puoi aggiungere più titoli e corsi ottenuti.</p>
+                  <p class="es-ar-photo-hint es-ix-2">Puoi aggiungere più titoli e corsi ottenuti.</p>
                   <div id="ar-edu-list" class="es-ar-edu-list"></div>
                   <button type="button" class="es-ar-add-edu" onclick="window.addSpectatorEduRow && window.addSpectatorEduRow();">+ Aggiungi titolo o corso</button>
                 </div>
@@ -1812,28 +1812,28 @@
   <!-- MODAL: ISCRIZIONE ELISEE SCOUT -->
   <!-- ============================================================ -->
   <div id="modal-registrazione" style="display:none; position:fixed; inset:0; z-index:99998; background:rgba(0,0,0,0.75); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); overflow-y:auto; padding:2rem 1rem;" onclick="if(event.target===this) closeRegistrazioneModal()">
-    <div style="max-width:520px; margin:2rem auto; background:linear-gradient(160deg, #070d1c 0%, #0a1328 100%); border:1.5px solid rgba(56,189,248,0.5); border-radius:20px; box-shadow:0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(2,132,199,0.2); padding:0; overflow:hidden; animation: slideUpModal 0.35s ease;">
+    <div class="es-ix-3">
       
       <!-- Header modale -->
-      <div style="background:linear-gradient(135deg, rgba(2,132,199,0.5), rgba(56,189,248,0.2)); padding:1.75rem 2rem; position:relative; text-align:center; border-bottom:1px solid rgba(56,189,248,0.25);">
-        <img src="immagini/logo/logo-site.png?v=20260925_150256" alt="ELISEE SCOUT" width="64" height="64"
-             style="display:block; margin:0 auto 0.65rem; width:64px; height:64px; object-fit:contain; border:none; border-radius:0; box-shadow:none; background:transparent;">
-        <h2 style="color:#ffffff; font-size:1.5rem; font-weight:900; margin:0 0 0.35rem;">Unisciti a ELISEE SCOUT</h2>
-        <p style="color:#94a3b8; font-size:0.87rem; margin:0;">La piattaforma di scouting calcistico professionale italiana</p>
-        <button onclick="closeRegistrazioneModal()" style="position:absolute; top:1rem; right:1.2rem; background:rgba(255,255,255,0.1); border:none; color:#94a3b8; width:32px; height:32px; border-radius:50%; font-size:1rem; cursor:pointer; line-height:32px;">&times;</button>
+      <div class="es-ix-4">
+        <img class="es-ix-5" src="immagini/logo/logo-site.png?v=20260925_150256" alt="ELISEE SCOUT" width="64" height="64"
+            >
+        <h2 class="es-ix-6">Unisciti a ELISEE SCOUT</h2>
+        <p class="es-ix-7">La piattaforma di scouting calcistico professionale italiana</p>
+        <button class="es-ix-8" onclick="closeRegistrazioneModal()">&times;</button>
       </div>
 
-      <div style="padding:1.75rem 2rem;">
+      <div class="es-ix-9">
 
         <!-- Accesso rapido social (registrazione) -->
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.25rem;">
-          <button type="button" id="btn-reg-google" onclick="event.preventDefault(); window.startEliseeGoogleOAuth && window.startEliseeGoogleOAuth();"
-            style="display:flex; align-items:center; justify-content:center; gap:0.65rem; padding:0.75rem 1rem; border-radius:10px; background:#ffffff; color:#0f172a; font-weight:700; font-size:0.88rem; border:none; cursor:pointer;">
+        <div class="es-ix-10">
+          <button class="es-ix-11" type="button" id="btn-reg-google" onclick="event.preventDefault(); window.startEliseeGoogleOAuth && window.startEliseeGoogleOAuth();"
+           >
             <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.29v3.15C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.29C.47 8.21 0 10.05 0 12s.47 3.79 1.29 5.42l3.99-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.58l3.99 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
             Google
           </button>
-          <button type="button" id="btn-reg-apple" onclick="event.preventDefault(); window.registerWithApple && window.registerWithApple();"
-            style="display:flex; align-items:center; justify-content:center; gap:0.65rem; padding:0.75rem 1rem; border-radius:10px; background:rgba(255,255,255,0.07); color:#ffffff; font-weight:700; font-size:0.88rem; border:1.5px solid rgba(255,255,255,0.25); cursor:pointer;">
+          <button class="es-ix-12" type="button" id="btn-reg-apple" onclick="event.preventDefault(); window.registerWithApple && window.registerWithApple();"
+           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
             Apple
           </button>
@@ -1841,95 +1841,95 @@
         <div id="reg-social-status" style="display:none; margin:-0.5rem 0 1rem; padding:0.75rem 0.9rem; border-radius:10px; border:1px solid rgba(56,189,248,0.35); background:rgba(14,165,233,0.1); color:#7dd3fc; font-size:0.85rem; font-weight:700; text-align:center;"></div>
         <div id="reg-google-simple" style="display:none; margin:-0.25rem 0 1.1rem; padding:0.95rem; border-radius:12px; border:1px solid rgba(56,189,248,0.3); background:rgba(8,18,32,0.62);">
           <form action="#" onsubmit="return false;" autocomplete="on">
-            <p style="margin:0 0 0.75rem; color:#e2e8f0; font-size:0.86rem; line-height:1.4;">Scrivi la tua <strong>email Gmail</strong> e scegli una <strong>password di almeno 8 caratteri</strong>.</p>
-            <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">EMAIL GMAIL *</label>
-            <input type="email" id="reg-google-email" autocomplete="username" placeholder="esempio@gmail.com" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.55rem;">
-            <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">PASSWORD (minimo 8 caratteri) *</label>
-            <input type="password" id="reg-google-password" minlength="8" autocomplete="new-password" placeholder="Minimo 8 caratteri" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.55rem;">
-            <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">RIPETI PASSWORD *</label>
-            <input type="password" id="reg-google-password2" minlength="8" autocomplete="new-password" placeholder="Ripeti la password" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.7rem;">
-            <button type="button" onclick="window.completeGoogleSimpleRegister && window.completeGoogleSimpleRegister();" style="width:100%; padding:0.7rem; border:0; border-radius:9px; background:linear-gradient(180deg,#f4fcff,#7dd3fc); color:#082033; font-weight:800; cursor:pointer;">Crea account e entra</button>
+            <p class="es-ix-13">Scrivi la tua <strong>email Gmail</strong> e scegli una <strong>password di almeno 8 caratteri</strong>.</p>
+            <label class="es-ix-14">EMAIL GMAIL *</label>
+            <input class="es-ix-15" type="email" id="reg-google-email" autocomplete="username" placeholder="esempio@gmail.com">
+            <label class="es-ix-14">PASSWORD (minimo 8 caratteri) *</label>
+            <input class="es-ix-15" type="password" id="reg-google-password" minlength="8" autocomplete="new-password" placeholder="Minimo 8 caratteri">
+            <label class="es-ix-14">RIPETI PASSWORD *</label>
+            <input class="es-ix-16" type="password" id="reg-google-password2" minlength="8" autocomplete="new-password" placeholder="Ripeti la password">
+            <button class="es-ix-17" type="button" onclick="window.completeGoogleSimpleRegister && window.completeGoogleSimpleRegister();">Crea account e entra</button>
           </form>
         </div>
 
-        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
-          <hr style="flex:1; border-color:rgba(56,189,248,0.2);">
-          <span style="color:#64748b; font-size:0.8rem; white-space:nowrap;">o registrati con email</span>
-          <hr style="flex:1; border-color:rgba(56,189,248,0.2);">
+        <div class="es-ix-18">
+          <hr class="es-ix-19">
+          <span class="es-ix-20">o registrati con email</span>
+          <hr class="es-ix-19">
         </div>
 
         <!-- Form campi -->
         <form id="form-registrazione" onsubmit="return window.submitRegistrazione(event);" autocomplete="on" novalidate>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+          <div class="es-ix-21">
             <div>
-              <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Nome *</label>
-              <input type="text" id="reg-nome" required autocomplete="given-name" placeholder="Es: Marco" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+              <label class="es-ix-22">Nome *</label>
+              <input class="es-ix-23" type="text" id="reg-nome" required autocomplete="given-name" placeholder="Es: Marco" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
             </div>
             <div>
-              <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Cognome *</label>
-              <input type="text" id="reg-cognome" required autocomplete="family-name" placeholder="Es: Rossi" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+              <label class="es-ix-22">Cognome *</label>
+              <input class="es-ix-23" type="text" id="reg-cognome" required autocomplete="family-name" placeholder="Es: Rossi" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
             </div>
           </div>
-          <div style="margin-bottom:0.75rem;">
-            <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Indirizzo Email *</label>
-            <input type="email" id="reg-email" required autocomplete="username" placeholder="la-tua@email.it" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+          <div class="es-ix-24">
+            <label class="es-ix-22">Indirizzo Email *</label>
+            <input class="es-ix-23" type="email" id="reg-email" required autocomplete="username" placeholder="la-tua@email.it" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
           </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+          <div class="es-ix-21">
             <div>
-              <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Data di nascita *</label>
-              <input type="date" id="reg-dob" required autocomplete="bday" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none; color-scheme:dark;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+              <label class="es-ix-22">Data di nascita *</label>
+              <input class="es-ix-25" type="date" id="reg-dob" required autocomplete="bday" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
             </div>
             <div>
               <input type="hidden" id="reg-ruolo" value="">
             </div>
           </div>
-          <div style="margin-bottom:0.75rem;">
-            <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Password *</label>
-            <input type="password" id="reg-password" required autocomplete="new-password" placeholder="8+ caratteri, maiuscola, numero, speciale" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'" oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('reg-pw-reqs', this.value)">
-            <div id="reg-pw-reqs" class="es-pw-reqs" style="margin-top:0.5rem; display:grid; grid-template-columns:1fr 1fr; gap:0.25rem;">
-              <span data-pw="len" style="font-size:0.72rem; color:#8a93a3;">Minimo 8 caratteri</span>
-              <span data-pw="upper" style="font-size:0.72rem; color:#8a93a3;">Una lettera maiuscola</span>
-              <span data-pw="num" style="font-size:0.72rem; color:#8a93a3;">Un numero</span>
-              <span data-pw="special" style="font-size:0.72rem; color:#8a93a3;">Un carattere speciale</span>
+          <div class="es-ix-24">
+            <label class="es-ix-22">Password *</label>
+            <input class="es-ix-23" type="password" id="reg-password" required autocomplete="new-password" placeholder="8+ caratteri, maiuscola, numero, speciale" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'" oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('reg-pw-reqs', this.value)">
+            <div id="reg-pw-reqs" class="es-pw-reqs es-ix-26">
+              <span class="es-ix-27" data-pw="len">Minimo 8 caratteri</span>
+              <span class="es-ix-27" data-pw="upper">Una lettera maiuscola</span>
+              <span class="es-ix-27" data-pw="num">Un numero</span>
+              <span class="es-ix-27" data-pw="special">Un carattere speciale</span>
             </div>
           </div>
-          <div style="margin-bottom:0.75rem;">
-            <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Conferma Password *</label>
-            <input type="password" id="reg-password2" required autocomplete="new-password" placeholder="Ripeti la password" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+          <div class="es-ix-24">
+            <label class="es-ix-22">Conferma Password *</label>
+            <input class="es-ix-23" type="password" id="reg-password2" required autocomplete="new-password" placeholder="Ripeti la password" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
           </div>
 
           <!-- Checkboxes TOS + Cookie -->
-          <div style="display:flex; flex-direction:column; gap:0.55rem; margin-bottom:1.2rem;">
-            <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer;">
-              <input type="checkbox" id="reg-tos" required style="margin-top:3px; accent-color:#38bdf8; width:16px; height:16px; cursor:pointer;">
-              <span style="color:#94a3b8; font-size:0.8rem; line-height:1.5;">Accetto l’<a href="privacy-policy.html" target="_blank" rel="noopener" style="color:#38bdf8;">informativa privacy</a> e l’<a href="cookie-policy.html" target="_blank" rel="noopener" style="color:#38bdf8;">informativa cookie</a> della piattaforma ELISEE SCOUT *</span>
+          <div class="es-ix-28">
+            <label class="es-ix-29">
+              <input class="es-ix-30" type="checkbox" id="reg-tos" required>
+              <span class="es-ix-31">Accetto l’<a class="es-ix-32" href="privacy-policy.html" target="_blank" rel="noopener">informativa privacy</a> e l’<a class="es-ix-32" href="cookie-policy.html" target="_blank" rel="noopener">informativa cookie</a> della piattaforma ELISEE SCOUT *</span>
             </label>
-            <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer;">
-              <input type="checkbox" id="reg-privacy" required style="margin-top:3px; accent-color:#38bdf8; width:16px; height:16px; cursor:pointer;">
-              <span style="color:#94a3b8; font-size:0.8rem; line-height:1.5;">Dichiaro di aver letto l’<a href="privacy-policy.html" target="_blank" style="color:#38bdf8;">informativa sul trattamento dei dati personali (artt. 12 e 13 GDPR)</a> e acconsento al trattamento dei miei dati personali *</span>
+            <label class="es-ix-29">
+              <input class="es-ix-30" type="checkbox" id="reg-privacy" required>
+              <span class="es-ix-31">Dichiaro di aver letto l’<a class="es-ix-32" href="privacy-policy.html" target="_blank">informativa sul trattamento dei dati personali (artt. 12 e 13 GDPR)</a> e acconsento al trattamento dei miei dati personali *</span>
             </label>
-            <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer;">
-              <input type="checkbox" id="reg-cookie" style="margin-top:3px; accent-color:#38bdf8; width:16px; height:16px; cursor:pointer;">
-              <span style="color:#94a3b8; font-size:0.8rem; line-height:1.5;">Accetto l’utilizzo di cookie di profilazione descritti nell’<a href="cookie-policy.html" target="_blank" rel="noopener" style="color:#38bdf8;">informativa cookie</a> (opzionale)</span>
+            <label class="es-ix-29">
+              <input class="es-ix-30" type="checkbox" id="reg-cookie">
+              <span class="es-ix-31">Accetto l’utilizzo di cookie di profilazione descritti nell’<a class="es-ix-32" href="cookie-policy.html" target="_blank" rel="noopener">informativa cookie</a> (opzionale)</span>
             </label>
-            <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer;">
-              <input type="checkbox" id="reg-newsletter" style="margin-top:3px; accent-color:#38bdf8; width:16px; height:16px; cursor:pointer;">
-              <span style="color:#94a3b8; font-size:0.8rem; line-height:1.5;">Desidero ricevere aggiornamenti, newsletter e offerte esclusive di ELISEE SCOUT (opzionale)</span>
+            <label class="es-ix-29">
+              <input class="es-ix-30" type="checkbox" id="reg-newsletter">
+              <span class="es-ix-31">Desidero ricevere aggiornamenti, newsletter e offerte esclusive di ELISEE SCOUT (opzionale)</span>
             </label>
-            <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer; background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.3); border-radius:10px; padding:0.65rem 0.7rem;">
-              <input type="checkbox" id="reg-art22-human" style="margin-top:3px; accent-color:#a78bfa; width:16px; height:16px; cursor:pointer;">
-              <span style="color:#c4b5fd; font-size:0.8rem; line-height:1.5;"><strong style="color:#e9d5ff;">Art. 22 GDPR (opzionale, consigliato):</strong> richiedo di <strong>non essere sottoposto a decisioni basate esclusivamente su trattamento automatizzato</strong> che producano effetti giuridici o incidano in modo analogo su di me (es. scoring matchmaking, ranking, idoneità). Garantisco il diritto di ottenere <strong>intervento di un operatore umano</strong>, di esprimere la mia opinione e di contestare la decisione. Dettagli nell'<a href="privacy-policy.html#ia-art22" target="_blank" style="color:#38bdf8;">informativa sul trattamento (sezione IA)</a>.</span>
+            <label class="es-ix-33">
+              <input class="es-ix-34" type="checkbox" id="reg-art22-human">
+              <span class="es-ix-35"><strong class="es-ix-36">Art. 22 GDPR (opzionale, consigliato):</strong> richiedo di <strong>non essere sottoposto a decisioni basate esclusivamente su trattamento automatizzato</strong> che producano effetti giuridici o incidano in modo analogo su di me (es. scoring matchmaking, ranking, idoneità). Garantisco il diritto di ottenere <strong>intervento di un operatore umano</strong>, di esprimere la mia opinione e di contestare la decisione. Dettagli nell'<a class="es-ix-32" href="privacy-policy.html#ia-art22" target="_blank">informativa sul trattamento (sezione IA)</a>.</span>
             </label>
           </div>
 
           <div id="reg-error-box" style="display:none; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.4); border-radius:10px; padding:0.75rem 1rem; color:#f87171; font-size:0.85rem; margin-bottom:0.75rem;"></div>
 
-          <button type="submit" id="btn-crea-profilo-scout" style="width:100%; padding:1rem; background:linear-gradient(135deg,#0284c7,#38bdf8); border:none; border-radius:12px; color:#ffffff; font-weight:900; font-size:1rem; cursor:pointer; letter-spacing:0.05em; box-shadow:0 8px 25px rgba(2,132,199,0.45); transition:opacity 0.2s;">
+          <button class="es-ix-37" type="submit" id="btn-crea-profilo-scout">
             ⚽ CREA IL MIO PROFILO SCOUT
           </button>
 
-          <p style="text-align:center; color:#64748b; font-size:0.78rem; margin-top:1rem; margin-bottom:0;">
-            Hai già un account? <a href="#" onclick="closeRegistrazioneModal(); switchView('account');" style="color:#38bdf8; font-weight:700;">Accedi qui</a>
+          <p class="es-ix-38">
+            Hai già un account? <a class="es-ix-39" href="#" onclick="closeRegistrazioneModal(); switchView('account');">Accedi qui</a>
           </p>
         </form>
       </div>
@@ -2030,13 +2030,13 @@
 
           <div id="accesso-spid-block" style="display:none;">
             <p data-i18n="auth.spidPick">Seleziona il tuo Identity Provider SPID:</p>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.45rem;">
-              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Poste ID','#0047BB')">Poste</button>
-              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Intesi Group','#0066CC')">Intesi</button>
-              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Aruba.it ID','#FF5500')">Aruba</button>
-              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('TIM id','#007CBA')">TIM</button>
-              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Namirial ID','#E30613')">Namirial</button>
-              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('InfoCert ID','#0055B8')">InfoCert</button>
+            <div class="es-ix-40">
+              <button type="button" class="es-social es-ix-41" onclick="selectSpidProvider('Poste ID','#0047BB')">Poste</button>
+              <button type="button" class="es-social es-ix-41" onclick="selectSpidProvider('Intesi Group','#0066CC')">Intesi</button>
+              <button type="button" class="es-social es-ix-41" onclick="selectSpidProvider('Aruba.it ID','#FF5500')">Aruba</button>
+              <button type="button" class="es-social es-ix-41" onclick="selectSpidProvider('TIM id','#007CBA')">TIM</button>
+              <button type="button" class="es-social es-ix-41" onclick="selectSpidProvider('Namirial ID','#E30613')">Namirial</button>
+              <button type="button" class="es-social es-ix-41" onclick="selectSpidProvider('InfoCert ID','#0055B8')">InfoCert</button>
             </div>
           </div>
 
@@ -2066,10 +2066,10 @@
             </div>
 
             <div id="accesso-error-general" class="es-login-alert">
-              <p id="accesso-error-msg" style="margin:0;"></p>
+              <p class="es-ix-42" id="accesso-error-msg"></p>
             </div>
 
-            <div class="glow-wrap glow-wrap--full" style="margin-top:14px;">
+            <div class="glow-wrap glow-wrap--full es-ix-43">
               <button type="submit" id="accesso-submit-btn" class="glow-btn glow-btn--full es-login-submit" data-i18n="nav.login">Accedi</button>
             </div>
           </div>
@@ -2107,15 +2107,15 @@
           </div>
 
           <div id="accesso-method-setpw" style="display:none;">
-            <p id="accesso-setpw-hello" class="es-login-or" style="text-align:left;" data-i18n="auth.setpw">Imposta una password nuova. Almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.</p>
+            <p id="accesso-setpw-hello" class="es-login-or es-ix-44" data-i18n="auth.setpw">Imposta una password nuova. Almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.</p>
             <div class="es-pwbox">
               <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder=" " spellcheck="false" required oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('setpw-reqs', this.value)">
               <label for="accesso-setpw-a" data-i18n="auth.newPw">Nuova password</label>
               <div class="es-pwbars" aria-hidden="true"><div></div></div>
               <p class="es-pwstrength"></p>
             </div>
-            <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" data-i18n-placeholder="auth.repeatPh" placeholder="Ripeti la password" style="margin-top:8px;">
-            <div id="setpw-reqs" class="es-pw-reqs" style="margin:8px 0;">
+            <input class="es-ix-45" type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" data-i18n-placeholder="auth.repeatPh" placeholder="Ripeti la password">
+            <div id="setpw-reqs" class="es-pw-reqs es-ix-46">
               <span data-pw="len" data-i18n="auth.pwLen">Minimo 8 caratteri</span>
               <span data-pw="upper" data-i18n="auth.pwUpper">Una lettera maiuscola</span>
               <span data-pw="num" data-i18n="auth.pwNum">Un numero</span>
@@ -2162,7 +2162,7 @@
             <span><span data-i18n="auth.tosBefore">Accetto l’</span><a href="privacy-policy.html" target="_blank" rel="noopener" data-i18n="auth.tosTerms">informativa privacy</a><span data-i18n="auth.tosMid"> e l’</span><a href="cookie-policy.html" target="_blank" rel="noopener" data-i18n="auth.tosCookies">informativa cookie</a><span data-i18n="auth.tosEnd">.</span></span>
           </label>
           <p id="es-login-reg-error" class="es-login-err" hidden></p>
-          <div class="glow-wrap glow-wrap--full" style="margin-top:14px;">
+          <div class="glow-wrap glow-wrap--full es-ix-43">
             <button type="submit" class="glow-btn glow-btn--full es-login-submit" data-i18n="auth.signup">Iscriviti</button>
           </div>
           <p class="es-login-or" data-i18n="auth.or">Oppure accedi con</p>
@@ -2250,7 +2250,7 @@
        ============================================================ -->
   <div id="es-mobile-app-shell">
     <!-- 1. Top App Bar -->
-    <div class="es-m-topbar" style="border:none !important;border-bottom:none !important;box-shadow:none !important;outline:none !important;">
+    <div class="es-m-topbar es-ix-47">
       <a href="#hero" class="es-m-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;">
         <img src="immagini/logo/logo-site.png?v=20260925_150256" alt="ELISEE SCOUT" class="es-m-brand-logo">
         <span class="es-m-brand-txt">ELISEE <span>SCOUT</span></span>
@@ -2300,7 +2300,7 @@
         </div>
 
         <!-- Bottone Accedi (se non loggato) -->
-        <button type="button" class="btn-nav-accedi" id="es-m-login-btn" data-i18n="nav.login" style="padding:0.25rem 0.6rem;font-size:0.75rem;height:32px;min-height:32px;">
+        <button type="button" class="btn-nav-accedi es-ix-48" id="es-m-login-btn" data-i18n="nav.login">
           Accedi
         </button>
 
@@ -2371,7 +2371,7 @@
     <div class="es-m-drawer-backdrop" id="es-m-drawer-backdrop">
       <aside class="es-m-drawer" aria-label="Menu laterale">
         <div class="es-m-drawer-head">
-          <a href="#hero" class="es-m-brand" style="cursor:pointer;">
+          <a href="#hero" class="es-m-brand es-ix-49">
             <img src="immagini/logo/logo-site.png?v=20260925_150256" alt="ELISEE SCOUT" class="es-m-brand-logo">
             <span class="es-m-brand-txt">ELISEE <span>SCOUT</span></span>
           </a>
@@ -2794,18 +2794,18 @@
               <div class="portfolio-stat"><strong>GDPR</strong><span data-i18n="home.statGdpr">Privacy al primo posto</span></div>
               <div class="portfolio-stat"><strong>Italia</strong><span data-i18n="home.statItaly">Focus dilettanti</span></div>
             </div>
-            <div class="hero-buttons-row" style="justify-content:center; margin-top:2rem;">
+            <div class="hero-buttons-row es-ix-50">
               <a href="#dashboard-skills" class="btn btn-outline-pill" data-i18n="home.openResume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Apri curriculum</a>
             </div>
           </div>
         </section>
 
         <!-- GLOW CARDS SHOWCASE: 3 PILASTRI DEL NETWORK -->
-        <section id="home-pillars-glow" class="portfolio-section" style="padding: 4.5rem 0;">
+        <section id="home-pillars-glow" class="portfolio-section es-ix-51">
           <div class="container text-center">
             <p class="portfolio-kicker" data-i18n="home.glowKicker">Ecosistema verificato</p>
             <h2 class="portfolio-heading" data-i18n="home.glowTitle">I tre ruoli del network</h2>
-            <p class="portfolio-text portfolio-text-center" data-i18n="home.glowLead" style="margin-bottom: 2rem;">
+            <p class="portfolio-text portfolio-text-center es-ix-52" data-i18n="home.glowLead">
               Dossier atleti con telemetria GPS, gestione club per Serie D ed Eccellenza, e radar di scouting per direttori sportivi e agenti.
             </p>
             <div class="glow-container">
@@ -2886,7 +2886,7 @@
               <p class="portfolio-text" data-i18n="home.joinText">
                 Accedi con Google o email. Crea il tuo profilo scout in pochi secondi.
               </p>
-              <div class="welcome-auth-stack" style="margin-top:1.5rem;">
+              <div class="welcome-auth-stack es-ix-53">
                 <button type="button" class="auth-btn auth-btn-google" onclick="openGoogleModal()">
                   <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.29v3.15C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.29C.47 8.21 0 10.05 0 12s.47 3.79 1.29 5.42l3.99-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.58l3.99 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
                   <span data-i18n="home.google">Continua con Google</span>
@@ -3401,7 +3401,7 @@
                 </div>
 
                 <div class="bacheca-people-extra-filters">
-                  <div class="filter-group pf-filter-group" style="min-width: 170px;">
+                  <div class="filter-group pf-filter-group es-ix-54">
                     <label data-i18n="bacheca.role">Ruolo</label>
                     <div class="custom-dropdown pf-select" id="search-people-role">
                       <div class="dropdown-trigger" role="button" tabindex="0" aria-haspopup="listbox">
@@ -3423,7 +3423,7 @@
                     </div>
                   </div>
 
-                  <div class="filter-group pf-filter-group" style="min-width: 170px;">
+                  <div class="filter-group pf-filter-group es-ix-54">
                     <label data-i18n="bacheca.category">Categoria</label>
                     <div class="custom-dropdown pf-select" id="search-people-category">
                       <div class="dropdown-trigger" role="button" tabindex="0" aria-haspopup="listbox">
@@ -3442,7 +3442,7 @@
                     </div>
                   </div>
 
-                  <button type="button" class="btn btn-outline-pill pf-mini" data-i18n="bacheca.clearFilters" onclick="resetPeopleFilters()" style="margin-bottom: 2px;">Azzera filtri</button>
+                  <button type="button" class="btn btn-outline-pill pf-mini es-ix-55" data-i18n="bacheca.clearFilters" onclick="resetPeopleFilters()">Azzera filtri</button>
                 </div>
               </div>
 
@@ -3468,7 +3468,7 @@
           <div class="es-sq-topbar">
             <h1 data-i18n="sq.title">Seleziona squadra</h1>
             <div class="es-sq-topbar-actions">
-              <button type="button" class="btn btn-outline-pill es-sq-btn-register" id="es-sq-open-register" style="border-color:var(--es-accent,#00d285);color:var(--es-accent,#00d285);font-weight:700;display:inline-flex;align-items:center;gap:6px;">
+              <button type="button" class="btn btn-outline-pill es-sq-btn-register es-ix-56" id="es-sq-open-register">
                 <span aria-hidden="true">+</span> <span data-i18n="sq.register">Registra Club</span>
               </button>
               <button type="button" class="btn btn-outline-pill es-sq-back" data-i18n="sq.back" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
@@ -3562,9 +3562,9 @@
                       <img id="es-sq-kit-img" class="es-sq-kit-img" src="immagini/kits-2d/foggia-city/home.png" alt="FOGGIA CITY DIVISA IN CASA" />
                       <span class="es-sq-kit-shine" aria-hidden="true"></span>
                       <div class="es-sq-kit-vector" id="es-sq-kit-vector" hidden>
-                        <div class="es-sq-kit-sleeve-l" id="es-sq-kit-sleeve-l" style="background:#0b1d4a;"></div>
-                        <div class="es-sq-kit-sleeve-r" id="es-sq-kit-sleeve-r" style="background:#0b1d4a;"></div>
-                        <div class="es-sq-kit-body" id="es-sq-kit-body" style="background:linear-gradient(90deg,#0b1d4a 0 14%,#1e90ff 14% 28%,#0b1d4a 28% 42%,#1e90ff 42% 56%,#0b1d4a 56% 70%,#1e90ff 70% 84%,#0b1d4a 84%);"></div>
+                        <div class="es-sq-kit-sleeve-l es-ix-57" id="es-sq-kit-sleeve-l"></div>
+                        <div class="es-sq-kit-sleeve-r es-ix-57" id="es-sq-kit-sleeve-r"></div>
+                        <div class="es-sq-kit-body es-ix-58" id="es-sq-kit-body"></div>
                         <div class="es-sq-kit-collar"></div>
                       </div>
                     </div>
@@ -3581,7 +3581,7 @@
                   </div>
                 </div>
                 <div class="es-sq-panel es-sq-city-panel has-stadium-photo" id="es-sq-city-panel">
-                  <div class="es-sq-city-bg" id="es-sq-city-bg" aria-hidden="true" style="background-image: url('immagini/stadi/city-foggia.jpg');"></div>
+                  <div class="es-sq-city-bg es-ix-59" id="es-sq-city-bg" aria-hidden="true"></div>
                   <div class="es-sq-city-overlay" aria-hidden="true"></div>
                   <div class="es-sq-city-content">
                     <div class="es-sq-panel-label" data-i18n="sq.cityStadium">Città · Stadio</div>
@@ -3633,11 +3633,11 @@
       <section id="iscrizione-portal" class="es-tc pf-page">
         <div class="pf-page-bg" aria-hidden="true"></div>
         <div class="pf-page-shade" aria-hidden="true"></div>
-        <div class="container pf-page-inner" style="max-width:720px;">
+        <div class="container pf-page-inner es-ix-60">
           <p class="es-tc-kicker" data-i18n="iscr.kicker">Iscrizione online</p>
           <h1 id="es-iscr-team">Modulo di iscrizione</h1>
           <p class="es-tc-muted" id="es-iscr-sub">Al posto del modulo cartaceo: anagrafica completa del tesserato.</p>
-          <form class="es-tc-card" id="es-iscr-form" style="margin-top:1.1rem;"></form>
+          <form class="es-tc-card es-ix-61" id="es-iscr-form"></form>
         </div>
       </section>
     </div>
@@ -3723,25 +3723,25 @@
                 <p class="pf-aside-text" data-i18n="amb.joinText">Compila i dati e firma digitalmente. Il contratto viene generato in anteprima a destra.</p>
                 <form id="form-ambassador" class="pf-form es-amb-form">
                   <div class="form-group">
-                    <label for="amb-name">Nome e cognome <span class="req" style="color: #3b7dff;">*</span></label>
+                    <label for="amb-name">Nome e cognome <span class="req es-ix-62">*</span></label>
                     <input type="text" id="amb-name" class="pf-input" placeholder="Es. Mario Rossi" required>
                   </div>
                   <div class="form-grid-2">
                     <div class="form-group">
-                      <label for="amb-birthplace">Luogo di nascita <span class="req" style="color: #3b7dff;">*</span></label>
+                      <label for="amb-birthplace">Luogo di nascita <span class="req es-ix-62">*</span></label>
                       <input type="text" id="amb-birthplace" class="pf-input" placeholder="Es. Milano" required>
                     </div>
                     <div class="form-group">
-                      <label for="amb-birthdate">Data di nascita <span class="req" style="color: #3b7dff;">*</span></label>
+                      <label for="amb-birthdate">Data di nascita <span class="req es-ix-62">*</span></label>
                       <input type="date" id="amb-birthdate" class="pf-input" required>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="amb-cf">Codice fiscale <span class="req" style="color: #3b7dff;">*</span></label>
+                    <label for="amb-cf">Codice fiscale <span class="req es-ix-62">*</span></label>
                     <input type="text" id="amb-cf" class="pf-input" placeholder="Es. RSSMRA00A01H501U" required>
                   </div>
                   <div class="form-group addr-autocomplete" data-addr-field="amb-address">
-                    <label for="amb-address">Indirizzo di residenza <span class="req" style="color: #3b7dff;">*</span></label>
+                    <label for="amb-address">Indirizzo di residenza <span class="req es-ix-62">*</span></label>
                     <div class="addr-autocomplete-wrap">
                       <input type="text" id="amb-address" class="pf-input" placeholder="Inizia a digitare via, CAP o città…" autocomplete="off" autocapitalize="words" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="amb-address-list" required>
                       <button type="button" class="addr-geo-btn" id="amb-address-geo" title="Usa la mia posizione" aria-label="Usa la mia posizione">
@@ -3752,7 +3752,7 @@
                     <p class="addr-hint">Suggerimenti geografici in tempo reale (vie, CAP e comuni italiani).</p>
                   </div>
                   <div class="form-group">
-                    <label for="sig-canvas">Firma elettronica <span class="req" style="color: #3b7dff;">*</span></label>
+                    <label for="sig-canvas">Firma elettronica <span class="req es-ix-62">*</span></label>
                     <p class="sig-hint" id="sig-hint">Disegna la firma nell'area sotto con il <strong>mouse</strong> o il <strong>dito</strong> (touch). Poi premi "Genera e firma contratto".</p>
                     <div class="canvas-wrapper pf-canvas-wrap" id="sig-pad-wrap">
                       <canvas id="sig-canvas" width="600" height="180" aria-label="Area firma elettronica"></canvas>
@@ -3765,15 +3765,15 @@
                     <input type="hidden" id="amb-signature-data" name="signature" value="">
                   </div>
 
-                  <div class="form-group es-gdpr-group" style="margin-top: 14px; margin-bottom: 18px;">
-                    <label class="es-checkbox-label" for="amb-gdpr-consent" style="display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: #8a93a3; cursor: pointer; text-transform: none !important; letter-spacing: 0.01em;">
-                      <input type="checkbox" id="amb-gdpr-consent" name="gdpr_consent" required style="margin-top: 2px; accent-color: #3b7dff; width: 16px; height: 16px; cursor: pointer; flex-shrink: 0;">
-                      <span>Dichiaro di aver letto l’<a href="privacy-policy.html" target="_blank" rel="noopener" style="color: #3b7dff; text-decoration: underline;">informativa privacy</a> e acconsento al trattamento dei dati personali e della firma elettronica per la richiesta e il contratto Ambassador. <span class="req" style="color: #3b7dff;">*</span></span>
+                  <div class="form-group es-gdpr-group es-ix-63">
+                    <label class="es-checkbox-label es-ix-64" for="amb-gdpr-consent">
+                      <input class="es-ix-65" type="checkbox" id="amb-gdpr-consent" name="gdpr_consent" required>
+                      <span>Dichiaro di aver letto l’<a class="es-ix-66" href="privacy-policy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei dati personali e della firma elettronica per la richiesta e il contratto Ambassador. <span class="req es-ix-62">*</span></span>
                     </label>
                   </div>
 
-                  <button type="submit" class="btn es-amb-submit" id="btn-amb-submit" style="width: 100%; background: #3b7dff; color: #ffffff; border: none; border-radius: 10px; padding: 15px; font-size: 14px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-bottom: 14px;">Genera e firma contratto</button>
-                  <p class="es-eligibility-note" id="amb-eligibility-note" style="font-size: 12px; color: #8a93a3; line-height: 1.6; padding-top: 14px; border-top: 1px solid #1e2430; margin-top: 14px;">
+                  <button type="submit" class="btn es-amb-submit es-ix-67" id="btn-amb-submit">Genera e firma contratto</button>
+                  <p class="es-eligibility-note es-ix-68" id="amb-eligibility-note">
                     Prima della firma, l'<strong>Agente IA Idoneità Ambassador</strong> verifica se il profilo è idoneo.
                     In caso di esito negativo, il team esamina manualmente la richiesta prima di una decisione definitiva.
                   </p>
@@ -3783,15 +3783,15 @@
               <div class="pf-aside-card pf-form-panel">
                 <h3 class="pf-aside-title" data-i18n="amb.previewTitle">Anteprima contratto</h3>
                 <p class="pf-aside-text" data-i18n="amb.previewText">Documento di 6 mesi. Si sblocca solo se la verifica di idoneità è positiva.</p>
-                <div class="contract-scrollable-body pf-contract es-preview" id="contract-render-target" style="min-height: 460px; display: flex; align-items: center; justify-content: center; padding: 32px; background: #10141d; border: 1px solid #1e2430; border-radius: 12px;">
-                  <div class="es-preview__empty" style="text-align: center; max-width: 280px; margin: 0 auto;">
-                    <svg class="es-preview__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="44" height="44" style="margin: 0 auto 16px; color: #8a93a3; display: block;">
+                <div class="contract-scrollable-body pf-contract es-preview es-ix-69" id="contract-render-target">
+                  <div class="es-preview__empty es-ix-70">
+                    <svg class="es-preview__icon es-ix-71" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="44" height="44">
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                       <path d="M14 2v6h6"/>
                       <line x1="8" y1="13" x2="16" y2="13"/>
                       <line x1="8" y1="17" x2="13" y2="17"/>
                     </svg>
-                    <p data-i18n="amb.previewEmpty" style="font-size: 13px; color: #8a93a3; line-height: 1.6; margin: 0;">Completa il modulo: la verifica di idoneità avviene prima di generare il contratto.</p>
+                    <p class="es-ix-72" data-i18n="amb.previewEmpty">Completa il modulo: la verifica di idoneità avviene prima di generare il contratto.</p>
                   </div>
                 </div>
               </div>
@@ -3899,10 +3899,10 @@
         <div class="container pf-page-inner">
 
           <div id="admin-login-guard" class="pf-aside-card pf-admin-login">
-            <div class="pf-account-icon" style="margin:0 auto 1.25rem;"><i data-lucide="lock"></i></div>
-            <p class="portfolio-kicker" style="text-align:center;">Governance</p>
-            <h1 class="pf-title" style="text-align:center; font-size:1.75rem;">Accesso area riservata</h1>
-            <p class="pf-lead" style="text-align:center; margin:0 auto 1.5rem;">Admin e Responsabile Privacy — autenticazione protetta</p>
+            <div class="pf-account-icon es-ix-73"><i data-lucide="lock"></i></div>
+            <p class="portfolio-kicker es-ix-74">Governance</p>
+            <h1 class="pf-title es-ix-75">Accesso area riservata</h1>
+            <p class="pf-lead es-ix-76">Admin e Responsabile Privacy — autenticazione protetta</p>
 
             <form id="form-admin-login" class="pf-form" action="javascript:void(0);" method="POST" onsubmit="return false;" autocomplete="on">
               <div class="form-group">
@@ -3917,14 +3917,14 @@
                 <label for="admin-totp" data-i18n="admin.totp.label">Codice 2FA</label>
                 <input type="text" id="admin-totp" class="pf-input" inputmode="numeric" autocomplete="one-time-code" maxlength="7" placeholder="6 cifre dall'app Authenticator" data-i18n-placeholder="admin.totp.placeholder">
               </div>
-              <div class="form-group" style="margin-top:0.35rem;">
-                <label style="text-transform:none; letter-spacing:0; font-size:0.82rem; color:#94a3b8; display:inline-flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="checkbox" id="admin-remember" checked style="accent-color:var(--accent-primary);">
+              <div class="form-group es-ix-77">
+                <label class="es-ix-78">
+                  <input class="es-ix-79" type="checkbox" id="admin-remember" checked>
                   Salva credenziali (logout dopo 2 mesi di inattività)
                 </label>
               </div>
               <div id="admin-login-error-container" style="display:none; margin:0.5rem 0;"></div>
-              <button type="submit" class="btn btn-outline-pill pf-btn-solid" style="width:100%; margin-top:0.5rem;"><i data-lucide="key" style="width:16px;height:16px;"></i> Autenticati</button>
+              <button type="submit" class="btn btn-outline-pill pf-btn-solid es-ix-80"><i class="es-ix-81" data-lucide="key"></i> Autenticati</button>
             </form>
           </div>
 
@@ -4180,11 +4180,11 @@
       <div class="es-share" id="es-share">
         <button type="button" class="es-share-main">Condividi</button>
         <span class="es-share-flood" aria-hidden="true"></span>
-        <button type="button" class="es-share-ch" data-ch="wa" style="--i:0" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 19l1.2-3.4A8 8 0 1 1 8.6 19.2L5 19z"/></svg></button>
-        <button type="button" class="es-share-ch" data-ch="in" style="--i:1" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 9H4v11h2.5V9zM5.2 4.5A1.6 1.6 0 1 0 5.2 7.7 1.6 1.6 0 0 0 5.2 4.5zM20 20h-2.5v-5.6c0-1.6-.6-2.6-2-2.6-1 0-1.6.7-1.9 1.4-.1.2-.1.6-.1.9V20H11V9h2.4v1.5c.4-.7 1.4-1.8 3.3-1.8 2.4 0 4.3 1.6 4.3 5V20z"/></svg></button>
-        <button type="button" class="es-share-ch" data-ch="mail" style="--i:2" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></button>
-        <button type="button" class="es-share-ch" data-ch="x" style="--i:3" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.7 10.3 22 2h-2.2l-6.3 7.2L8.2 2H2l7.7 11.1L2 22h2.2l7-8 5.6 8H22l-7.3-11.7z"/></svg></button>
-        <button type="button" class="es-share-ch" data-ch="link" style="--i:4" aria-label="Copia link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2a5 5 0 0 0 7.1 7.1l1.1-1.1"/></svg></button>
+        <button type="button" class="es-share-ch es-ix-82" data-ch="wa" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 19l1.2-3.4A8 8 0 1 1 8.6 19.2L5 19z"/></svg></button>
+        <button type="button" class="es-share-ch es-ix-83" data-ch="in" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 9H4v11h2.5V9zM5.2 4.5A1.6 1.6 0 1 0 5.2 7.7 1.6 1.6 0 0 0 5.2 4.5zM20 20h-2.5v-5.6c0-1.6-.6-2.6-2-2.6-1 0-1.6.7-1.9 1.4-.1.2-.1.6-.1.9V20H11V9h2.4v1.5c.4-.7 1.4-1.8 3.3-1.8 2.4 0 4.3 1.6 4.3 5V20z"/></svg></button>
+        <button type="button" class="es-share-ch es-ix-84" data-ch="mail" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></button>
+        <button type="button" class="es-share-ch es-ix-85" data-ch="x" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.7 10.3 22 2h-2.2l-6.3 7.2L8.2 2H2l7.7 11.1L2 22h2.2l7-8 5.6 8H22l-7.3-11.7z"/></svg></button>
+        <button type="button" class="es-share-ch es-ix-86" data-ch="link" aria-label="Copia link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2a5 5 0 0 0 7.1 7.1l1.1-1.1"/></svg></button>
         <p class="es-share-status"></p>
       </div>
       <section id="user-dossier-portal" class="pf-page">
@@ -4565,15 +4565,15 @@
           <header class="pf-header">
             <div class="pf-header-text">
               <p class="portfolio-kicker">Dossier</p>
-              <h1 class="pf-title" style="font-size:clamp(1.6rem,3vw,2.2rem);">Scheda anagrafica e trust</h1>
+              <h1 class="pf-title es-ix-87">Scheda anagrafica e trust</h1>
               <p class="pf-lead">Passaporto digitale, metriche GPS e stato di revisione governance.</p>
             </div>
             <div class="pf-header-actions">
               <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView){window.switchView('account','#account-portal');} return false;">
-                <i data-lucide="arrow-left" style="width:14px;height:14px;"></i> Area account
+                <i class="es-ix-1" data-lucide="arrow-left"></i> Area account
               </button>
               <button type="button" class="btn btn-outline-pill pf-btn-solid" onclick="openEditUserModal()">
-                <i data-lucide="edit-3" style="width:14px;height:14px;"></i> Modifica profilo
+                <i class="es-ix-1" data-lucide="edit-3"></i> Modifica profilo
               </button>
             </div>
           </header>
@@ -4586,16 +4586,16 @@
                 <span>Nessuna foto</span>
               </div>
             </div>
-            <div class="pf-dossier-identity" style="width:100%;">
-              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
+            <div class="pf-dossier-identity es-ix-88">
+              <div class="es-ix-89">
                 <div>
-                  <h2 id="dossier-user-name" style="margin-bottom:0.1rem;">[Nessun Utente Registrato]</h2>
-                  <span id="dossier-user-username" style="font-size:0.85rem; color:#38bdf8; font-weight:bold;">@utente</span>
-                  <p id="dossier-user-role" class="pf-job-role" style="display:inline-block; margin-left:0.5rem;">[In attesa di compilazione]</p>
+                  <h2 class="es-ix-90" id="dossier-user-name">[Nessun Utente Registrato]</h2>
+                  <span class="es-ix-91" id="dossier-user-username">@utente</span>
+                  <p id="dossier-user-role" class="pf-job-role es-ix-92">[In attesa di compilazione]</p>
                 </div>
                 <div id="dossier-trust-score-target"></div>
               </div>
-              <p id="dossier-user-bio" style="font-size:0.85rem; color:#cbd5e1; font-style:italic; margin:0.5rem 0 0.8rem 0; line-height:1.4;">Nessuna biografia inserita</p>
+              <p class="es-ix-93" id="dossier-user-bio">Nessuna biografia inserita</p>
               <div class="pf-dossier-grid">
                 <p><span>Ruolo sul sito *</span><strong id="dossier-site-role">Da specificare</strong></p>
                 <p><span>Cognome e nome</span><strong id="dossier-user-fullname">Non inserito</strong></p>
@@ -4610,7 +4610,7 @@
             </div>
           </div>
 
-          <div class="pf-layout pf-layout-equal" style="margin-top:1.25rem;" id="dossier-role-layout">
+          <div class="pf-layout pf-layout-equal es-ix-94" id="dossier-role-layout">
             <div class="pf-aside-card" id="dossier-panel-a">
               <h3 class="pf-aside-title" id="dossier-panel-a-title">Prestazione e GPS</h3>
               <ul class="pf-dossier-list" id="dossier-panel-a-list">
@@ -4628,7 +4628,7 @@
             <div class="pf-aside-card" id="dossier-panel-b">
               <h3 class="pf-aside-title" id="dossier-panel-b-title">Sanita e privacy</h3>
               <ul class="pf-dossier-list" id="dossier-panel-b-list">
-                <li><span>Badge di verifica</span><div id="dossier-badge-pill-target" style="display:inline-block;"></div></li>
+                <li><span>Badge di verifica</span><div class="es-ix-95" id="dossier-badge-pill-target"></div></li>
                 <li><span>Certificato medico</span><strong id="dossier-med">Non caricato</strong></li>
                 <li><span>Selfie anti-fake</span><strong id="dossier-selfie-status">In attesa</strong></li>
                 <li><span>Revisione governance</span><strong id="dossier-step-label">In attesa</strong></li>
@@ -4645,20 +4645,20 @@
             <button type="button" class="es-verify-go" id="es-verify-card-go">Allega documenti</button>
           </div>
           <!-- Badge request & complaint actions -->
-          <div class="pf-aside-card" id="dossier-verify-actions" style="margin-top:1.5rem;">
+          <div class="pf-aside-card es-ix-53" id="dossier-verify-actions">
             <h3 class="pf-aside-title">Azioni disponibili</h3>
-            <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:0.75rem;">
+            <div class="es-ix-96">
               <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-richiedi-badge" onclick="openRequestBadgeModal()">
-                <i data-lucide="badge-check" style="width:14px;height:14px;"></i> Richiedi Badge di Verifica
+                <i class="es-ix-1" data-lucide="badge-check"></i> Richiedi Badge di Verifica
               </button>
               <button type="button" class="btn btn-outline-pill pf-btn-solid" onclick="downloadAmbassadorPdf()">
-                <i data-lucide="download" style="width:14px;height:14px;"></i> Scarica Contratto PDF
+                <i class="es-ix-1" data-lucide="download"></i> Scarica Contratto PDF
               </button>
               <button type="button" class="btn btn-outline-pill" onclick="downloadGDPRPdf()">
-                <i data-lucide="file-text" style="width:14px;height:14px;"></i> PDF Dossier GDPR
+                <i class="es-ix-1" data-lucide="file-text"></i> PDF Dossier GDPR
               </button>
               <button type="button" class="btn btn-outline-pill" onclick="openSubmitComplaintModal()">
-                <i data-lucide="alert-circle" style="width:14px;height:14px;color:#f59e0b;"></i> Invia Segnalazione / Reclamo
+                <i class="es-ix-97" data-lucide="alert-circle"></i> Invia Segnalazione / Reclamo
               </button>
             </div>
           </div>
@@ -4726,7 +4726,7 @@
                 <h2 data-i18n="map.regionsTitle">Regioni con club iscritti</h2>
                 <p data-i18n="map.regionsLead">Qui compaiono solo i club registrati su Elisee Scout. La città natale li colloca sulla mappa e nella regione corrispondente.</p>
               </div>
-              <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+              <div class="es-ix-98">
                 <button type="button" class="es-map-reset-btn" id="es-map-reset-btn" onclick="if(window.EliseeClubMap) window.EliseeClubMap.resetView();" data-i18n-title="map.resetItaly" title="Torna a tutta Italia">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                   <span data-i18n="map.resetItaly">Torna a tutta Italia</span>
@@ -4894,7 +4894,7 @@
         <div class="es-mk-tabs" role="tablist" data-i18n-aria="mk.tabs" aria-label="Hub Mercato">
           <button type="button" class="es-mk-tab is-on" data-mk="secret" data-i18n="mk.tabSecret">Lista riservata</button>
           <button type="button" class="es-mk-tab" data-mk="wall" data-i18n="mk.tabWall">Wall trattative</button>
-          <button type="button" class="btn btn-outline-pill es-mk-back-bacheca" data-action="back-bacheca" style="margin-left:auto; background:transparent; border-color:rgba(56,189,248,0.3); color:#38bdf8;" onclick="event.stopPropagation(); if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Torna alla Bacheca</button>
+          <button type="button" class="btn btn-outline-pill es-mk-back-bacheca es-ix-99" data-action="back-bacheca" onclick="event.stopPropagation(); if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Torna alla Bacheca</button>
         </div>
         <div id="es-mk-secret">
           <p class="es-mk-stealth" id="es-mk-stealth-banner" data-i18n="mk.stealth">Modalità riservata · visibile solo a te · zero notifiche esterne</p>
@@ -4915,8 +4915,8 @@
               <button type="button" class="es-mk-btn" id="es-mk-add" data-i18n="mk.add">Aggiungi target</button>
             </div>
             <div class="es-mk-picker" id="es-mk-picker" hidden>
-              <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-                <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(148,163,184,.8);">Profili disponibili</span>
+              <div class="es-ix-100">
+                <span class="es-ix-101">Profili disponibili</span>
                 <span class="es-mk-pick-count" id="es-mk-pick-count" aria-live="polite" aria-atomic="true">0</span>
               </div>
               <input type="search" id="es-mk-pick-q" placeholder="Nome, ruolo, città…">
@@ -5005,40 +5005,40 @@
             <!-- Radar 1 -->
             <div class="radar-card" data-role="DS-Top">
               <h3>Northwind Labs</h3>
-              <div class="score-circle" style="--score: 9.8">
+              <div class="score-circle es-ix-102">
                 <span class="score-circle-val">9.8</span>
               </div>
               <div class="radar-bar">
-                <span class="bar" style="width:98%"></span>
+                <span class="bar es-ix-103"></span>
               </div>
               <p>Predizione: DS-Top • Ruolo: Lead Scout</p>
             </div>
             <!-- Radar 2 -->
             <div class="radar-card" data-role="Scout-Expert">
               <h3>Halcyon Bank</h3>
-              <div class="score-circle" style="--score: 7.4">
+              <div class="score-circle es-ix-104">
                 <span class="score-circle-val">7.4</span>
               </div>
               <div class="radar-bar">
-                <span class="bar" style="width:74%"></span>
+                <span class="bar es-ix-105"></span>
               </div>
               <p>Predizione: Scout-Expert • Ruolo: Wall Transfer</p>
             </div>
             <!-- Radar 3 -->
             <div class="radar-card" data-role="Analyst">
               <h3>Nova FC</h3>
-              <div class="score-circle" style="--score: 6.1">
+              <div class="score-circle es-ix-106">
                 <span class="score-circle-val">6.1</span>
               </div>
               <div class="radar-bar">
-                <span class="bar" style="width:61%"></span>
+                <span class="bar es-ix-107"></span>
               </div>
               <p>Predizione: Analyst • Ruolo: Market Scout</p>
             </div>
           </div>
           <!-- Badge reattivo live -->
-          <div style="text-align:center; margin-top:24px;">
-            <div class="badge-pill" style="padding:10px 24px; border-radius:9999px; background:#ff2d55; color:#fff; font-weight:700; font-size:13px; display:inline-block; cursor:pointer;">
+          <div class="es-ix-108">
+            <div class="badge-pill es-ix-109">
               Badge Mobile Msgs: <span id="live-radar-badge">0</span>
             </div>
           </div>
@@ -5064,8 +5064,8 @@
           <!-- Matching IA risultato -->
           <div id="matching-result" class="matching-result"></div>
           <!-- Live Badge 800ms -->
-          <div style="text-align:center; margin-top:24px;">
-            <div class="badge-pill" style="padding:10px 24px; border-radius:9999px; background:#00f5d4; color:#000; font-weight:800; font-size:13px; display:inline-block; cursor:pointer;">
+          <div class="es-ix-108">
+            <div class="badge-pill es-ix-110">
               Live Ticker Badge: <span id="live-badge">0</span>
             </div>
           </div>
@@ -5076,8 +5076,8 @@
           <div class="market-grid">
             <!-- Available Transfers -->
             <div class="market-list">
-              <div style="padding:16px;">
-                <input type="text" id="market-filter" placeholder="🔍 Search IA stealth... (DS / Scout / Wall)" class="market-filter" style="width:100%; padding:14px 20px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.12); border-radius:9999px; color:#fff; font-size:14px; box-sizing:border-box;">
+              <div class="es-ix-111">
+                <input type="text" id="market-filter" placeholder="🔍 Search IA stealth... (DS / Scout / Wall)" class="market-filter es-ix-112">
               </div>
               
               <div class="market-item" draggable="true" data-role="DS"><span>Northwind Labs • €2,400 • Wall Transfer</span><span class="market-pill">DS</span></div>
@@ -5136,8 +5136,8 @@
 
             <!-- Secret List -->
             <div class="market-list market-secret-list">
-              <div style="padding:16px 20px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:space-between;">
-                <h3 style="margin:0; color:#00f5d4; font-size:16px;">🔒 Secret List Stealth</h3>
+              <div class="es-ix-113">
+                <h3 class="es-ix-114">🔒 Secret List Stealth</h3>
                 <span class="market-badge">10</span>
               </div>
               <div class="market-item stealth">
@@ -5151,8 +5151,8 @@
 
           <!-- Wall Transfer Interactive -->
           <div class="market-wall" onclick="this.style.transition='none'; this.innerHTML='<h3>💥 Wall Transfer Activated</h3><p>Drop to Secret List</p>'; setTimeout(() => location.reload(), 1800)">
-            <h3 style="color:#00f5d4; margin-bottom:8px;">💥 Wall Transfer FIFA Style</h3>
-            <p style="color:#bbb; margin:0;">Trascina un elemento nella Secret List per renderlo Stealth • Zero Latenza</p>
+            <h3 class="es-ix-115">💥 Wall Transfer FIFA Style</h3>
+            <p class="es-ix-116">Trascina un elemento nella Secret List per renderlo Stealth • Zero Latenza</p>
           </div>
 
           <!-- Timeline mock -->
@@ -5188,7 +5188,7 @@
         <!-- AREA BACHECA – HEROUX35 -->
         <section class="bacheca-container" id="area-bacheca-pro">
           <div class="header">
-            <h1 style="color:#00f5d4; font-size:28px; margin:0; font-weight:800; letter-spacing:-0.5px;">ELISEE SCOUT</h1>
+            <h1 class="es-ix-117">ELISEE SCOUT</h1>
             <div class="header-buttons">
               <button onclick="if(window.createRipple)window.createRipple(event.clientX, event.clientY); if(window.EliseeSuccessSystem)window.EliseeSuccessSystem.showToast('Nuovo annuncio pronto per la pubblicazione', 1800);" class="btn primary">Nuovo annuncio</button>
               <button onclick="if(window.createRipple)window.createRipple(event.clientX, event.clientY); if(window.EliseeSuccessSystem)window.EliseeSuccessSystem.showToast('Creazione profilo avviata', 1800);" class="btn primary">Crea profilo</button>
@@ -5289,7 +5289,7 @@
 
         <!-- SCHEDE TECNICHE IA PRO – HEROUX36 -->
         <section id="schede-tecniche-pro" class="radar-section">
-          <h2 style="color:#00f5d4; text-align:center; margin-bottom:40px; font-size:28px; font-weight:800;">Schede Tecniche IA • Radar Live</h2>
+          <h2 class="es-ix-118">Schede Tecniche IA • Radar Live</h2>
           <div class="radar-grid">
             <div class="radar-card" data-role="Northwind Labs">
               <h3>Northwind Labs</h3>
@@ -5314,7 +5314,7 @@
 
         <!-- CANDIDATURE CLUB PRO – HEROUX37 -->
         <section id="candidature-club-pro" class="candidature-section">
-          <h2 style="color:#00f5d4; text-align:center; margin-bottom:40px; font-size:28px; font-weight:800;">Candidature Club • Matching IA Full</h2>
+          <h2 class="es-ix-118">Candidature Club • Matching IA Full</h2>
           <div class="form-grid">
             <div class="form-block">
               <h3>❇️ Cosa offriamo</h3>
@@ -5406,7 +5406,7 @@
   <div id="modal-pubblica-annuncio" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="pubblica-annuncio-title">
     <div class="modal-card es-pub-card">
       <button type="button" class="modal-close" id="pubblica-annuncio-close" aria-label="Chiudi">&times;</button>
-      <p class="portfolio-kicker" style="margin:0 0 0.35rem;">Bacheca annunci</p>
+      <p class="portfolio-kicker es-ix-119">Bacheca annunci</p>
       <h3 id="pubblica-annuncio-title">Nuovo annuncio</h3>
       <p class="es-pub-intro">Compila l’offerta e il profilo ricercato. La richiesta diventa visibile in Bacheca. Con l’IA attiva, i profili più compatibili vengono candidati in automatico e le schede restano qui, senza e-mail.</p>
       <form id="form-pubblica-annuncio" class="pf-form es-pub-form" onsubmit="return false;">
@@ -5499,15 +5499,15 @@
   </div>
 
   <div class="modal-overlay" id="governance-action-modal" style="display: none;">
-    <div class="modal-card" style="max-width: 520px; text-align: center; padding: 2.5rem 2rem; background: rgba(10, 15, 25, 0.95); -webkit-backdrop-filter: blur(25px); backdrop-filter: blur(25px); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px; box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);">
+    <div class="modal-card es-ix-120">
       <button class="modal-close" onclick="closeGovernanceActionModal()">&times;</button>
-      <div id="gov-modal-icon-container" style="width: 70px; height: 70px; border-radius: 50%; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--accent-primary); font-size: 2rem;">
+      <div class="es-ix-121" id="gov-modal-icon-container">
         <i data-lucide="shield-check" id="gov-modal-icon"></i>
       </div>
-      <div id="gov-modal-badge-target" style="display: inline-block; padding: 0.25rem 0.85rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.75rem;"></div>
-      <h3 id="gov-modal-title-target" style="font-size: 1.35rem; color: #fff; margin-bottom: 0.75rem;"></h3>
-      <p id="gov-modal-desc-target" class="text-muted" style="font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.75rem;"></p>
-      <button class="btn btn-primary btn-block btn-lg" onclick="closeGovernanceActionModal()" style="padding: 0.85rem 1.5rem; font-size: 0.95rem; font-weight: bold; width: 100%;">
+      <div class="es-ix-122" id="gov-modal-badge-target"></div>
+      <h3 class="es-ix-123" id="gov-modal-title-target"></h3>
+      <p id="gov-modal-desc-target" class="text-muted es-ix-124"></p>
+      <button class="btn btn-primary btn-block btn-lg es-ix-125" onclick="closeGovernanceActionModal()">
         <i data-lucide="check-circle-2"></i> CONFERMA & CHIUDI
       </button>
     </div>
@@ -5515,33 +5515,33 @@
 
   <!-- SCHERMATA INTEGRALE ISPEZIONE DOCUMENTO EX ART. 16/18.4 GDPR (SOLO LETTURA SCHERMO) -->
   <div class="modal-overlay" id="fullscreen-document-viewer" style="display: none; z-index: 9999999; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow-y: auto !important; background: rgba(5, 8, 15, 0.98); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);">
-    <div style="width: 100%; min-height: 100vh; display: flex; flex-direction: column; background: #04060a; position: relative;">
+    <div class="es-ix-126">
       
       <!-- TOOLBAR SUPERIORE SCHERMATA (FIXED STICKY) -->
-      <div style="position: sticky; top: 0; left: 0; width: 100%; height: 65px; background: #080a0f; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; z-index: 100; flex-shrink: 0;">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); display: flex; align-items: center; justify-content: center; color: #38bdf8;">
+      <div class="es-ix-127">
+        <div class="es-ix-128">
+          <div class="es-ix-129">
             <i data-lucide="file-check-2"></i>
           </div>
           <div>
-            <h3 id="doc-viewer-title-target" style="font-size: 1.05rem; color: #fff; margin: 0; letter-spacing: 0.02em;">ISPEZIONE DOCUMENTO RICHIESTA RETTIFICA</h3>
-            <span id="doc-viewer-badge-target" style="font-size: 0.75rem; color: #38bdf8; font-weight: bold;">DOCUMENTO DIGITALE UFFICIALE (VISUALIZZAZIONE A SCHERMO INTERO - NESSUN DOWNLOAD)</span>
+            <h3 class="es-ix-130" id="doc-viewer-title-target">ISPEZIONE DOCUMENTO RICHIESTA RETTIFICA</h3>
+            <span class="es-ix-131" id="doc-viewer-badge-target">DOCUMENTO DIGITALE UFFICIALE (VISUALIZZAZIONE A SCHERMO INTERO - NESSUN DOWNLOAD)</span>
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <span style="font-size: 0.78rem; color: #94a3b8; background: rgba(255, 255, 255, 0.05); padding: 0.35rem 0.75rem; border-radius: 6px;">
+        <div class="es-ix-128">
+          <span class="es-ix-132">
             🔒 Ispezione Diretta a Schermo
           </span>
-          <button type="button" class="btn btn-sm btn-secondary" onclick="closeFullscreenDocumentViewer()" style="font-weight: bold; padding: 0.55rem 1.25rem; color: #fff; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); cursor: pointer;">
+          <button type="button" class="btn btn-sm btn-secondary es-ix-133" onclick="closeFullscreenDocumentViewer()">
             ✕ CHIUDI SCHERMATA
           </button>
         </div>
       </div>
 
       <!-- AREA CENTRALE VISUALIZZATORE DOCUMENTO (SCROLLABILE SENZA BLOCCHI) -->
-      <div style="flex: 1; overflow-y: auto !important; padding: 2.5rem 1rem 5rem 1rem; display: flex; justify-content: center; background: #04060a; -webkit-overflow-scrolling: touch;">
-        <div id="doc-viewer-paper-target" style="width: 100%; max-width: 850px; margin: 0 auto; min-height: max-content;">
+      <div class="es-ix-134">
+        <div class="es-ix-135" id="doc-viewer-paper-target">
           <!-- Contenuto documento generato da openInspectRequestFileModal(id) -->
         </div>
       </div>
@@ -6691,7 +6691,7 @@
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20261020_PERF3"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
-  <script src="player-card.js?v=20261020_FIX2"></script>
+  <script src="player-card.js?v=20261020_STY1"></script>
   <script>EliseeLibs.lazyMinigioco('minigioco-carriera.css?v=20260913_HUBPOLISH2', 'minigioco-carriera.js?v=20261018_SEC1');</script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D (Architettura Completa) -->
   <script src="elisee-world/src/core/state-machine.js?v=20260906_EWGBA1"></script>
@@ -6756,7 +6756,7 @@
   <script src="squadre-select.js?v=20261001_FIX15"></script>
   <script src="formazione-squadra.js?v=20261019_SEC5"></script>
   <script src="manager-runtime.js?v=20261018_SEC1"></script>
-  <script src="tc-panel.js?v=20260915_TCSERIF1"></script>
+  <script src="tc-panel.js?v=20261020_STY1"></script>
   <script src="elisee-staff.js?v=20261018_SEC1"></script>
   <script>EliseeRoleScripts.write([
     'app-admin-panels.js?v=20260918_CCDROPDOWN1'
@@ -6785,15 +6785,15 @@
   <script src="club-role-ops.js?v=20261019_RD1"></script>
   <script src="dash-real.js?v=20261020_FIX2"></script>
   <script>EliseeRoleScripts.write([
-    'player-dash.js?v=20261020_FIX2',
+    'player-dash.js?v=20261020_STY1',
     'avatar-3d.js?v=20260924_KITBUG1',
     'elisee-supabase.js?v=20261020_FIX2',
     'squadra-membri.js?v=20261019_SQ2',
-    'coach-dash.js?v=20261020_FIX2',
+    'coach-dash.js?v=20261020_STY1',
     'ds-dash.js?v=20261020_FIX2',
-    'pres-dash.js?v=20261020_PRES1',
-    'vice-dash.js?v=20261020_FIX2',
-    'dash-i18n-data.js?v=20261020_FIX2',
+    'pres-dash.js?v=20261020_STY1',
+    'vice-dash.js?v=20261020_STY1',
+    'dash-i18n-data.js?v=20261020_STY1',
     'dash-i18n.js?v=20261020_FIX2',
     'role-dash-honest.js?v=20261019_RD3',
     'fisio-dash.js?v=20261019_RD2',
@@ -6814,7 +6814,7 @@
     'bt-dash.js?v=20261020_FIX2',
     'tifoso-dash.js?v=20261020_FIX2'
   ]);</script>
-  <script src="giorn-dash.js?v=20261020_FIX2"></script>
+  <script src="giorn-dash.js?v=20261020_STY1"></script>
   <script src="scopri-profili.js?v=20261020_FIX2"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20261020_FIX2"></script>
@@ -6996,23 +6996,23 @@
 
   <!-- Modal: Richiesta Badge di Verifica -->
   <div id="elisee-badge-request-modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="badge-modal-title">
-    <div class="modal-card" style="max-width:480px;">
+    <div class="modal-card es-ix-136">
       <button class="modal-close" id="badge-modal-close" aria-label="Chiudi">&times;</button>
-      <div style="text-align:center; margin-bottom:1.25rem;">
-        <i data-lucide="badge-check" style="width:48px;height:48px;color:#38bdf8;"></i>
+      <div class="es-ix-137">
+        <i class="es-ix-138" data-lucide="badge-check"></i>
       </div>
-      <h3 id="badge-modal-title" style="text-align:center; font-size:1.4rem; color:#fff; margin-bottom:0.75rem;">Richiedi Badge di Verifica</h3>
-      <p style="text-align:center; color:#94a3b8; font-size:0.88rem; margin-bottom:1.5rem;">Invia la richiesta di verifica del profilo al team di governance. Riceverai una risposta entro 48 ore.</p>
+      <h3 class="es-ix-139" id="badge-modal-title">Richiedi Badge di Verifica</h3>
+      <p class="es-ix-140">Invia la richiesta di verifica del profilo al team di governance. Riceverai una risposta entro 48 ore.</p>
       <div class="pf-form">
         <div class="form-group">
           <label>Note aggiuntive (opzionale)</label>
-          <textarea id="badge-notes" class="pf-input" rows="3" placeholder="Es: ho caricato il certificato medico e il selfie anti-fake" style="resize:vertical;"></textarea>
+          <textarea id="badge-notes" class="pf-input es-ix-141" rows="3" placeholder="Es: ho caricato il certificato medico e il selfie anti-fake"></textarea>
         </div>
       </div>
-      <div style="display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1.25rem;">
+      <div class="es-ix-142">
         <button type="button" class="btn btn-outline-pill" id="badge-modal-cancel">Annulla</button>
         <button type="button" class="btn btn-outline-pill pf-btn-solid" id="badge-modal-confirm">
-          <i data-lucide="send" style="width:14px;height:14px;"></i> Invia Richiesta
+          <i class="es-ix-1" data-lucide="send"></i> Invia Richiesta
         </button>
       </div>
     </div>
@@ -7020,13 +7020,13 @@
 
   <!-- Modal: Invio Reclamo / Segnalazione Art. 77 GDPR -->
   <div id="elisee-complaint-modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="complaint-modal-title">
-    <div class="modal-card" style="max-width:520px;">
+    <div class="modal-card es-ix-143">
       <button class="modal-close" id="complaint-modal-close" aria-label="Chiudi">&times;</button>
-      <div style="text-align:center; margin-bottom:1.25rem;">
-        <i data-lucide="alert-circle" style="width:48px;height:48px;color:#f59e0b;"></i>
+      <div class="es-ix-137">
+        <i class="es-ix-144" data-lucide="alert-circle"></i>
       </div>
-      <h3 id="complaint-modal-title" style="text-align:center; font-size:1.4rem; color:#fff; margin-bottom:0.75rem;">Segnalazione / Reclamo GDPR</h3>
-      <p style="text-align:center; color:#94a3b8; font-size:0.88rem; margin-bottom:1.5rem;">Invia una segnalazione al Responsabile della Protezione dei Dati (Art. 77 GDPR).</p>
+      <h3 class="es-ix-139" id="complaint-modal-title">Segnalazione / Reclamo GDPR</h3>
+      <p class="es-ix-140">Invia una segnalazione al Responsabile della Protezione dei Dati (Art. 77 GDPR).</p>
       <div class="pf-form">
         <div class="form-group">
           <label for="complaint-type">Tipologia di reclamo *</label>
@@ -7042,13 +7042,13 @@
         </div>
         <div class="form-group">
           <label for="complaint-desc">Descrizione *</label>
-          <textarea id="complaint-desc" class="pf-input" rows="4" placeholder="Descrivi dettagliatamente la segnalazione..." required style="resize:vertical;"></textarea>
+          <textarea id="complaint-desc" class="pf-input es-ix-141" rows="4" placeholder="Descrivi dettagliatamente la segnalazione..." required></textarea>
         </div>
       </div>
-      <div style="display:flex; gap:0.75rem; justify-content:flex-end; margin-top:1.25rem;">
+      <div class="es-ix-142">
         <button type="button" class="btn btn-outline-pill" id="complaint-modal-cancel">Annulla</button>
         <button type="button" class="btn btn-outline-pill pf-btn-solid" id="complaint-modal-submit">
-          <i data-lucide="send" style="width:14px;height:14px;"></i> Invia Segnalazione
+          <i class="es-ix-1" data-lucide="send"></i> Invia Segnalazione
         </button>
       </div>
     </div>
@@ -7088,10 +7088,10 @@
       </div>
       <div class="sw-top-actions">
         <button type="button" class="sw-icon-btn" title="Scarica Immagine Story (1080x1920 PNG)" onclick="window.SeasonWrapped.exportPng()">
-          <i data-lucide="download" style="width:18px;height:18px;"></i>
+          <i class="es-ix-145" data-lucide="download"></i>
         </button>
         <button type="button" class="sw-icon-btn" title="Chiudi Story" onclick="window.SeasonWrapped.close()">
-          <i data-lucide="x" style="width:20px;height:20px;"></i>
+          <i class="es-ix-146" data-lucide="x"></i>
         </button>
       </div>
     </div>
@@ -7126,13 +7126,13 @@
   <!-- Modal: Countdown Wrapped Day -->
   <div id="elisee-wrapped-countdown-modal" class="sw-modal-overlay" role="dialog" aria-modal="true" aria-label="Countdown Wrapped Day">
     <div class="sw-countdown-card">
-      <div style="font-size:0.8rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#38bdf8; margin-bottom:0.5rem;">
+      <div class="es-ix-147">
         MANCA SEMPRE MENO
       </div>
-      <h3 style="font-size:1.45rem; font-weight:900; color:#fff; margin-bottom:0.5rem; font-family:'Outfit', sans-serif;">
+      <h3 class="es-ix-148">
         La tua stagione sta per essere impacchettata
       </h3>
-      <p style="font-size:0.88rem; color:#94a3b8; margin-bottom:1rem;">
+      <p class="es-ix-149">
         Il <strong>15 Giugno alle ore 20:00</strong> sbloccherai il tuo Season Wrapped con numeri, superlativi e la tua Card OVR.
       </p>
 
@@ -7151,10 +7151,10 @@
         </div>
       </div>
 
-      <div style="display:flex; gap:0.75rem; justify-content:center;">
+      <div class="es-ix-150">
         <button type="button" class="btn btn-outline-pill" onclick="window.SeasonWrapped.closeCountdown()">Chiudi</button>
         <button type="button" id="sw-cd-btn-optin" class="btn btn-outline-pill pf-btn-solid" onclick="window.SeasonWrapped.subscribeReminder()">
-          <i data-lucide="bell" style="width:14px;height:14px;"></i> Attiva Promemoria
+          <i class="es-ix-1" data-lucide="bell"></i> Attiva Promemoria
         </button>
       </div>
     </div>
@@ -7162,17 +7162,17 @@
 
   <!-- Modal: Conferma Logout Admin -->
   <div id="elisee-logout-confirm-modal" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="logout-confirm-title">
-    <div class="modal-card" style="max-width:400px; text-align:center;">
+    <div class="modal-card es-ix-151">
       <button class="modal-close" id="logout-confirm-close" aria-label="Chiudi">&times;</button>
-      <div style="margin-bottom:1.25rem;">
-        <i data-lucide="log-out" style="width:48px;height:48px;color:#ef4444;"></i>
+      <div class="es-ix-152">
+        <i class="es-ix-153" data-lucide="log-out"></i>
       </div>
-      <h3 id="logout-confirm-title" style="font-size:1.3rem; color:#fff; margin-bottom:0.5rem;">Conferma Logout</h3>
-      <p style="color:#94a3b8; font-size:0.88rem; margin-bottom:1.5rem;">Sei sicuro di voler uscire dall'area riservata? Dovrai reinserire le credenziali al prossimo accesso.</p>
-      <div style="display:flex; gap:0.75rem; justify-content:center;">
+      <h3 class="es-ix-154" id="logout-confirm-title">Conferma Logout</h3>
+      <p class="es-ix-155">Sei sicuro di voler uscire dall'area riservata? Dovrai reinserire le credenziali al prossimo accesso.</p>
+      <div class="es-ix-150">
         <button type="button" class="btn btn-outline-pill" id="logout-confirm-cancel">Rimani</button>
-        <button type="button" class="btn btn-outline-pill" style="border-color:rgba(239,68,68,0.5);color:#ef4444;" id="logout-confirm-proceed">
-          <i data-lucide="log-out" style="width:14px;height:14px;"></i> Esci
+        <button type="button" class="btn btn-outline-pill es-ix-156" id="logout-confirm-proceed">
+          <i class="es-ix-1" data-lucide="log-out"></i> Esci
         </button>
       </div>
     </div>
@@ -7180,8 +7180,8 @@
 
   <!-- Hidden elements: chart tooltip, spin keyframe style, accessibility btn, select -->
   <div id="chart-hover-tooltip" style="position:fixed;background:rgba(10,15,25,0.92);border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:0.5rem 0.85rem;font-size:0.78rem;color:#e2e8f0;pointer-events:none;z-index:9999;display:none;">
-    <div id="tooltip-time" style="color:#94a3b8;margin-bottom:0.1rem;"></div>
-    <div id="tooltip-val" style="font-weight:700;color:#38bdf8;"></div>
+    <div class="es-ix-157" id="tooltip-time"></div>
+    <div class="es-ix-158" id="tooltip-val"></div>
   </div>
   <div id="amb-ai-blocked-style" hidden></div>
   <div id="spin-kf" hidden></div>
@@ -7256,32 +7256,32 @@
     <div class="radius-box nested">Nested Card</div>
     <div class="radius-pill">Pill Button</div>
     <div class="radius-pill radius-edges">Edges Toggle</div>
-    <div class="radius-ring" style="--gap: 2px;">Ring Button</div>
+    <div class="radius-ring es-ix-159">Ring Button</div>
     <div class="radius-image clip">
       <img src="immagini/logo/logo-site.png" alt="Image" />
     </div>
   </div>
   <!-- SUCCESS IS A SYSTEM – HEROUX28 -->
   <div id="success-system" class="success-box" style="display:none;" aria-hidden="true">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <h2 style="font-size:16px; margin:0; color:#fff;">Success is a System • HEROUX28</h2>
-      <button onclick="document.getElementById('success-system').style.display='none'" style="background:none; border:none; color:#888; font-size:18px; cursor:pointer;">&times;</button>
+    <div class="es-ix-160">
+      <h2 class="es-ix-161">Success is a System • HEROUX28</h2>
+      <button class="es-ix-162" onclick="document.getElementById('success-system').style.display='none'">&times;</button>
     </div>
-    <div style="display:flex; flex-direction:column; gap:8px;">
-      <button id="trigger-milestone" class="success-pill" style="border:none; text-align:center;">Trigger Milestone Paid €2,400</button>
-      <button onclick="EliseeSuccessSystem.showToast('Reversible toast - notifications saved', 2500)" class="es-btn es-btn-sm" style="border-radius:9999px;">Reversible Toast</button>
-      <button onclick="EliseeSuccessSystem.triggerConfetti(30)" class="es-btn es-btn-sm" style="border-radius:9999px;">Confetti (milestone only)</button>
-      <button onclick="EliseeSuccessSystem.showRareJoy()" class="es-btn es-btn-sm" style="border-radius:9999px;">Rare Joy (First Invoice Paid)</button>
-      <button onclick="EliseeSuccessSystem.openLoop('INV-2051')" class="es-btn es-btn-sm" style="border-radius:9999px;">Open Loop</button>
+    <div class="es-ix-163">
+      <button id="trigger-milestone" class="success-pill es-ix-164">Trigger Milestone Paid €2,400</button>
+      <button onclick="EliseeSuccessSystem.showToast('Reversible toast - notifications saved', 2500)" class="es-btn es-btn-sm es-ix-165">Reversible Toast</button>
+      <button onclick="EliseeSuccessSystem.triggerConfetti(30)" class="es-btn es-btn-sm es-ix-165">Confetti (milestone only)</button>
+      <button onclick="EliseeSuccessSystem.showRareJoy()" class="es-btn es-btn-sm es-ix-165">Rare Joy (First Invoice Paid)</button>
+      <button onclick="EliseeSuccessSystem.openLoop('INV-2051')" class="es-btn es-btn-sm es-ix-165">Open Loop</button>
     </div>
 
     <!-- Badge reattivo -->
-    <div class="badge-pill" style="margin-top:20px; padding:8px 20px; border-radius:9999px; background:#ff2d55; color:#fff; font-weight:700; font-size:13px; text-align:center; cursor:pointer;">
+    <div class="badge-pill es-ix-166">
       Badge Mobile Msgs: <span id="live-badge-demo">3</span>
     </div>
 
     <!-- UX Engine collegato -->
-    <div id="ux-engine" class="success-box" style="margin-top:16px;"></div>
+    <div id="ux-engine" class="success-box es-ix-167"></div>
   </div>
   <script>
     // Aggiornamento live badge

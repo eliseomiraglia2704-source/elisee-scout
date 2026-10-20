@@ -1327,19 +1327,19 @@
               ) : (
                 '<div class="es-cos-match-target is-empty">' +
                   '<p class="label">Prossima Partita</p>' +
-                  '<p class="when" id="match-when" style="color:#64748b;">Nessuna gara in programma</p>' +
-                  '<div class="opp" style="opacity:0.75;">' +
-                    '<div class="crest crest--sm es-cos-crest--sm" style="opacity:0.4;">--</div>' +
+                  '<p class="when es-cdx-1" id="match-when">Nessuna gara in programma</p>' +
+                  '<div class="opp es-cdx-2">' +
+                    '<div class="crest crest--sm es-cos-crest--sm es-cdx-3">--</div>' +
                     '<div>' +
-                      '<strong id="match-opp" style="color:#94a3b8; font-weight:600;">In attesa di calendario ufficiale</strong>' +
-                      '<span id="match-comp" style="color:#64748b; font-size:0.75rem;">Programma una gara nella sezione Calendario</span>' +
+                      '<strong class="es-cdx-4" id="match-opp">In attesa di calendario ufficiale</strong>' +
+                      '<span class="es-cdx-5" id="match-comp">Programma una gara nella sezione Calendario</span>' +
                     '</div>' +
                   '</div>' +
                 '</div>' +
                 '<div class="es-cos-countdown is-empty">' +
                   '<div>' +
                     '<p class="label">Countdown Gara</p>' +
-                    '<div class="es-cos-countdown-nums" style="opacity:0.4;">' +
+                    '<div class="es-cos-countdown-nums es-cdx-3">' +
                       '<div><strong id="cd-days">--</strong><span>Giorni</span></div>' +
                       '<div><strong id="cd-hours">--</strong><span>Ore</span></div>' +
                       '<div><strong id="cd-mins">--</strong><span>Min</span></div>' +
@@ -1411,7 +1411,7 @@
         '<button type="button" class="es-cos-nav-tab ' + (isMoreActive ? 'is-active' : '') + '" id="btn-toggle-tabs-more" aria-haspopup="true" aria-expanded="false" title="Altre sezioni staff">' +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>' +
           '<span>' + esc(activeLabel) + '</span>' +
-          '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"/></svg>' +
+          '<svg class="es-cdx-6" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>' +
         '</button>' +
         '<div class="es-cos-tab-more-menu" id="es-cos-tabs-more-menu">' +
           '<button type="button" class="' + (activeTab === 'gps_carichi' ? 'is-active' : '') + '" data-tab-nav="gps_carichi">' +
@@ -1512,7 +1512,7 @@
     var SOFT_MAP = { blue: "var(--cos-blue-soft)", green: "var(--cos-green-soft)", red: "var(--cos-red-soft)", amber: "var(--cos-amber-soft)" };
 
     return (
-      '<div style="display:flex; flex-direction:column; gap:18px;">' +
+      '<div class="es-cdx-7">' +
         // 1. RIEPILOGO STAGIONALE (8 Stat Cards - Reali da Supabase)
         '<section class="es-cos-card es-cos-stat-grid-8">' +
           statItems.map(function (s) {
@@ -1534,7 +1534,7 @@
         // 2. GRIGLIA CENTRALE (Calendario 1.4fr / Ultima Sessione 1.1fr / Notifiche 1fr)
         '<section class="es-cos-grid-main-3">' +
           // Blocco A: Calendario Prossime Gare
-          '<div class="es-cos-card" style="padding:20px;">' +
+          '<div class="es-cos-card es-cdx-8">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
               '<span>Calendario Prossime Gare</span>' +
@@ -1551,20 +1551,20 @@
                   var miniCrest = (m.avv || 'AVV').slice(0, 3).toUpperCase();
                   return (
                     '<tr data-tab-nav="calendario" title="Dettagli gara ' + esc(m.avv) + '">' +
-                      '<td style="white-space:nowrap;"><span class="es-cos-match-dot" style="background:' + dotColor + ';"></span>' + esc(m.data) + '</td>' +
-                      '<td style="color:var(--cos-text-muted);">' + esc(m.comp) + '</td>' +
+                      '<td class="es-cdx-9"><span class="es-cos-match-dot" style="background:' + dotColor + ';"></span>' + esc(m.data) + '</td>' +
+                      '<td class="es-cdx-10">' + esc(m.comp) + '</td>' +
                       '<td><div class="es-cos-opp-cell"><span class="crest crest--sm es-cos-crest--sm">' + esc(miniCrest) + '</span>' + esc(m.avv) + '</div></td>' +
-                      '<td style="color:var(--cos-text-muted);">' + esc(m.stadio) + '</td>' +
+                      '<td class="es-cdx-10">' + esc(m.stadio) + '</td>' +
                       '<td><span class="es-cos-status-tag ' + tagClass + '">' + tagLabel + ' &rsaquo;</span></td>' +
                     '</tr>'
                   );
-                }).join('') : '<tr><td colspan="5" style="text-align:center; padding:2rem 1rem; color:var(--cos-text-muted);"><div style="font-weight:700; color:#f3f8fc; font-size:0.9rem;">Nessuna gara in programma</div><div style="font-size:0.75rem; margin-top:0.25rem;">Nessuna partita registrata su Supabase per questo club.</div></td></tr>') +
+                }).join('') : '<tr><td class="es-cdx-11" colspan="5"><div class="es-cdx-12">Nessuna gara in programma</div><div class="es-cdx-13">Nessuna partita registrata su Supabase per questo club.</div></td></tr>') +
               '</tbody>' +
             '</table>' +
           '</div>' +
 
           // Blocco B: Ultima Sessione Svolta
-          '<div class="es-cos-card" style="padding:20px;">' +
+          '<div class="es-cos-card es-cdx-8">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>' +
               '<span>Ultima Sessione</span>' +
@@ -1586,7 +1586,7 @@
                   '<strong>' + esc(data.ultimaSessione.tipo) + '</strong>' +
                   '<span>' + esc(data.ultimaSessione.data) + ' · ' + esc(data.ultimaSessione.durata) + '</span>' +
                 '</div>' +
-                '<span style="color:var(--cos-green); font-size:12px; font-weight:700;">Carico: ' + esc(data.ultimaSessione.carico) + '</span>' +
+                '<span class="es-cdx-14">Carico: ' + esc(data.ultimaSessione.carico) + '</span>' +
               '</div>' +
               '<div class="es-cos-session-substats">' +
                 '<div><strong>' + esc(data.ultimaSessione.giocatori) + '</strong>Giocatori</div>' +
@@ -1601,17 +1601,17 @@
                 '<button type="button" class="es-btn-outline-sm" data-tab-nav="report_staff">Apri Report &rarr;</button>' +
               '</div>'
             ) : (
-              '<div style="text-align:center; padding:2.5rem 1rem; color:var(--cos-text-muted);">' +
-                '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:0.5; margin-bottom:0.5rem;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>' +
-                '<div style="font-weight:700; color:#f3f8fc; font-size:0.9rem;">Nessuna seduta registrata</div>' +
-                '<div style="font-size:0.75rem; margin-top:0.25rem;">Le sedute svolte registrate su Supabase appariranno qui.</div>' +
-                '<button type="button" class="es-btn-outline-sm" data-tab-nav="allenamenti" style="margin-top:1rem;">Pianifica Seduta &rarr;</button>' +
+              '<div class="es-cdx-15">' +
+                '<svg class="es-cdx-16" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>' +
+                '<div class="es-cdx-12">Nessuna seduta registrata</div>' +
+                '<div class="es-cdx-13">Le sedute svolte registrate su Supabase appariranno qui.</div>' +
+                '<button type="button" class="es-btn-outline-sm es-cdx-17" data-tab-nav="allenamenti">Pianifica Seduta &rarr;</button>' +
               '</div>'
             )) +
           '</div>' +
 
           // Blocco C: Notifiche Live Staff
-          '<div class="es-cos-card" style="padding:20px;">' +
+          '<div class="es-cos-card es-cdx-8">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' +
               '<span>Notifiche & Novità</span>' +
@@ -1621,14 +1621,14 @@
               (data.notifiche && data.notifiche.length ? data.notifiche.slice(0, 5).map(function (n) {
                 return (
                   '<div class="es-cos-notif-item">' +
-                    '<span class="es-cos-notif-icon" style="background:var(--cos-blue-soft); color:var(--cos-blue);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>' +
-                    '<div style="flex:1;">' +
+                    '<span class="es-cos-notif-icon es-cdx-18"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>' +
+                    '<div class="es-cdx-19">' +
                       '<strong>' + esc(n.text) + '</strong>' +
                       '<span>' + esc(n.date) + '</span>' +
                     '</div>' +
                   '</div>'
                 );
-              }).join('') : '<div style="text-align:center; padding:2rem 1rem; color:var(--cos-text-muted); font-size:0.8rem;">Nessuna notifica staff presente.</div>') +
+              }).join('') : '<div class="es-cdx-20">Nessuna notifica staff presente.</div>') +
             '</div>' +
           '</div>' +
         '</section>' +
@@ -1636,7 +1636,7 @@
         // 3. GRIGLIA INFERIORE (Ultimi Log 1fr / Carico Settimanale 1.2fr / Prossimi Impegni 1fr)
         '<section class="es-cos-grid-lower-3">' +
           // Blocco 1: Ultimi Log Attività
-          '<div class="es-cos-card" style="padding:20px;">' +
+          '<div class="es-cos-card es-cdx-8">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>' +
               '<span>Ultimi Log Attività</span>' +
@@ -1653,12 +1653,12 @@
                     '<span class="es-cos-log-text">' + esc(l.text) + '</span>' +
                   '</div>'
                 );
-              }).join('') : '<div style="text-align:center; padding:1.5rem; color:var(--cos-text-muted); font-size:0.8rem;">Nessuna attività registrata di recente.</div>') +
+              }).join('') : '<div class="es-cdx-21">Nessuna attività registrata di recente.</div>') +
             '</div>' +
           '</div>' +
 
           // Blocco 2: Carico Settimanale Squadra (Reale aggregato da Supabase)
-          '<div class="es-cos-card" style="padding:20px;">' +
+          '<div class="es-cos-card es-cdx-8">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-4 4"/></svg>' +
               '<span>Carico Settimanale Squadra</span>' +
@@ -1668,7 +1668,7 @@
               '<div class="es-cos-weekchart">' +
                 ((data.carico && data.carico.giorni && data.carico.giorni.length) ? data.carico.giorni.map(function (g) {
                   return '<div class="es-cos-weekchart-bar"><div class="fill" style="height:' + (g.val || 0) + '%;"></div><span class="day">' + esc(g.day) + '</span></div>';
-                }).join('') : ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].map(function(d){ return '<div class="es-cos-weekchart-bar"><div class="fill" style="height:0%;"></div><span class="day">'+d+'</span></div>'; }).join('')) +
+                }).join('') : ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].map(function(d){ return '<div class="es-cos-weekchart-bar"><div class="fill es-cdx-22"></div><span class="day">'+d+'</span></div>'; }).join('')) +
               '</div>' +
             '</div>' +
             '<div class="es-cos-gauge-wrap">' +
@@ -1686,7 +1686,7 @@
           '</div>' +
 
           // Blocco 3: Prossimi Impegni Staff
-          '<div class="es-cos-card" style="padding:20px;">' +
+          '<div class="es-cos-card es-cdx-8">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/></svg>' +
               '<span>Prossimi Impegni Staff</span>' +
@@ -1703,7 +1703,7 @@
                     '<span class="what">' + esc(imp.type) + '</span>' +
                   '</div>'
                 );
-              }).join('') : '<div style="text-align:center; padding:1.5rem; color:var(--cos-text-muted); font-size:0.8rem;">Nessun impegno staff registrato.</div>') +
+              }).join('') : '<div class="es-cdx-21">Nessun impegno staff registrato.</div>') +
             '</div>' +
           '</div>' +
         '</section>' +
@@ -1743,9 +1743,9 @@
           '<button type="button" class="es-btn-cos-primary" id="btn-add-player-modal">+ Aggiungi Calciatore</button>' +
         '</div>' +
 
-        '<div class="es-cos-roster-toolbar" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">' +
+        '<div class="es-cos-roster-toolbar es-cdx-23">' +
           '<input type="text" class="es-cos-search-input" id="inp-roster-search" placeholder="Cerca calciatore per nome o ruolo..." value="' + esc(rosterSearchQuery) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem 0.85rem; border-radius:6px; font-size:0.82rem; width:260px;">' +
-          '<div style="display:flex; gap:0.35rem; flex-wrap:wrap;">' +
+          '<div class="es-cdx-24">' +
             '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'all' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="all">Tutti (' + (data.roster ? data.roster.length : 0) + ')</button>' +
             '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'por' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="por">Portieri</button>' +
             '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'dif' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="dif">Difensori</button>' +
@@ -1756,12 +1756,12 @@
           '</div>' +
         '</div>' +
 
-        '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1rem;">' +
+        '<div class="es-cdx-25">' +
           (list.length ? list.map(function (p, pIdx) {
             var isDisp = p.status === 'disp';
-            var pillHtml = isDisp ? '<span class="es-cos-badge-pill is-green"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#22c55e;margin-right:4px;"></span>Disponibile</span>' :
-              (p.statoDettagliato === 'infortunato' ? '<span class="es-cos-badge-pill is-danger" title="' + esc(p.motivo || 'Infortunio') + '"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ef4444;margin-right:4px;"></span>Infortunato' + (p.rientro ? (' · Rientro: ' + esc(p.rientro)) : '') + '</span>' :
-              (p.statoDettagliato === 'squalificato' ? '<span class="es-cos-badge-pill is-warn"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#eab308;margin-right:4px;"></span>Squalificato</span>' : '<span class="es-cos-badge-pill is-warn"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#f97316;margin-right:4px;"></span>' + esc(p.statoDettagliato || 'Differenziato') + '</span>'));
+            var pillHtml = isDisp ? '<span class="es-cos-badge-pill is-green"><span class="es-cdx-26"></span>Disponibile</span>' :
+              (p.statoDettagliato === 'infortunato' ? '<span class="es-cos-badge-pill is-danger" title="' + esc(p.motivo || 'Infortunio') + '"><span class="es-cdx-27"></span>Infortunato' + (p.rientro ? (' · Rientro: ' + esc(p.rientro)) : '') + '</span>' :
+              (p.statoDettagliato === 'squalificato' ? '<span class="es-cos-badge-pill is-warn"><span class="es-cdx-28"></span>Squalificato</span>' : '<span class="es-cos-badge-pill is-warn"><span class="es-cdx-29"></span>' + esc(p.statoDettagliato || 'Differenziato') + '</span>'));
             
             var birthInfo = esc(p.role) + ((p.birth && p.birth !== '--') ? (' · Classe ' + esc(p.birth)) : (p.data_nascita ? (' · Nato: ' + esc(p.data_nascita)) : '')) + ((p.luogo_nascita || p.pob) ? (' (' + esc(p.luogo_nascita || p.pob) + ')') : '');
             var cfVal = p.codice_fiscale || p.cf || '';
@@ -1769,18 +1769,18 @@
             var metaParts = [];
             if (cfVal) metaParts.push('CF: ' + esc(cfVal));
             if (emailVal) metaParts.push(esc(emailVal));
-            var metaHtml = metaParts.length ? '<div style="font-size:0.67rem; color:#64748b; font-family:monospace; margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + metaParts.join(' · ') + '</div>' : '';
+            var metaHtml = metaParts.length ? '<div class="es-cdx-30">' + metaParts.join(' · ') + '</div>' : '';
 
             return (
               '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem; display:flex; gap:0.75rem; align-items:center;" data-player-card-idx="' + pIdx + '">' +
-                '<div style="width:42px; height:42px; border-radius:8px; background:#040912; border:1px solid #16b9ff; color:#16b9ff; font-size:1.1rem; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0;">#' + esc(p.num) + '</div>' +
-                '<div style="display:flex; flex-direction:column; gap:2px; flex:1 1 auto; overflow:hidden;">' +
-                  '<div style="font-size:0.9rem; font-weight:800; color:#f3f8fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + esc(p.name) + '</div>' +
-                  '<div style="font-size:0.72rem; color:#8da8bc; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + birthInfo + '</div>' +
+                '<div class="es-cdx-31">#' + esc(p.num) + '</div>' +
+                '<div class="es-cdx-32">' +
+                  '<div class="es-cdx-33">' + esc(p.name) + '</div>' +
+                  '<div class="es-cdx-34">' + birthInfo + '</div>' +
                   metaHtml +
-                  '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px; gap:0.5rem; flex-wrap:wrap;">' +
+                  '<div class="es-cdx-35">' +
                     pillHtml +
-                    (p.motivo ? '<span style="font-size:0.68rem; color:#f87171; max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + esc(p.motivo) + '</span>' : '') +
+                    (p.motivo ? '<span class="es-cdx-36">' + esc(p.motivo) + '</span>' : '') +
                   '</div>' +
                 '</div>' +
               '</div>'
@@ -1810,17 +1810,17 @@
     return (
       '<div class="es-cos-panel-card">' +
         // HEADER SEZIONE: TITOLO + SELETTORE MODULO + BOTTONI AZIONE
-        '<div class="es-cos-panel-head" style="gap:1rem; flex-wrap:wrap; justify-content:space-between; align-items:center;">' +
-          '<div style="display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap;">' +
-            '<span class="es-cos-panel-title" style="display:flex; align-items:center; gap:0.5rem; margin:0;">' +
+        '<div class="es-cos-panel-head es-cdx-37">' +
+          '<div class="es-cdx-38">' +
+            '<span class="es-cos-panel-title es-cdx-39">' +
               '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' +
               'Lineup Builder Ufficiale · XI Titolare' +
             '</span>' +
             // SELETTORE MODULO EVIDENTE CON ETICHETTA E FRECCIA SVG
-            '<div class="es-modulo-select-wrap" style="display:flex; align-items:center; gap:0.5rem; background:rgba(7, 21, 34, 0.85); border:1px solid rgba(56, 189, 248, 0.35); border-radius:8px; padding:0.32rem 0.75rem; box-shadow:0 2px 8px rgba(0,0,0,0.35);">' +
-              '<label for="sel-tactical-modulo" style="font-size:0.68rem; font-weight:600; color:#8da8bc; text-transform:uppercase; letter-spacing:0.04em; cursor:pointer;">Modulo:</label>' +
-              '<div style="position:relative; display:inline-flex; align-items:center;">' +
-                '<select id="sel-tactical-modulo" style="appearance:none; -webkit-appearance:none; background:transparent; border:none; color:#ffffff; font-size:0.85rem; font-weight:800; cursor:pointer; padding-right:1.4rem; outline:none;">' +
+            '<div class="es-modulo-select-wrap es-cdx-40">' +
+              '<label class="es-cdx-41" for="sel-tactical-modulo">Modulo:</label>' +
+              '<div class="es-cdx-42">' +
+                '<select class="es-cdx-43" id="sel-tactical-modulo">' +
                   '<option value="4-3-3" ' + (modKey === '4-3-3' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-3-3 (Offensivo con Ali)</option>' +
                   '<option value="4-4-2" ' + (modKey === '4-4-2' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-4-2 (Classico Lineare)</option>' +
                   '<option value="4-2-3-1" ' + (modKey === '4-2-3-1' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-2-3-1 (Doppio Mediano &amp; Trequarti)</option>' +
@@ -1829,28 +1829,28 @@
                   '<option value="5-3-2" ' + (modKey === '5-3-2' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">5-3-2 (Difesa a 5 &amp; Contropiede Rapido)</option>' +
                   '<option value="4-1-4-1" ' + (modKey === '4-1-4-1' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-1-4-1 (Vertice Basso &amp; Linea di Trequarti)</option>' +
                 '</select>' +
-                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" style="position:absolute; right:0; pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>' +
+                '<svg class="es-cdx-44" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>' +
               '</div>' +
             '</div>' +
           '</div>' +
           // BOTTONI STORY 9:16 E CONFERMA FORMAZIONE AFFIANCATI
-          '<div style="display:flex; gap:0.6rem; align-items:center;">' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-export-story-modal" title="Genera Anteprima Story Instagram 9:16" style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.5rem 0.9rem; font-size:0.82rem; font-weight:700; border:1px solid rgba(255,255,255,0.18); color:#f3f8fc; background:rgba(255,255,255,0.04); border-radius:7px; cursor:pointer; transition:all 0.15s ease;">' +
+          '<div class="es-cdx-45">' +
+            '<button type="button" class="es-btn-cos-sec es-cdx-46" id="btn-export-story-modal" title="Genera Anteprima Story Instagram 9:16">' +
               '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>' +
               'Story 9:16' +
             '</button>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-confirm-official-xi" style="padding:0.5rem 1.15rem; font-size:0.82rem; font-weight:800; border-radius:7px; cursor:pointer;">' +
+            '<button type="button" class="es-btn-cos-primary es-cdx-47" id="btn-confirm-official-xi">' +
               'Conferma Formazione Ufficiale' +
             '</button>' +
           '</div>' +
         '</div>' +
 
         // LAYOUT A DUE COLONNE: CAMPO FLESSIBILE A SINISTRA E PANCHINA FISSA A DESTRA (345px)
-        '<div class="es-lineup-layout-grid formazione-layout" style="display:grid; grid-template-columns:minmax(0, 1fr) 345px; gap:20px; align-items:start; margin-top:0.5rem; width:100%;">' +
+        '<div class="es-lineup-layout-grid formazione-layout es-cdx-48">' +
           // COLONNA SINISTRA: CAMPO DA CALCIO REGOLAMENTARE CON OVERLAY VETTORIALE SVG (ASPECT RATIO 3/4)
-          '<div class="es-pitch-container campo-container" style="background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:2.5px solid #16562f; border-radius:12px; position:relative; min-width:0; width:100%; max-width:540px; margin:0 auto; aspect-ratio:3/4; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;">' +
+          '<div class="es-pitch-container campo-container es-cdx-49">' +
             // LINEE REGOLAMENTARI DEL CAMPO IN OVERLAY VETTORIALE SVG
-            '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.32;">' +
+            '<svg class="es-cdx-50" viewBox="0 0 100 100" preserveAspectRatio="none">' +
               // Bordo perimetrale
               '<rect x="4" y="3" width="92" height="94" fill="none" stroke="#ffffff" stroke-width="1.2" rx="2"/>' +
               // Linea mediana di centrocampo
@@ -1878,44 +1878,44 @@
               '<path d="M 96 94 A 3 3 0 0 0 93 97" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
             '</svg>' +
             // GLOW RADIALE DEL CAMPO
-            '<div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(0,217,120,0.1) 0%, transparent 82%); pointer-events:none;"></div>' +
+            '<div class="es-cdx-51"></div>' +
             // WATERMARK DISCRETO MODULO IN BASSO AL CAMPO
-            '<div style="position:absolute; bottom:8px; left:12px; font-size:0.68rem; font-weight:800; color:rgba(255,255,255,0.22); letter-spacing:0.05em; pointer-events:none; text-transform:uppercase;">' + esc(curMod.nome) + '</div>' +
+            '<div class="es-cdx-52">' + esc(curMod.nome) + '</div>' +
             // 11 PIN TITOLARI DINAMICI
             renderPitchPins(data.top11, modKey) +
           '</div>' +
 
           // COLONNA DESTRA: PANCHINA A LARGHEZZA FISSA 345PX + STATO CONVALIDA
-          '<div class="es-bench-panel-card panchina-panel" style="background:#071522; border:1px solid #12344a; border-radius:12px; padding:0.85rem 0.95rem; display:flex; flex-direction:column; min-width:345px; max-width:345px; width:345px; box-sizing:border-box;">' +
+          '<div class="es-bench-panel-card panchina-panel es-cdx-53">' +
             '<div>' +
               // INTESTAZIONE PANCHINA CON CONTATORE REALE
-              '<div style="font-size:0.85rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.55rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #12344a; padding-bottom:0.5rem;">' +
-                '<div style="display:flex; align-items:center; gap:0.45rem;">' +
+              '<div class="es-cdx-54">' +
+                '<div class="es-cdx-55">' +
                   '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' +
                   '<span>A Disposizione (Panchina)</span>' +
                 '</div>' +
-                '<span class="es-cos-badge-pill is-blue" style="font-size:0.75rem; font-weight:800;">' + panchinaCount + ' Calciatori</span>' +
+                '<span class="es-cos-badge-pill is-blue es-cdx-56">' + panchinaCount + ' Calciatori</span>' +
               '</div>' +
 
               // SUGGERIMENTO DI INTERAZIONE (DRAG & DROP E CLICK)
-              '<div style="font-size:0.72rem; color:#8da8bc; margin-bottom:0.65rem; display:flex; align-items:center; gap:5px; background:rgba(22,185,255,0.06); border:1px dashed rgba(22,185,255,0.25); border-radius:6px; padding:0.4rem 0.55rem;">' +
-                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
+              '<div class="es-cdx-57">' +
+                '<svg class="es-cdx-58" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
                 '<span>Trascina sul campo o clicca <b>In Campo &rarr;</b></span>' +
               '</div>' +
 
               // LISTA SCROLLABILE CARD PANCHINARI CON ATTRIBUTO DRAGGABLE E RUOLO
-              '<div class="es-bench-scroll-list" style="display:flex; flex-direction:column; gap:0.45rem; max-height:360px; overflow-y:auto; padding-right:4px;">' +
+              '<div class="es-bench-scroll-list es-cdx-59">' +
                 (panchinaCount ? data.panchina.map(function (b) {
                   return (
                     '<div class="es-bench-card" draggable="true" data-bench-id="' + esc(b.id) + '" data-bench-num="' + esc(b.num) + '" data-bench-name="' + esc(b.name) + '" data-bench-pos="' + esc(b.pos || b.role) + '" style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.45rem 0.6rem; cursor:grab; transition:all 0.15s ease; gap:0.4rem;">' +
-                      '<div style="display:flex; align-items:center; gap:0.5rem; min-width:0; flex:1 1 auto; overflow:hidden;">' +
-                        '<div style="width:28px; height:28px; border-radius:50%; background:#071522; border:1.5px solid #16b9ff; color:#16b9ff; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:900; flex-shrink:0;">#' + esc(b.num) + '</div>' +
-                        '<div style="display:flex; flex-direction:column; gap:1px; overflow:hidden; min-width:0;">' +
+                      '<div class="es-cdx-60">' +
+                        '<div class="es-cdx-61">#' + esc(b.num) + '</div>' +
+                        '<div class="es-cdx-62">' +
                           '<span style="font-size:0.8rem; font-weight:700; color:#f3f8fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="' + esc(b.name) + '">' + esc(b.name) + '</span>' +
-                          '<span style="font-size:0.67rem; color:#8da8bc;">Classe ' + esc(b.birth || '--') + '</span>' +
+                          '<span class="es-cdx-63">Classe ' + esc(b.birth || '--') + '</span>' +
                         '</div>' +
                       '</div>' +
-                      '<div style="display:flex; align-items:center; gap:0.3rem; flex-shrink:0;">' +
+                      '<div class="es-cdx-64">' +
                         '<span style="font-size:0.65rem; font-weight:800; padding:1px 5px; border-radius:4px; ' + getRoleBadgeStyle(b.pos || b.role) + '">' + esc(b.pos || b.role) + '</span>' +
                         '<button type="button" class="es-bench-assign-btn" data-assign-bench-id="' + esc(b.id) + '" style="background:transparent; border:1px solid rgba(255,255,255,0.16); color:rgba(255,255,255,0.85); padding:0.2rem 0.4rem; border-radius:5px; font-size:0.65rem; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 0.15s ease;" title="Schiera titolare nello slot desiderato">' +
                           'In Campo &rarr;' +
@@ -1924,7 +1924,7 @@
                     '</div>'
                   );
                 }).join('') : (
-                  '<div style="text-align:center; padding:1.5rem; color:#8da8bc; font-size:0.8rem;">' +
+                  '<div class="es-cdx-65">' +
                     'Tutti i calciatori disponibili sono attualmente assegnati ai titolari.' +
                   '</div>'
                 )) +
@@ -1932,14 +1932,14 @@
             '</div>' +
 
             // BOX STATO UFFICIALE E RIEPILOGO CONVOCATI
-            '<div style="margin-top:1rem; background:rgba(0,217,120,0.06); border:1px solid rgba(0,217,120,0.3); border-radius:8px; padding:0.85rem; font-size:0.8rem; line-height:1.45;">' +
-              '<div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">' +
-                '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#00d978; box-shadow:0 0 8px #00d978;"></span>' +
-                '<b style="color:#00d978;">Stato Ufficiale:</b>' +
-                '<span style="color:#f3f8fc; font-weight:700;">Convalidata dal Mister</span>' +
+            '<div class="es-cdx-66">' +
+              '<div class="es-cdx-67">' +
+                '<span class="es-cdx-68"></span>' +
+                '<b class="es-cdx-69">Stato Ufficiale:</b>' +
+                '<span class="es-cdx-70">Convalidata dal Mister</span>' +
               '</div>' +
-              '<div style="color:#8da8bc; font-size:0.75rem;">' +
-                'Titolari: <b style="color:#16b9ff;">11</b> · Panchina: <b style="color:#16b9ff;">' + panchinaCount + '</b> · Consegne tecniche sincronizzate con la Bozza del Vice Allenatore.' +
+              '<div class="es-cdx-71">' +
+                'Titolari: <b class="es-cdx-72">11</b> · Panchina: <b class="es-cdx-72">' + panchinaCount + '</b> · Consegne tecniche sincronizzate con la Bozza del Vice Allenatore.' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -1968,14 +1968,14 @@
              'data-slot-role="' + esc(roleSigla) + '" ' +
              'title="Clicca per sostituire con la panchina o modificare il ruolo">' +
           // BADGE CIRCOLARE NUMERO MAGLIA CON GLOW E TASTO SWAP
-          '<div class="es-pitch-pin-badge" style="width:38px; height:38px; border-radius:50%; background:#071522; border:2.5px solid #16b9ff; color:#f3f8fc; font-size:0.85rem; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.7); position:relative; transition:all 0.15s ease;">' +
+          '<div class="es-pitch-pin-badge es-cdx-73">' +
             '#' + esc(p.num) +
-            '<span class="es-pitch-pin-swap-hint" style="position:absolute; top:-3px; right:-3px; width:14px; height:14px; border-radius:50%; background:#16b9ff; color:#040912; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:900; box-shadow:0 2px 4px rgba(0,0,0,0.6);">&#8644;</span>' +
+            '<span class="es-pitch-pin-swap-hint es-cdx-74">&#8644;</span>' +
           '</div>' +
           // TARGHETTA NOME GIOCATORE + RUOLO TRA PARENTESI
-          '<div class="es-pitch-pin-tag" style="background:rgba(5,9,16,0.94); border:1px solid #12344a; color:#f3f8fc; font-size:0.67rem; font-weight:800; padding:2px 6px; border-radius:5px; white-space:nowrap; box-shadow:0 2px 6px rgba(0,0,0,0.6); display:flex; align-items:center; gap:3px;">' +
+          '<div class="es-pitch-pin-tag es-cdx-75">' +
             '<span>' + esc(p.name) + '</span>' +
-            '<span style="color:#16b9ff; font-weight:900;">(' + esc(roleSigla) + ')</span>' +
+            '<span class="es-cdx-76">(' + esc(roleSigla) + ')</span>' +
           '</div>' +
         '</div>'
       );
@@ -2012,15 +2012,15 @@
 
     var benchItemsHtml = panchina.length ? panchina.map(function (b, bIdx) {
       return (
-        '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.5rem 0.75rem; margin-bottom:0.45rem;">' +
-          '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-            '<div style="width:28px; height:28px; border-radius:50%; background:#071522; border:1.5px solid #16b9ff; color:#16b9ff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900;">#' + esc(b.num) + '</div>' +
+        '<div class="es-cdx-77">' +
+          '<div class="es-cdx-78">' +
+            '<div class="es-cdx-79">#' + esc(b.num) + '</div>' +
             '<div>' +
-              '<div style="font-size:0.85rem; font-weight:700; color:#f3f8fc;">' + esc(b.name) + '</div>' +
-              '<div style="font-size:0.68rem; color:#8da8bc;">' + esc(b.role) + ' · Classe ' + esc(b.birth || '--') + '</div>' +
+              '<div class="es-cdx-80">' + esc(b.name) + '</div>' +
+              '<div class="es-cdx-81">' + esc(b.role) + ' · Classe ' + esc(b.birth || '--') + '</div>' +
             '</div>' +
           '</div>' +
-          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<div class="es-cdx-82">' +
             '<span style="font-size:0.7rem; font-weight:800; padding:2px 7px; border-radius:4px; ' + getRoleBadgeStyle(b.pos || b.role) + '">' + esc(b.pos || b.role) + '</span>' +
             '<button type="button" class="es-btn-cos-primary btn-do-swap-player" data-bench-idx="' + bIdx + '" style="padding:0.3rem 0.65rem; font-size:0.75rem; border-radius:5px; cursor:pointer;">' +
               'Schiera in Campo' +
@@ -2029,46 +2029,46 @@
         '</div>'
       );
     }).join('') : (
-      '<div style="text-align:center; color:#8da8bc; padding:1.25rem; font-size:0.82rem;">Nessun calciatore disponibile in panchina.</div>'
+      '<div class="es-cdx-83">Nessun calciatore disponibile in panchina.</div>'
     );
 
     var content =
-      '<div style="display:flex; flex-direction:column; gap:1.15rem;">' +
+      '<div class="es-cdx-84">' +
         // SCHEDA TITOLARE ATTUALE
-        '<div style="background:#040912; border:1.5px solid #16b9ff; border-radius:8px; padding:0.85rem; display:flex; justify-content:space-between; align-items:center;">' +
-          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
-            '<div style="width:38px; height:38px; border-radius:50%; background:#071522; border:2px solid #16b9ff; color:#f3f8fc; font-size:0.95rem; font-weight:900; display:flex; align-items:center; justify-content:center;">#' + esc(currentStarter.num) + '</div>' +
+        '<div class="es-cdx-85">' +
+          '<div class="es-cdx-86">' +
+            '<div class="es-cdx-87">#' + esc(currentStarter.num) + '</div>' +
             '<div>' +
-              '<div style="font-size:0.95rem; font-weight:800; color:#f3f8fc;">' + esc(currentStarter.name) + '</div>' +
-              '<div style="font-size:0.72rem; color:#8da8bc;">Titolare Attuale nello Slot #' + (slotIdx + 1) + ' (' + esc(slotDef.name) + ')</div>' +
+              '<div class="es-cdx-88">' + esc(currentStarter.name) + '</div>' +
+              '<div class="es-cdx-89">Titolare Attuale nello Slot #' + (slotIdx + 1) + ' (' + esc(slotDef.name) + ')</div>' +
             '</div>' +
           '</div>' +
           '<span style="font-size:0.75rem; font-weight:800; padding:3px 8px; border-radius:5px; ' + getRoleBadgeStyle(currentStarter.pos) + '">' + esc(currentStarter.pos) + '</span>' +
         '</div>' +
 
         // CAMBIO RUOLO TATTICO DELLO SLOT
-        '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.85rem;">' +
-          '<label style="font-size:0.78rem; font-weight:800; color:#93c5fd; text-transform:uppercase; margin-bottom:0.4rem; display:block;">Personalizza Ruolo Tattico Slot:</label>' +
-          '<div style="display:flex; gap:0.5rem; align-items:center;">' +
-            '<select id="sel-slot-custom-role" style="flex:1; background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem 0.75rem; border-radius:6px; font-size:0.82rem; font-weight:700;">' +
+        '<div class="es-cdx-90">' +
+          '<label class="es-cdx-91">Personalizza Ruolo Tattico Slot:</label>' +
+          '<div class="es-cdx-92">' +
+            '<select class="es-cdx-93" id="sel-slot-custom-role">' +
               rolesOptions +
             '</select>' +
-            '<button type="button" id="btn-save-slot-role" class="es-btn-cos-sec" style="padding:0.5rem 0.85rem; font-size:0.78rem; border-color:#3b82f6; color:#93c5fd; cursor:pointer;">Applica Ruolo</button>' +
+            '<button type="button" id="btn-save-slot-role" class="es-btn-cos-sec es-cdx-94">Applica Ruolo</button>' +
           '</div>' +
         '</div>' +
 
         // LISTA PANCHINA PER SOSTITUZIONE
         '<div>' +
-          '<div style="font-size:0.82rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.6rem; display:flex; justify-content:space-between;">' +
+          '<div class="es-cdx-95">' +
             '<span>Sostituisci con un Calciatore in Panchina</span>' +
-            '<span style="color:#16b9ff;">' + panchina.length + ' Disponibili</span>' +
+            '<span class="es-cdx-72">' + panchina.length + ' Disponibili</span>' +
           '</div>' +
-          '<div style="max-height:240px; overflow-y:auto; padding-right:2px;">' +
+          '<div class="es-cdx-96">' +
             benchItemsHtml +
           '</div>' +
         '</div>' +
 
-        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; border-top:1px solid #12344a; padding-top:0.75rem;">' +
+        '<div class="es-cdx-97">' +
           '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Chiudi</button>' +
         '</div>' +
       '</div>';
@@ -2156,15 +2156,15 @@
 
     var startersHtml = data.top11.map(function (st, sIdx) {
       return (
-        '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.5rem 0.75rem; margin-bottom:0.45rem;">' +
-          '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-            '<div style="width:28px; height:28px; border-radius:50%; background:#071522; border:1.5px solid #16b9ff; color:#f3f8fc; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900;">#' + esc(st.num) + '</div>' +
+        '<div class="es-cdx-77">' +
+          '<div class="es-cdx-78">' +
+            '<div class="es-cdx-98">#' + esc(st.num) + '</div>' +
             '<div>' +
-              '<div style="font-size:0.85rem; font-weight:700; color:#f3f8fc;">' + esc(st.name) + '</div>' +
-              '<div style="font-size:0.68rem; color:#8da8bc;">Slot #' + (sIdx + 1) + ' · ' + esc(st.roleName || st.pos) + '</div>' +
+              '<div class="es-cdx-80">' + esc(st.name) + '</div>' +
+              '<div class="es-cdx-81">Slot #' + (sIdx + 1) + ' · ' + esc(st.roleName || st.pos) + '</div>' +
             '</div>' +
           '</div>' +
-          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<div class="es-cdx-82">' +
             '<span style="font-size:0.7rem; font-weight:800; padding:2px 7px; border-radius:4px; ' + getRoleBadgeStyle(st.pos) + '">' + esc(st.pos) + '</span>' +
             '<button type="button" class="es-btn-cos-primary btn-replace-starter" data-slot-target="' + sIdx + '" style="padding:0.3rem 0.65rem; font-size:0.75rem; border-radius:5px; cursor:pointer;">' +
               'Sostituisci Questo' +
@@ -2175,18 +2175,18 @@
     }).join('');
 
     var content =
-      '<div style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.85rem; display:flex; align-items:center; gap:0.75rem;">' +
-          '<div style="width:36px; height:36px; border-radius:50%; background:#071522; border:2px solid #16b9ff; color:#16b9ff; font-size:0.9rem; font-weight:900; display:flex; align-items:center; justify-content:center;">#' + esc(benchPlayer.num) + '</div>' +
+      '<div class="es-cdx-99">' +
+        '<div class="es-cdx-100">' +
+          '<div class="es-cdx-101">#' + esc(benchPlayer.num) + '</div>' +
           '<div>' +
-            '<div style="font-size:0.92rem; font-weight:800; color:#f3f8fc;">' + esc(benchPlayer.name) + ' (' + esc(benchPlayer.pos || benchPlayer.role) + ')</div>' +
-            '<div style="font-size:0.72rem; color:#8da8bc;">Seleziona quale titolare sostituire per schierarlo in campo.</div>' +
+            '<div class="es-cdx-102">' + esc(benchPlayer.name) + ' (' + esc(benchPlayer.pos || benchPlayer.role) + ')</div>' +
+            '<div class="es-cdx-89">Seleziona quale titolare sostituire per schierarlo in campo.</div>' +
           '</div>' +
         '</div>' +
-        '<div style="max-height:280px; overflow-y:auto; padding-right:2px;">' +
+        '<div class="es-cdx-103">' +
           startersHtml +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; border-top:1px solid #12344a; padding-top:0.75rem;">' +
+        '<div class="es-cdx-97">' +
           '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
         '</div>' +
       '</div>';
@@ -2246,10 +2246,10 @@
       var surname = p.name ? (p.name.split(' ').pop().toUpperCase()) : '';
       return (
         '<div style="position:absolute; left:' + slot.x + '%; top:' + slot.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:2px; pointer-events:none;">' +
-          '<div style="width:22px; height:22px; border-radius:50%; background:#071a0e; border:1px solid rgba(255,255,255,0.45); color:#ffffff; font-size:0.65rem; font-weight:600; font-family:\'Inter\',sans-serif; display:flex; align-items:center; justify-content:center;">' +
+          '<div class="es-cdx-104">' +
             esc(p.num) +
           '</div>' +
-          '<div style="color:#f1f5f9; font-size:0.52rem; font-weight:600; font-family:\'Inter\',sans-serif; text-transform:uppercase; letter-spacing:0.08em; white-space:nowrap; text-shadow:0 1px 3px rgba(0,0,0,0.95);">' +
+          '<div class="es-cdx-105">' +
             esc(surname) +
           '</div>' +
         '</div>'
@@ -2258,34 +2258,34 @@
 
     // PANCHINA: GRIGLIA ORDINATA A 2 COLONNE
     var benchList = (data.panchina || []).slice(0, 10);
-    var benchGridHtml = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; margin-bottom:0.75rem;">' +
+    var benchGridHtml = '<div class="es-cdx-106">' +
       benchList.map(function (b) {
         var sname = b.name ? (b.name.split(' ').pop().toUpperCase()) : '';
         return (
-          '<div style="display:flex; align-items:baseline; gap:5px; font-size:0.6rem; font-family:\'Inter\',sans-serif; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">' +
-            '<span style="color:#94a3b8; font-weight:500; font-variant-numeric:tabular-nums; min-width:18px;">#' + esc(b.num) + '</span>' +
-            '<span style="color:#e2e8f0; font-weight:600; letter-spacing:0.03em; overflow:hidden; text-overflow:ellipsis;">' + esc(sname) + '</span>' +
+          '<div class="es-cdx-107">' +
+            '<span class="es-cdx-108">#' + esc(b.num) + '</span>' +
+            '<span class="es-cdx-109">' + esc(sname) + '</span>' +
           '</div>'
         );
       }).join('') +
     '</div>';
 
     var content =
-      '<div style="display:flex; flex-direction:column; align-items:center; gap:1rem;">' +
+      '<div class="es-cdx-110">' +
         // SCHERMO 9:16 SIMULATO (EDITORIAL LUXURY SPORT CARD)
-        '<div style="width:315px; min-height:560px; background:#060b11; border:1px solid rgba(255,255,255,0.12); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; padding:1.25rem 1.15rem; position:relative; box-shadow:0 20px 50px rgba(0,0,0,0.85); box-sizing:border-box;">' +
+        '<div class="es-cdx-111">' +
           // HEADER STORY EDITORIALE
-          '<div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.55rem;">' +
+          '<div class="es-cdx-112">' +
             '<div>' +
-              '<div style="font-size:0.58rem; font-weight:600; color:#94a3b8; letter-spacing:0.16em; text-transform:uppercase; font-family:\'Inter\',sans-serif;">Official Matchday Lineup</div>' +
-              '<div style="font-size:1.2rem; font-weight:800; color:#ffffff; letter-spacing:0.04em; font-family:\'Outfit\',\'Inter\',sans-serif; text-transform:uppercase; margin-top:2px;">' + esc(clubName) + '</div>' +
+              '<div class="es-cdx-113">Official Matchday Lineup</div>' +
+              '<div class="es-cdx-114">' + esc(clubName) + '</div>' +
             '</div>' +
-            '<span style="font-size:0.68rem; font-weight:600; background:transparent; border:1px solid rgba(255,255,255,0.24); color:#e2e8f0; padding:2px 8px; border-radius:4px; letter-spacing:0.06em; font-family:\'Inter\',sans-serif; margin-top:2px;">' + esc(modKey) + '</span>' +
+            '<span class="es-cdx-115">' + esc(modKey) + '</span>' +
           '</div>' +
 
           // MINI PITCH 2D: LINEE DESATURATE E PROFONDITÀ NATURALE
-          '<div style="position:relative; width:100%; aspect-ratio:16/12; background:radial-gradient(circle at 50% 50%, #0a1f13 0%, #030c07 100%); border:1px solid rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; margin:0.6rem 0;">' +
-            '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.2;">' +
+          '<div class="es-cdx-116">' +
+            '<svg class="es-cdx-117" viewBox="0 0 100 100" preserveAspectRatio="none">' +
               '<rect x="4" y="3" width="92" height="94" fill="none" stroke="#ffffff" stroke-width="1"/>' +
               '<line x1="4" y1="50" x2="96" y2="50" stroke="#ffffff" stroke-width="1"/>' +
               '<circle cx="50" cy="50" r="11" fill="none" stroke="#ffffff" stroke-width="1"/>' +
@@ -2297,21 +2297,21 @@
 
           // FOOTER STORY CON PANCHINA E WATERMARK EDITORIALE
           '<div>' +
-            '<div style="font-size:0.58rem; font-weight:600; color:#94a3b8; letter-spacing:0.16em; text-transform:uppercase; font-family:\'Inter\',sans-serif; margin-bottom:0.45rem; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:0.25rem;">A Disposizione (Panchina)</div>' +
+            '<div class="es-cdx-118">A Disposizione (Panchina)</div>' +
             benchGridHtml +
-            '<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.45rem; font-size:0.58rem; color:#64748b; font-family:\'Inter\',sans-serif;">' +
-              '<span style="letter-spacing:0.05em;">Formazione Convalidata</span>' +
-              '<span style="color:#ffffff; font-weight:800; letter-spacing:0.1em;">ELISEE SCOUT</span>' +
+            '<div class="es-cdx-119">' +
+              '<span class="es-cdx-120">Formazione Convalidata</span>' +
+              '<span class="es-cdx-121">ELISEE SCOUT</span>' +
             '</div>' +
           '</div>' +
         '</div>' +
 
         // BOTTONI AZIONE MODALE
-        '<div style="display:flex; gap:0.6rem;">' +
-          '<button type="button" class="es-btn-cos-primary" id="btn-copy-story-text" style="font-size:0.8rem; padding:0.5rem 1rem;">' +
+        '<div class="es-cdx-122">' +
+          '<button type="button" class="es-btn-cos-primary es-cdx-123" id="btn-copy-story-text">' +
             'Copia Formazione Testuale' +
           '</button>' +
-          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal" style="font-size:0.8rem; padding:0.5rem 1rem;">' +
+          '<button type="button" class="es-btn-cos-sec es-cdx-123" id="btn-close-modal">' +
             'Chiudi' +
           '</button>' +
         '</div>' +
@@ -2381,41 +2381,41 @@
     return (
       '<div class="es-cos-panel-card">' +
         // HEADER DELLA LAVAGNA
-        '<div class="es-cos-panel-head" style="flex-wrap:wrap; gap:0.75rem; justify-content:space-between; align-items:center;">' +
-          '<div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">' +
-            '<span class="es-cos-panel-title" style="margin:0; display:flex; align-items:center; gap:0.5rem;">' +
+        '<div class="es-cos-panel-head es-cdx-124">' +
+          '<div class="es-cdx-125">' +
+            '<span class="es-cos-panel-title es-cdx-126">' +
               '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>' +
               'Lavagna Tattica Digitale Interattiva' +
             '</span>' +
             // SELETTORE MODULO DROPDOWN LUXURY CON CHEVRON E BADGE SEPARATO
-            '<div class="es-board-modulo-dropdown" style="position:relative; display:inline-flex; align-items:center; gap:0.45rem; background:rgba(7, 21, 34, 0.85); border:1px solid rgba(56, 189, 248, 0.35); border-radius:8px; padding:0.32rem 0.75rem; box-shadow:0 2px 8px rgba(0,0,0,0.35); cursor:pointer;">' +
-              '<span style="font-size:0.68rem; font-weight:600; color:#8da8bc; text-transform:uppercase; letter-spacing:0.04em;">Modulo:</span>' +
-              '<strong style="font-size:0.88rem; font-weight:800; color:#ffffff; letter-spacing:0.02em;">' + currentModuloObj.code + '</strong>' +
-              '<span style="font-size:0.65rem; font-weight:600; color:#38bdf8; background:rgba(56, 189, 248, 0.12); border:1px solid rgba(56, 189, 248, 0.25); border-radius:4px; padding:2px 6px; white-space:nowrap;">' + currentModuloObj.sub + '</span>' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-left:2px;"><polyline points="6 9 12 15 18 9"/></svg>' +
-              '<select id="sel-board-modulo" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; z-index:2;">' +
+            '<div class="es-board-modulo-dropdown es-cdx-127">' +
+              '<span class="es-cdx-128">Modulo:</span>' +
+              '<strong class="es-cdx-129">' + currentModuloObj.code + '</strong>' +
+              '<span class="es-cdx-130">' + currentModuloObj.sub + '</span>' +
+              '<svg class="es-cdx-131" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+              '<select class="es-cdx-132" id="sel-board-modulo">' +
                 modOptions +
               '</select>' +
             '</div>' +
           '</div>' +
             // BOTTONI AZIONE & STORICO SCHEMI
-          '<div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">' +
-            '<select id="sel-board-saved-schemes" style="background:#071522; border:1px solid #12344a; color:#8da8bc; font-size:0.75rem; padding:0.45rem 0.65rem; border-radius:6px; max-width:210px; cursor:pointer; outline:none;">' +
+          '<div class="es-cdx-133">' +
+            '<select class="es-cdx-134" id="sel-board-saved-schemes">' +
               schemiOptions +
             '</select>' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-sync-board-xi" title="Importa XI Ufficiale confermato e modulo" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem;">' +
+            '<button type="button" class="es-btn-cos-sec es-cdx-135" id="btn-sync-board-xi" title="Importa XI Ufficiale confermato e modulo">' +
               '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
               '<span>Sincronizza da XI Ufficiale</span>' +
             '</button>' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-reset-board" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem;" title="Ripristina posizioni base del modulo">' +
+            '<button type="button" class="es-btn-cos-sec es-cdx-135" id="btn-reset-board" title="Ripristina posizioni base del modulo">' +
               '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>' +
               '<span>Reset Modulo</span>' +
             '</button>' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-import-board-preset" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; border-color:rgba(56, 189, 248, 0.4); color:#38bdf8;" title="Importa schemi tattici preimpostati (Mister & Vice)">' +
+            '<button type="button" class="es-btn-cos-sec es-cdx-136" id="btn-import-board-preset" title="Importa schemi tattici preimpostati (Mister & Vice)">' +
               '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
               '<span>Importa Schema</span>' +
             '</button>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-save-board-scheme" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem;" title="Salva schema tattico attuale">' +
+            '<button type="button" class="es-btn-cos-primary es-cdx-137" id="btn-save-board-scheme" title="Salva schema tattico attuale">' +
               '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>' +
               '<span>Salva Schema</span>' +
             '</button>' +
@@ -2424,7 +2424,7 @@
 
         // TOOLBAR STRUMENTI TATTICI (ICONE SVG LUCIDE)
         '<div class="es-board-toolbar">' +
-          '<span style="font-size:0.72rem; font-weight:800; color:#8da8bc; text-transform:uppercase; margin-right:4px;">Strumenti Tattici:</span>' +
+          '<span class="es-cdx-138">Strumenti Tattici:</span>' +
           '<button type="button" class="es-board-tool-btn ' + (activeTool === 'move' ? 'is-active' : '') + '" data-board-tool="move" title="Trascina liberamente calciatori e pallone">' +
             '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>' +
             '<span>Muovi</span>' +
@@ -2441,7 +2441,7 @@
             '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
             '<span>Zona Pressing</span>' +
           '</button>' +
-          '<div style="margin-left:auto; display:flex; gap:6px;">' +
+          '<div class="es-cdx-139">' +
             '<button type="button" class="es-board-tool-btn" id="btn-undo-drawing" title="Annulla ultimo tracciato (Ctrl+Z)">' +
               '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>' +
               '<span>Annulla Tratto</span>' +
@@ -2454,7 +2454,7 @@
         '</div>' +
 
         // RETTANGOLO DEL CAMPO INTERATTIVO
-        '<div id="es-tactical-pitch" style="background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:2.5px solid #16562f; border-radius:12px; position:relative; aspect-ratio:16/10; min-height:480px; overflow:hidden; user-select:none; box-shadow:0 12px 30px rgba(0,0,0,0.6);">' +
+        '<div class="es-cdx-140" id="es-tactical-pitch">' +
           // LINEE CAMPO REGOLAMENTARI SVG
           renderTacticalPitchLines() +
           // LAYER SVG PER FRECCE E ZONE
@@ -2462,7 +2462,7 @@
           // PEDINE CALCIATORI E PALLONE TRASCINABILI
           renderInteractiveBoardPins(tb.pins) +
           // WATERMARK MODULO IN BASSO
-          '<div style="position:absolute; bottom:8px; left:12px; font-size:0.68rem; font-weight:800; color:rgba(255,255,255,0.25); letter-spacing:0.05em; pointer-events:none; text-transform:uppercase;">' + esc(curMod.nome) + ' · STUDIO TATTICO</div>' +
+          '<div class="es-cdx-141">' + esc(curMod.nome) + ' · STUDIO TATTICO</div>' +
         '</div>' +
       '</div>'
     );
@@ -2470,7 +2470,7 @@
 
   function renderTacticalPitchLines() {
     return (
-      '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.32;">' +
+      '<svg class="es-cdx-50" viewBox="0 0 100 100" preserveAspectRatio="none">' +
         '<rect x="4" y="3" width="92" height="94" fill="none" stroke="#ffffff" stroke-width="1.2" rx="2"/>' +
         '<line x1="4" y1="50" x2="96" y2="50" stroke="#ffffff" stroke-width="1.2"/>' +
         '<circle cx="50" cy="50" r="11" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
@@ -2509,7 +2509,7 @@
     }).join('');
 
     return (
-      '<svg id="es-tactical-drawings-svg" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:15;">' +
+      '<svg class="es-cdx-142" id="es-tactical-drawings-svg">' +
         '<defs>' +
           '<marker id="arr-marker-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
             '<path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8" />' +
@@ -2539,13 +2539,13 @@
       return (
         '<div class="es-tactical-pin-drag" data-board-pin-idx="' + idx + '" style="position:absolute; left:' + p.x + '%; top:' + p.y + '%; transform:translate(-50%, -50%); z-index:25; display:flex; flex-direction:column; align-items:center; gap:2px; cursor:grab;" title="Trascina #' + esc(p.num) + ' ' + esc(p.name) + '">' +
           // PALLINO NUMERATO CON GLOW E BORDO AZZURRO
-          '<div style="width:36px; height:36px; border-radius:50%; background:#071522; border:2.5px solid #16b9ff; color:#f3f8fc; font-weight:900; font-size:0.85rem; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.7);">' +
+          '<div class="es-cdx-143">' +
             '#' + esc(p.num) +
           '</div>' +
           // TARGHETTA NOME GIOCATORE + RUOLO
-          '<div style="background:rgba(4,9,18,0.92); border:1px solid #12344a; color:#fff; font-size:0.65rem; font-weight:800; padding:1px 5px; border-radius:4px; white-space:nowrap; box-shadow:0 2px 6px rgba(0,0,0,0.6); display:flex; align-items:center; gap:3px;">' +
+          '<div class="es-cdx-144">' +
             '<span>' + esc(p.name) + '</span>' +
-            '<span style="color:#16b9ff; font-weight:900;">(' + esc(roleBadge) + ')</span>' +
+            '<span class="es-cdx-76">(' + esc(roleBadge) + ')</span>' +
           '</div>' +
         '</div>'
       );
@@ -2562,27 +2562,27 @@
           '<span class="es-cos-panel-title">Pianificazione Sedute di Allenamento (Tabella: allenamenti)</span>' +
           '<button type="button" class="es-btn-cos-primary" id="btn-add-training-modal">+ Pianifica Seduta</button>' +
         '</div>' +
-        '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:1rem;">' +
+        '<div class="es-cdx-145">' +
           (data.trainingsList && data.trainingsList.length ? data.trainingsList.map(function (tr, tIdx) {
             return (
-              '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; flex-direction:column; gap:0.5rem;">' +
-                '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-                  '<b style="font-size:0.95rem; color:#f3f8fc;">' + esc(tr.tipo) + '</b>' +
+              '<div class="es-cdx-146">' +
+                '<div class="es-cdx-147">' +
+                  '<b class="es-cdx-148">' + esc(tr.tipo) + '</b>' +
                   '<span class="es-cos-badge-pill is-blue">' + esc(tr.data) + ' · ' + esc(tr.orario) + '</span>' +
                 '</div>' +
-                '<div style="font-size:0.75rem; color:#8da8bc;">Campo: <b style="color:#f3f8fc;">' + esc(tr.luogo) + '</b></div>' +
-                '<p style="font-size:0.78rem; color:#8da8bc; margin:0.2rem 0;">' + esc(tr.desc) + '</p>' +
-                '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem; padding-top:0.5rem; border-top:1px solid #12344a;">' +
+                '<div class="es-cdx-149">Campo: <b class="es-cdx-150">' + esc(tr.luogo) + '</b></div>' +
+                '<p class="es-cdx-151">' + esc(tr.desc) + '</p>' +
+                '<div class="es-cdx-152">' +
                   '<span class="es-cos-badge-pill is-green">Carico: ' + esc(tr.carico || 'Medio') + '</span>' +
-                  '<button type="button" class="es-btn-cos-sec" style="padding:0.35rem 0.75rem; font-size:0.74rem;" data-upload-gps-tr="' + tr.id + '"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:3px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>GPS</button>' +
+                  '<button type="button" class="es-btn-cos-sec" style="padding:0.35rem 0.75rem; font-size:0.74rem;" data-upload-gps-tr="' + tr.id + '"><svg class="es-cdx-153" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>GPS</button>' +
                 '</div>' +
               '</div>'
             );
           }).join('') : (
-            '<div style="grid-column:1/-1; text-align:center; padding:3.5rem 1rem; color:#8da8bc;">' +
-              '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4; margin-bottom:0.75rem;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
-              '<div style="font-size:1rem; font-weight:800; color:#f3f8fc;">Nessuna seduta programmata</div>' +
-              '<div style="font-size:0.78rem; margin-top:0.3rem;">Gli allenamenti inseriti a database appariranno qui.</div>' +
+            '<div class="es-cdx-154">' +
+              '<svg class="es-cdx-155" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+              '<div class="es-cdx-156">Nessuna seduta programmata</div>' +
+              '<div class="es-cdx-157">Gli allenamenti inseriti a database appariranno qui.</div>' +
             '</div>'
           )) +
         '</div>' +
@@ -2699,10 +2699,10 @@
 
     if (filteredEvents.length === 0) {
       eventsListHtml =
-        '<div style="text-align:center; padding:3.5rem 1.5rem; background:rgba(7,21,34,0.5); border:1px dashed #12344a; border-radius:10px; color:#8da8bc;">' +
-          '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="1.5" style="opacity:0.6; margin-bottom:0.75rem;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
-          '<div style="font-size:0.95rem; font-weight:800; color:#f3f8fc;">Nessun evento corrispondente ai filtri</div>' +
-          '<div style="font-size:0.76rem; margin-top:0.25rem;">Modifica il filtro per tipo o seleziona un altro mese dal selettore in alto.</div>' +
+        '<div class="es-cdx-158">' +
+          '<svg class="es-cdx-159" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+          '<div class="es-cdx-88">Nessun evento corrispondente ai filtri</div>' +
+          '<div class="es-cdx-160">Modifica il filtro per tipo o seleziona un altro mese dal selettore in alto.</div>' +
         '</div>';
     } else {
       filteredEvents.forEach(function (ev) {
@@ -2803,7 +2803,7 @@
             '</h3>' +
             '<p class="es-cal-subtitle">Pianificazione timeline gare ufficiali, sedute di allenamento e impegni operativi dello staff</p>' +
           '</div>' +
-          '<button type="button" class="es-btn-cos-primary" id="btn-add-cal-event" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; padding:0.5rem 1rem;">' +
+          '<button type="button" class="es-btn-cos-primary es-cdx-161" id="btn-add-cal-event">' +
             '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
             '<span>+ Aggiungi Evento</span>' +
           '</button>' +
@@ -2829,7 +2829,7 @@
           '</div>' +
 
           '<div class="es-cal-month-select-wrap">' +
-            '<label for="sel-cal-month" style="font-size:0.75rem; font-weight:700; color:#8da8bc;">Filtra Mese:</label>' +
+            '<label class="es-cdx-162" for="sel-cal-month">Filtra Mese:</label>' +
             '<select id="sel-cal-month" class="es-cal-month-select">' +
               monthOptionsHtml +
             '</select>' +
@@ -3039,20 +3039,20 @@
     '</datalist>';
 
     var formHtml =
-      '<form id="form-calendar-event" style="display:flex; flex-direction:column; gap:1rem;">' +
+      '<form class="es-cdx-99" id="form-calendar-event">' +
         datalistHtml +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
-          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Tipologia Evento *</label>' +
-            '<select id="cal-form-tipo" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+        '<div class="es-cdx-163">' +
+          '<div class="es-cdx-164">' +
+            '<label class="es-cdx-165">Tipologia Evento *</label>' +
+            '<select class="es-cdx-166" id="cal-form-tipo" required>' +
               '<option value="partita" ' + (defaultTipo === 'partita' ? 'selected' : '') + '>Partita Ufficiale</option>' +
               '<option value="allenamento" ' + (defaultTipo === 'allenamento' ? 'selected' : '') + '>Seduta di Allenamento</option>' +
               '<option value="amichevole" ' + (defaultTipo === 'amichevole' ? 'selected' : '') + '>Amichevole / Test Match</option>' +
             '</select>' +
           '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Stato Evento *</label>' +
-            '<select id="cal-form-stato" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+          '<div class="es-cdx-164">' +
+            '<label class="es-cdx-165">Stato Evento *</label>' +
+            '<select class="es-cdx-166" id="cal-form-stato" required>' +
               '<option value="Da preparare" ' + (defaultStato === 'Da preparare' ? 'selected' : '') + '>Da preparare</option>' +
               '<option value="Programmata" ' + (defaultStato === 'Programmata' ? 'selected' : '') + '>Programmata</option>' +
               '<option value="Disputata" ' + (defaultStato === 'Disputata' ? 'selected' : '') + '>Disputata</option>' +
@@ -3060,26 +3060,26 @@
           '</div>' +
         '</div>' +
 
-        '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-          '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Titolo Evento / Avversario *</label>' +
+        '<div class="es-cdx-164">' +
+          '<label class="es-cdx-165">Titolo Evento / Avversario *</label>' +
           '<input type="text" id="cal-form-titolo" value="' + esc(defaultTitolo) + '" required placeholder="Es. Foggia City vs Cerignola Nord oppure Rifinitura Tattica" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.85rem;">' +
         '</div>' +
 
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
-          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Data *</label>' +
+        '<div class="es-cdx-163">' +
+          '<div class="es-cdx-164">' +
+            '<label class="es-cdx-165">Data *</label>' +
             '<input type="date" id="cal-form-data" value="' + esc(defaultDate) + '" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
           '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Orario *</label>' +
+          '<div class="es-cdx-164">' +
+            '<label class="es-cdx-165">Orario *</label>' +
             '<input type="time" id="cal-form-ora" value="' + esc(defaultTime) + '" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
           '</div>' +
         '</div>' +
 
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
-          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Competizione / Categoria *</label>' +
-            '<select id="cal-form-comp" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+        '<div class="es-cdx-163">' +
+          '<div class="es-cdx-164">' +
+            '<label class="es-cdx-165">Competizione / Categoria *</label>' +
+            '<select class="es-cdx-166" id="cal-form-comp" required>' +
               '<option value="Campionato" ' + (defaultComp === 'Campionato' ? 'selected' : '') + '>Campionato</option>' +
               '<option value="Coppa Italia" ' + (defaultComp === 'Coppa Italia' || defaultComp === 'Coppa' ? 'selected' : '') + '>Coppa Italia</option>' +
               '<option value="Amichevole" ' + (defaultComp === 'Amichevole' ? 'selected' : '') + '>Amichevole</option>' +
@@ -3088,18 +3088,18 @@
               '<option value="Palestra & Video" ' + (defaultComp === 'Palestra & Video' ? 'selected' : '') + '>Palestra & Video</option>' +
             '</select>' +
           '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Stadio / Luogo</label>' +
+          '<div class="es-cdx-164">' +
+            '<label class="es-cdx-165">Stadio / Luogo</label>' +
             '<input type="text" id="cal-form-luogo" list="campi-suggeriti-list" value="' + esc(defaultLuogo) + '" placeholder="Es. Campo Comunale Cerignola" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
           '</div>' +
         '</div>' +
 
-        '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-          '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Descrizione / Note Tecniche</label>' +
-          '<textarea id="cal-form-desc" rows="2" placeholder="Indicazioni per la squadra, orario ritrovo o programma..." style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' + esc(defaultDesc) + '</textarea>' +
+        '<div class="es-cdx-164">' +
+          '<label class="es-cdx-165">Descrizione / Note Tecniche</label>' +
+          '<textarea class="es-cdx-166" id="cal-form-desc" rows="2" placeholder="Indicazioni per la squadra, orario ritrovo o programma...">' + esc(defaultDesc) + '</textarea>' +
         '</div>' +
 
-        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
+        '<div class="es-cdx-167">' +
           '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
           '<button type="submit" class="es-btn-cos-primary">' + (isEdit ? 'Salva Modifiche' : 'Crea Evento') + '</button>' +
         '</div>' +
@@ -3249,15 +3249,15 @@
 
     if (matchesList.length === 0) {
       return (
-        '<div class="es-cos-panel-card" style="padding:3.5rem 1.5rem; text-align:center; background:#071522; border:1px solid #12344a; border-radius:10px;">' +
-          '<div style="width:56px; height:56px; border-radius:50%; background:rgba(56,189,248,0.1); border:1.5px solid rgba(56,189,248,0.3); display:inline-flex; align-items:center; justify-content:center; color:#38bdf8; margin-bottom:1rem;">' +
+        '<div class="es-cos-panel-card es-cdx-168">' +
+          '<div class="es-cdx-169">' +
             '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
           '</div>' +
-          '<h3 style="font-size:1.25rem; font-weight:800; color:#f3f8fc; margin-bottom:0.5rem;">Nessuna gara in programma da analizzare</h3>' +
-          '<p style="font-size:0.85rem; color:#8da8bc; max-width:480px; margin:0 auto 1.5rem auto; line-height:1.5;">' +
+          '<h3 class="es-cdx-170">Nessuna gara in programma da analizzare</h3>' +
+          '<p class="es-cdx-171">' +
             'Il dossier tattico si attiva automaticamente programmando le partite nel Calendario reale del club.' +
           '</p>' +
-          '<button type="button" class="es-btn-cos-primary" data-tab-nav="calendario" style="display:inline-flex; align-items:center; gap:6px; font-size:0.85rem; padding:0.6rem 1.25rem;">' +
+          '<button type="button" class="es-btn-cos-primary es-cdx-172" data-tab-nav="calendario">' +
             '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
             '<span>Vai al Calendario &rarr;</span>' +
           '</button>' +
@@ -3295,30 +3295,30 @@
     }).join('');
 
     return (
-      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+      '<div class="es-cdx-173">' +
         // BARRA SUPERIORE SELETTORE PARTITA / AVVERSARIO (SENZA LABEL TECNICA)
-        '<div class="es-cos-panel-card" style="padding:0.9rem 1.35rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; background:linear-gradient(90deg, #071522 0%, #0a1e30 100%); border:1px solid #12344a; border-radius:10px;">' +
-          '<div style="display:flex; align-items:center; gap:0.85rem;">' +
-            '<div style="width:42px; height:42px; border-radius:10px; background:rgba(22,185,255,0.12); border:1.5px solid rgba(22,185,255,0.35); display:flex; align-items:center; justify-content:center; color:#16b9ff; flex-shrink:0;">' +
+        '<div class="es-cos-panel-card es-cdx-174">' +
+          '<div class="es-cdx-175">' +
+            '<div class="es-cdx-176">' +
               '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
             '</div>' +
             '<div>' +
-              '<div style="font-size:1.35rem; font-weight:900; color:#f3f8fc; line-height:1.2;">' + esc(activeOpponent) + '</div>' +
-              '<div style="display:flex; align-items:center; gap:8px; margin-top:4px; font-size:0.75rem; color:#8da8bc;">' +
-                '<span class="es-cos-badge-pill is-blue" style="font-size:0.68rem; font-weight:800; padding:2px 7px;">' + (curMatch.isNext ? 'Prossimo Incontro Ufficiale' : 'Dossier Programmato') + '</span>' +
-                '<span>Data: <b style="color:#cbd5e1;">' + esc(curMatch.data || '18/09/2026') + '</b></span>' +
+              '<div class="es-cdx-177">' + esc(activeOpponent) + '</div>' +
+              '<div class="es-cdx-178">' +
+                '<span class="es-cos-badge-pill is-blue es-cdx-179">' + (curMatch.isNext ? 'Prossimo Incontro Ufficiale' : 'Dossier Programmato') + '</span>' +
+                '<span>Data: <b class="es-cdx-180">' + esc(curMatch.data || '18/09/2026') + '</b></span>' +
                 '<span>·</span>' +
-                '<span>Stadio: <b style="color:#cbd5e1;">' + esc(curMatch.stadio || 'Campo Comunale') + '</b></span>' +
+                '<span>Stadio: <b class="es-cdx-180">' + esc(curMatch.stadio || 'Campo Comunale') + '</b></span>' +
               '</div>' +
             '</div>' +
           '</div>' +
-          '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-            '<label for="sel-dossier-match" style="font-size:0.76rem; font-weight:700; color:#8da8bc; text-transform:uppercase; letter-spacing:0.04em;">Dossier Gara:</label>' +
-            '<div style="position:relative; display:inline-flex; align-items:center;">' +
-              '<select id="sel-dossier-match" style="appearance:none; -webkit-appearance:none; background:#040912; border:1.5px solid rgba(56,189,248,0.4); color:#ffffff; font-size:0.82rem; font-weight:700; padding:0.45rem 2.2rem 0.45rem 0.85rem; border-radius:7px; cursor:pointer; outline:none; box-shadow:0 2px 8px rgba(0,0,0,0.3);">' +
+          '<div class="es-cdx-78">' +
+            '<label class="es-cdx-181" for="sel-dossier-match">Dossier Gara:</label>' +
+            '<div class="es-cdx-42">' +
+              '<select class="es-cdx-182" id="sel-dossier-match">' +
                 matchSelectOptions +
               '</select>' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" style="position:absolute; right:10px; pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>' +
+              '<svg class="es-cdx-183" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -3332,12 +3332,12 @@
                 '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>' +
                 '<span>Dossier Tattico · ' + esc(activeOpponent) + '</span>' +
               '</h4>' +
-              '<button type="button" class="es-btn-cos-sec" id="btn-edit-all-dossier" style="font-size:0.75rem; display:inline-flex; align-items:center; gap:5px; padding:0.38rem 0.75rem;">' +
+              '<button type="button" class="es-btn-cos-sec es-cdx-184" id="btn-edit-all-dossier">' +
                 '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
                 '<span>Modifica Dossier</span>' +
               '</button>' +
             '</div>' +
-            '<div style="display:flex; flex-direction:column;">' +
+            '<div class="es-cdx-185">' +
               // SEZIONE 1: Punti di Forza (Bordo sottile verde, titolo neutro, icona scudo)
               '<div class="es-dossier-section-row is-forza">' +
                 '<div class="es-dossier-section-head">' +
@@ -3382,33 +3382,33 @@
           '</div>' +
 
           // COLONNA DESTRA: PANNELLO VIDEO REPORT & MATCH ANALYSIS ALLEGGERITO
-          '<div class="es-cos-panel-card" style="display:flex; flex-direction:column; justify-content:space-between; height:100%;">' +
+          '<div class="es-cos-panel-card es-cdx-186">' +
             '<div>' +
-              '<div class="es-cos-panel-head" style="margin-bottom:0.85rem;">' +
+              '<div class="es-cos-panel-head es-cdx-187">' +
                 '<span class="es-cos-panel-title">Video Report & Match Analysis</span>' +
                 (matchVideos.length ? (
-                  '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="font-size:0.74rem; padding:0.35rem 0.75rem;">' +
-                    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+                  '<button type="button" class="es-btn-cos-primary es-cdx-188" id="btn-upload-video-analysis">' +
+                    '<svg class="es-cdx-189" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
                     '+ Aggiungi File' +
                   '</button>'
                 ) : '') +
               '</div>' +
 
               (matchVideos.length ? (
-                '<div style="display:flex; flex-direction:column; gap:0.6rem; max-height:420px; overflow-y:auto; padding-right:2px;">' +
+                '<div class="es-cdx-190">' +
                   matchVideos.map(function (vf) {
                     var fileName = vf.nome || (vf.file_url ? vf.file_url.split('/').pop() : 'Report_Analisi.mp4');
                     var fileCat = vf.categoria_label || 'Video Analisi';
                     return (
-                      '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.75rem 0.9rem; display:flex; justify-content:space-between; align-items:center; gap:0.6rem;">' +
-                        '<div style="display:flex; align-items:center; gap:0.65rem; min-width:0; overflow:hidden;">' +
-                          '<div style="width:34px; height:34px; border-radius:6px; background:rgba(22,185,255,0.12); color:#16b9ff; display:flex; align-items:center; justify-content:center; flex-shrink:0;">' +
+                      '<div class="es-cdx-191">' +
+                        '<div class="es-cdx-192">' +
+                          '<div class="es-cdx-193">' +
                             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
                           '</div>' +
-                          '<div style="overflow:hidden; min-width:0;">' +
+                          '<div class="es-cdx-194">' +
                             '<b style="color:#f3f8fc; font-size:0.82rem; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="' + esc(fileName) + '">' + esc(fileName) + '</b>' +
-                            '<div style="display:flex; align-items:center; gap:6px; font-size:0.68rem; color:#8da8bc; margin-top:2px;">' +
-                              '<span class="es-cos-badge-pill is-blue" style="font-size:0.62rem; padding:1px 5px;">' + esc(fileCat) + '</span>' +
+                            '<div class="es-cdx-195">' +
+                              '<span class="es-cos-badge-pill is-blue es-cdx-196">' + esc(fileCat) + '</span>' +
                               '<span>' + formatDate(vf.created_at) + '</span>' +
                             '</div>' +
                           '</div>' +
@@ -3420,13 +3420,13 @@
                 '</div>'
               ) : (
                 // STATO VUOTO ALLEGGERITO (DESIGN INTENZIONALE & PULITO)
-                '<div style="background:rgba(4,9,18,0.6); border:1px dashed #12344a; border-radius:8px; padding:1.75rem 1.25rem; text-align:center;">' +
-                  '<div style="width:40px; height:40px; border-radius:50%; background:rgba(22,185,255,0.08); border:1px solid rgba(22,185,255,0.22); color:#38bdf8; display:flex; align-items:center; justify-content:center; margin:0 auto 0.65rem;">' +
+                '<div class="es-cdx-197">' +
+                  '<div class="es-cdx-198">' +
                     '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
                   '</div>' +
-                  '<div style="font-weight:700; font-size:0.86rem; color:#f3f8fc;">Nessun video analisi o report allegato per ' + esc(activeOpponent) + '</div>' +
-                  '<p style="font-size:0.73rem; color:#8da8bc; margin:0.35rem 0 1rem;">File salvati nell’archivio della squadra, visibili solo allo staff.</p>' +
-                  '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="padding:0.48rem 1rem; font-size:0.78rem; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">' +
+                  '<div class="es-cdx-199">Nessun video analisi o report allegato per ' + esc(activeOpponent) + '</div>' +
+                  '<p class="es-cdx-200">File salvati nell’archivio della squadra, visibili solo allo staff.</p>' +
+                  '<button type="button" class="es-btn-cos-primary es-cdx-201" id="btn-upload-video-analysis">' +
                     '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
                     'Carica Video / Match Analysis' +
                   '</button>' +
@@ -3434,8 +3434,8 @@
               )) +
             '</div>' +
             // NOTA METODOLOGICA DISCRETA IN CALCE
-            '<div style="margin-top:1rem; padding:0.65rem 0.85rem; background:rgba(22,185,255,0.04); border:1px solid rgba(22,185,255,0.18); border-radius:6px; font-size:0.72rem; color:#8da8bc; line-height:1.45;">' +
-              '<b style="color:#38bdf8;">Accesso Condiviso:</b> I clip e dossier collegati a questa gara sono sincronizzati in tempo reale con il Vice Allenatore e il Match Analyst.' +
+            '<div class="es-cdx-202">' +
+              '<b class="es-cdx-203">Accesso Condiviso:</b> I clip e dossier collegati a questa gara sono sincronizzati in tempo reale con il Vice Allenatore e il Match Analyst.' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -3453,17 +3453,17 @@
     var stato = (data.carico && data.carico.stato) || 'In attesa dati GPS';
 
     return (
-      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+      '<div class="es-cdx-173">' +
         '<div class="es-cos-panel-card">' +
           '<div class="es-cos-panel-head">' +
             '<span class="es-cos-panel-title">Dashboard Telemetria GPS & Workload Management (Supabase)</span>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-upload-gps-modal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica Telemetria GPS (.csv, .json, .fit)</button>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-upload-gps-modal"><svg class="es-cdx-189" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica Telemetria GPS (.csv, .json, .fit)</button>' +
           '</div>' +
-          '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; margin-bottom:1rem;">' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#16b9ff;">' + (avg > 0 ? (avg + '%') : '--') + '</div><div style="font-size:0.72rem; color:#8da8bc;">CARICO MEDIO SETTIMANA</div></div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">' + '--' + '</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA TOTALE STIMATA</div></div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#ffd21a;">' + acwr + '</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR RATIO MEDIO</div></div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">' + esc(stato) + '</div><div style="font-size:0.72rem; color:#8da8bc;">STATO DI FORMA</div></div>' +
+          '<div class="es-cdx-204">' +
+            '<div class="es-cdx-205"><div class="es-cdx-206">' + (avg > 0 ? (avg + '%') : '--') + '</div><div class="es-cdx-89">CARICO MEDIO SETTIMANA</div></div>' +
+            '<div class="es-cdx-205"><div class="es-cdx-207">' + '--' + '</div><div class="es-cdx-89">DISTANZA TOTALE STIMATA</div></div>' +
+            '<div class="es-cdx-205"><div class="es-cdx-208">' + acwr + '</div><div class="es-cdx-89">ACWR RATIO MEDIO</div></div>' +
+            '<div class="es-cdx-205"><div class="es-cdx-207">' + esc(stato) + '</div><div class="es-cdx-89">STATO DI FORMA</div></div>' +
           '</div>' +
           '<table class="es-cos-table-compact">' +
             '<thead><tr><th>Calciatore</th><th>Ruolo</th><th>Km Totali</th><th>Sprint >25km/h</th><th>ACWR</th><th>Semaforo Rischio</th></tr></thead>' +
@@ -3471,7 +3471,7 @@
               (data.roster && data.roster.length ? data.roster.map(function (p) {
                 var isDiff = p.status === 'diff';
                 return '<tr><td><b>' + esc(p.name) + '</b></td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + (isDiff ? '--' : '--') + '</td><td><b>' + esc(p.acwr) + '</b></td><td><span class="es-cos-badge-pill ' + (isDiff ? 'is-warn' : 'is-green') + '">' + (isDiff ? 'Differenziato' : 'Regolare') + '</span></td></tr>';
-              }).join('') : '<tr><td colspan="6" style="text-align:center; padding:2rem; color:#8da8bc;">Nessun dato di carico o atleta presente.</td></tr>') +
+              }).join('') : '<tr><td class="es-cdx-209" colspan="6">Nessun dato di carico o atleta presente.</td></tr>') +
             '</tbody>' +
           '</table>' +
         '</div>' +
@@ -3480,17 +3480,17 @@
         '<div class="es-cos-panel-card">' +
           '<div class="es-cos-panel-head"><span class="es-cos-panel-title">File GPS archiviati</span></div>' +
           (gpsFiles.length ? (
-            '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
+            '<div class="es-cdx-210">' +
               gpsFiles.map(function (gf) {
                 return (
-                  '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
-                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(gf.nome || 'File GPS') + '</b><div style="font-size:0.72rem; color:#8da8bc;">Caricato il ' + formatDate(gf.created_at) + '</div></div>' +
+                  '<div class="es-cdx-211">' +
+                    '<div><b class="es-cdx-212">' + esc(gf.nome || 'File GPS') + '</b><div class="es-cdx-89">Caricato il ' + formatDate(gf.created_at) + '</div></div>' +
                     '<button type="button" data-sq-dl="' + esc(gf.id) + '" data-sq-name="' + esc(gf.nome || 'allegato') + '" class="es-btn-cos-sec" style="font-size:0.74rem;">Scarica &rarr;</button>' +
                   '</div>'
                 );
               }).join('') +
             '</div>'
-          ) : '<div style="text-align:center; padding:2rem; color:#8da8bc; font-size:0.82rem;">Nessun tracciato GPS caricato. Clicca su "+ Carica Telemetria GPS" per importare dati.</div>') +
+          ) : '<div class="es-cdx-213">Nessun tracciato GPS caricato. Clicca su "+ Carica Telemetria GPS" per importare dati.</div>') +
         '</div>' +
       '</div>'
     );
@@ -3504,32 +3504,32 @@
     var allegati = data.allegati || [];
 
     return (
-      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+      '<div class="es-cdx-173">' +
         '<div class="es-cos-panel-card">' +
           '<div class="es-cos-panel-head">' +
             '<span class="es-cos-panel-title">Report Staff Tecnico & Medico (Tabella: report)</span>' +
             '<div class="es-sqf-head-actions"><button type="button" class="es-btn-cos-primary" id="btn-write-staff-report">Scrivi report</button>' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-upload-staff-report-modal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica file</button></div>' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-upload-staff-report-modal"><svg class="es-cdx-189" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica file</button></div>' +
           '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.75rem;">' +
+          '<div class="es-cdx-214">' +
             (reports.length ? reports.map(function (r) {
               return (
-                '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                '<div class="es-cdx-215">' +
                   '<div>' +
-                    '<div class="es-cos-badge-pill is-blue" style="margin-bottom:4px;">' + esc(r.tipo || 'Report Staff') + '</div>' +
-                    '<div style="font-weight:800; font-size:0.95rem; color:#f3f8fc;">' + esc(r.titolo) + '</div>' +
-                    '<div style="font-size:0.75rem; color:#8da8bc;">' + esc(r.contenuto || '') + ' · ' + formatDate(r.created_at) + '</div>' +
+                    '<div class="es-cos-badge-pill is-blue es-cdx-216">' + esc(r.tipo || 'Report Staff') + '</div>' +
+                    '<div class="es-cdx-217">' + esc(r.titolo) + '</div>' +
+                    '<div class="es-cdx-149">' + esc(r.contenuto || '') + ' · ' + formatDate(r.created_at) + '</div>' +
                   '</div>' +
-                  '<div style="display:flex; gap:0.5rem;">' +
+                  '<div class="es-cdx-218">' +
                     (r.file_url ? '<a href="' + esc(r.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Allegato &rarr;</a>' : '') +
                   '</div>' +
                 '</div>'
               );
             }).join('') : (
-              '<div style="text-align:center; padding:2.5rem; color:#8da8bc;">' +
-                '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:0.4; margin-bottom:0.5rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>' +
-                '<div style="font-size:0.95rem; font-weight:800; color:#f3f8fc;">Nessun report ricevuto dallo staff</div>' +
-                '<div style="font-size:0.75rem; margin-top:0.25rem;">Le schede e i report inviati dai collaboratori tecnici appariranno qui.</div>' +
+              '<div class="es-cdx-219">' +
+                '<svg class="es-cdx-220" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>' +
+                '<div class="es-cdx-88">Nessun report ricevuto dallo staff</div>' +
+                '<div class="es-cdx-13">Le schede e i report inviati dai collaboratori tecnici appariranno qui.</div>' +
               '</div>'
             )) +
           '</div>' +
@@ -3539,17 +3539,17 @@
         '<div class="es-cos-panel-card">' +
           '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Archivio file e allegati</span></div>' +
           (allegati.length ? (
-            '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
+            '<div class="es-cdx-210">' +
               allegati.map(function (al) {
                 return (
-                  '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
-                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(al.nome || 'Allegato') + '</b><div style="font-size:0.72rem; color:#8da8bc;">Categoria: <b>' + esc(al.categoria) + '</b> · ' + formatDate(al.created_at) + '</div></div>' +
+                  '<div class="es-cdx-211">' +
+                    '<div><b class="es-cdx-212">' + esc(al.nome || 'Allegato') + '</b><div class="es-cdx-89">Categoria: <b>' + esc(al.categoria) + '</b> · ' + formatDate(al.created_at) + '</div></div>' +
                     '<button type="button" data-sq-dl="' + esc(al.id) + '" data-sq-name="' + esc(al.nome || 'allegato') + '" class="es-btn-cos-sec" style="font-size:0.74rem;">Scarica &rarr;</button>' +
                   '</div>'
                 );
               }).join('') +
             '</div>'
-          ) : '<div style="text-align:center; padding:1.5rem; color:#8da8bc; font-size:0.8rem;">Nessun documento o referto archiviato.</div>') +
+          ) : '<div class="es-cdx-65">Nessun documento o referto archiviato.</div>') +
         '</div>' +
       '</div>'
     );
@@ -3562,19 +3562,19 @@
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Canale Tecnico Diretto: Allenatore Capo &harr; Vice Allenatore</span></div>' +
-        '<div style="display:flex; flex-direction:column; gap:0.65rem; max-height:360px; overflow-y:auto; background:#040912; border:1px solid #12344a; border-radius:8px; padding:1rem; margin-bottom:1rem;">' +
+        '<div class="es-cdx-221">' +
           data.messaggiStaff.map(function (m) {
             var isMister = m.from.indexOf('Mister') >= 0;
             return (
               '<div style="align-self:' + (isMister ? 'flex-end' : 'flex-start') + '; max-width:80%; background:' + (isMister ? 'rgba(7,152,209,0.18)' : 'rgba(255,255,255,0.04)') + '; border:1px solid ' + (isMister ? '#078fd0' : '#12344a') + '; border-radius:8px; padding:0.65rem 0.85rem;">' +
-                '<div style="display:flex; justify-content:space-between; gap:1rem; font-size:0.72rem; color:#8da8bc; margin-bottom:3px;"><b style="color:' + (isMister ? '#16b9ff' : '#00d978') + ';">' + esc(m.from) + '</b><span>' + esc(m.time) + '</span></div>' +
-                '<div style="font-size:0.84rem; color:#f3f8fc;">' + esc(m.text) + '</div>' +
+                '<div class="es-cdx-222"><b style="color:' + (isMister ? '#16b9ff' : '#00d978') + ';">' + esc(m.from) + '</b><span>' + esc(m.time) + '</span></div>' +
+                '<div class="es-cdx-223">' + esc(m.text) + '</div>' +
               '</div>'
             );
           }).join('') +
         '</div>' +
-        '<form id="form-send-staff-msg" style="display:flex; gap:0.5rem;">' +
-          '<input type="text" class="es-cos-form-input" id="inp-staff-msg" placeholder="Scrivi una comunicazione tecnica..." style="flex:1; background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem 0.85rem; border-radius:6px;" required>' +
+        '<form class="es-cdx-218" id="form-send-staff-msg">' +
+          '<input type="text" class="es-cos-form-input es-cdx-224" id="inp-staff-msg" placeholder="Scrivi una comunicazione tecnica..." required>' +
           '<button type="submit" class="es-btn-cos-primary">Invia</button>' +
         '</form>' +
       '</div>'
@@ -3588,12 +3588,12 @@
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Impostazioni Tecniche & Configurazione Staff</span></div>' +
-        '<form id="form-save-settings" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Nome Allenatore</label><input type="text" id="cfg-coach-name" value="' + esc(data.coachName) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Qualifica UEFA</label><input type="text" id="cfg-coach-patent" value="' + esc(data.patent) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Club</label><input type="text" id="cfg-coach-club" value="' + esc(data.clubName) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Matricola FIGC</label><input type="text" id="cfg-coach-matr" value="' + esc(data.matricola) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-          '<div style="grid-column:1/-1; display:flex; justify-content:flex-end;"><button type="submit" class="es-btn-cos-primary">Salva Impostazioni</button></div>' +
+        '<form class="es-cdx-225" id="form-save-settings">' +
+          '<div class="es-cdx-226"><label class="es-cdx-227">Nome Allenatore</label><input type="text" id="cfg-coach-name" value="' + esc(data.coachName) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+          '<div class="es-cdx-226"><label class="es-cdx-227">Qualifica UEFA</label><input type="text" id="cfg-coach-patent" value="' + esc(data.patent) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+          '<div class="es-cdx-226"><label class="es-cdx-227">Club</label><input type="text" id="cfg-coach-club" value="' + esc(data.clubName) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+          '<div class="es-cdx-226"><label class="es-cdx-227">Matricola FIGC</label><input type="text" id="cfg-coach-matr" value="' + esc(data.matricola) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+          '<div class="es-cdx-228"><button type="submit" class="es-btn-cos-primary">Salva Impostazioni</button></div>' +
         '</form>' +
       '</div>' +
       '<section class="es-cos-panel-card es-sqm" id="es-sqm-mount" aria-live="polite"></section>'
@@ -3921,19 +3921,19 @@
     if (btnAddP) {
       btnAddP.onclick = function () {
         openModal('Tesseramento Nuovo Calciatore',
-          '<form id="form-modal-add-p" style="display:flex; flex-direction:column; gap:0.9rem;">' +
-            '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-              '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Nome e Cognome *</label>' +
-              '<input type="text" id="inp-p-name" required placeholder="Es. Marco Bellini" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+          '<form class="es-cdx-229" id="form-modal-add-p">' +
+            '<div class="es-cdx-164">' +
+              '<label class="es-cdx-230">Nome e Cognome *</label>' +
+              '<input class="es-cdx-231" type="text" id="inp-p-name" required placeholder="Es. Marco Bellini">' +
             '</div>' +
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Numero Maglia *</label>' +
+            '<div class="es-cdx-232">' +
+              '<div class="es-cdx-164">' +
+                '<label class="es-cdx-230">Numero Maglia *</label>' +
                 '<input type="number" id="inp-p-num" value="' + (data.roster.length + 1) + '" min="1" max="99" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
               '</div>' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Ruolo *</label>' +
-                '<select id="inp-p-role" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+              '<div class="es-cdx-164">' +
+                '<label class="es-cdx-230">Ruolo *</label>' +
+                '<select class="es-cdx-231" id="inp-p-role">' +
                   '<option>Portiere</option>' +
                   '<option>Difensore Centrale</option>' +
                   '<option>Terzino Destro</option>' +
@@ -3947,27 +3947,27 @@
                 '</select>' +
               '</div>' +
             '</div>' +
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Data di nascita *</label>' +
-                '<input type="date" id="inp-p-dob" required style="color-scheme:dark; background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+            '<div class="es-cdx-232">' +
+              '<div class="es-cdx-164">' +
+                '<label class="es-cdx-230">Data di nascita *</label>' +
+                '<input class="es-cdx-233" type="date" id="inp-p-dob" required>' +
               '</div>' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Luogo di Nascita *</label>' +
-                '<input type="text" id="inp-p-pob" required placeholder="Es. Foggia (FG)" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
-              '</div>' +
-            '</div>' +
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Codice Fiscale *</label>' +
-                '<input type="text" id="inp-p-cf" required placeholder="Es. BLLMRC03D14D643X" maxlength="16" oninput="this.value=this.value.toUpperCase()" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem; text-transform:uppercase; font-family:monospace;">' +
-              '</div>' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Email ( Opzionale )</label>' +
-                '<input type="email" id="inp-p-email" placeholder="Es. calciatore@email.it" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+              '<div class="es-cdx-164">' +
+                '<label class="es-cdx-230">Luogo di Nascita *</label>' +
+                '<input class="es-cdx-231" type="text" id="inp-p-pob" required placeholder="Es. Foggia (FG)">' +
               '</div>' +
             '</div>' +
-            '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
+            '<div class="es-cdx-232">' +
+              '<div class="es-cdx-164">' +
+                '<label class="es-cdx-230">Codice Fiscale *</label>' +
+                '<input class="es-cdx-234" type="text" id="inp-p-cf" required placeholder="Es. BLLMRC03D14D643X" maxlength="16" oninput="this.value=this.value.toUpperCase()">' +
+              '</div>' +
+              '<div class="es-cdx-164">' +
+                '<label class="es-cdx-230">Email ( Opzionale )</label>' +
+                '<input class="es-cdx-231" type="email" id="inp-p-email" placeholder="Es. calciatore@email.it">' +
+              '</div>' +
+            '</div>' +
+            '<div class="es-cdx-167">' +
               '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
               '<button type="submit" class="es-btn-cos-primary">Tessera Calciatore</button>' +
             '</div>' +
@@ -4189,20 +4189,20 @@
         var defaultName = 'Schema ' + curMod + ' · ' + nowStr;
 
         openModal('Salva Schema Tattico',
-          '<form id="form-save-scheme" style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-              '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Nome Schema *</label>' +
+          '<form class="es-cdx-99" id="form-save-scheme">' +
+            '<div class="es-cdx-164">' +
+              '<label class="es-cdx-230">Nome Schema *</label>' +
               '<input type="text" id="inp-scheme-name" value="' + esc(defaultName) + '" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
             '</div>' +
-            '<div style="font-size:0.75rem; color:#8da8bc; background:#040912; border:1px solid #12344a; padding:0.65rem; border-radius:6px;">' +
+            '<div class="es-cdx-235">' +
               'Verranno memorizzati: modulo <b>' + esc(curMod) + '</b>, posizioni dei calciatori, pallone, ' + (tb.arrows ? tb.arrows.length : 0) + ' frecce e ' + (tb.zones ? tb.zones.length : 0) + ' zone tattiche.' +
             '</div>' +
-            '<div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; margin-top:0.5rem; flex-wrap:wrap;">' +
-              '<button type="button" class="es-btn-cos-sec" id="btn-export-current-json" style="display:inline-flex; align-items:center; gap:5px; font-size:0.75rem;" title="Scarica questo schema come file .json">' +
+            '<div class="es-cdx-236">' +
+              '<button type="button" class="es-btn-cos-sec es-cdx-237" id="btn-export-current-json" title="Scarica questo schema come file .json">' +
                 '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
                 '<span>Esporta File JSON</span>' +
               '</button>' +
-              '<div style="display:flex; gap:0.5rem;">' +
+              '<div class="es-cdx-218">' +
                 '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
                 '<button type="submit" class="es-btn-cos-primary">Salva Schema</button>' +
               '</div>' +
@@ -4637,106 +4637,106 @@
     }
 
     var content =
-      '<form id="form-edit-dossier" style="display:flex; flex-direction:column; gap:0.95rem;">' +
+      '<form class="es-cdx-238" id="form-edit-dossier">' +
         // HEADER CONTESTUALE MODALE E AZIONE IA
-        '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; padding:0.65rem 0.95rem; border-radius:8px;">' +
+        '<div class="es-cdx-239">' +
           '<div>' +
-            '<div style="font-size:0.8rem; font-weight:800; color:#f3f8fc;">Dossier Tattico · ' + esc(opponentName) + '</div>' +
-            '<div style="font-size:0.7rem; color:#8da8bc;">Revisione dossier scout e piano gara</div>' +
+            '<div class="es-cdx-240">Dossier Tattico · ' + esc(opponentName) + '</div>' +
+            '<div class="es-cdx-241">Revisione dossier scout e piano gara</div>' +
           '</div>' +
-          '<button type="button" id="btn-ia-suggest-dossier" class="es-btn-cos-sec" style="background:rgba(22,185,255,0.08); border-color:#16b9ff; color:#38bdf8; font-size:0.75rem; font-weight:700; padding:0.35rem 0.75rem; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:5px;">' +
+          '<button type="button" id="btn-ia-suggest-dossier" class="es-btn-cos-sec es-cdx-242">' +
             'Usa una traccia' +
           '</button>' +
         '</div>' +
 
         // BOX ANTEPRIMA BOZZA IA (INIZIALMENTE NASCOSTO - MAI SOVRASCRITTURA AUTOMATICA SENZA CONFERMA)
-        '<div id="es-ia-suggestion-container" style="display:none;" class="es-ia-preview-box">' +
-          '<div style="display:flex; align-items:center; justify-content:space-between;">' +
-            '<div style="display:flex; align-items:center; gap:6px; font-size:0.78rem; font-weight:800; color:#38bdf8;">' +
+        '<div id="es-ia-suggestion-container" class="es-ia-preview-box es-cdx-243">' +
+          '<div class="es-cdx-244">' +
+            '<div class="es-cdx-245">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>' +
               '<span>Traccia per l\'analisi di ' + esc(opponentName) + '</span>' +
             '</div>' +
-            '<button type="button" id="btn-ia-close-preview" style="background:none; border:none; color:#8da8bc; font-size:1.1rem; cursor:pointer; line-height:1;">&times;</button>' +
+            '<button class="es-cdx-246" type="button" id="btn-ia-close-preview">&times;</button>' +
           '</div>' +
-          '<div style="font-size:0.72rem; color:#8da8bc; line-height:1.4;">' +
+          '<div class="es-cdx-247">' +
             'Domande guida da completare con quello che hai visto. Non è un\'analisi automatica dell\'avversario.' +
           '</div>' +
-          '<div id="ia-preview-content" style="background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.65rem; font-size:0.75rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.4rem; max-height:160px; overflow-y:auto;">' +
+          '<div class="es-cdx-248" id="ia-preview-content">' +
           '</div>' +
-          '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.25rem;">' +
-            '<button type="button" id="btn-ia-dismiss-suggestion" class="es-btn-cos-sec" style="font-size:0.72rem; padding:0.35rem 0.75rem;">Ignora</button>' +
-            '<button type="button" id="btn-ia-apply-suggestion" class="es-btn-cos-primary" style="font-size:0.72rem; padding:0.35rem 0.85rem; background:#10b981; border-color:#10b981;">' +
+          '<div class="es-cdx-249">' +
+            '<button type="button" id="btn-ia-dismiss-suggestion" class="es-btn-cos-sec es-cdx-250">Ignora</button>' +
+            '<button type="button" id="btn-ia-apply-suggestion" class="es-btn-cos-primary es-cdx-251">' +
               'Usa la traccia nel dossier' +
             '</button>' +
           '</div>' +
         '</div>' +
 
         // CAMPO 1: Punti di Forza
-        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<label style="font-size:0.78rem; font-weight:700; color:#e2e8f0; display:inline-flex; align-items:center; gap:6px;">' +
-              '<span style="width:18px; height:18px; border-radius:4px; background:rgba(16,185,129,0.12); color:#10b981; display:inline-flex; align-items:center; justify-content:center;">' +
+        '<div class="es-cdx-226">' +
+          '<div class="es-cdx-147">' +
+            '<label class="es-cdx-252">' +
+              '<span class="es-cdx-253">' +
                 '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
               '</span>' +
               'Punti di Forza' +
             '</label>' +
             '<span class="es-textarea-char-count" id="count-forza">0 / 500</span>' +
           '</div>' +
-          '<textarea id="inp-dos-forza" maxlength="500" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.83rem; line-height:1.5; outline:none;">' + esc(cur.puntiForza || '') + '</textarea>' +
+          '<textarea class="es-cdx-254" id="inp-dos-forza" maxlength="500" rows="2">' + esc(cur.puntiForza || '') + '</textarea>' +
         '</div>' +
 
         // CAMPO 2: Punti Deboli
-        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<label style="font-size:0.78rem; font-weight:700; color:#e2e8f0; display:inline-flex; align-items:center; gap:6px;">' +
-              '<span style="width:18px; height:18px; border-radius:4px; background:rgba(248,113,113,0.12); color:#f87171; display:inline-flex; align-items:center; justify-content:center;">' +
+        '<div class="es-cdx-226">' +
+          '<div class="es-cdx-147">' +
+            '<label class="es-cdx-252">' +
+              '<span class="es-cdx-255">' +
                 '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
               '</span>' +
               'Punti Deboli & Vulnerabilità' +
             '</label>' +
             '<span class="es-textarea-char-count" id="count-deboli">0 / 500</span>' +
           '</div>' +
-          '<textarea id="inp-dos-deboli" maxlength="500" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.83rem; line-height:1.5; outline:none;">' + esc(cur.puntiDeboli || '') + '</textarea>' +
+          '<textarea class="es-cdx-254" id="inp-dos-deboli" maxlength="500" rows="2">' + esc(cur.puntiDeboli || '') + '</textarea>' +
         '</div>' +
 
         // CAMPO 3: Giocatori Chiave
-        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<label style="font-size:0.78rem; font-weight:700; color:#e2e8f0; display:inline-flex; align-items:center; gap:6px;">' +
-              '<span style="width:18px; height:18px; border-radius:4px; background:rgba(251,191,36,0.12); color:#fbbf24; display:inline-flex; align-items:center; justify-content:center;">' +
+        '<div class="es-cdx-226">' +
+          '<div class="es-cdx-147">' +
+            '<label class="es-cdx-252">' +
+              '<span class="es-cdx-256">' +
                 '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
               '</span>' +
               'Giocatori Chiave' +
             '</label>' +
             '<span class="es-textarea-char-count" id="count-chiave">0 / 500</span>' +
           '</div>' +
-          '<textarea id="inp-dos-chiave" maxlength="500" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.83rem; line-height:1.5; outline:none;">' + esc(cur.giocatoriChiave || '') + '</textarea>' +
+          '<textarea class="es-cdx-254" id="inp-dos-chiave" maxlength="500" rows="2">' + esc(cur.giocatoriChiave || '') + '</textarea>' +
         '</div>' +
 
         // CAMPO 4: Palle Inattive
-        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
-          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-            '<label style="font-size:0.78rem; font-weight:700; color:#e2e8f0; display:inline-flex; align-items:center; gap:6px;">' +
-              '<span style="width:18px; height:18px; border-radius:4px; background:rgba(56,189,248,0.12); color:#38bdf8; display:inline-flex; align-items:center; justify-content:center;">' +
+        '<div class="es-cdx-226">' +
+          '<div class="es-cdx-147">' +
+            '<label class="es-cdx-252">' +
+              '<span class="es-cdx-257">' +
                 '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>' +
               '</span>' +
               'Palle Inattive & Schemi' +
             '</label>' +
             '<span class="es-textarea-char-count" id="count-piazzati">0 / 500</span>' +
           '</div>' +
-          '<textarea id="inp-dos-piazzati" maxlength="500" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.83rem; line-height:1.5; outline:none;">' + esc(cur.palleInattive || '') + '</textarea>' +
+          '<textarea class="es-cdx-254" id="inp-dos-piazzati" maxlength="500" rows="2">' + esc(cur.palleInattive || '') + '</textarea>' +
         '</div>' +
 
         // FOOTER BOTTONI CON STATO "SALVATO"
-        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.6rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.08);">' +
-          '<div id="es-dossier-save-badge" style="display:none; align-items:center; gap:6px; font-size:0.78rem; font-weight:700; color:#10b981;">' +
+        '<div class="es-cdx-258">' +
+          '<div class="es-cdx-259" id="es-dossier-save-badge">' +
             '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
             '<span>✓ Salvato</span>' +
           '</div>' +
-          '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-left:auto;">' +
+          '<div class="es-cdx-260">' +
             '<button type="button" class="es-btn-cos-sec" id="btn-custom-cancel-dossier">Annulla</button>' +
             '<button type="submit" class="es-btn-cos-primary" id="btn-submit-dossier">' +
-              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>' +
+              '<svg class="es-cdx-189" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>' +
               'Salva Dossier' +
             '</button>' +
           '</div>' +
@@ -4820,10 +4820,10 @@
 
         if (iaContent && iaContainer) {
           iaContent.innerHTML =
-            '<div><b style="color:#10b981;">Forza:</b> ' + esc(currentIaDraft.puntiForza) + '</div>' +
-            '<div><b style="color:#f87171;">Deboli:</b> ' + esc(currentIaDraft.puntiDeboli) + '</div>' +
-            '<div><b style="color:#fbbf24;">Chiave:</b> ' + esc(currentIaDraft.giocatoriChiave) + '</div>' +
-            '<div><b style="color:#38bdf8;">Piazzati:</b> ' + esc(currentIaDraft.palleInattive) + '</div>';
+            '<div><b class="es-cdx-261">Forza:</b> ' + esc(currentIaDraft.puntiForza) + '</div>' +
+            '<div><b class="es-cdx-262">Deboli:</b> ' + esc(currentIaDraft.puntiDeboli) + '</div>' +
+            '<div><b class="es-cdx-263">Chiave:</b> ' + esc(currentIaDraft.giocatoriChiave) + '</div>' +
+            '<div><b class="es-cdx-203">Piazzati:</b> ' + esc(currentIaDraft.palleInattive) + '</div>';
           iaContainer.style.display = 'flex';
           iaContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -4906,22 +4906,22 @@
     };
 
     var content =
-      '<form id="form-upload-cloud" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.85rem; font-size:0.8rem; color:#8da8bc; line-height:1.45;">' +
+      '<form class="es-cdx-99" id="form-upload-cloud">' +
+        '<div class="es-cdx-264">' +
           'I file restano nell’archivio della squadra e li vedono solo i membri dello staff. Massimo 4 MB per file: per i video carica un link.' +
         '</div>' +
 
         // AREA DRAG & DROP E FILE SELECTOR
-        '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-          '<label style="font-size:0.8rem; font-weight:800; color:#cbd5e1;">Seleziona o Trascina File *</label>' +
+        '<div class="es-cdx-164">' +
+          '<label class="es-cdx-265">Seleziona o Trascina File *</label>' +
           '<div id="dropzone-file-upload" class="es-upload-dropzone">' +
             '<input type="file" id="inp-upload-file" required accept="' + (acceptMap[categoria] || '*/*') + '" style="display:none;">' +
             '<div class="es-upload-dropzone-icon">' +
               '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
             '</div>' +
-            '<div style="font-size:0.84rem; font-weight:700; color:#f3f8fc;" id="dropzone-text-title">Trascina qui il file oppure clicca per sfogliare</div>' +
-            '<div style="font-size:0.72rem; color:#8da8bc; margin-top:4px;" id="dropzone-text-hint">Supportati: Video MP4/WebM, Report Scout PDF, Telemetria GPS</div>' +
-            '<div id="dropzone-file-preview" style="display:none; margin-top:0.75rem; padding:0.45rem 0.85rem; background:rgba(22,185,255,0.12); border:1px solid rgba(22,185,255,0.3); border-radius:6px; font-size:0.8rem; color:#38bdf8; font-weight:700; align-items:center; justify-content:center; gap:8px;">' +
+            '<div class="es-cdx-266" id="dropzone-text-title">Trascina qui il file oppure clicca per sfogliare</div>' +
+            '<div class="es-cdx-267" id="dropzone-text-hint">Supportati: Video MP4/WebM, Report Scout PDF, Telemetria GPS</div>' +
+            '<div class="es-cdx-268" id="dropzone-file-preview">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
               '<span id="preview-file-name">Nessun file selezionato</span>' +
             '</div>' +
@@ -4929,10 +4929,10 @@
         '</div>' +
 
         // SELECT CATEGORIA & SELECT VISIBILITA'
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label for="inp-upload-cat" style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Categoria File</label>' +
-            '<select id="inp-upload-cat" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+        '<div class="es-cdx-225">' +
+          '<div class="es-cdx-164">' +
+            '<label class="es-cdx-230" for="inp-upload-cat">Categoria File</label>' +
+            '<select class="es-cdx-166" id="inp-upload-cat">' +
               '<option value="video_analisi"' + (categoria === 'video_analisi' ? ' selected' : '') + '>Video Analisi Tattica</option>' +
               '<option value="report_scout"' + (categoria === 'report_scout' ? ' selected' : '') + '>Report Scout & Match Analysis</option>' +
               '<option value="dati_gps"' + (categoria === 'dati_gps' || categoria === 'gps' ? ' selected' : '') + '>Dati GPS / Telemetria</option>' +
@@ -4940,9 +4940,9 @@
               '<option value="altro"' + (categoria === 'altro' || categoria === 'staff_tecnico' ? ' selected' : '') + '>Altro / Scheda Extra</option>' +
             '</select>' +
           '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label for="inp-upload-vis" style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Visibilità Accesso</label>' +
-            '<select id="inp-upload-vis" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+          '<div class="es-cdx-164">' +
+            '<label class="es-cdx-230" for="inp-upload-vis">Visibilità Accesso</label>' +
+            '<select class="es-cdx-166" id="inp-upload-vis">' +
               '<option value="staff_tecnico">Staff Tecnico (Mister + Vice)</option>' +
               '<option value="staff_completo">Staff Tecnico Completo (+ Match Analyst)</option>' +
               '<option value="squadra">Tutta la Squadra (Atleti + Staff)</option>' +
@@ -4952,23 +4952,23 @@
         '</div>' +
 
         // BARRA DI PROGRESSO REALE ANIMATA
-        '<div id="upload-cloud-progress-container" style="display:none; margin-top:0.4rem;">' +
-          '<div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#8da8bc; margin-bottom:4px;">' +
+        '<div class="es-cdx-269" id="upload-cloud-progress-container">' +
+          '<div class="es-cdx-270">' +
             '<span id="upload-status-label">Caricamento su bucket cloud...</span>' +
-            '<b id="upload-percent-label" style="color:#38bdf8;">0%</b>' +
+            '<b class="es-cdx-203" id="upload-percent-label">0%</b>' +
           '</div>' +
           '<div class="es-upload-progress-wrap">' +
             '<div id="upload-progress-bar" class="es-upload-progress-bar"></div>' +
           '</div>' +
         '</div>' +
 
-        '<div id="upload-cloud-status" style="display:none; font-size:0.82rem; font-weight:700; text-align:center; padding:0.35rem;"></div>' +
+        '<div class="es-cdx-271" id="upload-cloud-status"></div>' +
 
         // FOOTER MODALE
-        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
+        '<div class="es-cdx-167">' +
           '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
           '<button type="submit" class="es-btn-cos-primary" id="btn-submit-upload">' +
-            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+            '<svg class="es-cdx-189" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
             'Avvia Upload Cloud' +
           '</button>' +
         '</div>' +
@@ -5126,8 +5126,8 @@
     modal.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:99999; padding:1rem;';
     modal.innerHTML =
       '<div style="background:#071522; border:1px solid #16b9ff; border-radius:10px; max-width:' + mw + '; width:100%; max-height:92vh; overflow-y:auto; padding:1.5rem; position:relative; box-shadow:0 12px 36px rgba(0,0,0,0.8);">' +
-        '<button type="button" id="btn-modal-close-x" style="position:absolute; top:12px; right:12px; background:none; border:none; color:#8da8bc; font-size:1.4rem; cursor:pointer;">&times;</button>' +
-        '<h3 style="margin:0 0 1.25rem; font-size:1.15rem; font-weight:800; color:#f3f8fc;">' + esc(title) + '</h3>' +
+        '<button class="es-cdx-272" type="button" id="btn-modal-close-x">&times;</button>' +
+        '<h3 class="es-cdx-273">' + esc(title) + '</h3>' +
         '<div>' + contentHtml + '</div>' +
       '</div>';
     document.body.appendChild(modal);
@@ -5218,7 +5218,7 @@
       });
 
       if (list.length === 0) {
-        return '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#8da8bc; font-size:0.85rem;">Nessuno schema preimpostato trovato per questa categoria.</div>';
+        return '<div class="es-cdx-274">Nessuno schema preimpostato trovato per questa categoria.</div>';
       }
 
       return list.map(function (p) {
@@ -5229,22 +5229,22 @@
         return (
           '<div class="es-preset-card" data-preset-cat="' + esc(p.categoria) + '" style="background:#040912; border:1px solid #16364d; border-radius:10px; padding:1.1rem; display:flex; flex-direction:column; justify-content:space-between; gap:0.85rem; box-shadow:0 6px 18px rgba(0,0,0,0.5); transition:border-color 0.15s ease;">' +
             '<div>' +
-              '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; gap:0.5rem; flex-wrap:wrap;">' +
-                '<div style="display:flex; align-items:center; gap:6px;">' +
-                  '<span style="background:rgba(56,189,248,0.14); border:1px solid #38bdf8; color:#38bdf8; font-size:0.72rem; font-weight:800; padding:2px 7px; border-radius:5px;">' + esc(p.modulo) + '</span>' +
+              '<div class="es-cdx-275">' +
+                '<div class="es-cdx-276">' +
+                  '<span class="es-cdx-277">' + esc(p.modulo) + '</span>' +
                   '<span style="background:rgba(255,255,255,0.06); border:1px solid ' + esc(p.badgeColore || '#8da8bc') + '; color:' + esc(p.badgeColore || '#8da8bc') + '; font-size:0.68rem; font-weight:700; padding:2px 7px; border-radius:5px;">' + esc(p.categoria) + '</span>' +
                 '</div>' +
-                '<span style="font-size:0.68rem; color:#64748b; font-style:italic;">' + esc(p.autore || 'Staff Tecnico') + '</span>' +
+                '<span class="es-cdx-278">' + esc(p.autore || 'Staff Tecnico') + '</span>' +
               '</div>' +
-              '<h4 style="margin:0 0 0.45rem 0; font-size:0.96rem; font-weight:800; color:#f3f8fc; line-height:1.3;">' + esc(p.nome) + '</h4>' +
-              '<p style="margin:0 0 0.75rem 0; font-size:0.77rem; color:#8da8bc; line-height:1.42;">' + esc(p.descrizione) + '</p>' +
-              '<div style="display:flex; gap:8px; flex-wrap:wrap; font-size:0.7rem; color:#94a3b8; background:rgba(255,255,255,0.02); padding:0.4rem 0.6rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">' +
-                (numPass > 0 ? '<span style="display:inline-flex; align-items:center; gap:4px; color:#38bdf8;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg> ' + numPass + ' Passaggi</span>' : '') +
-                (numRun > 0 ? '<span style="display:inline-flex; align-items:center; gap:4px; color:#ffd21a;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg> ' + numRun + ' Corse</span>' : '') +
-                (numZones > 0 ? '<span style="display:inline-flex; align-items:center; gap:4px; color:#f87171;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ' + numZones + ' Zone</span>' : '') +
+              '<h4 class="es-cdx-279">' + esc(p.nome) + '</h4>' +
+              '<p class="es-cdx-280">' + esc(p.descrizione) + '</p>' +
+              '<div class="es-cdx-281">' +
+                (numPass > 0 ? '<span class="es-cdx-282"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg> ' + numPass + ' Passaggi</span>' : '') +
+                (numRun > 0 ? '<span class="es-cdx-283"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg> ' + numRun + ' Corse</span>' : '') +
+                (numZones > 0 ? '<span class="es-cdx-284"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ' + numZones + ' Zone</span>' : '') +
               '</div>' +
             '</div>' +
-            '<div style="margin-top:0.4rem;">' +
+            '<div class="es-cdx-285">' +
               '<button type="button" class="es-btn-cos-primary btn-apply-preset" data-preset-id="' + esc(p.id) + '" style="width:100%; display:inline-flex; align-items:center; justify-content:center; gap:6px; font-size:0.78rem; padding:0.5rem 0.8rem;">' +
                 '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
                 '<span>Importa sulla Lavagna</span>' +
@@ -5256,29 +5256,29 @@
     }
 
     var content =
-      '<div style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="font-size:0.8rem; color:#8da8bc; line-height:1.45;">' +
+      '<div class="es-cdx-99">' +
+        '<div class="es-cdx-286">' +
           'Seleziona uno schema codificato sviluppato secondo i principi tattici moderni (UEFA Pro). Il modulo, i movimenti delle frecce, le zone di pressione e le posizioni degli atleti verranno applicati istantaneamente agli 11 titolari del tuo club.' +
         '</div>' +
-        '<div style="display:flex; gap:6px; flex-wrap:wrap;" id="es-preset-filter-bar">' +
+        '<div class="es-cdx-287" id="es-preset-filter-bar">' +
           filterPills +
         '</div>' +
-        '<div id="es-preset-cards-container" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:12px; max-height:58vh; overflow-y:auto; padding-right:4px;">' +
+        '<div class="es-cdx-288" id="es-preset-cards-container">' +
           renderPresetCards('Tutti') +
         '</div>' +
-        '<div style="background:#03080e; border:1px dashed #1e4a6a; border-radius:8px; padding:0.75rem 1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
-          '<div style="display:flex; align-items:center; gap:8px;">' +
+        '<div class="es-cdx-289">' +
+          '<div class="es-cdx-290">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
-            '<span style="font-size:0.77rem; color:#cbd5e1;">Hai un file schema salvato (.json)? Caricalo direttamente sulla lavagna.</span>' +
+            '<span class="es-cdx-291">Hai un file schema salvato (.json)? Caricalo direttamente sulla lavagna.</span>' +
           '</div>' +
           '<div>' +
-            '<input type="file" id="inp-file-scheme-json" accept=".json" style="display:none;">' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-trigger-json-upload" style="font-size:0.74rem; padding:0.35rem 0.75rem;">' +
+            '<input class="es-cdx-243" type="file" id="inp-file-scheme-json" accept=".json">' +
+            '<button type="button" class="es-btn-cos-sec es-cdx-188" id="btn-trigger-json-upload">' +
               'Carica File JSON...' +
             '</button>' +
           '</div>' +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.25rem;">' +
+        '<div class="es-cdx-249">' +
           '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Chiudi</button>' +
         '</div>' +
       '</div>';

@@ -54,7 +54,7 @@
   }
 
   function cardRequestHtml(r) {
-    var verifiedTag = r.verificato ? ' <span style="color:var(--es-verified); font-size:11px; font-weight:700;">✓ verificato</span>' : '';
+    var verifiedTag = r.verificato ? ' <span class="es-pdx-1">✓ verificato</span>' : '';
     if (r.stato) {
       var statusLabel = r.stato === 'accepted' ? 'Accettata' : 'Rifiutata';
       var statusClass = r.stato === 'accepted' ? 'accepted' : 'declined';
@@ -96,7 +96,7 @@
     var countBadge = box ? box.querySelector('#requests-count-badge') : document.getElementById('requests-count-badge');
     var pending = reqList.filter(function (r) { return !r.stato; }).length;
     if (countBadge) countBadge.textContent = pending + ' in attesa';
-    if (emptyNote) emptyNote.style.display = reqList.length === 0 ? 'block' : 'none';
+    if (emptyNote) emptyNote.hidden = reqList.length !== 0;
     if (list) list.innerHTML = renderRequestsList(reqList);
 
     var bellDot = document.getElementById('es-nav-bell-dot');
@@ -160,8 +160,8 @@
 
   function radarSvg(dataset) {
     if (!dataset || !dataset.hasData) {
-      return '<div style="background:rgba(15,23,42,0.5); border:1px dashed rgba(148,163,184,0.2); border-radius:4px; padding:3rem 1.5rem; text-align:center; color:#94a3b8; font-size:0.82rem;">' +
-        '<div style="font-weight:700; color:#38bdf8; margin-bottom:0.4rem;">Nessun dato registrato per la ' + esc(currentSeason) + '</div>' +
+      return '<div class="es-pdx-2">' +
+        '<div class="es-pdx-3">Nessun dato registrato per la ' + esc(currentSeason) + '</div>' +
         '<div>La rilevazione delle prestazioni e il tracciamento video sono attivi a partire dalle stagioni successive.</div>' +
         '</div>';
     }
@@ -188,7 +188,7 @@
         '" stroke="rgba(148,163,184,0.18)"/>';
       var lab = polar(cx, cy, r + 20, i, n, 100);
       html += '<text x="' + lab[0].toFixed(1) + '" y="' + lab[1].toFixed(1) +
-        '" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-size="8.5" font-family="Outfit,sans-serif" style="cursor:pointer;" class="es-pd-radar-axis-label" data-axis-name="' + esc(AXES[i]) + '">' +
+        '" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-size="8.5" font-family="Outfit,sans-serif" class="es-pd-radar-axis-label" data-axis-name="' + esc(AXES[i]) + '">' +
         esc(AXES[i]) + ' ' + primary[i] + '%</text>';
     }
     
@@ -283,8 +283,8 @@
           '</div>' +
           '<div class="es-pro-header-match-row">' +
             '<div class="es-pro-target-box"><p class="label">Stagione corrente</p><strong>' + esc(season) + '</strong><span>Dossier prestazioni e voti PGB</span></div>' +
-            '<div class="es-pro-target-box"><p class="label">PGB media</p><strong style="color:#38bdf8;">' + esc(pgb) + '</strong><span>Media voto pubblico</span></div>' +
-            '<div class="es-pro-target-box"><p class="label">Focus</p><strong style="color:#38bdf8;">Crescita &amp; Visibilità</strong><span>Profilo, card e rete scouting</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">PGB media</p><strong class="es-pdx-4">' + esc(pgb) + '</strong><span>Media voto pubblico</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Focus</p><strong class="es-pdx-4">Crescita &amp; Visibilità</strong><span>Profilo, card e rete scouting</span></div>' +
           '</div>' +
         '</div>' +
         '<nav class="es-pro-nav-tabs">' +
@@ -372,7 +372,7 @@
       }
     } catch (_) {}
 
-    var seasonPickerHtml = '<div style="font-size:0.75rem; color:#38bdf8; font-weight:700;">Stagione ' + esc(currentSeason) + '</div>';
+    var seasonPickerHtml = '<div class="es-pdx-5">Stagione ' + esc(currentSeason) + '</div>';
     var publicRatingCardHtml = '';
     try {
       if (window.EliseeRatingSystem && window.EliseeRatingSystem.renderSeasonPicker) {
@@ -418,12 +418,12 @@
             '<dt>Obiettivi di carriera</dt>' +
             '<dd class="' + (careerGoals ? '' : 'muted') + '">' + (careerGoals ? esc(careerGoals) : 'Non dichiarati') + '</dd>' +
           '</dl>' +
-          '<div class="es-field-row" style="margin-top:14px;">' +
-            '<dl class="es-field-list" style="margin:0;">' +
+          '<div class="es-field-row es-pdx-6">' +
+            '<dl class="es-field-list es-pdx-7">' +
               '<dt>Disponibilità trasferimento</dt>' +
               '<dd class="' + (availTransfer !== null && availTransfer !== undefined ? '' : 'muted') + '">' + (availTransfer === true ? 'Disponibile' : (availTransfer === false ? 'Non disponibile' : 'Non dichiarata')) + '</dd>' +
             '</dl>' +
-            '<dl class="es-field-list" style="margin:0;">' +
+            '<dl class="es-field-list es-pdx-7">' +
               '<dt>Stato contrattuale</dt>' +
               '<dd class="' + (contractStatus ? '' : 'muted') + '">' + esc(contractStatus || 'Non dichiarato') + '</dd>' +
             '</dl>' +
@@ -432,8 +432,8 @@
             '<dt>Preferenze di contatto</dt>' +
             '<dd class="' + (contactPref ? '' : 'muted') + '">' + esc(contactPref || 'Non dichiarate') + '</dd>' +
           '</dl>' +
-          '<button type="button" class="es-btn es-btn--primary" style="width:100%; margin-top:16px;" data-pd="edit">Modifica Profilo &amp; Autovalutazione</button>' +
-          '<button type="button" class="es-btn es-btn--secondary" style="width:100%; margin-top:8px; border:1px solid #38bdf8; color:#38bdf8; background:rgba(56,189,248,0.08); font-weight:700;" data-pd="share-public">🔗 Condividi Scheda Pubblica Atleta</button>' +
+          '<button type="button" class="es-btn es-btn--primary es-pdx-8" data-pd="edit">Modifica Profilo &amp; Autovalutazione</button>' +
+          '<button type="button" class="es-btn es-btn--secondary es-pdx-9" data-pd="share-public">🔗 Condividi Scheda Pubblica Atleta</button>' +
         '</div>';
 
     var prestazioneCol =
@@ -443,14 +443,14 @@
             '<h4>Radar Prestazioni a 12 Assi (' + esc(currentSeason) + ')</h4>' +
             '<span class="es-badge ' + (sData.hasData ? 'es-badge--active' : 'es-badge--pending') + '">' + (sData.hasData ? 'Dati gara' : 'In attesa') + '</span>' +
           '</div>' +
-          '<p class="es-empty-note" style="margin-bottom:14px;">Clicca su un parametro per aprire clip video e contesto gara.</p>' +
-          '<div style="display:flex; gap:14px; font-size:11px; color:var(--es-text-muted); margin-bottom:16px;">' +
-            '<span><b style="color:var(--es-accent);">■</b> ' + esc(currentSeason) + '</span><span><b style="color:var(--es-text-muted);">■</b> Benchmark</span><span><b style="color:var(--es-verified);">■</b> Media Girone</span>' +
+          '<p class="es-empty-note es-pdx-10">Clicca su un parametro per aprire clip video e contesto gara.</p>' +
+          '<div class="es-pdx-11">' +
+            '<span><b class="es-pdx-12">■</b> ' + esc(currentSeason) + '</span><span><b class="es-pdx-13">■</b> Benchmark</span><span><b class="es-pdx-14">■</b> Media Girone</span>' +
           '</div>' +
           (sData.hasData
             ? radarSvg(sData)
-            : '<div style="background:var(--es-panel-2); border:1px solid var(--es-border); border-radius:10px; padding:32px; text-align:center;">' +
-                '<p style="font-size:13px; font-weight:700; margin:0 0 6px; color:var(--es-text);">Nessun dato registrato per la ' + esc(currentSeason) + '</p>' +
+            : '<div class="es-pdx-15">' +
+                '<p class="es-pdx-16">Nessun dato registrato per la ' + esc(currentSeason) + '</p>' +
                 '<p class="es-empty-note">La rilevazione delle prestazioni e il tracciamento video sono attivi a partire dalle stagioni successive.</p>' +
               '</div>'
           ) +
@@ -466,7 +466,7 @@
             '</tbody></table>'
           ) : (
             '<table class="es-mini-table"><thead><tr><th>Gara</th><th>MIN</th><th>G</th><th>A</th><th>PGB</th><th>Esito</th></tr></thead></table>' +
-            '<p class="es-empty-note" style="margin-top:10px;">Nessuna gara registrata per questo profilo.</p>'
+            '<p class="es-empty-note es-pdx-17">Nessuna gara registrata per questo profilo.</p>'
           )) +
         '</div>' +
         '<div class="es-panel-card">' +
@@ -487,12 +487,12 @@
         '<h1>' + ICONS.activity + ' Elisee Scout — Report Tecnico &amp; Profilo Atleta</h1>' +
         '<div class="es-dossier__season">' +
           '<strong>' + esc(name) + '</strong>' +
-          '<span style="color:var(--es-border); margin:0 4px;">|</span>' +
+          '<span class="es-pdx-18">|</span>' +
           '<button type="button" class="es-season-nav" aria-label="Stagione precedente" data-season-step="-1" title="Stagione precedente">‹</button>' +
           '<span>Stagione <strong>' + esc(currentSeason) + '</strong> ' +
             (currentSeason === '2026/27'
-              ? '<span style="color:var(--es-accent);">· Attuale</span>'
-              : '<span style="color:var(--es-text-muted);">· Storico</span>') +
+              ? '<span class="es-pdx-12">· Attuale</span>'
+              : '<span class="es-pdx-13">· Storico</span>') +
           '</span>' +
           '<button type="button" class="es-season-nav" aria-label="Stagione successiva" data-season-step="1" title="Stagione successiva">›</button>' +
         '</div>' +
@@ -512,7 +512,7 @@
           '</div>' +
           '<div class="es-profile-summary">' +
             '<div class="es-profile-summary__photo">' +
-              (user.photoUrl ? '<img src="' + esc(user.photoUrl) + '" alt="' + esc(name) + '">' : '<div class="es-pd-ph" style="width:100%;height:100%;display:grid;place-items:center;background:var(--es-panel-2);color:var(--es-accent);font-weight:800;">' + esc((name || 'EM').slice(0, 2).toUpperCase()) + '</div>') +
+              (user.photoUrl ? '<img src="' + esc(user.photoUrl) + '" alt="' + esc(name) + '">' : '<div class="es-pd-ph es-pdx-19">' + esc((name || 'EM').slice(0, 2).toUpperCase()) + '</div>') +
             '</div>' +
             '<div>' +
               '<p class="es-profile-summary__name">' + esc(name) + '</p>' +
@@ -520,7 +520,7 @@
               '<p class="es-profile-summary__club">' + esc(clubLabel) + '</p>' +
             '</div>' +
           '</div>' +
-          '<span class="es-badge es-badge--active" style="margin-bottom:12px;">Cat. ' + esc(category || 'Iscritto Elisee') + '</span>' +
+          '<span class="es-badge es-badge--active es-pdx-20">Cat. ' + esc(category || 'Iscritto Elisee') + '</span>' +
           (sData.hasData && sData.metrics && (sData.metrics.compatibilita || sData.metrics.tackle) ? (
             kv('Compatibilità tattica', sData.metrics.compatibilita, true) +
             kv('Tackle e contrasti', sData.metrics.tackle) +
@@ -557,17 +557,17 @@
         '</div>' +
 
         // Card Avatar 3D Volumetrico
-        '<div class="es-panel-card" style="border:1px solid rgba(56,189,248,0.22); background:radial-gradient(circle at 80% 20%, rgba(56,189,248,0.08) 0%, rgba(13,19,32,0.95) 100%);">' +
+        '<div class="es-panel-card es-pdx-21">' +
           '<div class="es-panel-card__head">' +
             '<h4>Avatar 3D Ufficiale</h4>' +
             '<span class="es-badge ' + (avatar3dOk ? 'es-badge--verified' : 'es-badge--pending') + '">' + (avatar3dOk ? '3D Ready' : 'Biometrico') + '</span>' +
           '</div>' +
-          '<p class="es-empty-note" style="margin-bottom:14px;">' +
+          '<p class="es-empty-note es-pdx-10">' +
             (avatar3dOk
               ? 'Il tuo modello 3D volumetrico è attivo con la divisa sociale ufficiale e le metriche corporee.'
               : 'Configura il tuo modello 3D con scansione del volto conforme al GDPR Art. 9.') +
           '</p>' +
-          '<button type="button" class="es-btn es-btn--primary" style="width:100%; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="if(window.EliseeAvatar3D) window.EliseeAvatar3D.open();">' +
+          '<button type="button" class="es-btn es-btn--primary es-pdx-22" onclick="if(window.EliseeAvatar3D) window.EliseeAvatar3D.open();">' +
             '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M12 14v7"/></svg>' +
             '<span>' + (avatar3dOk ? 'Apri Visualizzatore 3D (360°)' : 'Attiva il tuo Avatar 3D') + '</span>' +
           '</button>' +
@@ -579,34 +579,34 @@
             '<h4>' + (isMinor ? 'Interesse Scouting &amp; Formazione' : 'Interesse Scouting &amp; Percorso') + '</h4>' +
             '<span class="es-badge es-badge--tag">Profilo</span>' +
           '</div>' +
-          '<p class="es-empty-note" style="margin-bottom:14px;">' + (marketVal ? ('Valore dichiarato: <strong style="color:var(--es-accent);">' + esc(marketVal) + '</strong>') : 'Nessuna stima di mercato certificata.') + '</p>' +
-          '<dl class="es-field-list" style="display:flex; flex-direction:column; gap:0;">' +
-            '<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--es-border);">' +
-              '<dt style="margin:0; text-transform:none; font-weight:400; color:var(--es-text-muted); font-size:13px;">Club attuale</dt>' +
-              '<dd style="font-weight:700;">' + esc(clubLabel) + '</dd>' +
+          '<p class="es-empty-note es-pdx-10">' + (marketVal ? ('Valore dichiarato: <strong class="es-pdx-12">' + esc(marketVal) + '</strong>') : 'Nessuna stima di mercato certificata.') + '</p>' +
+          '<dl class="es-field-list es-pdx-23">' +
+            '<div class="es-pdx-24">' +
+              '<dt class="es-pdx-25">Club attuale</dt>' +
+              '<dd class="es-pdx-26">' + esc(clubLabel) + '</dd>' +
             '</div>' +
-            '<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--es-border);">' +
-              '<dt style="margin:0; text-transform:none; font-weight:400; color:var(--es-text-muted); font-size:13px;">Disponibilità</dt>' +
+            '<div class="es-pdx-24">' +
+              '<dt class="es-pdx-25">Disponibilità</dt>' +
               '<dd class="' + (availTransfer !== null && availTransfer !== undefined ? '' : 'muted') + '">' + (availTransfer === true ? 'Disponibile' : (availTransfer === false ? 'Non disponibile' : 'Non dichiarato')) + '</dd>' +
             '</div>' +
-            '<div style="display:flex; justify-content:space-between; padding:8px 0;">' +
-              '<dt style="margin:0; text-transform:none; font-weight:400; color:var(--es-text-muted); font-size:13px;">Scadenza vincolo</dt>' +
+            '<div class="es-pdx-27">' +
+              '<dt class="es-pdx-25">Scadenza vincolo</dt>' +
               '<dd class="' + (p.contractEnd || user.scadenzaContratto ? '' : 'muted') + '">' + esc(p.contractEnd || user.scadenzaContratto || 'Non dichiarato') + '</dd>' +
             '</div>' +
           '</dl>' +
         '</div>' +
-        (publicRatingCardHtml ? '<div class="es-panel-card" style="margin-top:0;">' + publicRatingCardHtml + '</div>' : '') +
+        (publicRatingCardHtml ? '<div class="es-panel-card es-pdx-28">' + publicRatingCardHtml + '</div>' : '') +
       '</div>' +
 
       '</div>' + // fine es-dossier-grid
 
       // ===== Card 3: Azioni possibili =====
-      '<div class="es-panel-card" style="margin-top: 24px;">' +
+      '<div class="es-panel-card es-pdx-29">' +
         '<div class="es-panel-card__head">' +
           '<h4>Azioni possibili</h4>' +
           '<span class="es-badge es-badge--tag">Strumenti operativi</span>' +
         '</div>' +
-        '<p class="es-empty-note" style="margin-bottom:10px;">— Calciatore / Utente</p>' +
+        '<p class="es-empty-note es-pdx-30">— Calciatore / Utente</p>' +
         '<div class="es-link-list">' +
           '<a href="#" data-pd="edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Aggiornare anagrafica e preferenze</a>' +
           '<a href="#" data-player-action="behavioral_consent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Attivare consenso profilo comportamentale</a>' +
@@ -616,23 +616,23 @@
       '</div>' +
 
       // ===== Richieste di contatto =====
-      '<div class="es-panel-card" style="margin-top: 24px;">' +
+      '<div class="es-panel-card es-pdx-29">' +
         '<div class="es-panel-card__head">' +
           '<h4>Richieste di contatto</h4>' +
           '<span class="es-badge es-badge--active" id="requests-count-badge">0 in attesa</span>' +
         '</div>' +
-        '<p class="es-empty-note" style="margin-bottom: 16px;">Richieste esplicite di contatto da profili verificati — diverse dal semplice interesse passivo qui sotto: qui c\'è un\'azione da parte tua.</p>' +
+        '<p class="es-empty-note es-pdx-31">Richieste esplicite di contatto da profili verificati — diverse dal semplice interesse passivo qui sotto: qui c\'è un\'azione da parte tua.</p>' +
         '<div id="requests-list">' + renderRequestsList(getRichiesteData()) + '</div>' +
-        '<div class="es-empty-note" id="requests-empty"' + (getRichiesteData().length ? ' style="display:none;"' : '') + '>Nessuna richiesta di contatto in attesa.</div>' +
+        '<div class="es-empty-note" id="requests-empty"' + (getRichiesteData().length ? ' hidden' : '') + '>Nessuna richiesta di contatto in attesa.</div>' +
       '</div>' +
 
       // ===== Interesse dalla rete =====
-      '<div class="es-panel-card" style="margin-top: 24px;">' +
+      '<div class="es-panel-card es-pdx-29">' +
         '<div class="es-panel-card__head">' +
           '<h4>Interesse dalla rete</h4>' +
           '<span class="es-badge es-badge--tag">Solo tu puoi vederlo</span>' +
         '</div>' +
-        '<p class="es-empty-note" style="margin-bottom: 18px;">Chi, nella rete Elisee Scout, ha mostrato interesse verso il tuo profilo. Visibile solo a te finché non scegli di condividerlo.</p>' +
+        '<p class="es-empty-note es-pdx-32">Chi, nella rete Elisee Scout, ha mostrato interesse verso il tuo profilo. Visibile solo a te finché non scegli di condividerlo.</p>' +
         '<div class="es-interest-grid">' +
           '<div class="es-interest-item">' +
             '<span class="es-interest-item__count">0</span>' +
@@ -655,7 +655,7 @@
             '<p class="es-interest-item__label">Osservatori rappresentative giovanili</p>' +
           '</div>' +
         '</div>' +
-        '<p class="es-empty-note" style="margin-top: 16px;">Nessun interesse registrato finora — comparirà qui non appena un profilo verificato visualizza o salva il tuo dossier.</p>' +
+        '<p class="es-empty-note es-pdx-33">Nessun interesse registrato finora — comparirà qui non appena un profilo verificato visualizza o salva il tuo dossier.</p>' +
       '</div>' +
 
       '</div>';
@@ -743,7 +743,7 @@
       return '<option value="' + esc(cp) + '"' + (cp === contactPrefVal ? ' selected' : '') + '>' + esc(cp) + '</option>';
     }).join('');
 
-    backdrop.innerHTML = '<div class="es-edit-modal" style="max-width:720px; border-radius:6px;">' +
+    backdrop.innerHTML = '<div class="es-edit-modal es-pdx-34">' +
       '<div class="es-edit-modal-head">' +
         '<h2>' + ICONS.edit + ' Il Mio Profilo &amp; Anagrafica Atleta (Dati Dichiarati)</h2>' +
         '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
@@ -762,8 +762,8 @@
         '<div class="es-edit-field"><label>Stato Contrattuale Dichiarato</label><select id="es-ed-contract">' + contractOpts + '</select></div>' +
         '<div class="es-edit-field"><label>Preferenze di Contatto</label><select id="es-ed-contact-pref">' + contactOpts + '</select></div>' +
         '<div class="es-edit-field full"><label>Disponibilità per Provini / Trasferimento</label>' +
-          '<div style="display:flex; align-items:center; gap:0.75rem; margin-top:0.25rem;">' +
-            '<label style="display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:#f1f5f9; cursor:pointer;">' +
+          '<div class="es-pdx-35">' +
+            '<label class="es-pdx-36">' +
               '<input type="checkbox" id="es-ed-avail" ' + (p.availTransfer !== false ? 'checked' : '') + '> Disponibile a valutare nuove proposte' +
             '</label>' +
           '</div>' +

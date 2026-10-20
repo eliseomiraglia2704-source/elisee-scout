@@ -165,7 +165,7 @@
     if (/\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
       return '<div class="es-st-video"><video controls src="' + esc(url) + '"></video></div>';
     }
-    return '<p class="es-st-meta"><a href="' + esc(url) + '" target="_blank" rel="noopener" style="color:#38bdf8">Apri video</a></p>';
+    return '<p class="es-st-meta"><a href="' + esc(url) + '" target="_blank" rel="noopener" class="es-gd-link">Apri video</a></p>';
   }
   function ico(d) {
     return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>';
@@ -263,8 +263,8 @@
           '</div>' +
           '<div class="es-pro-header-match-row">' +
             '<div class="es-pro-target-box"><p class="label">Licenza</p><strong>' + esc(licence) + '</strong><span>' + (verified ? 'Pubblicazione abilitata' : 'In attesa di verifica') + '</span></div>' +
-            '<div class="es-pro-target-box"><p class="label">Coda redazionale</p><strong style="color:#38bdf8;">Contenuti in attesa</strong><span>Approvazione staff prima del feed</span></div>' +
-            '<div class="es-pro-target-box"><p class="label">Focus</p><strong style="color:#38bdf8;">Copertura territoriale</strong><span>Città, provincia, regione, nazionale</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Coda redazionale</p><strong class="es-gdx-1">Contenuti in attesa</strong><span>Approvazione staff prima del feed</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Focus</p><strong class="es-gdx-1">Copertura territoriale</strong><span>Città, provincia, regione, nazionale</span></div>' +
           '</div>' +
         '</div>' +
         '<nav class="es-pro-nav-tabs">' +
@@ -292,19 +292,19 @@
       ? window.EliseeDashReal.compliance(user)
       : '';
 
-    var leftCol = '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+    var leftCol = '<div class="es-gdx-2">' +
         identity +
         '<section class="es-pd-card">' +
           '<div class="es-pd-card-header"><h2>Badge stampa</h2><span class="es-pd-source-badge">' + (verified ? 'Validato' : 'Da completare') + '</span></div>' +
           (verified
-            ? '<div class="es-pd-empty" style="padding-top:0">Il badge ciano <b style="color:#38bdf8">Stampa / Giornalista Verificato</b> è attivo. Puoi inviare articoli, sondaggi e video in coda staff.</div>'
-            : '<div class="es-pd-empty" style="padding-top:0">Solo gli account con badge <b style="color:#38bdf8">Stampa / Giornalista Verificato</b> possono mandare contenuti in pubblicazione. Completa documento e selfie anti-fake.</div>') +
+            ? '<div class="es-pd-empty es-gdx-3">Il badge ciano <b class="es-gdx-1">Stampa / Giornalista Verificato</b> è attivo. Puoi inviare articoli, sondaggi e video in coda staff.</div>'
+            : '<div class="es-pd-empty es-gdx-3">Solo gli account con badge <b class="es-gdx-1">Stampa / Giornalista Verificato</b> possono mandare contenuti in pubblicazione. Completa documento e selfie anti-fake.</div>') +
           '<div class="es-pd-empty">In coda: ' + pendingN + ' · Pubblicati: ' + mine.filter(function (it) { return it.status === 'approved'; }).length + '</div>' +
         '</section>' +
         '<div id="es-pd-actions-slot"></div>' +
       '</div>';
 
-    var composerCol = '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+    var composerCol = '<div class="es-gdx-2">' +
         '<section class="es-pd-card">' +
           '<div class="es-pd-card-header"><h2>Nuovo contenuto</h2><span class="es-pd-source-badge">Sito</span></div>' +
           '<div class="es-gd-tabs">' +
@@ -327,7 +327,7 @@
           '<div class="es-gd-field" id="es-gd-greg-wrap"><label>Regione</label><select id="es-gd-greg">' + regionOptions('') + '</select></div>' +
           '<div class="es-gd-field" id="es-gd-gprov-wrap"><label>Provincia</label><select id="es-gd-gprov">' + provinceOptions('', '') + '</select></div>' +
           '<div class="es-gd-field" id="es-gd-gcity-wrap"><label>Città</label><input id="es-gd-gcity" placeholder="Comune"></div>' +
-          '<div style="margin:0.4rem 0 0.2rem;font-size:0.68rem;color:#94a3b8;font-weight:800;letter-spacing:0.05em;text-transform:uppercase">Checklist editoriale</div>' +
+          '<div class="es-gdx-4">Checklist editoriale</div>' +
           CHECKS.map(function (c) {
             return '<label class="es-gd-check"><input type="checkbox" data-gd-check="' + c.id + '"><span>' + esc(c.label) + '</span></label>';
           }).join('') +
@@ -337,7 +337,7 @@
         '</section>' +
       '</div>';
 
-    var rightCol = '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+    var rightCol = '<div class="es-gdx-2">' +
         '<section class="es-pd-card es-pd-comply">' +
           '<div class="es-pd-card-header"><h2>Verifica &amp; compliance</h2>' +
           '<span class="es-pd-source-badge">' + (String(user.badgeVerificaStato || '') === 'approved' ? 'Validato' : 'Da completare') + '</span></div>' +
@@ -359,7 +359,7 @@
       inner = '<div class="es-pd-body es-pro-body"><section class="es-pd-card">' +
         '<div class="es-pd-card-header"><h2>Coda</h2><span class="es-pd-source-badge">' + (pendingN || 'Vuoto') + '</span></div>' +
         (pendingMine.length ? pendingMine.map(itemCard).join('') : '<div class="es-pd-empty">Nessun contenuto in attesa di approvazione.</div>') +
-        (isStaffMod(user) ? '<button type="button" class="es-gd-ghost" id="es-gd-open-mod" style="width:auto;margin-top:12px">Apri coda staff</button>' : '') +
+        (isStaffMod(user) ? '<button type="button" class="es-gd-ghost es-gdx-5" id="es-gd-open-mod">Apri coda staff</button>' : '') +
         '</section></div>';
     } else {
       inner = '<div class="es-pd-body es-pro-body"><div class="es-pd-grid">' + leftCol + rightCol + '</div></div>';
@@ -565,7 +565,7 @@
     box.style.display = 'block';
         box.innerHTML = hits.map(function (t) {
           return '<button type="button" data-gd-pick="' + encodeURIComponent(JSON.stringify({ kind: t.kind, id: t.id, name: t.name })) + '">' +
-            esc(t.name) + ' <span style="color:#94a3b8">' + esc(t.extra || t.kind) + '</span></button>';
+            esc(t.name) + ' <span class="es-gdx-6">' + esc(t.extra || t.kind) + '</span></button>';
         }).join('');
       }
     });
@@ -696,72 +696,6 @@
     }
   ];
 
-  var COMUNICATI_UFFICIALI = [
-    {
-      id: 'com-04',
-      date: '05 SET 2026',
-      title: 'Comunicato Ufficiale N. 04/2026 — Rilascio Elisee Scout v3.0 e Rete Anti-Fake',
-      text: 'Presentazione ufficiale della release di produzione della piattaforma: dossier verificati con verifica dell\'identità a doppio fattore e conformità GDPR Art. 22.',
-      docTitle: 'Scarica PDF (240 KB)'
-    },
-    {
-      id: 'com-03',
-      date: '28 AGO 2026',
-      title: 'Comunicato Ufficiale N. 03/2026 — Protocollo di Digitalizzazione Calcio Territoriale',
-      text: 'Accordo per la standardizzazione dei report prestazionali GPS e delle schede tecniche condivise per club di Serie D, Eccellenza e Promozione.',
-      docTitle: 'Scarica PDF (180 KB)'
-    },
-    {
-      id: 'com-02',
-      date: '15 AGO 2026',
-      title: 'Comunicato Ufficiale N. 02/2026 — Linee Guida per il Trattamento Dati Biometrici',
-      text: 'Approvato il documento programmatico sulla tutela dei dati sanitari, atletici e delle metriche video con crittografia end-to-end e chat referente privacy.',
-      docTitle: 'Scarica PDF (310 KB)'
-    },
-    {
-      id: 'com-01',
-      date: '01 AGO 2026',
-      title: 'Comunicato Ufficiale N. 01/2026 — Apertura Accreditamenti Stampa e Media Kit 2026/27',
-      text: 'Attivazione del desk giornalisti con rilascio del pacchetto di asset grafici ufficiali, linee guida brand e canali dedicati per interviste.',
-      docTitle: 'Scarica PDF (150 KB)'
-    }
-  ];
-
-  var MEDIA_KIT_ITEMS = [
-    {
-      id: 'mk-1',
-      icon: '',
-      title: 'Loghi Ufficiali & Brand Asset',
-      desc: 'Pacchetto loghi vettoriali SVG, versioni Dark e Light in PNG ad altissima risoluzione con trasparenza e favicon ufficiali.',
-      meta: 'ZIP · 2.4 MB',
-      file: 'immagini/logo/logo-site.png'
-    },
-    {
-      id: 'mk-2',
-      icon: '',
-      title: 'Screenshot UI & Mockup HD',
-      desc: 'Catture in risoluzione 4K dell\'interfaccia: dashboard scouting, bacheca annunci di reclutamento e dossier analitico calciatore.',
-      meta: 'ZIP · 8.1 MB',
-      file: 'immagini/01-home-hero/hero-workspace.jpg'
-    },
-    {
-      id: 'mk-3',
-      icon: '',
-      title: 'Executive One-Pager & Factsheet',
-      desc: 'Presentazione corporate in formato PDF: metriche di piattaforma, copertura dei campionati e standard di sicurezza.',
-      meta: 'PDF · 1.2 MB',
-      file: '#'
-    },
-    {
-      id: 'mk-4',
-      icon: '',
-      title: 'Brand & Editorial Guidelines',
-      desc: 'Linee guida d\'uso del marchio, palette colori ufficiali (HEX/Pantone), tipografia Outfit/Inter e regole di attribuzione stampa.',
-      meta: 'PDF · 950 KB',
-      file: '#'
-    }
-  ];
-
   function renderRassegnaCards(items) {
     if (!items || items.length === 0) {
       return '<div class="es-empty is-active" id="articles-empty">' +
@@ -772,7 +706,7 @@
     return items.map(function (it) {
       var tagHtml = '';
       if (it.tag && it.tag.name && it.tag.kind === 'club') {
-        tagHtml = '<span class="es-article__internal-link" data-st-tag="' + encodeURIComponent(JSON.stringify(it.tag)) + '" style="cursor:pointer;" title="Vedi scheda club">' +
+        tagHtml = '<span class="es-article__internal-link es-gd-pointer" data-st-tag="' + encodeURIComponent(JSON.stringify(it.tag)) + '" title="Vedi scheda club">' +
           'Club · ' + esc(it.tag.name) + '</span>';
       }
       return '<article class="es-article">' +
@@ -792,31 +726,16 @@
   }
 
   function renderUfficioStampaHTML() {
-    var comHtml = COMUNICATI_UFFICIALI.map(function (c) {
-      return '<li>' +
-        '<div>' +
-          '<div style="font-size:11px; color:var(--es-accent); font-weight:600; letter-spacing:0.08em; margin-bottom:4px;">' + esc(c.date) + '</div>' +
-          '<div style="font-weight:600; color:var(--es-text); font-size:14px; margin-bottom:4px;">' + esc(c.title) + '</div>' +
-          '<div style="font-size:13px; color:var(--es-text-muted); line-height:1.5;">' + esc(c.text) + '</div>' +
-        '</div>' +
-        '<a href="#" onclick="event.preventDefault();event.stopPropagation();if(window.showToast)window.showToast(\'Download comunicato: ' + esc(c.title).replace(/'/g, "\\'") + '\', \'info\'); return false;" style="white-space:nowrap; margin-left:16px;">' + esc(c.docTitle) + ' →</a>' +
-      '</li>';
-    }).join('');
-
+    var mail = 'mailto:areaeliseescout@gmail.com?subject=' + encodeURIComponent('Richiesta materiale stampa');
     return '<div class="es-mediakit">' +
       '<div class="es-mediakit__block">' +
         '<h3>Comunicati ufficiali</h3>' +
-        '<p>Documenti e note istituzionali rilasciate da Elisee Scout.</p>' +
-        '<ul class="es-mediakit__list">' + comHtml + '</ul>' +
+        '<p>Nessun comunicato pubblicato per ora.</p>' +
       '</div>' +
       '<div class="es-mediakit__block">' +
-        '<h3>Asset scaricabili</h3>' +
-        '<p>Logo, palette colori e linee guida del brand per articoli, servizi e collaborazioni editoriali.</p>' +
-        '<ul class="es-mediakit__list">' +
-          '<li>Logo pack (SVG / PNG) <a href="#" data-asset="logo" onclick="event.preventDefault();event.stopPropagation();if(window.showToast)window.showToast(\'Download Logo pack avviato\', \'success\'); return false;">Scarica →</a></li>' +
-          '<li>Brand guidelines (PDF) <a href="#" data-asset="guidelines" onclick="event.preventDefault();event.stopPropagation();if(window.showToast)window.showToast(\'Download Brand guidelines avviato\', \'success\'); return false;">Scarica →</a></li>' +
-          '<li>Scheda piattaforma / fact sheet <a href="#" data-asset="factsheet" onclick="event.preventDefault();event.stopPropagation();if(window.showToast)window.showToast(\'Download Fact sheet avviato\', \'success\'); return false;">Scarica →</a></li>' +
-        '</ul>' +
+        '<h3>Materiale per la stampa</h3>' +
+        '<p>Logo, colori e linee guida del brand: chiedili all’ufficio stampa e te li inviamo.</p>' +
+        '<a class="es-gd-link" href="' + mail + '">Richiedi il materiale →</a>' +
       '</div>' +
       '<div class="es-mediakit__block">' +
         '<div class="es-mediakit__contact">' +
@@ -827,6 +746,7 @@
       '</div>' +
     '</div>';
   }
+
 
   function renderFeed(host) {
     host = host || document.getElementById('stampa-portal');
@@ -990,10 +910,10 @@
         '</div></article>';
     }).join('') : '<div class="es-st-empty">Nessun contenuto in questo stato.</div>';
     return '<div class="es-st-mod-sheet">' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;gap:0.6rem">' +
+      '<div class="es-gdx-10">' +
       '<h2>Coda stampa</h2>' +
-      '<button type="button" class="es-gd-ghost" style="width:auto" data-st-close="1">Chiudi</button></div>' +
-      '<div class="es-gd-tabs" style="margin-top:0.6rem">' +
+      '<button type="button" class="es-gd-ghost es-gdx-11" data-st-close="1">Chiudi</button></div>' +
+      '<div class="es-gd-tabs es-gdx-12">' +
       '<button type="button" class="' + (filter === 'pending' ? 'is-on' : '') + '" data-st-filter="pending">In attesa</button>' +
       '<button type="button" class="' + (filter === 'approved' ? 'is-on' : '') + '" data-st-filter="approved">Approvati</button>' +
       '<button type="button" class="' + (filter === 'rejected' ? 'is-on' : '') + '" data-st-filter="rejected">Rifiutati</button>' +

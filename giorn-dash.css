@@ -973,3 +973,68 @@ body.is-giorn-mode #site-public-footer {
   .es-pro-header-match-row { grid-template-columns: 1fr; }
 }
 
+/* Stili spostati da giorn-dash.js (prima scritti nel codice) */
+.es-gdx-1.es-gdx-1.es-gdx-1 {
+  color:#38bdf8;
+}
+.es-gdx-2.es-gdx-2.es-gdx-2 {
+  display:flex;
+  flex-direction:column;
+  gap:0.85rem;
+}
+.es-gdx-3.es-gdx-3.es-gdx-3 {
+  padding-top:0;
+}
+.es-gdx-4.es-gdx-4.es-gdx-4 {
+  margin:0.4rem 0 0.2rem;
+  font-size:0.68rem;
+  color:#94a3b8;
+  font-weight:800;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+.es-gdx-5.es-gdx-5.es-gdx-5 {
+  width:auto;
+  margin-top:12px;
+}
+.es-gdx-6.es-gdx-6.es-gdx-6 {
+  color:#94a3b8;
+}
+.es-gdx-7.es-gdx-7.es-gdx-7 {
+  font-size:11px;
+  color:var(--es-accent);
+  font-weight:600;
+  letter-spacing:0.08em;
+  margin-bottom:4px;
+}
+.es-gdx-8.es-gdx-8.es-gdx-8 {
+  font-weight:600;
+  color:var(--es-text);
+  font-size:14px;
+  margin-bottom:4px;
+}
+.es-gdx-9.es-gdx-9.es-gdx-9 {
+  font-size:13px;
+  color:var(--es-text-muted);
+  line-height:1.5;
+}
+.es-gdx-10.es-gdx-10.es-gdx-10 {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:0.6rem;
+}
+.es-gdx-11.es-gdx-11.es-gdx-11 {
+  width:auto;
+}
+.es-gdx-12.es-gdx-12.es-gdx-12 {
+  margin-top:0.6rem;
+}
+
+.es-gd-link {
+  color: #38bdf8;
+}
+
+.es-gd-pointer {
+  cursor: pointer;
+}

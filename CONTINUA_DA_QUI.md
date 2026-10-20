@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-20** — FIX2 — Traduzioni, dati inventati tolti, errori di interfaccia:
+Ultimo aggiornamento: **2026-10-20** — STY1 — Stili scritti nel codice spostati in classi (aspetto identico, verificato):
+
+1. Convertiti in classi CSS gli `style="..."` fissi di: `player-dash.js` (48), `giorn-dash.js` (18), `pres-dash.js` (500), `coach-dash.js` (421), `vice-dash.js` (421), `player-card.js` (122), `tc-panel.js` (178), `index.html` (236). Le classi sono `.es-pdx-*`, `.es-gdx-*`, `.es-prx-*`, `.es-cdx-*`, `.es-vdx-*`, `.es-pcx-*`, `.es-tcx-*`, `.es-ix-*`, scritte in fondo al CSS di ciascun file (in `style.css` per index.html), con selettore ripetuto tre volte per avere la stessa forza dello stile in linea.
+2. Restano in linea solo gli stili con valori calcolati (larghezze, colori dinamici) e, in index.html, quelli che nascondono/mostrano elementi (`display:none`), perché il codice li usa.
+3. Verifica: screenshot di tutte le schede prima/dopo (1366 e 390 px) per le dashboard; per index.html confronto dello stile calcolato di ognuno dei 236 elementi. Nessuna differenza.
+4. Area giornalista: tolti i 4 «comunicati ufficiali» inventati (es. accordo con club di Serie D) e i finti pulsanti «Scarica PDF / Logo pack»: ora c'è un link per chiedere il materiale all'ufficio stampa.
+
+Precedente: FIX2 — Traduzioni, dati inventati tolti, errori di interfaccia:
 
 1. Traduzioni EN/ES/FR: Allenatore e Vice, Giornalista, Giocatore, Direttore sportivo e 10 dashboard piccole (`dash-i18n-data.js`). `dash-i18n.js` traduce anche le finestre `.es-edit-modal-backdrop`.
 2. Dati inventati tolti:

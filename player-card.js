@@ -721,7 +721,7 @@
       { x: 180, y: 60, label: 'ATT' }
     ];
 
-    var html = '<div style="position:relative;width:100%;max-width:520px;margin:0 auto;">';
+    var html = '<div class="es-pcx-1">';
     html += '<svg class="es-pc-pitch" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Ruoli tattici Football Manager">';
     html += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="#166534"/>';
     html += '<rect x="' + pad + '" y="' + pad + '" width="' + (w - pad * 2) + '" height="' + (h - pad * 2) + '" fill="none" stroke="#ecfdf5" stroke-width="2"/>';
@@ -755,14 +755,14 @@
     html += '</svg>';
 
     // Legenda FM & Compiti Tattici sotto il campo
-    html += '<div style="margin-top:0.65rem;background:#091120;border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:0.75rem 0.9rem;font-size:0.75rem;">';
-    html += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.08);">';
-    html += '<span style="display:flex;align-items:center;gap:0.35rem;color:#86efac;font-weight:700;"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#22c55e;"></span> Naturale (100%)</span>';
-    html += '<span style="display:flex;align-items:center;gap:0.35rem;color:#7dd3fc;font-weight:700;"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#38bdf8;"></span> Competente (80%)</span>';
-    html += '<span style="display:flex;align-items:center;gap:0.35rem;color:#fde047;font-weight:700;"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#eab308;"></span> Adattabile (60%)</span>';
+    html += '<div class="es-pcx-2">';
+    html += '<div class="es-pcx-3">';
+    html += '<span class="es-pcx-4"><span class="es-pcx-5"></span> Naturale (100%)</span>';
+    html += '<span class="es-pcx-6"><span class="es-pcx-7"></span> Competente (80%)</span>';
+    html += '<span class="es-pcx-8"><span class="es-pcx-9"></span> Adattabile (60%)</span>';
     html += '</div>';
-    html += '<div style="color:#94a3b8;line-height:1.45;">';
-    html += '<b style="color:#fff;">Ruolo Principale:</b> ' + esc(primary) + ' · <b style="color:#fff;">Mansione:</b> Punta Avanzata / Finalizzatore';
+    html += '<div class="es-pcx-10">';
+    html += '<b class="es-pcx-11">Ruolo Principale:</b> ' + esc(primary) + ' · <b class="es-pcx-11">Mansione:</b> Punta Avanzata / Finalizzatore';
     html += '</div>';
     html += '</div>';
 
@@ -803,26 +803,26 @@
         '<div class="es-pc-stat"><b>' + st.yc + '</b><span>Cartellini Gialli</span></div>' +
       '</div>' +
 
-      '<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0.45rem;margin:0.55rem 0 1rem;">' +
-        '<div class="es-pc-stat" style="border-color:rgba(56,189,248,0.3);background:rgba(6,18,38,0.85);"><b style="color:#38bdf8;">7.85</b><span>Rating Elisee</span></div>' +
-        '<div class="es-pc-stat" style="border-color:rgba(34,197,94,0.3);background:rgba(6,18,38,0.85);"><b style="color:#4ade80;">0.68</b><span>xG / Partita</span></div>' +
-        '<div class="es-pc-stat" style="border-color:rgba(168,85,247,0.3);background:rgba(6,18,38,0.85);"><b style="color:#c084fc;">74%</b><span>Duelli Vinti</span></div>' +
-        '<div class="es-pc-stat" style="border-color:rgba(234,179,8,0.3);background:rgba(6,18,38,0.85);"><b style="color:#facc15;">' + esc(foot.toUpperCase()) + '</b><span>Piede Dominante</span></div>' +
+      '<div class="es-pcx-12">' +
+        '<div class="es-pc-stat es-pcx-13"><b class="es-pcx-14">7.85</b><span>Rating Elisee</span></div>' +
+        '<div class="es-pc-stat es-pcx-15"><b class="es-pcx-16">0.68</b><span>xG / Partita</span></div>' +
+        '<div class="es-pc-stat es-pcx-17"><b class="es-pcx-18">74%</b><span>Duelli Vinti</span></div>' +
+        '<div class="es-pc-stat es-pcx-19"><b class="es-pcx-20">' + esc(foot.toUpperCase()) + '</b><span>Piede Dominante</span></div>' +
       '</div>' +
 
       '<div class="es-pc-fm">' +
         '<div>' +
-          '<h3 style="margin:0 0 0.55rem;font-size:0.92rem;color:#38bdf8;display:flex;align-items:center;gap:0.45rem;">' +
-            '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#38bdf8;"></span> Heatmap di Movimento (Posizionamento Reale)' +
+          '<h3 class="es-pcx-21">' +
+            '<span class="es-pcx-22"></span> Heatmap di Movimento (Posizionamento Reale)' +
           '</h3>' +
           pitchSvg(heat.cells, false) +
-          '<div style="margin-top:0.65rem;background:#091120;border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:0.75rem 0.9rem;font-size:0.75rem;color:#94a3b8;line-height:1.45;">' +
-            '<b style="color:#fff;">Densità Tattica:</b> Elevata concentrazione negli ultimi 25 metri e area di rigore avversaria con tagli centrali.' +
+          '<div class="es-pcx-23">' +
+            '<b class="es-pcx-11">Densità Tattica:</b> Elevata concentrazione negli ultimi 25 metri e area di rigore avversaria con tagli centrali.' +
           '</div>' +
         '</div>' +
         '<div>' +
-          '<h3 style="margin:0 0 0.55rem;font-size:0.92rem;color:#38bdf8;display:flex;align-items:center;gap:0.45rem;">' +
-            '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;"></span> Idoneità Ruoli Football Manager' +
+          '<h3 class="es-pcx-21">' +
+            '<span class="es-pcx-24"></span> Idoneità Ruoli Football Manager' +
           '</h3>' +
           fmPitchSvg(u) +
         '</div>' +
@@ -831,27 +831,27 @@
       (function () {
         var ma = maTagsOf(u);
         if (!ma || !(ma.mention || (ma.badges && ma.badges.length) || (ma.clips && ma.clips.length) || ma.adaptedRole)) return '';
-        var h = '<div style="margin-top:1.2rem;background:#0c1527;border:1px solid rgba(56,189,248,0.3);border-radius:12px;padding:0.85rem 1rem;">' +
-          '<h3 style="margin:0 0 0.4rem;font-size:0.92rem;color:#38bdf8;">Relazione Match Analyst Verificata</h3>';
+        var h = '<div class="es-pcx-25">' +
+          '<h3 class="es-pcx-26">Relazione Match Analyst Verificata</h3>';
         if (ma.mention) {
-          h += '<p class="lead" style="margin-bottom:0.35rem;"><b>Menzione Speciale:</b> ' + esc(ma.mention.title) +
+          h += '<p class="lead es-pcx-27"><b>Menzione Speciale:</b> ' + esc(ma.mention.title) +
             (ma.mention.analyst ? ' · <i>' + esc(ma.mention.analyst) + '</i>' : '') + '</p>';
         }
         if (ma.adaptedRole) {
-          h += '<p class="lead" style="margin-bottom:0.35rem;">Posizione tattica consigliata: <b style="color:#fde047;">' + esc(ma.adaptedRole) + '</b></p>';
+          h += '<p class="lead es-pcx-27">Posizione tattica consigliata: <b class="es-pcx-28">' + esc(ma.adaptedRole) + '</b></p>';
         }
         if (ma.clips && ma.clips.length) {
-          h += '<p class="lead" style="margin-bottom:0;">Clip archiviate: ' + esc(ma.clips.map(function (c) { return c.title || c.kind; }).join(' · ')) + '</p>';
+          h += '<p class="lead es-pcx-29">Clip archiviate: ' + esc(ma.clips.map(function (c) { return c.title || c.kind; }).join(' · ')) + '</p>';
         }
         h += '</div>';
         return h;
       }()) +
 
-      '<div style="margin-top:1.2rem;background:#080e1a;border:1px solid rgba(148,163,184,0.18);border-radius:12px;padding:0.9rem 1.1rem;">' +
-        '<h3 style="margin:0 0 0.4rem;font-size:0.92rem;color:#fff;display:flex;align-items:center;gap:0.45rem;">' +
+      '<div class="es-pcx-30">' +
+        '<h3 class="es-pcx-31">' +
           'Highlight Video Hub (Clip &amp; Scouting Match)' +
         '</h3>' +
-        '<p style="color:#94a3b8;font-size:0.8rem;margin:0 0 0.65rem;">Carica i link video per consentire ai Direttori Sportivi e Scout di visionare i tuoi momenti salienti.</p>' +
+        '<p class="es-pcx-32">Carica i link video per consentire ai Direttori Sportivi e Scout di visionare i tuoi momenti salienti.</p>' +
         '<div class="es-pc-video-row">' +
           '<input id="es-pc-vid-url" placeholder="Incolla link YouTube / Veo / Hudl / Wyscout..." />' +
           '<button type="button" class="es-pc-btn" data-pc="add-video">Aggiungi Video</button>' +
@@ -907,91 +907,91 @@
       '<h2>Heatmap Intelligente a Fine Gara</h2>' +
       '<p class="lead">Traccia e rifinisci la mappa termica del tuo movimento in campo: tocca le zolle o scegli i preset tattici per generare il tuo report.</p>' +
 
-      '<div class="es-pc-form" style="margin-bottom:1.1rem;display:flex;align-items:center;flex-wrap:wrap;gap:0.6rem;">' +
-        '<span style="font-size:0.82rem;font-weight:700;color:#94a3b8;">Modulo di Gara:</span>' +
-        '<select id="es-pc-form" style="background:#091224;color:#fff;border-color:rgba(56,189,248,0.35);padding:0.4rem 0.8rem;border-radius:8px;">' +
+      '<div class="es-pc-form es-pcx-33">' +
+        '<span class="es-pcx-34">Modulo di Gara:</span>' +
+        '<select class="es-pcx-35" id="es-pc-form">' +
           ['4-3-3', '4-2-3-1', '4-4-2', '3-5-2', '3-4-3', '4-3-1-2'].map(function (f) {
             return '<option' + (heatRange.form === f ? ' selected' : '') + '>' + f + '</option>';
           }).join('') +
         '</select>' +
-        '<button type="button" class="es-pc-btn" data-pc="heat-auto" style="padding:0.4rem 0.9rem;">Genera dal Modulo</button>' +
-        '<button type="button" class="es-pc-btn" data-pc="heat-save" style="background:#0284c7;color:#fff;padding:0.4rem 1.1rem;border-color:#38bdf8;">Salva Heatmap sulla Card</button>' +
-        '<button type="button" class="es-pc-btn" data-pc="heat-clear" style="background:rgba(239,68,68,0.12);color:#f87171;border-color:rgba(239,68,68,0.3);margin-left:auto;">Azzera</button>' +
+        '<button type="button" class="es-pc-btn es-pcx-36" data-pc="heat-auto">Genera dal Modulo</button>' +
+        '<button type="button" class="es-pc-btn es-pcx-37" data-pc="heat-save">Salva Heatmap sulla Card</button>' +
+        '<button type="button" class="es-pc-btn es-pcx-38" data-pc="heat-clear">Azzera</button>' +
       '</div>' +
 
-      '<div class="es-pc-fm" style="gap:1.3rem;align-items:start;">' +
+      '<div class="es-pc-fm es-pcx-39">' +
         '<div>' +
-          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">' +
-            '<h3 style="margin:0;font-size:0.92rem;color:#38bdf8;display:flex;align-items:center;gap:0.45rem;">' +
-              '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#38bdf8;"></span> Campo Interattivo (Tocca per aggiungere calore)' +
+          '<div class="es-pcx-40">' +
+            '<h3 class="es-pcx-41">' +
+              '<span class="es-pcx-22"></span> Campo Interattivo (Tocca per aggiungere calore)' +
             '</h3>' +
-            '<span style="font-size:0.75rem;color:#94a3b8;">Fronte d’Attacco ↑</span>' +
+            '<span class="es-pcx-42">Fronte d’Attacco ↑</span>' +
           '</div>' +
           '<div id="es-pc-heat-pitch">' + pitchSvg(heatRange.cells, true) + '</div>' +
         '</div>' +
 
-        '<div style="display:flex;flex-direction:column;gap:0.9rem;">' +
+        '<div class="es-pcx-43">' +
           // Box Guida Tattica
-          '<div style="background:#081020;border:1px solid rgba(56,189,248,0.25);border-radius:12px;padding:0.95rem 1.1rem;">' +
-            '<h4 style="margin:0 0 0.6rem;color:#38bdf8;font-size:0.88rem;display:flex;align-items:center;gap:0.4rem;">' +
+          '<div class="es-pcx-44">' +
+            '<h4 class="es-pcx-45">' +
               'Guida: Come Muoverti &amp; Posizionarti' +
             '</h4>' +
-            '<div style="font-size:0.78rem;color:#cbd5e1;line-height:1.55;display:flex;flex-direction:column;gap:0.55rem;">' +
-              '<div style="display:flex;gap:0.5rem;">' +
-                '<span style="color:#38bdf8;font-weight:800;">1.</span>' +
+            '<div class="es-pcx-46">' +
+              '<div class="es-pcx-47">' +
+                '<span class="es-pcx-48">1.</span>' +
                 '<span><b>Tocca le zolle:</b> ogni click incrementa l’intensità termica di quella porzione di campo fino al livello massimo.</span>' +
               '</div>' +
-              '<div style="display:flex;gap:0.5rem;">' +
-                '<span style="color:#38bdf8;font-weight:800;">2.</span>' +
+              '<div class="es-pcx-47">' +
+                '<span class="es-pcx-48">2.</span>' +
                 '<span><b>Attacco &amp; Profondità:</b> focalizza la pressione negli ultimi 20 metri per indicare presenza costante nei 16 metri e tagli centrali.</span>' +
               '</div>' +
-              '<div style="display:flex;gap:0.5rem;">' +
-                '<span style="color:#38bdf8;font-weight:800;">3.</span>' +
+              '<div class="es-pcx-47">' +
+                '<span class="es-pcx-48">3.</span>' +
                 '<span><b>Corsie Esterne:</b> colora le fasce laterali se effettui allarghi, sovrapposizioni o cross a rientrare.</span>' +
               '</div>' +
-              '<div style="display:flex;gap:0.5rem;">' +
-                '<span style="color:#38bdf8;font-weight:800;">4.</span>' +
+              '<div class="es-pcx-47">' +
+                '<span class="es-pcx-48">4.</span>' +
                 '<span><b>Non Possesso &amp; Pressing:</b> colora la trequarti avversaria per segnalare pressing feroce sul primo possesso avversario.</span>' +
               '</div>' +
             '</div>' +
           '</div>' +
 
           // Box Legenda Termica
-          '<div style="background:#081020;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.95rem 1.1rem;">' +
-            '<h4 style="margin:0 0 0.6rem;color:#fff;font-size:0.86rem;display:flex;align-items:center;gap:0.4rem;">' +
+          '<div class="es-pcx-49">' +
+            '<h4 class="es-pcx-50">' +
               'Legenda Intensità Termica' +
             '</h4>' +
-            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;font-size:0.76rem;">' +
-              '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(56,189,248,0.4);">' +
-                '<span style="width:12px;height:12px;border-radius:3px;background:rgba(56,189,248,0.9);box-shadow:0 0 6px #38bdf8;"></span>' +
-                '<span style="color:#fff;font-weight:700;">Alta Frequenza (>75%)</span>' +
+            '<div class="es-pcx-51">' +
+              '<div class="es-pcx-52">' +
+                '<span class="es-pcx-53"></span>' +
+                '<span class="es-pcx-54">Alta Frequenza (>75%)</span>' +
               '</div>' +
-              '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(56,189,248,0.25);">' +
-                '<span style="width:12px;height:12px;border-radius:3px;background:rgba(56,189,248,0.5);"></span>' +
-                '<span style="color:#cbd5e1;font-weight:600;">Media Frequenza (50%)</span>' +
+              '<div class="es-pcx-55">' +
+                '<span class="es-pcx-56"></span>' +
+                '<span class="es-pcx-57">Media Frequenza (50%)</span>' +
               '</div>' +
-              '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(56,189,248,0.15);">' +
-                '<span style="width:12px;height:12px;border-radius:3px;background:rgba(56,189,248,0.2);"></span>' +
-                '<span style="color:#94a3b8;">Transizione (25%)</span>' +
+              '<div class="es-pcx-58">' +
+                '<span class="es-pcx-59"></span>' +
+                '<span class="es-pcx-60">Transizione (25%)</span>' +
               '</div>' +
-              '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(255,255,255,0.05);">' +
-                '<span style="width:12px;height:12px;border-radius:3px;background:#166534;"></span>' +
-                '<span style="color:#64748b;">Nessun Tocco (0%)</span>' +
+              '<div class="es-pcx-61">' +
+                '<span class="es-pcx-62"></span>' +
+                '<span class="es-pcx-63">Nessun Tocco (0%)</span>' +
               '</div>' +
             '</div>' +
           '</div>' +
 
           // Box Preset Tattici Rapidi
-          '<div style="background:#081020;border:1px solid rgba(56,189,248,0.2);border-radius:12px;padding:0.95rem 1.1rem;">' +
-            '<h4 style="margin:0 0 0.6rem;color:#38bdf8;font-size:0.86rem;display:flex;align-items:center;gap:0.4rem;">' +
+          '<div class="es-pcx-64">' +
+            '<h4 class="es-pcx-65">' +
               'Preset Tattici Rapidi' +
             '</h4>' +
-            '<div style="display:flex;flex-wrap:wrap;gap:0.45rem;">' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="att" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Punta / Finalizzazione</button>' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="ala" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Ala / Corsie Esterne</button>' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="trq" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Trequarti &amp; Raccordo</button>' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="b2b" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Box-to-Box / Mezzala</button>' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="press" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Pressing Alto</button>' +
+            '<div class="es-pcx-66">' +
+              '<button type="button" class="es-pc-btn es-pcx-67" data-pc="heat-preset" data-preset="att">Punta / Finalizzazione</button>' +
+              '<button type="button" class="es-pc-btn es-pcx-67" data-pc="heat-preset" data-preset="ala">Ala / Corsie Esterne</button>' +
+              '<button type="button" class="es-pc-btn es-pcx-67" data-pc="heat-preset" data-preset="trq">Trequarti &amp; Raccordo</button>' +
+              '<button type="button" class="es-pc-btn es-pcx-67" data-pc="heat-preset" data-preset="b2b">Box-to-Box / Mezzala</button>' +
+              '<button type="button" class="es-pc-btn es-pcx-67" data-pc="heat-preset" data-preset="press">Pressing Alto</button>' +
             '</div>' +
           '</div>' +
 
@@ -1063,7 +1063,7 @@
     return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="110">' +
       '<polyline fill="none" stroke="#38bdf8" stroke-width="2" points="' + d + '"/>' +
       '</svg>' +
-      '<div style="font-size:0.78rem;color:#7dd3fc;font-weight:700;">Velocità massima: ' +
+      '<div class="es-pcx-68">Velocità massima: ' +
       speeds[imax].toFixed(1) + ' km/h — campione ' + (imax + 1) + '</div>';
   }
   function gpsPathSvg(pts) {
@@ -1121,23 +1121,23 @@
         '<h2>Consenso Tracciamento Prestazioni &amp; Sensori</h2>' +
         '<p class="lead">Per abilitare la registrazione GPS in campo, la sincronizzazione con Smartwatch e il conteggio passi dal tuo dispositivo, è richiesto il tuo consenso esplicito.</p>' +
         
-        '<div style="background:#081020;border:1px solid rgba(56,189,248,0.3);border-radius:14px;padding:1.2rem 1.4rem;margin:1.2rem 0;color:#cbd5e1;line-height:1.6;font-size:0.84rem;">' +
-          '<div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.8rem;">' +
+        '<div class="es-pcx-69">' +
+          '<div class="es-pcx-70">' +
             '' +
-            '<h3 style="margin:0;color:#fff;font-size:1rem;">Informativa Privacy &amp; Tracciamento Biometrico (Art. 9 GDPR)</h3>' +
+            '<h3 class="es-pcx-71">Informativa Privacy &amp; Tracciamento Biometrico (Art. 9 GDPR)</h3>' +
           '</div>' +
-          '<p style="margin:0 0 0.8rem;">I dati raccolti (coordinate GPS sul terreno di gioco, velocità, picchi di sprint, conteggio passi giornaliero e frequenza cardiaca) vengono utilizzati <b>esclusivamente</b> per:</p>' +
-          '<ul style="margin:0 0 1rem;padding-left:1.2rem;display:flex;flex-direction:column;gap:0.35rem;">' +
+          '<p class="es-pcx-72">I dati raccolti (coordinate GPS sul terreno di gioco, velocità, picchi di sprint, conteggio passi giornaliero e frequenza cardiaca) vengono utilizzati <b>esclusivamente</b> per:</p>' +
+          '<ul class="es-pcx-73">' +
             '<li>Calcolo delle metriche atletiche e reportistica tecnica scoutistica;</li>' +
             '<li>Sincronizzazione opzionale con smartwatch e dispositivi indossabili (Apple Watch, Garmin, Polar, Whoop, Wear OS);</li>' +
             '<li>Conteggio passi e monitoraggio del carico di lavoro fisico della settimana.</li>' +
           '</ul>' +
-          '<p style="margin:0;font-size:0.78rem;color:#94a3b8;">Puoi revocare il consenso in qualunque momento dal pannello impostazioni o da questa schermata. I dati non vengono ceduti a terzi per scopi commerciali.</p>' +
+          '<p class="es-pcx-74">Puoi revocare il consenso in qualunque momento dal pannello impostazioni o da questa schermata. I dati non vengono ceduti a terzi per scopi commerciali.</p>' +
         '</div>' +
 
-        '<div style="display:flex;gap:0.8rem;flex-wrap:wrap;">' +
-          '<button type="button" class="es-pc-btn" data-pc="consent-accept" style="background:#0284c7;color:#fff;border-color:#38bdf8;padding:0.6rem 1.4rem;font-size:0.9rem;border-radius:8px;">Accetto e Attiva Tracciamento</button>' +
-          '<button type="button" class="es-pc-btn" data-pc="close" style="background:transparent;color:#94a3b8;border-color:rgba(255,255,255,0.15);padding:0.6rem 1.2rem;border-radius:8px;">Non ora</button>' +
+        '<div class="es-pcx-75">' +
+          '<button type="button" class="es-pc-btn es-pcx-76" data-pc="consent-accept">Accetto e Attiva Tracciamento</button>' +
+          '<button type="button" class="es-pc-btn es-pcx-77" data-pc="close">Non ora</button>' +
         '</div>';
     }
 
@@ -1153,47 +1153,47 @@
     var avgBpm = watch && watch.avgBpm ? watch.avgBpm : (st.distKm > 0 ? 152 : 0);
     var maxBpm = watch && watch.maxBpm ? watch.maxBpm : (st.distKm > 0 ? 184 : 0);
 
-    var liveNote = live ? '<div class="es-pd-empty" style="color:#6ee7b7;font-weight:700;">Sessione GPS in corso sul campo — ' + live.points.length + ' campioni registrati.</div>' : '';
+    var liveNote = live ? '<div class="es-pd-empty es-pcx-78">Sessione GPS in corso sul campo — ' + live.points.length + ' campioni registrati.</div>' : '';
 
     return '<button type="button" class="es-pc-close" data-pc="close">Chiudi</button>' +
       '<h2>GPS &amp; Tracciamento Prestazioni Fisiche</h2>' +
       '<p class="lead">Sincronizza le tue prestazioni in campo e quotidiane da Smartwatch, contapassi del dispositivo o GPS live dello smartphone.</p>' +
       
       // Hub Sincronizzazione Dispositivi
-      '<div style="background:#061226;border:1px solid rgba(56,189,248,0.3);border-radius:14px;padding:0.95rem 1.15rem;margin:0.9rem 0 1.2rem;">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.6rem;margin-bottom:0.75rem;padding-bottom:0.65rem;border-bottom:1px solid rgba(255,255,255,0.08);">' +
-          '<div style="display:flex;align-items:center;gap:0.55rem;">' +
-            '<span style="font-size:1.2rem;">⌚</span>' +
+      '<div class="es-pcx-79">' +
+        '<div class="es-pcx-80">' +
+          '<div class="es-pcx-81">' +
+            '<span class="es-pcx-82">⌚</span>' +
             '<div>' +
-              '<b style="color:#fff;font-size:0.86rem;">Smartwatch &amp; App Contapassi del Dispositivo</b>' +
-              '<div style="color:#94a3b8;font-size:0.72rem;">' +
-                (watch ? ('Collegato: <span style="color:#4ade80;font-weight:700;">' + esc(watch.name) + '</span> (Sincronizzato ' + new Date(watch.lastSync).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ')') : 'Nessun orologio collegato.') +
+              '<b class="es-pcx-83">Smartwatch &amp; App Contapassi del Dispositivo</b>' +
+              '<div class="es-pcx-84">' +
+                (watch ? ('Collegato: <span class="es-pcx-85">' + esc(watch.name) + '</span> (Sincronizzato ' + new Date(watch.lastSync).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ')') : 'Nessun orologio collegato.') +
               '</div>' +
             '</div>' +
           '</div>' +
-          '<div style="display:flex;gap:0.45rem;flex-wrap:wrap;">' +
-            '<button type="button" class="es-pc-btn" data-pc="sync-watch" style="font-size:0.75rem;padding:0.35rem 0.75rem;background:#0369a1;color:#fff;border-color:#38bdf8;">Sincronizza Smartwatch</button>' +
-            '<button type="button" class="es-pc-btn" data-pc="sync-pedometer" style="font-size:0.75rem;padding:0.35rem 0.75rem;background:rgba(56,189,248,0.12);color:#38bdf8;">Sincronizza Passi Dispositivo</button>' +
-            '<button type="button" class="es-pc-btn" data-pc="consent-revoke" style="font-size:0.72rem;padding:0.35rem 0.6rem;background:transparent;color:#94a3b8;border-color:rgba(255,255,255,0.1);">Gestisci Consenso</button>' +
+          '<div class="es-pcx-86">' +
+            '<button type="button" class="es-pc-btn es-pcx-87" data-pc="sync-watch">Sincronizza Smartwatch</button>' +
+            '<button type="button" class="es-pc-btn es-pcx-88" data-pc="sync-pedometer">Sincronizza Passi Dispositivo</button>' +
+            '<button type="button" class="es-pc-btn es-pcx-89" data-pc="consent-revoke">Gestisci Consenso</button>' +
           '</div>' +
         '</div>' +
 
-        '<div style="display:flex;align-items:center;gap:0.6rem;font-size:0.74rem;color:#cbd5e1;flex-wrap:wrap;">' +
-          '<span style="color:#94a3b8;">Dispositivi supportati:</span>' +
-          '<span style="background:rgba(255,255,255,0.06);padding:0.2rem 0.5rem;border-radius:4px;">Apple Watch / Salute</span>' +
-          '<span style="background:rgba(255,255,255,0.06);padding:0.2rem 0.5rem;border-radius:4px;">Garmin Connect</span>' +
-          '<span style="background:rgba(255,255,255,0.06);padding:0.2rem 0.5rem;border-radius:4px;">Polar / Whoop</span>' +
-          '<span style="background:rgba(255,255,255,0.06);padding:0.2rem 0.5rem;border-radius:4px;">Wear OS / Google Fit</span>' +
-          '<span style="background:rgba(255,255,255,0.06);padding:0.2rem 0.5rem;border-radius:4px;">Contapassi Smartphone &amp; Tablet</span>' +
+        '<div class="es-pcx-90">' +
+          '<span class="es-pcx-60">Dispositivi supportati:</span>' +
+          '<span class="es-pcx-91">Apple Watch / Salute</span>' +
+          '<span class="es-pcx-91">Garmin Connect</span>' +
+          '<span class="es-pcx-91">Polar / Whoop</span>' +
+          '<span class="es-pcx-91">Wear OS / Google Fit</span>' +
+          '<span class="es-pcx-91">Contapassi Smartphone &amp; Tablet</span>' +
         '</div>' +
       '</div>' +
 
       liveNote +
 
-      '<div class="es-pc-form" style="margin-bottom:0.9rem;">' +
+      '<div class="es-pc-form es-pcx-92">' +
         (live
-          ? '<button type="button" class="es-pc-btn" data-pc="gps-stop" style="background:#dc2626;color:#fff;border-color:#ef4444;font-size:0.86rem;padding:0.5rem 1.2rem;">⏹ Termina Allenamento GPS</button>'
-          : '<button type="button" class="es-pc-btn" data-pc="gps-start" style="background:#0284c7;color:#fff;border-color:#38bdf8;font-size:0.86rem;padding:0.5rem 1.2rem;">▶ Inizia Allenamento GPS Live</button>') +
+          ? '<button type="button" class="es-pc-btn es-pcx-93" data-pc="gps-stop">⏹ Termina Allenamento GPS</button>'
+          : '<button type="button" class="es-pc-btn es-pcx-94" data-pc="gps-start">▶ Inizia Allenamento GPS Live</button>') +
       '</div>' +
 
       '<div class="es-pc-hist" id="es-pc-gps-range">' +
@@ -1205,7 +1205,7 @@
 
       '<div class="es-pc-kpi">' +
         '<div class="es-pc-stat"><b>' + st.distKm.toFixed(2) + '</b><span>Km Percorsi</span></div>' +
-        '<div class="es-pc-stat"><b style="color:#38bdf8;">' + stepsCount.toLocaleString() + '</b><span>Passi Registrati</span></div>' +
+        '<div class="es-pc-stat"><b class="es-pcx-14">' + stepsCount.toLocaleString() + '</b><span>Passi Registrati</span></div>' +
         '<div class="es-pc-stat"><b>' + st.hid.toFixed(2) + '</b><span>Km Alta Intensità</span></div>' +
         '<div class="es-pc-stat"><b>' + st.vmaxKmh.toFixed(1) + '</b><span>Vmax km/h</span></div>' +
       '</div>' +
@@ -1213,17 +1213,17 @@
       '<div class="es-pc-kpi">' +
         '<div class="es-pc-stat"><b>' + st.sprints + '</b><span>Sprint Eseguiti</span></div>' +
         '<div class="es-pc-stat"><b>' + st.acc + '</b><span>Accelerazioni</span></div>' +
-        '<div class="es-pc-stat"><b style="color:#f87171;">' + (avgBpm ? (avgBpm + ' bpm') : '—') + '</b><span>Frequenza Media</span></div>' +
+        '<div class="es-pc-stat"><b class="es-pcx-95">' + (avgBpm ? (avgBpm + ' bpm') : '—') + '</b><span>Frequenza Media</span></div>' +
         '<div class="es-pc-stat"><b>' + st.durMin.toFixed(1) + '’</b><span>Minuti Netti</span></div>' +
       '</div>' +
 
-      '<div style="margin-top:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;">' +
+      '<div class="es-pcx-96">' +
         '<div>' +
-          '<h3 style="margin:0 0 0.45rem;font-size:0.88rem;color:#38bdf8;">Profilo Velocità &amp; Picchi</h3>' +
+          '<h3 class="es-pcx-97">Profilo Velocità &amp; Picchi</h3>' +
           speedChart(pts) +
         '</div>' +
         '<div>' +
-          '<h3 style="margin:0 0 0.45rem;font-size:0.88rem;color:#38bdf8;">Tracciamento Percorso in Campo</h3>' +
+          '<h3 class="es-pcx-97">Tracciamento Percorso in Campo</h3>' +
           gpsPathSvg(pts) +
         '</div>' +
       '</div>';
@@ -1281,7 +1281,7 @@
       '<h2>Candidati Ora · scheda tecnica</h2>' +
       '<p class="lead">Un tap invia al club un dossier già compilato: Card, heatmap, ruoli, stats, GPS e highlight. Niente email manuale.</p>' +
       cardHtml(u, { hideHint: true }) +
-      '<p style="margin:0.8rem 0 0.35rem;color:#94a3b8;font-size:0.82rem;"><strong style="color:#fff;">Annuncio:</strong> ' +
+      '<p class="es-pcx-98"><strong class="es-pcx-11">Annuncio:</strong> ' +
       esc((job && (job.title || job)) || '') + '</p>' +
       '<div class="es-pc-stats">' +
         '<div class="es-pc-stat"><b>' + st.g + '</b><span>Gol</span></div>' +
@@ -1291,7 +1291,7 @@
         '<div class="es-pc-stat"><b>' + (gs ? gs.vmaxKmh.toFixed(1) : '—') + '</b><span>Vmax</span></div>' +
       '</div>' +
       pitchSvg(heat.cells, false) +
-      '<p style="font-size:0.78rem;color:#94a3b8;">Highlight: ' + (vids.length ? vids.length + ' clip' : 'nessuna clip') + '</p>' +
+      '<p class="es-pcx-99">Highlight: ' + (vids.length ? vids.length + ' clip' : 'nessuna clip') + '</p>' +
       '<div class="es-pc-form">' +
         '<button type="button" class="es-pc-btn" data-pc="confirm-apply" data-title="' +
         esc((job && job.title) || job || '') + '">Conferma e invia dossier</button>' +
