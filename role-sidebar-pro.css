@@ -912,7 +912,16 @@ body.es-sidebar-is-collapsed .es-msb-cta-btn {
     min-width: 264px !important;
     max-width: 264px !important;
   }
+  /* Le barre laterali restano nascoste (vedi regole in fondo al file): niente spazio vuoto a sinistra. */
   .es-pro-shell,
+  .es-cos-shell,
+  .es-at-shell,
+  .es-gk-shell,
+  .es-ma-shell,
+  .es-med-shell,
+  .es-obs-shell {
+    padding-left: 18px !important;
+  }
   .es-pro-dash-wrap,
   .es-obs-dash-container,
   .es-cos-dash-wrap,
@@ -924,7 +933,7 @@ body.es-sidebar-is-collapsed .es-msb-cta-btn {
   .es-pro-main,
   .es-cos-main,
   .es-obs-main {
-    padding-left: 116px !important;
+    padding-left: 0 !important;
   }
   .es-sb-hover:is(:hover, .es-sb-lock) .es-sb-meta,
   .es-sb-hover:is(:hover, .es-sb-lock) .es-sb-chev,

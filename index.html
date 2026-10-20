@@ -107,7 +107,7 @@
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
   <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX41">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX41">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20261020_FIX2">
   <link rel="stylesheet" href="es-nav-ux.css?v=20261001_FIX22">
   <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="micro-interactions.css?v=20260929_HEROUX74">
@@ -746,7 +746,7 @@
   <link rel="stylesheet" href="tc-panel.css?v=20260915_TCSERIF1">
   <link rel="stylesheet" href="player-profile.css?v=20260917_ALLPRO1">
   <link rel="stylesheet" href="player-dash.css?v=20260917_ALLPRO1">
-  <link rel="stylesheet" href="dash-luxury.css?v=20261019_RD3">
+  <link rel="stylesheet" href="dash-luxury.css?v=20261020_FIX2">
   <link rel="stylesheet" href="card-atelier.css?v=20260914_PLAYERDOSSIER1">
   <script>EliseeRoleScripts.writeStyles([
     'coach-dash.css?v=20260917_VICEFIX1',
@@ -5365,7 +5365,7 @@
           <h4 class="pf-footer-heading" data-i18n="footer.features">Funzionalità</h4>
           <ul class="pf-footer-links">
             <li><a href="#dashboard-skills" data-i18n="footer.cv" onclick="switchView('pillars'); return false;">Curriculum sportivo</a></li>
-            <li><a href="#schede-tecniche" data-i18n="footer.sheets" onclick="if(window.openSchedeTecniche){window.openSchedeTecniche({id:'attaccante-centrale-stagione-2026-27',title:'Attaccante centrale — stagione 2026/27',club:'ASD Virtus Foggia',role:'Attaccante',location:'Foggia'});} return false;">Schede tecniche</a></li>
+            <li><a href="#schede-tecniche" data-i18n="footer.sheets" onclick="if(window.switchView){window.switchView('schede','#schede-tecniche');return false;}">Schede tecniche</a></li>
             <li><a href="#scopri-portal" data-i18n="scopri.title" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else{switchView('scopri','#scopri-portal');} return false;">Scopri profili</a></li>
             <li><a href="#wall-trasferimenti" data-i18n="home.cardWall" onclick="if(window.openTransferWall){window.openTransferWall();}else{switchView('mercato','#wall-trasferimenti');} return false;">Wall mercato</a></li>
             <li><a href="#bacheca-annunci" data-i18n="footer.people" onclick="switchView('bacheca','#bacheca-network'); return false;">Persone e squadre</a></li>
@@ -6691,7 +6691,7 @@
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20261020_PERF3"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
-  <script src="player-card.js?v=20261001_FIX21"></script>
+  <script src="player-card.js?v=20261020_FIX2"></script>
   <script>EliseeLibs.lazyMinigioco('minigioco-carriera.css?v=20260913_HUBPOLISH2', 'minigioco-carriera.js?v=20261018_SEC1');</script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D (Architettura Completa) -->
   <script src="elisee-world/src/core/state-machine.js?v=20260906_EWGBA1"></script>
@@ -6783,41 +6783,41 @@
   <script src="schede-tecniche.js?v=20261019_ST1"></script>
   <script src="persist-sync.js?v=20261019_SEC5"></script>
   <script src="club-role-ops.js?v=20261019_RD1"></script>
-  <script src="dash-real.js?v=20261019_RD1"></script>
+  <script src="dash-real.js?v=20261020_FIX2"></script>
   <script>EliseeRoleScripts.write([
-    'player-dash.js?v=20261019_RD4',
+    'player-dash.js?v=20261020_FIX2',
     'avatar-3d.js?v=20260924_KITBUG1',
-    'elisee-supabase.js?v=20261019_FILE1',
+    'elisee-supabase.js?v=20261020_FIX2',
     'squadra-membri.js?v=20261019_SQ2',
-    'coach-dash.js?v=20261019_FILE1',
-    'ds-dash.js?v=20261019_RD1',
+    'coach-dash.js?v=20261020_FIX2',
+    'ds-dash.js?v=20261020_FIX2',
     'pres-dash.js?v=20261020_PRES1',
-    'vice-dash.js?v=20261019_FILE1',
-    'dash-i18n-data.js?v=20261020_PRES1',
-    'dash-i18n.js?v=20261020_PRES1',
+    'vice-dash.js?v=20261020_FIX2',
+    'dash-i18n-data.js?v=20261020_FIX2',
+    'dash-i18n.js?v=20261020_FIX2',
     'role-dash-honest.js?v=20261019_RD3',
     'fisio-dash.js?v=20261019_RD2',
     'ma-dash.js?v=20261019_RD3',
     'med-dash.js?v=20261019_RD2',
     'obs-dash.js?v=20261019_RD3',
-    'tm-dash.js?v=20261019_RD1',
+    'tm-dash.js?v=20261020_FIX2',
     'gk-dash.js?v=20261019_RD3',
     'at-dash.js?v=20261019_RD3',
-    'yg-dash.js?v=20261019_RD1',
-    'dg-dash.js?v=20261019_RD1',
-    'ag-dash.js?v=20261019_RD1',
-    'mk-dash.js?v=20261019_RD1',
-    'pr-dash.js?v=20261019_RD1',
+    'yg-dash.js?v=20261020_FIX2',
+    'dg-dash.js?v=20261020_FIX2',
+    'ag-dash.js?v=20261020_FIX2',
+    'mk-dash.js?v=20261020_FIX2',
+    'pr-dash.js?v=20261020_FIX2',
     'nu-dash.js?v=20261019_RD2',
-    'eq-dash.js?v=20261019_RD1',
-    'sg-dash.js?v=20261019_RD1',
-    'bt-dash.js?v=20261019_RD1',
-    'tifoso-dash.js?v=20261019_RD1'
+    'eq-dash.js?v=20261020_FIX2',
+    'sg-dash.js?v=20261020_FIX2',
+    'bt-dash.js?v=20261020_FIX2',
+    'tifoso-dash.js?v=20261020_FIX2'
   ]);</script>
-  <script src="giorn-dash.js?v=20261019_RD4"></script>
-  <script src="scopri-profili.js?v=20261001_FIX21"></script>
+  <script src="giorn-dash.js?v=20261020_FIX2"></script>
+  <script src="scopri-profili.js?v=20261020_FIX2"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
-  <script src="mercato-hub.js?v=20261018_SEC1"></script>
+  <script src="mercato-hub.js?v=20261020_FIX2"></script>
 
   <script src="mappa-club.js?v=20261019_SPEED1"></script>
   <script src="chi-segui.js?v=20261001_FIX21"></script>
@@ -6827,7 +6827,7 @@
     'flusso-contatti.js?v=20260925_FLUSSO1',
     'cc-analytics.js?v=20261018_SEC3'
   ]);</script>
-  <script src="ds-hub.js?v=20261019_RD1"></script>
+  <script src="ds-hub.js?v=20261020_FIX2"></script>
   <script src="verifica-account.js?v=20261019_RD5"></script>
   <script src="season-wrapped.js?v=20261019_SPEED1"></script>
   <script>EliseeRoleScripts.write([
@@ -7320,6 +7320,6 @@
   <script src="file-dropzone.js?v=20260927_HEROUX61" defer></script>
   <script src="realistic-switch.js?v=20261001_FIX21" defer></script>
   <script src="es-ux-controls.js?v=20260928_HEROUX73" defer></script>
-  <script src="public-profile.js?v=20260929_HEROUX76" defer></script>
+  <script src="public-profile.js?v=20261020_FIX2" defer></script>
 </body>
 </html>

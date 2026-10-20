@@ -267,12 +267,12 @@
     var initText = esc(initials(name, roleLabel));
     var avaHtml;
     if (ph && ph.length > 5 && !/simulated|null|undefined/i.test(ph)) {
-      avaHtml = '<div class="es-pd-who-ava-wrap" style="position:relative; width:56px; height:56px; flex-shrink:0;">' +
-        '<img src="' + esc(ph) + '" alt="" style="width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid rgba(56,189,248,0.35); box-shadow:0 4px 12px rgba(0,0,0,0.35);" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
-        '<div class="es-pd-ph" style="display:none; width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #0f2742 0%, #0369a1 100%); border:2px solid rgba(56,189,248,0.4); color:#ffffff; font-weight:800; font-size:1.15rem; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.35);">' + initText + '</div>' +
+      avaHtml = '<div class="es-pd-who-ava-wrap es-dr-ava-wrap">' +
+        '<img class="es-dr-ava-img" src="' + esc(ph) + '" alt="" onerror="this.parentNode.classList.add(\'is-broken\')">' +
+        '<div class="es-pd-ph es-dr-ava es-dr-ava--fallback">' + initText + '</div>' +
       '</div>';
     } else {
-      avaHtml = '<div class="es-pd-ph" style="display:flex; width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #0f2742 0%, #0369a1 100%); border:2px solid rgba(56,189,248,0.4); color:#ffffff; font-weight:800; font-size:1.15rem; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,0.35);">' + initText + '</div>';
+      avaHtml = '<div class="es-pd-ph es-dr-ava">' + initText + '</div>';
     }
     var club = clubOf(user);
     var bio = val((user.staffProfile && user.staffProfile.bio) || user.bio);
@@ -282,42 +282,42 @@
     var pct = Math.round(100 * checks.filter(function (x) { return !!val(x); }).length / checks.length);
     var verified = String(user.badgeVerificaStato || '') === 'approved';
 
-    return '<section class="es-pd-card es-pd-indice" style="padding:1.25rem;">' +
-      '<div class="es-pd-card-header" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(148,163,184,0.12);">' +
-        '<div style="display:flex; align-items:center; gap:8px;">' +
-          '<h2 style="font-size:0.95rem; font-weight:800; color:#f3f8fc; margin:0; letter-spacing:0.02em;">Profilo Ufficiale</h2>' +
-          '<span class="es-pd-source-badge es-pd-source-user" style="font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:6px; background:rgba(56,189,248,0.1); color:#38bdf8; border:1px solid rgba(56,189,248,0.25);">' + (verified ? 'Verificato' : 'Profilo') + '</span>' +
+    return '<section class="es-pd-card es-pd-indice es-dr-card">' +
+      '<div class="es-pd-card-header es-dr-head">' +
+        '<div class="es-dr-head-title">' +
+          '<h2 class="es-dr-h2">Profilo Ufficiale</h2>' +
+          '<span class="es-pd-source-badge es-pd-source-user es-dr-badge">' + (verified ? 'Verificato' : 'Profilo') + '</span>' +
         '</div>' +
-        '<button type="button" class="es-btn-cos-primary" data-' + esc(attr || 'pd') + '="' + esc(primaryAction.act) + '" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; font-weight:700; padding:0.4rem 0.85rem; border-radius:6px; background:#0284c7; color:#fff; border:none; cursor:pointer; box-shadow:0 2px 8px rgba(2,132,199,0.3);">' +
+        '<button type="button" class="es-btn-cos-primary es-dr-primary" data-' + esc(attr || 'pd') + '="' + esc(primaryAction.act) + '">' +
           primaryAction.icon + '<span>' + esc(primaryAction.label) + '</span>' +
         '</button>' +
       '</div>' +
-      '<div class="es-pd-who" style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">' +
+      '<div class="es-pd-who es-dr-who">' +
         avaHtml +
-        '<div style="display:flex; flex-direction:column; gap:3px;">' +
-          '<b style="color:#f8fafc; font-size:1.15rem; font-weight:900; line-height:1.2;">' + esc(name) + '</b>' +
-          '<div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:2px;">' +
-            '<span style="font-size:0.72rem; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.28); border-radius:4px; padding:2px 6px; font-weight:800; text-transform:uppercase; letter-spacing:0.03em;">' + esc(roleLabel) + '</span>' +
-            (club ? '<span style="font-size:0.75rem; color:#cbd5e1; font-weight:600; display:flex; align-items:center; gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' + esc(club) + '</span>' : '') +
+        '<div class="es-dr-who-text">' +
+          '<b class="es-dr-name">' + esc(name) + '</b>' +
+          '<div class="es-dr-tags">' +
+            '<span class="es-dr-role">' + esc(roleLabel) + '</span>' +
+            (club ? '<span class="es-dr-club"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' + esc(club) + '</span>' : '') +
           '</div>' +
         '</div>' +
       '</div>' +
-      '<div class="es-pd-onboarding-box" style="background:#040912; border:1px solid rgba(56,189,248,0.18); border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.75rem;">' +
-        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">' +
-          '<span style="font-size:0.75rem; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.04em;">Completamento Anagrafica &amp; Ruolo</span>' +
-          '<span style="font-size:0.8rem; font-weight:900; color:#38bdf8;">' + pct + '%</span>' +
+      '<div class="es-pd-onboarding-box es-dr-onb">' +
+        '<div class="es-dr-onb-row">' +
+          '<span class="es-dr-onb-label">Completamento Anagrafica &amp; Ruolo</span>' +
+          '<span class="es-dr-onb-pct">' + pct + '%</span>' +
         '</div>' +
-        '<div style="height:6px; background:rgba(15,23,42,0.8); border-radius:3px; overflow:hidden; border:1px solid rgba(148,163,184,0.14);">' +
-          '<div style="width:' + pct + '%; height:100%; background:linear-gradient(90deg, #0284c7 0%, #38bdf8 100%); border-radius:3px;"></div>' +
+        '<div class="es-dr-bar">' +
+          '<div class="es-dr-bar-fill" data-pct="' + (Math.round(pct / 5) * 5) + '"></div>' +
         '</div>' +
-        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:0.72rem;">' +
-          '<span style="color:#64748b;">' + (pct >= 100 ? 'Profilo completo' : 'Completa i dati mancanti') + '</span>' +
-          '<button type="button" class="es-pd-edit" data-' + esc(attr || 'pd') + '="edit" style="background:none; border:none; color:#38bdf8; font-weight:800; cursor:pointer; padding:0; display:inline-flex; align-items:center; gap:3px;">' +
+        '<div class="es-dr-onb-foot">' +
+          '<span class="es-dr-muted">' + (pct >= 100 ? 'Profilo completo' : 'Completa i dati mancanti') + '</span>' +
+          '<button type="button" class="es-pd-edit es-dr-link" data-' + esc(attr || 'pd') + '="edit">' +
             '<span>Modifica Anagrafica</span> &rarr;' +
           '</button>' +
         '</div>' +
       '</div>' +
-      (bio ? '<div style="font-size:0.75rem; color:#8da8bc; line-height:1.5; padding:0.4rem 0.2rem;">' + esc(bio) + '</div>' : '') +
+      (bio ? '<div class="es-dr-bio">' + esc(bio) + '</div>' : '') +
     '</section>';
   }
 
@@ -337,7 +337,7 @@
   }
 
   function panelCard(title, body) {
-    return '<section class="es-pd-card" style="padding:1.25rem;">' +
+    return '<section class="es-pd-card es-dr-card">' +
       '<div class="es-pd-card-header"><h2>' + title + '</h2></div>' +
       body +
     '</section>';
@@ -367,12 +367,12 @@
       }).join('');
       registroContent = '<table class="es-pd-table"><thead><tr>' + th + '</tr></thead><tbody>' + tableBody + '</tbody></table>';
     } else {
-      registroContent = '<div style="padding:1.75rem 1rem; text-align:center; display:flex; flex-direction:column; align-items:center; gap:0.5rem;">' +
-        '<div style="width:40px; height:40px; border-radius:50%; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); display:flex; align-items:center; justify-content:center; color:#38bdf8;">' +
+      registroContent = '<div class="es-dr-empty">' +
+        '<div class="es-dr-empty-ico">' +
           '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
         '</div>' +
-        '<div style="font-size:0.82rem; font-weight:700; color:#f3f8fc;">Nessuna registrazione recente</div>' +
-        '<div style="font-size:0.72rem; color:#64748b; max-width:280px; line-height:1.4;">Il registro si popola automaticamente con le attività e relazioni operative del ruolo.</div>' +
+        '<div class="es-dr-empty-title">Nessuna registrazione recente</div>' +
+        '<div class="es-dr-empty-text">Il registro si popola automaticamente con le attività e relazioni operative del ruolo.</div>' +
       '</div>';
     }
 
@@ -384,11 +384,11 @@
     var dashInner =
       (clubOpsDash || '') +
       '<div class="es-pd-grid">' +
-        '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+        '<div class="es-dr-col">' +
           identityCard(user, roleLabel, attr) +
           '<div id="es-pd-actions-slot"></div>' +
         '</div>' +
-        '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+        '<div class="es-dr-col">' +
           '<section class="es-pd-card es-pd-radar">' +
             '<div class="es-pd-card-header"><h2>' + esc(opts.radarTitle || 'Quadro operativo') + '</h2>' +
             '<span class="es-pd-source-badge">In attesa</span></div>' +
@@ -400,7 +400,7 @@
             empty(opts.workEmpty || 'Nessuna attività registrata per questo ruolo.') +
           '</section>' +
         '</div>' +
-        '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+        '<div class="es-dr-col">' +
           '<section class="es-pd-card es-pd-comply">' +
             '<div class="es-pd-card-header"><h2>Verifica &amp; compliance</h2>' +
             '<span class="es-pd-source-badge">' + (String(user.badgeVerificaStato || '') === 'approved' ? 'Validato' : 'Da completare') + '</span></div>' +
@@ -428,7 +428,7 @@
         ? '<button type="button" class="es-pro-btn-quick-jump" data-' + attr + '="' + n.act + '">Apri ' + esc(n.label) + '</button>'
         : '';
       return tabPanel(n.id, panelCard(esc(n.label),
-        '<p style="color:#94a3b8;font-size:0.82rem;line-height:1.5;margin:0 0 12px;">Modulo operativo di ' + esc(cfg.area) + '. I dati si popolano dalle attività reali del ruolo.</p>' + cta
+        '<p class="es-dr-lead">Modulo operativo di ' + esc(cfg.area) + '. I dati si popolano dalle attività reali del ruolo.</p>' + cta
       ));
     }).join('');
 
@@ -479,7 +479,7 @@
           '<div class="es-pro-header-match-row">' +
             '<div class="es-pro-target-box"><p class="label">' + esc(cfg.next.label) + '</p><strong>Nessun impegno in programma</strong><span>Si aggiorna con il calendario del club</span></div>' +
             '<div class="es-pro-target-box"><p class="label">' + esc(cfg.kpi.label) + '</p><div class="es-pro-countdown-nums">' + kpiHtml + '</div></div>' +
-            '<div class="es-pro-target-box"><p class="label">' + esc(cfg.focus.label) + '</p><strong style="color:#38bdf8;">' + esc(cfg.focus.title) + '</strong><span>' + esc(cfg.focus.sub) + '</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">' + esc(cfg.focus.label) + '</p><strong class="es-dr-accent">' + esc(cfg.focus.title) + '</strong><span>' + esc(cfg.focus.sub) + '</span></div>' +
           '</div>' +
         '</div>' +
         '<nav class="es-pro-nav-tabs">' +

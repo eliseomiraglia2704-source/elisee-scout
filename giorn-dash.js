@@ -730,7 +730,7 @@
   var MEDIA_KIT_ITEMS = [
     {
       id: 'mk-1',
-      icon: '🎨',
+      icon: '',
       title: 'Loghi Ufficiali & Brand Asset',
       desc: 'Pacchetto loghi vettoriali SVG, versioni Dark e Light in PNG ad altissima risoluzione con trasparenza e favicon ufficiali.',
       meta: 'ZIP · 2.4 MB',
@@ -738,7 +738,7 @@
     },
     {
       id: 'mk-2',
-      icon: '📱',
+      icon: '',
       title: 'Screenshot UI & Mockup HD',
       desc: 'Catture in risoluzione 4K dell\'interfaccia: dashboard scouting, bacheca annunci di reclutamento e dossier analitico calciatore.',
       meta: 'ZIP · 8.1 MB',
@@ -746,7 +746,7 @@
     },
     {
       id: 'mk-3',
-      icon: '📄',
+      icon: '',
       title: 'Executive One-Pager & Factsheet',
       desc: 'Presentazione corporate in formato PDF: metriche di piattaforma, copertura dei campionati e standard di sicurezza.',
       meta: 'PDF · 1.2 MB',
@@ -754,7 +754,7 @@
     },
     {
       id: 'mk-4',
-      icon: '📘',
+      icon: '',
       title: 'Brand & Editorial Guidelines',
       desc: 'Linee guida d\'uso del marchio, palette colori ufficiali (HEX/Pantone), tipografia Outfit/Inter e regole di attribuzione stampa.',
       meta: 'PDF · 950 KB',

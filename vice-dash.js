@@ -144,7 +144,7 @@
       var allenamenti = res[4] || [];
       var dispRosa = res[5] || { totale: 0, disponibili: 0, infortunati: 0, squalificati: 0, differenziati: 0, indisponibiliTotale: 0, percentuale: 0, indisponibiliLista: [] };
       var rosa = res[6] || [];
-      var carico = res[7] || { mediaSettimanale: 0, giorni: [], acwr: '1.00', stato: 'In attesa dati GPS' };
+      var carico = res[7] || { mediaSettimanale: 0, giorni: [], acwr: '—', stato: 'In attesa dati GPS' };
       var reports = res[8] || [];
       var logs = res[9] || [];
       var impegni = res[10] || [];
@@ -207,7 +207,7 @@
         tipo: ultima.tipo || 'Seduta di campo',
         data: formatDateTime(ultima.data_ora),
         durata: (ultima.durata_minuti || 90) + ' min',
-        carico: ultima.carico_percepito || 'Medio',
+        carico: ultima.carico_percepito || '—',
         giocatori: dispRosa.totale > 0 ? (dispRosa.disponibili + '/' + dispRosa.totale) : '--',
         esercizi: ultima.n_esercizi || 0,
         obiettivi: Array.isArray(ultima.obiettivi) ? ultima.obiettivi.length : (ultima.obiettivi ? 1 : 0)
@@ -241,7 +241,7 @@
           rientro: g.data_rientro_prevista ? formatDate(g.data_rientro_prevista) : '',
           app: 0,
           load: '--',
-          acwr: '1.00'
+          acwr: '—'
         };
       });
 
@@ -253,7 +253,7 @@
           orario: formatTime(tr.data_ora),
           luogo: 'Centro Sportivo Club',
           desc: Array.isArray(tr.obiettivi) ? tr.obiettivi.join(', ') : (tr.obiettivi || 'Obiettivi tecnici e tattici.'),
-          carico: tr.carico_percepito || 'Medio'
+          carico: tr.carico_percepito || '—'
         };
       });
 
@@ -1101,7 +1101,7 @@
       messaggiStaff: [],
       allegati: [],
       dispRosa: { totale: 0, disponibili: 0, infortunati: 0, squalificati: 0, differenziati: 0, indisponibiliTotale: 0, percentuale: 0, indisponibiliLista: [] },
-      carico: { mediaSettimanale: 0, giorni: [], acwr: '1.00', stato: 'In attesa dati GPS' },
+      carico: { mediaSettimanale: 0, giorni: [], acwr: '—', stato: 'In attesa dati GPS' },
       prepPartita: { pct: 0, foot: 'In attesa' },
       reports: [],
       unreadCount: 0,
@@ -2315,7 +2315,7 @@
         // BOTTONI AZIONE MODALE
         '<div style="display:flex; gap:0.6rem;">' +
           '<button type="button" class="es-btn-cos-primary" id="btn-copy-story-text" style="font-size:0.8rem; padding:0.5rem 1rem;">' +
-            '📋 Copia Formazione Testuale' +
+            'Copia Formazione Testuale' +
           '</button>' +
           '<button type="button" class="es-btn-cos-sec" id="btn-close-modal" style="font-size:0.8rem; padding:0.5rem 1rem;">' +
             'Chiudi' +
@@ -2328,7 +2328,7 @@
     var btnCopy = document.getElementById('btn-copy-story-text');
     if (btnCopy) {
       btnCopy.onclick = function () {
-        var text = '⚽ ' + clubName + ' — FORMAZIONE UFFICIALE (' + modKey + ')\n\n' +
+        var text = clubName + ' — FORMAZIONE UFFICIALE (' + modKey + ')\n\n' +
           'XI Titolare:\n' +
           data.top11.map(function (p, i) { return (i + 1) + '. #' + p.num + ' ' + p.name + ' (' + p.pos + ')'; }).join('\n') +
           '\n\nPanchina:\n' +
@@ -3296,7 +3296,7 @@
 
     var matchSelectOptions = matchesList.map(function (m) {
       return '<option value="' + esc(m.id) + '" ' + (m.id === data.selectedDossierMatchId ? 'selected' : '') + ' style="background:#071522; color:#fff;">' +
-        (m.isNext ? '⚽ Prossima Gara: ' : '📅 Gara: ') + esc(m.avversario) + ' (' + esc(m.data) + ')' +
+        (m.isNext ? 'Prossima Gara: ' : 'Gara: ') + esc(m.avversario) + ' (' + esc(m.data) + ')' +
       '</option>';
     }).join('');
 
@@ -3311,7 +3311,7 @@
             '<div>' +
               '<div style="font-size:1.35rem; font-weight:900; color:#f3f8fc; line-height:1.2;">' + esc(activeOpponent) + '</div>' +
               '<div style="display:flex; align-items:center; gap:8px; margin-top:4px; font-size:0.75rem; color:#8da8bc;">' +
-                '<span class="es-cos-badge-pill is-blue" style="font-size:0.68rem; font-weight:800; padding:2px 7px;">' + (curMatch.isNext ? '⚽ Prossimo Incontro Ufficiale' : '📅 Dossier Programmato') + '</span>' +
+                '<span class="es-cos-badge-pill is-blue" style="font-size:0.68rem; font-weight:800; padding:2px 7px;">' + (curMatch.isNext ? 'Prossimo Incontro Ufficiale' : 'Dossier Programmato') + '</span>' +
                 '<span>Data: <b style="color:#cbd5e1;">' + esc(curMatch.data || '18/09/2026') + '</b></span>' +
                 '<span>·</span>' +
                 '<span>Stadio: <b style="color:#cbd5e1;">' + esc(curMatch.stadio || 'Campo Comunale') + '</b></span>' +
@@ -3455,7 +3455,7 @@
   function renderGpsCarichi(data) {
     var gpsFiles = (data.allegati || []).filter(function (f) { return f.categoria === 'gps'; });
     var avg = (data.carico && data.carico.mediaSettimanale) || 0;
-    var acwr = (data.carico && data.carico.acwr) || '1.00';
+    var acwr = (data.carico && data.carico.acwr) || '—';
     var stato = (data.carico && data.carico.stato) || 'In attesa dati GPS';
 
     return (
@@ -3467,7 +3467,7 @@
           '</div>' +
           '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; margin-bottom:1rem;">' +
             '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#16b9ff;">' + (avg > 0 ? (avg + '%') : '--') + '</div><div style="font-size:0.72rem; color:#8da8bc;">CARICO MEDIO SETTIMANA</div></div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">' + (avg > 0 ? (Math.round(avg * 1.3) + ' km') : '--') + '</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA TOTALE STIMATA</div></div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">' + '--' + '</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA TOTALE STIMATA</div></div>' +
             '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#ffd21a;">' + acwr + '</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR RATIO MEDIO</div></div>' +
             '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">' + esc(stato) + '</div><div style="font-size:0.72rem; color:#8da8bc;">STATO DI FORMA</div></div>' +
           '</div>' +
@@ -3742,7 +3742,7 @@
       btnConfirmXI.onclick = function () {
         data.formazioneUfficialeConfermata = true;
         saveCoachData(data);
-        if (window.showToast) window.showToast('🏆 Formazione Ufficiale Confermata dal Mister!', 'success');
+        if (window.showToast) window.showToast('Formazione Ufficiale Confermata dal Mister!', 'success');
       };
     }
 
@@ -4015,8 +4015,8 @@
               email: email,
               status: 'disp',
               app: 0,
-              load: '8.5 km',
-              acwr: '1.02'
+              load: '--',
+              acwr: '—'
             };
 
             data.roster.push(newPlayer);
@@ -4651,7 +4651,7 @@
             '<div style="font-size:0.7rem; color:#8da8bc;">Revisione dossier scout e piano gara</div>' +
           '</div>' +
           '<button type="button" id="btn-ia-suggest-dossier" class="es-btn-cos-sec" style="background:rgba(22,185,255,0.08); border-color:#16b9ff; color:#38bdf8; font-size:0.75rem; font-weight:700; padding:0.35rem 0.75rem; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:5px;">' +
-            '✨ Suggerisci con IA' +
+            'Usa una traccia' +
           '</button>' +
         '</div>' +
 
@@ -4660,19 +4660,19 @@
           '<div style="display:flex; align-items:center; justify-content:space-between;">' +
             '<div style="display:flex; align-items:center; gap:6px; font-size:0.78rem; font-weight:800; color:#38bdf8;">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>' +
-              '<span>Bozza Tattica Suggerita da IA per ' + esc(opponentName) + '</span>' +
+              '<span>Traccia per l\'analisi di ' + esc(opponentName) + '</span>' +
             '</div>' +
             '<button type="button" id="btn-ia-close-preview" style="background:none; border:none; color:#8da8bc; font-size:1.1rem; cursor:pointer; line-height:1;">&times;</button>' +
           '</div>' +
           '<div style="font-size:0.72rem; color:#8da8bc; line-height:1.4;">' +
-            'L\'assistente IA ha elaborato una bozza basata sull\'analisi tattica e i pattern di gioco. Rivedi l\'anteprima prima di applicarla.' +
+            'Domande guida da completare con quello che hai visto. Non è un\'analisi automatica dell\'avversario.' +
           '</div>' +
           '<div id="ia-preview-content" style="background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.65rem; font-size:0.75rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.4rem; max-height:160px; overflow-y:auto;">' +
           '</div>' +
           '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.25rem;">' +
             '<button type="button" id="btn-ia-dismiss-suggestion" class="es-btn-cos-sec" style="font-size:0.72rem; padding:0.35rem 0.75rem;">Ignora</button>' +
             '<button type="button" id="btn-ia-apply-suggestion" class="es-btn-cos-primary" style="font-size:0.72rem; padding:0.35rem 0.85rem; background:#10b981; border-color:#10b981;">' +
-              '✓ Applica Bozza al Dossier' +
+              'Usa la traccia nel dossier' +
             '</button>' +
           '</div>' +
         '</div>' +
@@ -4816,40 +4816,13 @@
 
     if (btnIa) {
       btnIa.onclick = function () {
-        // Genera bozza contestuale specifica per l'avversario
-        var isCerignola = /cerignola/i.test(opponentName);
-        var isManfredonia = /manfredonia/i.test(opponentName);
-        var isSanSevero = /san\s*severo/i.test(opponentName);
-
-        if (isCerignola) {
-          currentIaDraft = {
-            puntiForza: 'Densità centrale nel primo tempo; raddoppi sistematici sulla mezzala avversaria e ripartenze a tre con esterni veloci.',
-            puntiDeboli: 'Calo di intensità atletica dopo il 65°; vulnerabili nei cambi di gioco rapidi e nei cross tesi dalla trequarti opposta.',
-            giocatoriChiave: 'Numero 9 (centravanti strutturato d\'area) e numero 10 (regista di centrocampo abile sui calci da fermo).',
-            palleInattive: 'Marcatura a uomo mista a zona sul dischetto; barriera fragile e disallineata sui tiri a giro da destra.'
-          };
-        } else if (isManfredonia) {
-          currentIaDraft = {
-            puntiForza: 'Forte pressione ultra-offensiva nei primi 20 minuti; corsie esterne con sovrapposizione costante dei terzini.',
-            puntiDeboli: 'Spazi enormi concessi alle spalle della linea difensiva quando salgono; disattenzioni nei duelli aerei su seconda palla.',
-            giocatoriChiave: 'Ala sinistra rapida nell\'uno contro uno e mediano metodista di grande interdizione fisica.',
-            palleInattive: 'Blocchi coordinati sul secondo palo; battute corte a due per liberare il tiro dal limite.'
-          };
-        } else if (isSanSevero) {
-          currentIaDraft = {
-            puntiForza: 'Compattezza con baricentro basso in un 5-4-1 elastico; ripartenze dirette sulle seconde palle.',
-            puntiDeboli: 'Difficoltà ad uscire con palla al piede sotto pressing alto; terzini in affanno se puntati nell\'uno contro uno.',
-            giocatoriChiave: 'Attaccante boa bravo a difendere palla e portiere reattivo tra i pali.',
-            palleInattive: 'Marcatura totalmente a zona nei 16 metri; tendono a lasciare scoperto il limite dell\'area per i rimorchi.'
-          };
-        } else {
-          currentIaDraft = {
-            puntiForza: 'Transizioni rapide con 3-4 uomini in fase di ribaltamento; linee strette e organizzate a centrocampo.',
-            puntiDeboli: 'Transizioni difensive lente; vulnerabilità agli inserimenti centrali delle mezzali tra centrale e terzino.',
-            giocatoriChiave: 'Numero 10 leader tecnico per assist filtranti e centravanti rapido in profondità.',
-            palleInattive: 'Traiettorie a uscire dal corner; schema a blocchi per liberare il colpitore di testa sul primo palo.'
-          };
-        }
+        // Traccia di domande guida: non è un'analisi dell'avversario.
+        currentIaDraft = {
+          puntiForza: 'Come costruisce il gioco? Dove crea superiorità? Chi accelera la manovra?',
+          puntiDeboli: 'Dove concede spazio? Come reagisce al pressing? Cala nel finale?',
+          giocatoriChiave: 'Chi decide le partite? Chi batte i calci piazzati? Chi è più pericoloso in area?',
+          palleInattive: 'Marcatura a uomo o a zona? Schemi su corner e punizioni? Chi va sul primo palo?'
+        };
 
         if (iaContent && iaContainer) {
           iaContent.innerHTML =
@@ -4876,7 +4849,7 @@
         isDirty = true;
         updateCounts();
         if (iaContainer) iaContainer.style.display = 'none';
-        if (window.showToast) window.showToast('Bozza IA applicata! Puoi revisionare e salvare il dossier.', 'info');
+        if (window.showToast) window.showToast('Traccia inserita: completala e salva il dossier.', 'info');
       };
     }
 

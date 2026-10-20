@@ -174,15 +174,15 @@
         '<div class="es-pp-hero-meta">' +
           '<h2 class="es-pp-name">' + esc(player.name) + '</h2>' +
           '<div class="es-pp-badges-row">' +
-            '<span class="es-pp-pill es-pp-pill--role">⚽ ' + esc(player.role || 'Calciatore') + '</span>' +
+            '<span class="es-pp-pill es-pp-pill--role">' + esc(player.role || 'Calciatore') + '</span>' +
             '<span class="es-pp-pill ' + (isFree ? 'es-pp-pill--status' : 'es-pp-pill--role') + '">' +
-              (isFree ? '🟢 ' : '🛡️ ') + esc(club) +
+              esc(club) +
             '</span>' +
-            '<span class="es-pp-pill es-pp-pill--foot">👟 Piede ' + esc(foot) + '</span>' +
+            '<span class="es-pp-pill es-pp-pill--foot">Piede ' + esc(foot) + '</span>' +
           '</div>' +
           '<div class="es-pp-subinfo">' +
-            '<span>📍 ' + esc(loc) + '</span>' +
-            '<span>⭐ Overall Elisee: <strong>' + stats.ovr + '</strong></span>' +
+            '<span>' + esc(loc) + '</span>' +
+            '<span>Overall Elisee: <strong>' + stats.ovr + '</strong></span>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -190,18 +190,18 @@
       '<!-- ACTION BAR -->' +
       '<div class="es-pp-actions-bar">' +
         '<button type="button" class="es-pp-btn es-pp-btn--share" id="es-pp-share-btn" data-id="' + esc(player.id) + '">' +
-          '🔗 Copia Link Profilo' +
+          'Copia Link Profilo' +
         '</button>' +
         '<button type="button" class="es-pp-btn es-pp-btn--contact" id="es-pp-contact-btn" data-id="' + esc(player.id) + '" data-name="' + esc(player.name) + '">' +
-          '✉️ Proponi Provino / Contatta' +
+          'Proponi Provino / Contatta' +
         '</button>' +
         '<button type="button" class="es-pp-btn es-pp-btn--secret" id="es-pp-secret-btn" data-id="' + esc(player.id) + '" data-name="' + esc(player.name) + '" data-role="' + esc(player.role || '') + '" data-city="' + esc(player.city || '') + '">' +
-          '⭐ Salva in Secret List' +
+          'Salva in Secret List' +
         '</button>' +
       '</div>' +
 
       '<!-- STATISTICHE STAGIONALI -->' +
-      '<h3 class="es-pp-section-title">📊 Rendimento Stagionale Ufficiale</h3>' +
+      '<h3 class="es-pp-section-title">Rendimento Stagionale Ufficiale</h3>' +
       '<div class="es-pp-stats-grid">' +
         '<div class="es-pp-stat-card">' +
           '<span class="es-pp-stat-val">' + stats.presenze + '</span>' +
@@ -230,7 +230,7 @@
       '</div>' +
 
       '<!-- ATTRIBUTI CARD METRICHE -->' +
-      '<h3 class="es-pp-section-title">⚡ Parametri Atletici &amp; Tecnici</h3>' +
+      '<h3 class="es-pp-section-title">Parametri Atletici &amp; Tecnici</h3>' +
       '<div class="es-pp-attrs-grid">' +
         '<div class="es-pp-attr-box"><div class="es-pp-attr-num">' + stats.vel + '</div><div class="es-pp-attr-code">Velocità</div></div>' +
         '<div class="es-pp-attr-box"><div class="es-pp-attr-num">' + stats.tir + '</div><div class="es-pp-attr-code">Tiro</div></div>' +
@@ -241,7 +241,7 @@
       '</div>' +
 
       '<!-- VIDEO & HIGHLIGHTS HUB -->' +
-      '<h3 class="es-pp-section-title">📹 Video Highlights &amp; Match Clips</h3>' +
+      '<h3 class="es-pp-section-title">Video Highlights &amp; Match Clips</h3>' +
       '<div class="es-pp-videos-list">' +
         '<a href="https://www.youtube.com/results?search_query=calcio+highlights+' + encodeURIComponent(player.name) + '" target="_blank" rel="noopener" class="es-pp-video-link">' +
           '<span>▶️ Guarda Clip Scouting &amp; Highlights Partita</span>' +

@@ -849,7 +849,7 @@
 
       '<div style="margin-top:1.2rem;background:#080e1a;border:1px solid rgba(148,163,184,0.18);border-radius:12px;padding:0.9rem 1.1rem;">' +
         '<h3 style="margin:0 0 0.4rem;font-size:0.92rem;color:#fff;display:flex;align-items:center;gap:0.45rem;">' +
-          '<span>📹</span> Highlight Video Hub (Clip &amp; Scouting Match)' +
+          'Highlight Video Hub (Clip &amp; Scouting Match)' +
         '</h3>' +
         '<p style="color:#94a3b8;font-size:0.8rem;margin:0 0 0.65rem;">Carica i link video per consentire ai Direttori Sportivi e Scout di visionare i tuoi momenti salienti.</p>' +
         '<div class="es-pc-video-row">' +
@@ -914,9 +914,9 @@
             return '<option' + (heatRange.form === f ? ' selected' : '') + '>' + f + '</option>';
           }).join('') +
         '</select>' +
-        '<button type="button" class="es-pc-btn" data-pc="heat-auto" style="padding:0.4rem 0.9rem;">⚡ Genera dal Modulo</button>' +
-        '<button type="button" class="es-pc-btn" data-pc="heat-save" style="background:#0284c7;color:#fff;padding:0.4rem 1.1rem;border-color:#38bdf8;">💾 Salva Heatmap sulla Card</button>' +
-        '<button type="button" class="es-pc-btn" data-pc="heat-clear" style="background:rgba(239,68,68,0.12);color:#f87171;border-color:rgba(239,68,68,0.3);margin-left:auto;">🧹 Azzera</button>' +
+        '<button type="button" class="es-pc-btn" data-pc="heat-auto" style="padding:0.4rem 0.9rem;">Genera dal Modulo</button>' +
+        '<button type="button" class="es-pc-btn" data-pc="heat-save" style="background:#0284c7;color:#fff;padding:0.4rem 1.1rem;border-color:#38bdf8;">Salva Heatmap sulla Card</button>' +
+        '<button type="button" class="es-pc-btn" data-pc="heat-clear" style="background:rgba(239,68,68,0.12);color:#f87171;border-color:rgba(239,68,68,0.3);margin-left:auto;">Azzera</button>' +
       '</div>' +
 
       '<div class="es-pc-fm" style="gap:1.3rem;align-items:start;">' +
@@ -934,7 +934,7 @@
           // Box Guida Tattica
           '<div style="background:#081020;border:1px solid rgba(56,189,248,0.25);border-radius:12px;padding:0.95rem 1.1rem;">' +
             '<h4 style="margin:0 0 0.6rem;color:#38bdf8;font-size:0.88rem;display:flex;align-items:center;gap:0.4rem;">' +
-              '<span>🧭</span> Guida: Come Muoverti &amp; Posizionarti' +
+              'Guida: Come Muoverti &amp; Posizionarti' +
             '</h4>' +
             '<div style="font-size:0.78rem;color:#cbd5e1;line-height:1.55;display:flex;flex-direction:column;gap:0.55rem;">' +
               '<div style="display:flex;gap:0.5rem;">' +
@@ -959,7 +959,7 @@
           // Box Legenda Termica
           '<div style="background:#081020;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.95rem 1.1rem;">' +
             '<h4 style="margin:0 0 0.6rem;color:#fff;font-size:0.86rem;display:flex;align-items:center;gap:0.4rem;">' +
-              '<span>🎨</span> Legenda Intensità Termica' +
+              'Legenda Intensità Termica' +
             '</h4>' +
             '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;font-size:0.76rem;">' +
               '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(56,189,248,0.4);">' +
@@ -984,14 +984,14 @@
           // Box Preset Tattici Rapidi
           '<div style="background:#081020;border:1px solid rgba(56,189,248,0.2);border-radius:12px;padding:0.95rem 1.1rem;">' +
             '<h4 style="margin:0 0 0.6rem;color:#38bdf8;font-size:0.86rem;display:flex;align-items:center;gap:0.4rem;">' +
-              '<span>⚡</span> Preset Tattici Rapidi' +
+              'Preset Tattici Rapidi' +
             '</h4>' +
             '<div style="display:flex;flex-wrap:wrap;gap:0.45rem;">' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="att" style="font-size:0.75rem;padding:0.35rem 0.65rem;">🎯 Punta / Finalizzazione</button>' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="ala" style="font-size:0.75rem;padding:0.35rem 0.65rem;">🚀 Ala / Corsie Esterne</button>' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="trq" style="font-size:0.75rem;padding:0.35rem 0.65rem;">🧠 Trequarti &amp; Raccordo</button>' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="b2b" style="font-size:0.75rem;padding:0.35rem 0.65rem;">🔋 Box-to-Box / Mezzala</button>' +
-              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="press" style="font-size:0.75rem;padding:0.35rem 0.65rem;">⚔️ Pressing Alto</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="att" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Punta / Finalizzazione</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="ala" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Ala / Corsie Esterne</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="trq" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Trequarti &amp; Raccordo</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="b2b" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Box-to-Box / Mezzala</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="press" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Pressing Alto</button>' +
             '</div>' +
           '</div>' +
 
@@ -1123,7 +1123,7 @@
         
         '<div style="background:#081020;border:1px solid rgba(56,189,248,0.3);border-radius:14px;padding:1.2rem 1.4rem;margin:1.2rem 0;color:#cbd5e1;line-height:1.6;font-size:0.84rem;">' +
           '<div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.8rem;">' +
-            '<span style="font-size:1.4rem;">🔒</span>' +
+            '' +
             '<h3 style="margin:0;color:#fff;font-size:1rem;">Informativa Privacy &amp; Tracciamento Biometrico (Art. 9 GDPR)</h3>' +
           '</div>' +
           '<p style="margin:0 0 0.8rem;">I dati raccolti (coordinate GPS sul terreno di gioco, velocità, picchi di sprint, conteggio passi giornaliero e frequenza cardiaca) vengono utilizzati <b>esclusivamente</b> per:</p>' +
@@ -1136,7 +1136,7 @@
         '</div>' +
 
         '<div style="display:flex;gap:0.8rem;flex-wrap:wrap;">' +
-          '<button type="button" class="es-pc-btn" data-pc="consent-accept" style="background:#0284c7;color:#fff;border-color:#38bdf8;padding:0.6rem 1.4rem;font-size:0.9rem;border-radius:8px;">✅ Accetto e Attiva Tracciamento</button>' +
+          '<button type="button" class="es-pc-btn" data-pc="consent-accept" style="background:#0284c7;color:#fff;border-color:#38bdf8;padding:0.6rem 1.4rem;font-size:0.9rem;border-radius:8px;">Accetto e Attiva Tracciamento</button>' +
           '<button type="button" class="es-pc-btn" data-pc="close" style="background:transparent;color:#94a3b8;border-color:rgba(255,255,255,0.15);padding:0.6rem 1.2rem;border-radius:8px;">Non ora</button>' +
         '</div>';
     }
@@ -1153,7 +1153,7 @@
     var avgBpm = watch && watch.avgBpm ? watch.avgBpm : (st.distKm > 0 ? 152 : 0);
     var maxBpm = watch && watch.maxBpm ? watch.maxBpm : (st.distKm > 0 ? 184 : 0);
 
-    var liveNote = live ? '<div class="es-pd-empty" style="color:#6ee7b7;font-weight:700;">🟢 Sessione GPS in corso sul campo — ' + live.points.length + ' campioni registrati.</div>' : '';
+    var liveNote = live ? '<div class="es-pd-empty" style="color:#6ee7b7;font-weight:700;">Sessione GPS in corso sul campo — ' + live.points.length + ' campioni registrati.</div>' : '';
 
     return '<button type="button" class="es-pc-close" data-pc="close">Chiudi</button>' +
       '<h2>GPS &amp; Tracciamento Prestazioni Fisiche</h2>' +
@@ -1172,9 +1172,9 @@
             '</div>' +
           '</div>' +
           '<div style="display:flex;gap:0.45rem;flex-wrap:wrap;">' +
-            '<button type="button" class="es-pc-btn" data-pc="sync-watch" style="font-size:0.75rem;padding:0.35rem 0.75rem;background:#0369a1;color:#fff;border-color:#38bdf8;">🔄 Sincronizza Smartwatch</button>' +
-            '<button type="button" class="es-pc-btn" data-pc="sync-pedometer" style="font-size:0.75rem;padding:0.35rem 0.75rem;background:rgba(56,189,248,0.12);color:#38bdf8;">📱 Sincronizza Passi Dispositivo</button>' +
-            '<button type="button" class="es-pc-btn" data-pc="consent-revoke" style="font-size:0.72rem;padding:0.35rem 0.6rem;background:transparent;color:#94a3b8;border-color:rgba(255,255,255,0.1);">⚙️ Gestisci Consenso</button>' +
+            '<button type="button" class="es-pc-btn" data-pc="sync-watch" style="font-size:0.75rem;padding:0.35rem 0.75rem;background:#0369a1;color:#fff;border-color:#38bdf8;">Sincronizza Smartwatch</button>' +
+            '<button type="button" class="es-pc-btn" data-pc="sync-pedometer" style="font-size:0.75rem;padding:0.35rem 0.75rem;background:rgba(56,189,248,0.12);color:#38bdf8;">Sincronizza Passi Dispositivo</button>' +
+            '<button type="button" class="es-pc-btn" data-pc="consent-revoke" style="font-size:0.72rem;padding:0.35rem 0.6rem;background:transparent;color:#94a3b8;border-color:rgba(255,255,255,0.1);">Gestisci Consenso</button>' +
           '</div>' +
         '</div>' +
 
@@ -1219,11 +1219,11 @@
 
       '<div style="margin-top:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;">' +
         '<div>' +
-          '<h3 style="margin:0 0 0.45rem;font-size:0.88rem;color:#38bdf8;">📈 Profilo Velocità &amp; Picchi</h3>' +
+          '<h3 style="margin:0 0 0.45rem;font-size:0.88rem;color:#38bdf8;">Profilo Velocità &amp; Picchi</h3>' +
           speedChart(pts) +
         '</div>' +
         '<div>' +
-          '<h3 style="margin:0 0 0.45rem;font-size:0.88rem;color:#38bdf8;">📍 Tracciamento Percorso in Campo</h3>' +
+          '<h3 style="margin:0 0 0.45rem;font-size:0.88rem;color:#38bdf8;">Tracciamento Percorso in Campo</h3>' +
           gpsPathSvg(pts) +
         '</div>' +
       '</div>';

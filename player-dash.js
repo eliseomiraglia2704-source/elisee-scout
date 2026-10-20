@@ -704,23 +704,23 @@
     var backdrop = document.createElement('div');
     backdrop.className = 'es-edit-modal-backdrop';
     
-    var roleVal = p.fieldRole || user.ruoloDettagliato || 'Punta Centrale';
+    var roleVal = p.fieldRole || user.ruoloDettagliato || '';
     var roles = [
       'Punta Centrale', 'Seconda Punta', 'Ala Destra', 'Ala Sinistra',
       'Trequartista', 'Mezzala', 'Regista', 'Mediano',
       'Terzino Destro', 'Terzino Sinistro', 'Difensore Centrale', 'Portiere'
     ];
-    var rolesOpts = roles.map(function (r) {
+    var rolesOpts = '<option value=""' + (roleVal ? '' : ' selected') + '>Seleziona...</option>' + roles.map(function (r) {
       return '<option value="' + esc(r) + '"' + (r === roleVal ? ' selected' : '') + '>' + esc(r) + '</option>';
     }).join('');
 
-    var footVal = p.foot || user.piede || 'Destro';
+    var footVal = p.foot || user.piede || '';
     var feet = ['Destro', 'Mancino', 'Ambidestro'];
-    var feetOpts = feet.map(function (f) {
+    var feetOpts = '<option value=""' + (footVal ? '' : ' selected') + '>Seleziona...</option>' + feet.map(function (f) {
       return '<option value="' + esc(f) + '"' + (f === footVal ? ' selected' : '') + '>' + esc(f) + '</option>';
     }).join('');
 
-    var contractStatusVal = p.contractStatus || 'Sotto contratto (Accordo Economico)';
+    var contractStatusVal = p.contractStatus || '';
     var contracts = [
       'Sotto contratto (Accordo Economico)',
       'Svincolato / In cerca di squadra',
@@ -728,7 +728,7 @@
       'Tesseramento Giovanile FIGC',
       'In trattativa'
     ];
-    var contractOpts = contracts.map(function (c) {
+    var contractOpts = '<option value=""' + (contractStatusVal ? '' : ' selected') + '>Non indicato</option>' + contracts.map(function (c) {
       return '<option value="' + esc(c) + '"' + (c === contractStatusVal ? ' selected' : '') + '>' + esc(c) + '</option>';
     }).join('');
 
@@ -752,12 +752,12 @@
         '<div class="es-edit-field"><label>Nome</label><input id="es-ed-nome" value="' + esc(user.nome || '') + '"></div>' +
         '<div class="es-edit-field"><label>Cognome</label><input id="es-ed-cognome" value="' + esc(user.cognome || '') + '"></div>' +
         '<div class="es-edit-field"><label>Ruolo Principale</label><select id="es-ed-role">' + rolesOpts + '</select></div>' +
-        '<div class="es-edit-field"><label>Ruoli Secondari Giocabili</label><input id="es-ed-sec-roles" placeholder="es. Ala Sinistra, Trequartista" value="' + esc(p.secondaryRoles || 'Ala Sinistra, Trequartista') + '"></div>' +
+        '<div class="es-edit-field"><label>Ruoli Secondari Giocabili</label><input id="es-ed-sec-roles" placeholder="es. Ala Sinistra, Trequartista" value="' + esc(p.secondaryRoles || '') + '"></div>' +
         '<div class="es-edit-field"><label>Piede Preferito</label><select id="es-ed-foot">' + feetOpts + '</select></div>' +
-        '<div class="es-edit-field"><label>Età (Anni)</label><input type="number" id="es-ed-eta" value="' + esc(user.eta || '22') + '"></div>' +
-        '<div class="es-edit-field"><label>Altezza</label><input id="es-ed-altezza" value="' + esc(user.altezza || p.heightCm || '1.83 m') + '"></div>' +
-        '<div class="es-edit-field"><label>Peso</label><input id="es-ed-peso" value="' + esc(user.peso || p.weightKg || '76 kg') + '"></div>' +
-        '<div class="es-edit-field"><label>Categoria Attuale</label><input id="es-ed-categoria" value="' + esc(user.categoria || 'Serie D · Girone F') + '"></div>' +
+        '<div class="es-edit-field"><label>Età (Anni)</label><input type="number" id="es-ed-eta" value="' + esc(user.eta || '') + '"></div>' +
+        '<div class="es-edit-field"><label>Altezza</label><input id="es-ed-altezza" placeholder="Es. 1,80 m" value="' + esc(user.altezza || p.heightCm || '') + '"></div>' +
+        '<div class="es-edit-field"><label>Peso</label><input id="es-ed-peso" placeholder="Es. 75 kg" value="' + esc(user.peso || p.weightKg || '') + '"></div>' +
+        '<div class="es-edit-field"><label>Categoria Attuale</label><input id="es-ed-categoria" placeholder="Es. Eccellenza" value="' + esc(user.categoria || '') + '"></div>' +
         '<div class="es-edit-field"><label>Club / Società Attuale</label><input id="es-ed-club" value="' + esc(user.squadra || user.club || '') + '"></div>' +
         '<div class="es-edit-field"><label>Stato Contrattuale Dichiarato</label><select id="es-ed-contract">' + contractOpts + '</select></div>' +
         '<div class="es-edit-field"><label>Preferenze di Contatto</label><select id="es-ed-contact-pref">' + contactOpts + '</select></div>' +
@@ -768,8 +768,8 @@
             '</label>' +
           '</div>' +
         '</div>' +
-        '<div class="es-edit-field full"><label>Obiettivi di Carriera (Dichiarati)</label><textarea id="es-ed-goals" rows="2">' + esc(p.careerGoals || 'Continuità di minutaggio e consolidamento categoria con prospettiva salto nei professionisti.') + '</textarea></div>' +
-        '<div class="es-edit-field full"><label>Presentazione Personale / Bio Tecnico-Tattica</label><textarea id="es-ed-bio" rows="3">' + esc(p.bio || user.bio || 'Attaccante rapido con ottima visione di gioco e attacco costante della profondità.') + '</textarea></div>' +
+        '<div class="es-edit-field full"><label>Obiettivi di Carriera (Dichiarati)</label><textarea id="es-ed-goals" rows="2">' + esc(p.careerGoals || '') + '</textarea></div>' +
+        '<div class="es-edit-field full"><label>Presentazione Personale / Bio Tecnico-Tattica</label><textarea id="es-ed-bio" rows="3">' + esc(p.bio || user.bio || '') + '</textarea></div>' +
       '</div>' +
       '<div class="es-edit-actions">' +
         '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
@@ -804,20 +804,20 @@
       user.nome = n || user.nome;
       user.cognome = c || user.cognome;
       user.fullName = (user.nome + ' ' + user.cognome).trim();
-      user.piede = f;
+      user.piede = f || user.piede || '';
       user.eta = eta;
       user.altezza = alt;
       user.peso = peso;
       user.categoria = cat;
       user.squadra = clb;
       user.club = clb;
-      user.ruoloDettagliato = r;
+      user.ruoloDettagliato = r || user.ruoloDettagliato || '';
       user.bio = bio;
 
       if (!user.playerProfile) user.playerProfile = {};
-      user.playerProfile.fieldRole = r;
+      user.playerProfile.fieldRole = r || user.playerProfile.fieldRole || '';
       user.playerProfile.secondaryRoles = secR;
-      user.playerProfile.foot = f;
+      user.playerProfile.foot = f || user.playerProfile.foot || '';
       user.playerProfile.heightCm = alt;
       user.playerProfile.weightKg = peso;
       user.playerProfile.bio = bio;

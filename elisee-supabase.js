@@ -185,7 +185,7 @@
   // CARICO SETTIMANALE (dalle presenze, oppure dagli allenamenti)
   // ============================================================
   async function getCaricoSettimanale(clubId) {
-    if (!clubId) return { mediaSettimanale: 0, giorni: [], acwr: '1.00', stato: 'In attesa dati' };
+    if (!clubId) return { mediaSettimanale: 0, giorni: [], acwr: '—', stato: 'In attesa dati' };
     var weekAgo = Date.now() - 7 * 86400000;
     var names = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
     var giorniMap = { Lun: [], Mar: [], Mer: [], Gio: [], Ven: [], Sab: [], Dom: [] };
@@ -209,8 +209,11 @@
 
     if (count === 0) {
       recent.forEach(function (al) {
-        var raw = String(al.carico_percepito || '').toLowerCase();
-        var val = raw === 'alto' ? 85 : (raw === 'basso' ? 50 : (/^\d+$/.test(raw) ? parseInt(raw, 10) : 70));
+        var raw = String(al.carico_percepito || '').toLowerCase().trim();
+        // Senza fatica percepita indicata la seduta non entra nella media.
+        if (!raw) return;
+        var val = raw === 'alto' ? 85 : (raw === 'basso' ? 50 : (raw === 'medio' ? 70 : (/^\d+$/.test(raw) ? parseInt(raw, 10) : 0)));
+        if (!val) return;
         sum += val; count++;
         var day = names[new Date(al.data_ora).getDay()];
         if (giorniMap[day]) giorniMap[day].push(val);
@@ -224,7 +227,7 @@
         var arr = giorniMap[d];
         return { day: d, val: arr.length ? Math.round(arr.reduce(function (a, b) { return a + b; }, 0) / arr.length) : 0 };
       }),
-      acwr: avg > 0 ? (avg / 75).toFixed(2) : '1.00',
+      acwr: '—',
       stato: avg === 0 ? 'In attesa dati GPS' : (avg >= 70 && avg <= 88 ? 'Ottimale' : (avg > 88 ? 'Rischio sovraccarico' : 'Scarico'))
     };
   }

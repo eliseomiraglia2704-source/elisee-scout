@@ -1,6 +1,22 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-20** — PRES1 — Dashboard Presidente tradotta e sistemata:
+Ultimo aggiornamento: **2026-10-20** — FIX2 — Traduzioni, dati inventati tolti, errori di interfaccia:
+
+1. Traduzioni EN/ES/FR: Allenatore e Vice, Giornalista, Giocatore, Direttore sportivo e 10 dashboard piccole (`dash-i18n-data.js`). `dash-i18n.js` traduce anche le finestre `.es-edit-modal-backdrop`.
+2. Dati inventati tolti:
+   - Allenatore/Vice: «Suggerisci con IA» mostrava analisi già scritte di Cerignola, Manfredonia, San Severo come se fossero IA. Ora è «Usa una traccia»: domande guida, dichiarate come tali.
+   - Carichi di lavoro: niente più 70% di default, ACWR fisso, distanza «stimata» e «8,5 km» per i nuovi calciatori (`coach-dash.js`, `vice-dash.js`, `elisee-supabase.js`).
+   - Ricerca profili del DS (`ds-hub.js`, prima «AI Scouting Advisor»): età, velocità GPS, piede, contratto e distanza erano generati dall'id. Ora usa solo i dati del profilo; i dati mancanti non danno punti e lo dice.
+   - Link «Schede tecniche» nel footer: non crea più l'annuncio di esempio «ASD Virtus Foggia».
+3. Errori di interfaccia:
+   - La finestra «Modifica anagrafica» delle 11 dashboard piccole non aveva stile e finiva in fondo alla pagina: stili aggiunti in `dash-luxury.css`.
+   - Colonna vuota a sinistra nelle dashboard su computer: le barre laterali sono sempre nascoste, ora lo spazio non è più riservato (`role-sidebar-pro.css`).
+4. Scheda condivisa delle 11 dashboard (`dash-real.js`): stili scritti nel codice spostati in classi `.es-dr-*` in `dash-luxury.css` (aspetto identico).
+5. La finestra «Modifica profilo» del calciatore ora si vede bene anche su telefono.
+6. Emoji tolte da: dashboard piccole, giornalista, Allenatore/Vice, profilo pubblico, card giocatore, hub mercato.
+7. Con l'ok di Eliseo (20/10): modulo «Il mio profilo» del calciatore senza valori già scritti (`player-dash.js`; se ruolo o piede restano vuoti si tiene il valore salvato prima). Tolti i nomi di esempio da «Scopri profili» (`scopri-profili.js`: STAFF e PLAYERS vuoti, follower a 0) e i trasferimenti di esempio dal Wall (`mercato-hub.js`: le voci seed salvate nel browser vengono cancellate).
+
+Precedente: PRES1 — Dashboard Presidente tradotta e sistemata:
 
 1. Traduzioni EN/ES/FR della dashboard Presidente (circa 560 testi + 34 regole per i testi con numeri o nomi) in `dash-i18n-data.js`. Aggiunta una regola generica «numero + parola» (es. «3 gare»): va in fondo all'elenco delle regole.
 2. La finestra di dettaglio del Presidente (`#es-pres-detail-overlay`) ora è tradotta (aggiunta alle radici di `dash-i18n.js`).

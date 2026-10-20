@@ -33,99 +33,11 @@
   var PAGE = 40;
   var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260820_MAP1';
 
-  var STAFF = [
-    ['Eklit Farruky', 'Direttore Sportivo', 'Lombardia', 'Milano'],
-    ['Lorenzo Lalle', 'Allenatore', 'Piemonte', 'Torino'],
-    ['Andrea Mazza', 'Allenatore', 'Lombardia', 'Bergamo'],
-    ['Mauro Aimo', 'Allenatore', 'Piemonte', 'Cuneo'],
-    ['Giulia Conti', 'Match analyst', 'Lazio', 'Roma'],
-    ['Elena Santoro', 'Preparatore atletico', 'Puglia', 'Foggia'],
-    ['Stefano Ricci', 'Direttore Sportivo', 'Puglia', 'Cerignola'],
-    ['Andrea Moretti', 'Scout / Osservatore', 'Campania', 'Napoli'],
-    ['Chiara Greco', 'Fisioterapista', 'Veneto', 'Verona'],
-    ['Paolo Gentile', 'Allenatore in seconda', 'Sicilia', 'Palermo'],
-    ['Marco De Luca', 'Preparatore dei portieri', 'Toscana', 'Firenze'],
-    ['Sara Bianchi', 'Mental coach', 'Emilia-Romagna', 'Bologna'],
-    ['Luca Ferrero', 'Team manager', 'Liguria', 'Genova'],
-    ['Francesca Riva', 'Medico sociale', 'Lombardia', 'Monza'],
-    ['Davide Colombo', 'Video analyst', 'Lombardia', 'Milano'],
-    ['Alessia Romano', 'Nutrizionista', 'Lazio', 'Latina'],
-    ['Gianluca Serra', 'Allenatore', 'Sardegna', 'Cagliari'],
-    ['Valentina Costa', 'Scout / Osservatore', 'Veneto', 'Venezia'],
-    ['Roberto Marino', 'Direttore Sportivo', 'Campania', 'Salerno'],
-    ['Martina Gallo', 'Preparatore atletico', 'Puglia', 'Bari'],
-    ['Fabio Leone', 'Allenatore', 'Calabria', 'Catanzaro'],
-    ['Ilaria Fontana', 'Match analyst', 'Piemonte', 'Novara'],
-    ['Simone Vitale', 'Collaboratore tecnico', 'Marche', 'Ancona'],
-    ['Paola Messina', 'Fisioterapista', 'Sicilia', 'Catania'],
-    ['Enrico Barbera', 'Allenatore', 'Friuli-Venezia Giulia', 'Udine'],
-    ['Claudia Neri', 'Team manager', 'Toscana', 'Pisa'],
-    ['Michele Russo', 'Scout / Osservatore', 'Puglia', 'Lecce'],
-    ['Anna Pellegrini', 'Preparatore atletico', 'Veneto', 'Padova'],
-    ['Daniele Coppola', 'Allenatore in seconda', 'Campania', 'Caserta'],
-    ['Elisa Morelli', 'Match analyst', 'Lombardia', 'Brescia'],
-    ['Antonio Esposito', 'Direttore Sportivo', 'Campania', 'Napoli'],
-    ['Giada Ferri', 'Fisioterapista', 'Emilia-Romagna', 'Parma'],
-    ['Nicola Bianco', 'Allenatore', 'Basilicata', 'Potenza'],
-    ['Federica Longo', 'Scout / Osservatore', 'Lazio', 'Roma'],
-    ['Alessandro Conte', 'Preparatore dei portieri', 'Piemonte', 'Torino'],
-    ['Marta Villa', 'Mental coach', 'Lombardia', 'Como'],
-    ['Pietro Arena', 'Allenatore', 'Sicilia', 'Messina'],
-    ['Silvia Monti', 'Nutrizionista', 'Toscana', 'Siena'],
-    ['Carlo D Angelo', 'Team manager', 'Abruzzo', 'Pescara'],
-    ['Beatrice Gatti', 'Match analyst', 'Veneto', 'Vicenza'],
-    ['Luigi Parisi', 'Allenatore', 'Puglia', 'Taranto'],
-    ['Noemi Greco', 'Fisioterapista', 'Calabria', 'Cosenza'],
-    ['Vincenzo Amato', 'Direttore Sportivo', 'Sicilia', 'Trapani'],
-    ['Greta Bellini', 'Scout / Osservatore', 'Emilia-Romagna', 'Modena'],
-    ['Salvatore Piras', 'Allenatore', 'Sardegna', 'Sassari'],
-    ['Irene Casale', 'Preparatore atletico', 'Lazio', 'Frosinone'],
-    ['Matteo Barbieri', 'Video analyst', 'Lombardia', 'Varese'],
-    ['Cristina Leone', 'Collaboratore tecnico', 'Piemonte', 'Alessandria'],
-    ['Omar Haddad', 'Allenatore', 'Lombardia', 'Milano'],
-    ['Giovanni Stabile', 'Dirigente accompagnatore', 'Puglia', 'San Severo'],
-    ['Laura Pugliese', 'Segretario sportivo', 'Campania', 'Avellino'],
-    ['Riccardo Napolitano', 'Allenatore', 'Molise', 'Campobasso']
-  ];
+  // Solo profili veri: niente nomi di esempio.
+  var STAFF = [];
 
-  var PLAYERS = [
-    ['Marco Rossi', 'Centravanti', 'Puglia', 'Foggia'],
-    ['Lorenzo Bianchi', 'Centrocampista', 'Puglia', 'San Severo'],
-    ['Matteo Ferrari', 'Difensore centrale', 'Puglia', 'Manfredonia'],
-    ['Roberto Barbieri', 'Portiere', 'Puglia', 'Lucera'],
-    ['Sara Esposito', 'Ala', 'Campania', 'Napoli'],
-    ['Kevin Di Bari', 'Trequartista', 'Lazio', 'Roma'],
-    ['Giulia Romano', 'Terzino', 'Lazio', 'Latina'],
-    ['Andrea Conte', 'Mediano', 'Lombardia', 'Milano'],
-    ['Francesco Greco', 'Centravanti', 'Sicilia', 'Palermo'],
-    ['Martina Leone', 'Ala', 'Toscana', 'Firenze'],
-    ['Davide Russo', 'Portiere', 'Veneto', 'Verona'],
-    ['Alessia Fontana', 'Mezzala', 'Piemonte', 'Torino'],
-    ['Nicola Vitale', 'Difensore centrale', 'Calabria', 'Cosenza'],
-    ['Chiara Moretti', 'Seconda punta', 'Emilia-Romagna', 'Bologna'],
-    ['Luca Gentile', 'Esterno', 'Campania', 'Salerno'],
-    ['Elena Bianco', 'Portiere', 'Puglia', 'Bari'],
-    ['Simone Riva', 'Trequartista', 'Lombardia', 'Bergamo'],
-    ['Paola Serra', 'Centravanti', 'Sardegna', 'Cagliari'],
-    ['Giuseppe Amato', 'Terzino', 'Sicilia', 'Catania'],
-    ['Ilaria Gallo', 'Centrocampista', 'Marche', 'Ancona'],
-    ['Fabio Neri', 'Ala', 'Liguria', 'Genova'],
-    ['Valentina Costa', 'Difensore centrale', 'Veneto', 'Padova'],
-    ['Antonio Pellegrini', 'Centravanti', 'Lazio', 'Roma'],
-    ['Greta Ferri', 'Trequartista', 'Emilia-Romagna', 'Parma'],
-    ['Michele Coppola', 'Portiere', 'Campania', 'Caserta'],
-    ['Noemi Longo', 'Ala', 'Puglia', 'Lecce'],
-    ['Daniele Monti', 'Mediano', 'Toscana', 'Pisa'],
-    ['Beatrice Arena', 'Terzino', 'Sicilia', 'Messina'],
-    ['Salvatore Parisi', 'Centravanti', 'Puglia', 'Taranto'],
-    ['Irene Haddad', 'Mezzala', 'Lombardia', 'Como'],
-    ['Omar Stabile', 'Portiere', 'Piemonte', 'Novara'],
-    ['Laura Napolitano', 'Ala', 'Campania', 'Avellino'],
-    ['Riccardo Casale', 'Difensore centrale', 'Lazio', 'Frosinone'],
-    ['Marta Piras', 'Centravanti', 'Sardegna', 'Sassari'],
-    ['Enrico Bellini', 'Trequartista', 'Emilia-Romagna', 'Modena'],
-    ['Claudia Villa', 'Portiere', 'Lombardia', 'Varese']
-  ];
+  // Solo profili veri: niente nomi di esempio.
+  var PLAYERS = [];
 
   var ENTI = REGIONS.map(function (r) {
     return ['LND ' + r, 'Comitato regionale LND', r, r];
@@ -159,7 +71,7 @@
         sport: sportDefault || 'Calcio',
         group: '',
         nation: 'IT',
-        followers: 40 + ((r[0].length * 17 + i * 13) % 420),
+        followers: 0,
         photo: ''
       };
     });
@@ -265,7 +177,7 @@
           group: c.group || '',
           league: c.league || '',
           nation: 'IT',
-          followers: 30 + ((String(c.name).length * 11 + i * 7) % 900),
+          followers: 0,
           photo: c.logo || '',
           lat: c.lat,
           lng: c.lng
@@ -273,10 +185,7 @@
       });
       if (done) done();
     }).catch(function () {
-      clubCache = pack('club', [
-        ['ASD Foggia Calcio', 'Società', 'Puglia', 'Foggia'],
-        ['US San Severo', 'Società', 'Puglia', 'San Severo']
-      ]);
+      clubCache = [];
       if (done) done();
     });
   }

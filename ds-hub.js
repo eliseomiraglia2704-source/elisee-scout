@@ -134,7 +134,7 @@
       '<button type="button" class="es-dsh-tool" data-dsh="secret"><b>Secret List</b><span>Hub stealth FIFA/FM. Nessuna notifica all’atleta o ai club.</span></button>' +
       '<button type="button" class="es-dsh-tool" data-dsh="wall"><b>Wall trattative</b><span>Feed ufficiale: Card, maglia, banner TRASFERITO / UFFICIALE.</span></button>' +
       '<button type="button" class="es-dsh-tool" data-dsh="msg"><b>Contatto &amp; trattative</b><span>Messaggio o proposta di colloquio/prova al calciatore o al procuratore.</span></button>' +
-      '<button type="button" class="es-dsh-tool" data-dsh="ai"><b>AI Scouting Advisor</b><span>Match Index e scheda tecnica automatica sui profili del database.</span></button>' +
+      '<button type="button" class="es-dsh-tool" data-dsh="ai"><b>Ricerca profili</b><span>Trova i profili più vicini alla tua richiesta, con i dati inseriti.</span></button>' +
     '</div>';
   }
 
@@ -158,14 +158,17 @@
     return [];
   }
 
+  // Solo dati presenti nel profilo: niente valori inventati.
   function playerMetrics(p) {
-    var h = hash(p.id || p.name);
-    var age = 17 + (h % 12);
-    var vmax = 26 + (h % 8) + (h % 10) / 10;
-    var foot = (h % 3 === 0) ? 'Sinistro' : 'Destro';
-    var free = h % 4 !== 1;
-    var dist = 8 + (h % 90);
-    return { age: age, vmax: vmax, foot: foot, free: free, dist: dist };
+    var age = null;
+    var by = parseInt(p.birthYear || p.annoNascita || '', 10);
+    if (p.age) age = parseInt(p.age, 10) || null;
+    else if (by > 1900) age = new Date().getFullYear() - by;
+    var vmax = parseFloat(p.vmax || (p.gps && p.gps.vmax) || '') || null;
+    var footRaw = String(p.foot || p.piede || '').toLowerCase();
+    var foot = /sin|manc|left/.test(footRaw) ? 'Sinistro' : (/des|right/.test(footRaw) ? 'Destro' : null);
+    var free = (p.svincolato === true || p.free === true) ? true : ((p.svincolato === false || p.free === false) ? false : null);
+    return { age: age, vmax: vmax, foot: foot, free: free };
   }
 
   function parseBrief(text) {
@@ -208,40 +211,31 @@
     var pts = 0;
     var why = [];
     var roleOk = !brief.role || String(p.role || '').toLowerCase().indexOf(brief.role.toLowerCase().split(' ')[0]) >= 0;
-    if (roleOk && brief.role) { pts += 32; why.push('Ruolo allineato: ' + (p.role || brief.role)); }
-    else if (!brief.role) pts += 12;
+    if (roleOk && brief.role) { pts += 40; why.push('Ruolo allineato: ' + (p.role || brief.role)); }
+    else if (!brief.role) pts += 15;
     var sameReg = geo.reg && p.region && String(p.region).toLowerCase() === geo.reg.toLowerCase();
     var sameCity = geo.city && p.city && String(p.city).toLowerCase() === geo.city.toLowerCase();
-    var dist = sameCity ? 8 : (sameReg ? 28 : m.dist);
-    if (!brief.km || dist <= brief.km) {
-      pts += sameCity ? 22 : (sameReg ? 16 : 6);
-      why.push('Distanza: ' + dist + ' km (' + (sameCity ? 'città' : (sameReg ? 'provincia/regione' : 'nazionale')) + ').');
-    }
-    if (!brief.foot || brief.foot === m.foot) {
-      pts += 10;
-      if (brief.foot) why.push('Piede ' + m.foot + ' richiesto.');
-    }
-    if (!brief.maxAge || m.age <= brief.maxAge) {
-      pts += 10;
-      if (brief.maxAge) why.push('Età ' + m.age + ' (limite ' + brief.maxAge + ').');
-    }
-    if (!brief.free || m.free) {
-      pts += m.free ? 12 : 4;
-      why.push(m.free ? 'Status contrattuale: svincolato / disponibile.' : 'Tesserato, da valutare svincolo.');
-    }
-    if (!brief.vmax || m.vmax >= brief.vmax) {
-      pts += 10;
-      why.push('Performance GPS: velocità di picco ' + m.vmax.toFixed(1) + ' km/h' +
-        (brief.vmax ? ' (target ' + brief.vmax + ' km/h).' : '.'));
-    }
-    var heat = /ala|esterno|terzino/.test(String(p.role || '').toLowerCase())
-      ? 'Copertura fascia e fondo campo per i cross.'
-      : (/punta|centravanti/.test(String(p.role || '').toLowerCase())
-        ? 'Occupazione area e profondità.'
-        : 'Copertura della zona di competenza del ruolo.');
-    why.push('Heatmap match: ' + heat);
+    if (sameCity) { pts += 30; why.push('Stessa città: ' + p.city + '.'); }
+    else if (sameReg) { pts += 20; why.push('Stessa regione: ' + p.region + '.'); }
+    else if (p.city || p.region) why.push('Zona: ' + [p.city, p.region].filter(Boolean).join(', ') + '.');
+    if (brief.foot) {
+      if (m.foot === brief.foot) { pts += 10; why.push('Piede ' + m.foot.toLowerCase() + ', come richiesto.'); }
+      else if (!m.foot) why.push('Piede non indicato nel profilo.');
+    } else pts += 5;
+    if (brief.maxAge) {
+      if (m.age !== null && m.age <= brief.maxAge) { pts += 10; why.push('Età ' + m.age + ' (limite ' + brief.maxAge + ').'); }
+      else if (m.age === null) why.push('Età non indicata nel profilo.');
+    } else pts += 5;
+    if (brief.free) {
+      if (m.free === true) { pts += 10; why.push('Svincolato.'); }
+      else if (m.free === null) why.push('Situazione contrattuale non indicata.');
+    } else pts += 5;
+    if (brief.vmax) {
+      if (m.vmax !== null && m.vmax >= brief.vmax) { pts += 10; why.push('Velocità massima ' + m.vmax.toFixed(1) + ' km/h (richiesta ' + brief.vmax + ').'); }
+      else if (m.vmax === null) why.push('Nessun dato GPS nel profilo.');
+    } else pts += 5;
     if (pts > 99) pts = 99;
-    return { p: p, m: m, pct: pts, why: why, dist: dist };
+    return { p: p, m: m, pct: pts, why: why };
   }
 
   function advisorHtml(query, results) {
@@ -257,8 +251,9 @@
             '<div><b style="color:#fff;font-size:1rem;">' + esc(r.p.name) + '</b>' +
             '<div style="font-size:0.78rem;color:#94a3b8;">' + esc(r.p.role || '') +
             (r.p.city ? ' · ' + esc(r.p.city) : '') +
-            (r.m.free ? ' · Svincolato' : ' · Tesserato') +
-            ' · ' + r.m.age + ' anni · piede ' + esc(r.m.foot) + '</div></div>' +
+            (r.m.free === true ? ' · Svincolato' : (r.m.free === false ? ' · Tesserato' : '')) +
+            (r.m.age !== null ? ' · ' + r.m.age + ' anni' : '') +
+            (r.m.foot ? ' · piede ' + esc(r.m.foot.toLowerCase()) : '') + '</div></div>' +
             '<div class="es-dsh-pct">' + r.pct + '%<small>' + label + '</small></div>' +
           '</div>' +
           '<ul class="es-dsh-why">' + r.why.map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul>' +
@@ -271,18 +266,18 @@
       }).join('');
     }
     return '<button type="button" class="es-dsh-close" data-dsh="close">Chiudi</button>' +
-      '<h2>AI Scouting Advisor</h2>' +
-      '<p class="lead">Match Analyst e Scout virtuale: incrocia anagrafica, status contrattuale, heatmap/ruoli e GPS. Soglia di notifica: 85% ADEGUATO.</p>' +
+      '<h2>Ricerca profili</h2>' +
+      '<p class="lead">Confronta la tua richiesta con i dati inseriti nei profili: ruolo, zona, età, piede, contratto e GPS. I dati mancanti non danno punti.</p>' +
       '<textarea class="es-dsh-q" id="es-dsh-brief" placeholder="Es. Cerco un’Ala Sinistra Under 21, piede destro, entro 40 km, vmax sopra 29 km/h">' +
       esc(query || '') + '</textarea>' +
       '<div class="es-dsh-row">' +
-        '<button type="button" class="es-dsh-btn" data-dsh="run-ai">Analizza database</button>' +
+        '<button type="button" class="es-dsh-btn" data-dsh="run-ai">Cerca</button>' +
       '</div>' + body;
   }
 
   function runAdvisor() {
     var q = ((document.getElementById('es-dsh-brief') || {}).value || '').trim();
-    if (!q) q = 'Cerco un’Ala Sinistra Under 21, piede destro, entro 40 km, vmax 29 km/h';
+    if (!q) { if (window.showToast) window.showToast('Scrivi cosa cerchi.', 'info'); return; }
     var brief = parseBrief(q);
     var skip = discarded();
     var geo = geoOf(userObj());

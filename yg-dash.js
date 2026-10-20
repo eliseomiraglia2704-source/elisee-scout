@@ -55,7 +55,7 @@
 
     backdrop.innerHTML = '<div class="es-edit-modal">' +
       '<div class="es-edit-modal-head">' +
-      '<h2><span>✏️</span> Modifica Anagrafica Responsabile Settore Giovanile</h2>' +
+      '<h2>Modifica Anagrafica Responsabile Settore Giovanile</h2>' +
       '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
       '</div>' +
       '<div class="es-edit-grid">' +
@@ -67,7 +67,7 @@
       '</div>' +
       '<div class="es-edit-actions">' +
       '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
-      '<button type="button" class="es-edit-btn-save">💾 Salva Anagrafica</button>' +
+      '<button type="button" class="es-edit-btn-save">Salva Anagrafica</button>' +
       '</div>' +
       '</div>';
 

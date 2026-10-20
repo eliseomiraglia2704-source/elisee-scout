@@ -192,14 +192,17 @@
     map[k] = { items: items, updatedAt: new Date().toISOString() };
     saveMap(LIST_KEY, map);
   }
+  // Solo operazioni vere: le vecchie voci di esempio (seed) vengono tolte.
   function wallItems() {
     try {
       var rows = JSON.parse(localStorage.getItem(WALL_KEY) || 'null');
-      if (Array.isArray(rows) && rows.length) return rows;
+      if (Array.isArray(rows)) {
+        var real = rows.filter(function (r) { return r && !r.seed && !/^w-seed-/.test(String(r.id || '')); });
+        if (real.length !== rows.length) localStorage.setItem(WALL_KEY, JSON.stringify(real));
+        return real;
+      }
     } catch (_) {}
-    var seed = defaultWall();
-    try { localStorage.setItem(WALL_KEY, JSON.stringify(seed)); } catch (_) {}
-    return seed;
+    return [];
   }
   function saveWall(rows) {
     try { localStorage.setItem(WALL_KEY, JSON.stringify(rows)); } catch (_) {}
@@ -223,31 +226,13 @@
     if (found && found.logo) return found.logo;
     return 'immagini/squadre-loghi/' + slug(club).replace(/^a-c-/, '').replace(/^us-/, '').replace(/^asd-/, '') + '.png';
   }
-  function defaultWall() {
-    var now = Date.now();
-    function ago(h) { return new Date(now - h * 3600000).toISOString(); }
-    return [
-      { id: 'w-seed-1', player: 'Marco Rossi', role: 'Centravanti', from: 'Svincolato', to: 'Audace Cerignola', at: ago(2), stage: 'chiusa', fee: 'Gratuito', category: 'Serie C', seed: true },
-      { id: 'w-seed-2', player: 'Sara Esposito', role: 'Ala', from: 'Svincolato', to: 'SSC Bari', at: ago(6), stage: 'offerta', fee: 'In definizione', category: 'Serie B', seed: true },
-      { id: 'w-seed-3', player: 'Kevin Di Bari', role: 'Trequartista', from: 'Svincolato', to: 'Calcio Foggia 1920', at: ago(14), stage: 'trattativa', fee: 'Prestito', category: 'Serie C', seed: true },
-      { id: 'w-seed-4', player: 'Francesco Greco', role: 'Centravanti', from: 'Svincolato', to: 'Catania FC', at: ago(28), stage: 'candidatura', fee: 'Svincolato', category: 'Serie C', seed: true },
-      { id: 'w-seed-5', player: 'Noemi Longo', role: 'Ala', from: 'Svincolato', to: 'US Lecce', at: ago(40), stage: 'chiusa', fee: 'Definitivo', category: 'Serie A', seed: true },
-      { id: 'w-seed-6', player: 'Lorenzo Bianchi', role: 'Centrocampista', from: 'Svincolato', to: 'US San Severo', at: ago(1), stage: 'trattativa', fee: 'Svincolato', category: 'Eccellenza', seed: true },
-      { id: 'w-seed-7', player: 'Davide Russo', role: 'Portiere', from: 'Svincolato', to: 'Manfredonia Calcio', at: ago(3), stage: 'candidatura', fee: 'Under 2005', category: 'Serie D', seed: true }
-    ];
-  }
   function peoplePool() {
     try {
       if (window.EliseeScopri && typeof window.EliseeScopri.allProfiles === 'function') {
         return window.EliseeScopri.allProfiles().filter(function (p) { return p.kind === 'player'; });
       }
     } catch (_) {}
-    return [
-      { id: 'p-marco-rossi-0', name: 'Marco Rossi', role: 'Centravanti', city: 'Foggia', region: 'Puglia' },
-      { id: 'p-lorenzo-bianchi-1', name: 'Lorenzo Bianchi', role: 'Centrocampista', city: 'San Severo', region: 'Puglia' },
-      { id: 'p-sara-esposito-4', name: 'Sara Esposito', role: 'Ala', city: 'Napoli', region: 'Campania' },
-      { id: 'p-kevin-di-bari-5', name: 'Kevin Di Bari', role: 'Trequartista', city: 'Roma', region: 'Lazio' }
-    ];
+    return [];
   }
   function alreadyIn(id, name) {
     return myList().some(function (x) {
@@ -466,7 +451,7 @@
     // Toolbar con switcher modalità (Standard vs Swimlane)
     html += '<div class="es-board-toolbar">' +
       '<h3 class="es-board-title">' +
-        '<span>📋</span> Board Trattative di Mercato' +
+        'Board Trattative di Mercato' +
       '</h3>' +
       '<div class="es-board-modes">' +
         '<span style="font-size:0.75rem; color:#94a3b8; margin-right:0.3rem;">Vista:</span>' +
@@ -508,7 +493,7 @@
 
         html += '<div class="es-board-swimlane' + (isLaneCollapsed ? ' is-collapsed' : '') + '" data-swimlane="' + ln.id + '">' +
           '<div class="es-board-swimlane-header" data-toggle-swimlane="' + ln.id + '" role="button" tabindex="0">' +
-            '<h4 class="es-board-swimlane-title"><span>🛡️</span> ' + ln.label + ' (' + itemsInLine.length + ')</h4>' +
+            '<h4 class="es-board-swimlane-title">' + ln.label + ' (' + itemsInLine.length + ')</h4>' +
             '<button type="button" class="es-board-col-toggle" aria-expanded="' + (!isLaneCollapsed) + '">' +
               (isLaneCollapsed ? '▶' : '▼') +
             '</button>' +
@@ -829,14 +814,14 @@
     var rows = wallItems().slice().sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); });
     var ticker = rows.slice(0, 8).map(function (d) {
       return 'TRASFERITO  ·  ' + d.player + ' → ' + d.to;
-    }).join('     ★     ');
+    }).join('         ');
     
     // Iniezione Board Kanban (.es-board)
     var boardHtml = renderBoard(rows);
     var html = boardHtml;
 
     html += '<p class="es-mk-live" style="margin-top:1.5rem;"><i></i> Feed in tempo reale · Notizie e accordi ufficializzati</p>';
-    if (ticker) html += '<div class="es-mk-ticker" aria-hidden="true"><span>' + esc(ticker + '     ★     ' + ticker) + '</span></div>';
+    if (ticker) html += '<div class="es-mk-ticker" aria-hidden="true"><span>' + esc(ticker + '         ' + ticker) + '</span></div>';
     html += '<div class="es-mk-toolbar">' +
       (canOfficialize()
         ? '<button type="button" class="es-mk-btn" id="es-mk-official-open">+ Nuova Trattativa / Ufficializza</button>'

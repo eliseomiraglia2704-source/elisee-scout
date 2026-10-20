@@ -9,6 +9,7 @@
 
   // Dashboard Allenatore/Vice e tutte le dashboard di ruolo (staff, calciatore, tifoso, giornalista).
   var ROOTS = ['es-cd', 'es-cos-modal-box', 'es-staff-profile', 'es-player-profile', 'es-tifoso-profile', 'es-giorn-profile', 'es-ra-modal', 'es-pres-detail-overlay'];
+  var CLASS_ROOTS = '.es-edit-modal-backdrop';
   var ATTRS = ['placeholder', 'title', 'aria-label'];
   var originals = new WeakMap();
   var compiled = null;
@@ -85,6 +86,8 @@
     scheduled = false;
     var L = lang();
     ROOTS.forEach(function (id) { apply(document.getElementById(id), L); });
+    // Finestre aggiunte al body senza id (es. «Modifica anagrafica»).
+    Array.prototype.forEach.call(document.querySelectorAll(CLASS_ROOTS), function (el) { apply(el, L); });
   }
   function schedule() {
     if (scheduled) return;
@@ -95,6 +98,7 @@
   function inRoot(n) {
     while (n && n !== document.body) {
       if (n.id && ROOTS.indexOf(n.id) >= 0) return true;
+      if (n.matches && n.matches(CLASS_ROOTS)) return true;
       n = n.parentNode;
     }
     return false;
@@ -104,7 +108,7 @@
     for (var i = 0; i < list.length; i++) {
       var m = list[i];
       var target = m.target;
-      if (inRoot(target) || (m.addedNodes && Array.prototype.some.call(m.addedNodes, function (x) { return x.id && ROOTS.indexOf(x.id) >= 0 || (x.querySelector && x.querySelector('#es-cos-modal-box')); }))) {
+      if (inRoot(target) || (m.addedNodes && Array.prototype.some.call(m.addedNodes, function (x) { return x.id && ROOTS.indexOf(x.id) >= 0 || (x.matches && x.matches(CLASS_ROOTS)) || (x.querySelector && x.querySelector('#es-cos-modal-box')); }))) {
         schedule();
         return;
       }
